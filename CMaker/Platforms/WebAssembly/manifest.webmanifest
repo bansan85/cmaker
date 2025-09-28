@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "CMaker",
+  "display": "standalone",
+  "name": "CMaker",
+  "short_name": "CMaker",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
