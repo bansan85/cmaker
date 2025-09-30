@@ -6,22 +6,48 @@
       xmlns:utu="using:Uno.Toolkit.UI"
       xmlns:um="using:Uno.Material"
       NavigationCacheMode="Required"
-      Background="{ThemeResource BackgroundBrush}">
-  <TabView>
-    <TabViewItem Header="Global">
-      <Grid>
-        <TextBlock Text="Global"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
-      </Grid>
-    </TabViewItem>
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <MenuBar Grid.Row="0">
+      <MenuBarItem Title="File">
+        <MenuFlyoutItem Text="New"/>
+        <MenuFlyoutItem Text="Open"/>
+        <MenuFlyoutItem Text="Save"/>
+        <MenuFlyoutItem Text="Exit"/>
+      </MenuBarItem>
 
-    <TabViewItem Header="Targets">
-      <Grid>
-        <TextBlock Text="Targets"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
-      </Grid>
-    </TabViewItem>
-  </TabView>
+      <MenuBarItem Title="Edit">
+        <MenuFlyoutItem Text="Undo"/>
+        <MenuFlyoutItem Text="Cut"/>
+        <MenuFlyoutItem Text="Copy"/>
+        <MenuFlyoutItem Text="Paste"/>
+      </MenuBarItem>
+
+      <MenuBarItem Title="Help">
+        <MenuFlyoutItem Text="About"/>
+      </MenuBarItem>
+    </MenuBar>
+    <TabView Grid.Row="1">
+      <TabViewItem Header="Global">
+        <Grid>
+          <TextBlock Text="Global"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+        </Grid>
+      </TabViewItem>
+
+      <TabViewItem Header="Targets">
+        <Grid>
+          <TextBlock Text="Targets"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+        </Grid>
+      </TabViewItem>
+    </TabView>
+  </Grid>
 </Page>
