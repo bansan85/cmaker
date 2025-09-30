@@ -33,20 +33,12 @@
       </MenuBarItem>
     </MenuBar>
     <TabView Grid.Row="1">
-      <TabViewItem Header="Global">
-        <Grid>
-          <TextBlock Text="Global"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"/>
-        </Grid>
+      <TabViewItem Header="Project">
+        <local:ProjectTab/>
       </TabViewItem>
 
       <TabViewItem Header="Targets">
-        <Grid>
-          <TextBlock Text="Targets"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"/>
-        </Grid>
+        <local:TargetsTab/>
       </TabViewItem>
     </TabView>
   </Grid>
