@@ -6,7 +6,6 @@
     "appId": "com.bansan.cmaker",
     "files": [
       "dist/cmaker/browser/**/*",
-      "dist/cmaker/browser/*",
       "app.js"
     ],
     "directories": {

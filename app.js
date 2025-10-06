@@ -1,10 +1,9 @@
-// app.js
-
 const { app, BrowserWindow } = require('electron');
 const url = require('url');
 const path = require('path');
 
 let mainWindow;
+let hasReloaded = false;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -29,6 +28,15 @@ function createWindow() {
       })
     );
   }
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (!hasReloaded) {
+      hasReloaded = true;
+      setTimeout(() => {
+        mainWindow.reload();
+      }, 5);
+    }
+  });
 
   mainWindow.on('closed', function () {
     mainWindow = null;
