@@ -7,7 +7,8 @@
     "beforeDevCommand": "pnpm start",
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "pnpm build",
-    "frontendDist": "../dist/cmaker/browser"
+    "frontendDist": "../dist/cmaker/browser",
+    "removeUnusedCommands": true
   },
   "app": {
     "windows": [
