@@ -1,0 +1,6 @@
+<input
+  type="checkbox"
+  [checked]="value === true"
+  [indeterminate]="value === undefined"
+  (click)="$event.preventDefault(); toggle()"
+/>

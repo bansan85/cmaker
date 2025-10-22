@@ -1,8 +1,9 @@
-import { Component, Input } from "@angular/core";
+import { Component } from "@angular/core";
+import { ProjectMsvc } from "./project-msvc";
 
 @Component({
   selector: "app-tab-project",
-  imports: [],
+  imports: [ProjectMsvc],
   templateUrl: "./tab-project.html",
   styleUrl: "./tab-project.css",
 })
