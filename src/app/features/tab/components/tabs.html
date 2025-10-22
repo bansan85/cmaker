@@ -1,0 +1,14 @@
+<div class="tab-container">
+  <div class="nav">
+    @for(tab of tabs; track tab) {
+    <div
+      [ngClass]="{active: tab == activeComponent}"
+      (click)="activateTab(tab)"
+      class="nav-item"
+    >
+      <span>{{tab.tabName}}</span>
+    </div>
+    }
+  </div>
+  <ng-container *ngComponentOutlet="activeComponent.component"></ng-container>
+</div>

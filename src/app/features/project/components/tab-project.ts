@@ -7,5 +7,4 @@ import { Component, Input } from "@angular/core";
   styleUrl: "./tab-project.css",
 })
 export class TabProject {
-  @Input() content?: { title: string; description: string };
 }
