@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ProjectMsvc } from "./project-msvc";
+import { ProjectMsvc } from "../../cmake/components/project-msvc";
 
 @Component({
   selector: "app-tab-project",
