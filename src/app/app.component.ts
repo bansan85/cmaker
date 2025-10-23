@@ -3,7 +3,7 @@ import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
 import { TabItem } from "./features/tab/components/tab-item";
 import { Tabs } from "./features/tab/components/tabs";
-import { TabProject } from "./features/project/components/tab-project";
+import { TabProject } from "./features/tab/components/tab-project";
 import { TabTarget } from "./features/target/components/target";
 
 @Component({

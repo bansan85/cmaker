@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, output } from "@angular/core";
 
 @Component({
   selector: "app-ui-checkbox-indeterminate",
@@ -7,11 +7,15 @@ import { Component } from "@angular/core";
   styleUrl: "./ui-checkbox-indeterminate.css",
 })
 export class UiCheckboxIndeterminate {
-  value?: boolean;
+  value: boolean | null = null;
+
+  checked = output<boolean | null>();
 
   toggle(): void {
-    if (this.value === true) this.value = undefined;
-    else if (this.value === undefined) this.value = false;
+    if (this.value === true) this.value = null;
+    else if (this.value === null) this.value = false;
     else this.value = true;
+
+    this.checked.emit(this.value);
   }
 }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabTarget } from './tab-target';
+import { TabTarget } from './target';
 
 describe('TabTarget', () => {
   let component: TabTarget;

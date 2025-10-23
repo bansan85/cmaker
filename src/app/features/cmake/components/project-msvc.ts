@@ -1,6 +1,6 @@
-import { Component, inject, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { UiCheckboxIndeterminate } from "../../../shared/components/ui-checkbox-indeterminate";
-import { CMakeMinVersion } from "../services/cmake-min-version";
+import { ProjectMsvcModel } from "../models/project-msvc-model";
 
 @Component({
   selector: "app-project-msvc",
@@ -9,12 +9,14 @@ import { CMakeMinVersion } from "../services/cmake-min-version";
   styleUrl: "./project-msvc.css",
 })
 export class ProjectMsvc {
+  public msvc: ProjectMsvcModel = new ProjectMsvcModel();
+
+  constructor() { }
+
   @ViewChild("cbMsvcRuntimeLibrary")
   cbMsvcRuntimeLibrary!: UiCheckboxIndeterminate;
 
-  cmakeMinVersion = inject(CMakeMinVersion);
-
   toto() {
-    console.log(this.cmakeMinVersion.get(this));
+    console.log(this.msvc.cmakeMinVersion());
   }
 }
