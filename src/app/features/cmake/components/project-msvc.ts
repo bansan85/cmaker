@@ -1,22 +1,25 @@
-import { Component, ViewChild } from "@angular/core";
-import { UiCheckboxIndeterminate } from "../../../shared/components/ui-checkbox-indeterminate";
-import { ProjectMsvcModel } from "../models/project-msvc-model";
+import { Component, inject, ViewChild } from "@angular/core";
+import { ProjectMsvcRuntime } from "./project-msvc-runtime";
+import { ProjectMsvcRuntimeService } from "../services/project-msvc-runtime-service";
 
 @Component({
   selector: "app-project-msvc",
-  imports: [UiCheckboxIndeterminate],
+  imports: [ProjectMsvcRuntime],
   templateUrl: "./project-msvc.html",
   styleUrl: "./project-msvc.css",
 })
 export class ProjectMsvc {
-  public msvc: ProjectMsvcModel = new ProjectMsvcModel();
-
-  constructor() { }
+  private msvcRuntimeService = inject(ProjectMsvcRuntimeService);
 
   @ViewChild("cbMsvcRuntimeLibrary")
-  cbMsvcRuntimeLibrary!: UiCheckboxIndeterminate;
+  cbMsvcRuntimeLibrary!: ProjectMsvcRuntime;
 
   toto() {
-    console.log(this.msvc.cmakeMinVersion());
+    console.log(
+      this.msvcRuntimeService.cmakeMinVersion(this.cbMsvcRuntimeLibrary)
+    );
+    console.log(
+      this.msvcRuntimeService.toCMakeListTxt(this.cbMsvcRuntimeLibrary)
+    );
   }
 }
