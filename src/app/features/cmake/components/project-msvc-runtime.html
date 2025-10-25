@@ -1,3 +1,3 @@
-<input [(ngModel)]="enabled" type="checkbox"/>
-<span>MSVC Runtime Library</span>
-<input [(ngModel)]="defaultValue" type="checkbox"/>
+<input [(ngModel)]="enabled" type="checkbox" />
+<span [class.disabled]="!enabled">MSVC Runtime Library</span>
+<input [(ngModel)]="defaultValue" type="checkbox" [disabled]="!enabled" />
