@@ -3,12 +3,12 @@ import { FormsModule } from "@angular/forms";
 import { ProjectService } from "../services/project-service";
 
 @Component({
-  selector: "app-project",
+  selector: "app-project-command",
   imports: [FormsModule],
-  templateUrl: "./project.html",
-  styleUrl: "./project.css",
+  templateUrl: "./project-command.html",
+  styleUrl: "./project-command.css",
 })
-export class Project {
+export class ProjectCommand {
   private projectService = inject(ProjectService);
 
   enabledLicense: boolean = false;

@@ -1,24 +1,25 @@
 import { Injectable } from "@angular/core";
 import { CMakeFeatureInterface } from "./cmake-feature-interface";
-import { Project } from "../components/project";
 import { Version } from "../../../shared/models/version";
-import { CMakeObjects } from "../models/cmake-objects";
+import { ProjectCommand } from "../components/project-command";
+import { CMakeAvailableData } from "../models/cmake-available-data";
 
 @Injectable({
   providedIn: "root",
 })
-export class ProjectService implements CMakeFeatureInterface<Project> {
+export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
   private readonly variable = "CRT_SHARED_LIBS";
   private readonly helpText = "Build using CRT shared libraries";
 
-  cmakeMinVersion(action: Project): Version | null {
+  cmakeMinVersion(action: ProjectCommand): Version | null {
     if (action.enabledLicense) {
       return new Version("4.2");
     } else {
       return null;
     }
   }
-  cmakeObjects(action: Project): CMakeObjects {
+
+  cmakeObjects(action: ProjectCommand): CMakeAvailableData {
     if (action.enabledLicense) {
       return {
         variables: [
@@ -34,7 +35,8 @@ export class ProjectService implements CMakeFeatureInterface<Project> {
       return {};
     }
   }
-  toCMakeListTxt(action: Project): string {
+
+  toCMakeListTxt(action: ProjectCommand): string {
     if (action.enabledLicense) {
       return `SPDX_LICENSE "${action.license}"`;
     } else {
