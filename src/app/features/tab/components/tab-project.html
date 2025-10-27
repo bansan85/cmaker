@@ -1,6 +1,14 @@
 <div class="first-wrapper">
-  <app-project-command></app-project-command>
-<h3>Visual Studio</h3>
-<app-cmake-msvc-runtime-library-variable #cbMsvcRuntimeLibrary></app-cmake-msvc-runtime-library-variable>
-<button (click)="showCMakeMsvcRuntimeLibrary()"></button>
+  <app-draggable-list>
+    <app-draggable-item>
+      <app-project-command></app-project-command>
+    </app-draggable-item>
+    <app-draggable-item>
+      <h3>Visual Studio</h3>
+      <app-cmake-msvc-runtime-library-variable
+        #cbMsvcRuntimeLibrary
+      ></app-cmake-msvc-runtime-library-variable>
+      <button (click)="showCMakeMsvcRuntimeLibrary()"></button>
+    </app-draggable-item>
+  </app-draggable-list>
 </div>
