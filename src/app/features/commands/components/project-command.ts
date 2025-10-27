@@ -7,6 +7,7 @@ import { ProjectService } from "../services/project-service";
   imports: [FormsModule],
   templateUrl: "./project-command.html",
   styleUrl: "./project-command.css",
+  providers:[ProjectService]
 })
 export class ProjectCommand {
   private projectService = inject(ProjectService);
