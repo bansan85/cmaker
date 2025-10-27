@@ -1,24 +1,14 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
-import { TabItem } from "./features/tab/components/tab-item";
-import { Tabs } from "./features/tab/components/tabs";
-import { TabProject } from "./features/tab/components/tab-project";
-import { TabTarget } from "./features/target/components/target";
+import { CMakeProject } from "./features/cmake-project/components/cmake-project/cmake-project";
 
 @Component({
   selector: "app-root",
-  imports: [TabItem, Tabs],
+  imports: [CMakeProject],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
 export class AppComponent {
-  tab1 = "Tab 1";
-  tab2 = "Tab 2";
-
-  tabProject = TabProject;
-  tabTarget = TabTarget;
-
   greetingMessage = "";
 
   greet(event: SubmitEvent, name: string): void {
