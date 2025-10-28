@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ProjectService } from "../services/project-service";
+import { CMakeProvider } from "../../cmake-project/interfaces/cmake-provider";
 
 @Component({
   selector: "app-project-command",
@@ -9,7 +10,7 @@ import { ProjectService } from "../services/project-service";
   styleUrl: "./project-command.css",
   providers:[ProjectService]
 })
-export class ProjectCommand {
+export class ProjectCommand implements CMakeProvider {
   private projectService = inject(ProjectService);
 
   enabledLicense: boolean = false;

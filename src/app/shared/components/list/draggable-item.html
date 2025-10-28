@@ -1,3 +1,8 @@
-<li draggable="true" (dragover)="dragOver($event)" (dragstart)="dragStart($event)">
-    <ng-content></ng-content>
+<li
+  draggable="true"
+  (dragover)="dragOver($event)"
+  (dragstart)="dragStart($event)"
+  (dragend)="dragEnd($event)"
+>
+  <ng-content></ng-content>
 </li>

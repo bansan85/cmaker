@@ -1,10 +1,9 @@
 <div class="first-wrapper">
-  <app-draggable-list>
+  <app-draggable-list (orderChanged)="reorderItems($event)">
+    @for (item of items; track item) {
     <app-draggable-item>
-      <app-project-command></app-project-command>
+      <ng-container *ngComponentOutlet="item" />
     </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-msvc-runtime-library-variable></app-cmake-msvc-runtime-library-variable>
-    </app-draggable-item>
+    }
   </app-draggable-list>
 </div>

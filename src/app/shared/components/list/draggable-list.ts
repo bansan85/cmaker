@@ -2,6 +2,8 @@ import {
   AfterContentInit,
   Component,
   ContentChildren,
+  EventEmitter,
+  Output,
   QueryList,
 } from "@angular/core";
 import { DraggableItemComponent } from "./draggable-item";
@@ -13,33 +15,66 @@ import { DraggableItemComponent } from "./draggable-item";
 export class DraggableListComponent implements AfterContentInit {
   @ContentChildren(DraggableItemComponent)
   items!: QueryList<DraggableItemComponent>;
-  draggedEl!: HTMLElement;
+  draggableItem!: HTMLElement;
+
+  from: number = 0;
+  to: number = 0;
+
+  @Output() orderChanged = new EventEmitter<{ from: number; to: number }>();
 
   ngAfterContentInit() {
     this.items.forEach((item) => {
-      item.dragStartEvent.subscribe((el) => (this.draggedEl = el));
+      item.dragStartEvent.subscribe((target) => this.onDragStart(target));
       item.dragOverEvent.subscribe((target) => this.onDragOver(target));
+      item.dragEndEvent.subscribe(() => this.onDragEnd());
     });
   }
 
-  private getDraggableItemEl(el: HTMLElement): HTMLElement | null {
+  private getDraggableItemEl(el: HTMLElement): HTMLElement {
     while (el && !el.hasAttribute("draggable")) {
       el = el.parentElement as HTMLElement;
     }
-    return el || null;
+    return el!;
   }
 
-  onDragStart(el: HTMLElement) {
-    this.draggedEl = el;
+  onDragStart(targetEl: HTMLElement) {
+    this.draggableItem = this.getDraggableItemEl(targetEl)
+      .parentNode as HTMLElement;
+
+    this.from = Array.from(this.draggableItem.parentNode!.children).indexOf(
+      this.draggableItem
+    );
+    this.to = this.from;
   }
 
   onDragOver(targetEl: HTMLElement) {
     const target = this.getDraggableItemEl(targetEl);
-    if (!target || !this.draggedEl || target === this.draggedEl) return;
+    // Don't move over itself.
+    if (target.parentNode === this.draggableItem) {
+      return;
+    }
+    const draggableItem = target.parentNode as HTMLElement;
 
-    if (this.isBefore(this.draggedEl, target))
-      target.parentNode!.insertBefore(this.draggedEl, target);
-    else target.parentNode!.insertBefore(this.draggedEl, target.nextSibling);
+    this.to = Array.from(this.draggableItem.parentNode!.children).indexOf(
+      draggableItem
+    );
+
+    if (this.isBefore(this.draggableItem, draggableItem)) {
+      draggableItem.parentNode!.insertBefore(this.draggableItem, draggableItem);
+    } else {
+      draggableItem.parentNode!.insertBefore(
+        this.draggableItem,
+        draggableItem.nextSibling
+      );
+    }
+  }
+
+  onDragEnd() {
+    if (this.from == this.to) {
+      return;
+    }
+
+    this.orderChanged.emit({ from: this.from, to: this.to });
   }
 
   private isBefore(el1: HTMLElement, el2: HTMLElement) {
