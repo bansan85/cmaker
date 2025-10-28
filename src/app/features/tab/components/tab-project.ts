@@ -12,17 +12,4 @@ import { DraggableItemComponent } from "../../../shared/components/list/draggabl
   styleUrl: "./tab-project.css",
 })
 export class TabProject {
-  private msvcRuntimeService = inject(CMakeMsvcRuntimeLibraryVariableService);
-
-  @ViewChild("cbMsvcRuntimeLibrary")
-  cbMsvcRuntimeLibrary!: CMakeMsvcRuntimeLibraryVariable;
-
-  showCMakeMsvcRuntimeLibrary() {
-    console.log(
-      this.msvcRuntimeService.cmakeMinVersion(this.cbMsvcRuntimeLibrary)
-    );
-    console.log(
-      this.msvcRuntimeService.toCMakeListTxt(this.cbMsvcRuntimeLibrary)
-    );
-  }
 }

@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { CMakeMsvcRuntimeLibraryVariableService } from "../services/cmake-msvc-runtime-library-variable-service";
 
 @Component({
   selector: "app-cmake-msvc-runtime-library-variable",
@@ -8,6 +9,13 @@ import { FormsModule } from "@angular/forms";
   styleUrl: "./cmake-msvc-runtime-library-variable.css",
 })
 export class CMakeMsvcRuntimeLibraryVariable {
+  private msvcRuntimeService = inject(CMakeMsvcRuntimeLibraryVariableService);
+
   enabled: boolean = false;
   defaultValue: boolean = false;
+
+  toto() {
+    console.log(this.msvcRuntimeService.cmakeMinVersion(this));
+    console.log(this.msvcRuntimeService.toCMakeListTxt(this));
+  }
 }
