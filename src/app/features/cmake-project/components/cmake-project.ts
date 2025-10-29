@@ -4,6 +4,8 @@ import { TabItem } from "../../tab/components/tab-item";
 import { ProjectContextService } from "../services/project-context-service";
 import { TabProject } from "./tab-project";
 import { TabTarget } from "./tab-target";
+import { TabOptions } from "./tab-options";
+import { Version } from "../../../shared/models/version";
 
 @Component({
   selector: "app-cmake-project",
@@ -13,12 +15,13 @@ import { TabTarget } from "./tab-target";
   providers: [ProjectContextService],
 })
 export class CMakeProject implements OnInit {
+  tabOptions = TabOptions;
   tabProject = TabProject;
   tabTarget = TabTarget;
 
   context = inject(ProjectContextService);
 
   ngOnInit() {
-    this.context.version = "v3";
+    this.context.version = new Version("3.2");
   }
 }

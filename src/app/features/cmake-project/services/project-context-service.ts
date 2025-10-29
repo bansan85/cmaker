@@ -1,9 +1,9 @@
-import { NgPluralCase } from "@angular/common";
 import { Injectable } from "@angular/core";
+import { Version } from "../../../shared/models/version";
 
 @Injectable({
   providedIn: null,
 })
 export class ProjectContextService {
-  version!: string;
+  version!: Version;
 }
