@@ -3,8 +3,8 @@ import { Component, Input } from "@angular/core";
 @Component({
   selector: "app-ui-target",
   imports: [],
-  templateUrl: "./target.html",
-  styleUrl: "./target.css",
+  templateUrl: "./tab-target.html",
+  styleUrl: "./tab-target.css",
 })
 export class TabTarget {
 }

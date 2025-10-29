@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { invoke } from "@tauri-apps/api/core";
-import { CMakeProject } from "./features/cmake-project/components/cmake-project/cmake-project";
+import { CMakeProject } from "./features/cmake-project/components/cmake-project";
 
 @Component({
   selector: "app-root",
