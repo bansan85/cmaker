@@ -22,6 +22,6 @@ export class CMakeProject implements OnInit {
   context = inject(ProjectContextService);
 
   ngOnInit() {
-    this.context.version = new Version("3.2");
+    this.context.version = new Version("4.2");
   }
 }

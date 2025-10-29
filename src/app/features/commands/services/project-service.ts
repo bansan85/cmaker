@@ -4,6 +4,7 @@ import { Version } from "../../../shared/models/version";
 import { ProjectCommand } from "../components/project-command";
 import { CMakeAvailableData } from "../models/cmake-available-data";
 import { ProjectContextService } from "../../cmake-project/services/project-context-service";
+import { ProjectLicenseService } from "./project-license-service";
 
 @Injectable({
   providedIn: null,
@@ -12,39 +13,17 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
   private readonly variable = "CRT_SHARED_LIBS";
   private readonly helpText = "Build using CRT shared libraries";
 
-  projectContext = inject(ProjectContextService);
+  projectLicense = inject(ProjectLicenseService);
 
   cmakeMinVersion(action: ProjectCommand): Version | null {
-    console.log(this.projectContext.version);
-    if (action.enabledLicense) {
-      return new Version("4.2");
-    } else {
-      return null;
-    }
+    return this.projectLicense.cmakeMinVersion(action.license);
   }
 
   cmakeObjects(action: ProjectCommand): CMakeAvailableData {
-    if (action.enabledLicense) {
-      return {
-        variables: [
-          {
-            name: "PROJECT_SPDX_LICENSE",
-          },
-          {
-            name: "<PROJECT-NAME>_SPDX_LICENSE",
-          },
-        ],
-      };
-    } else {
-      return {};
-    }
+    return this.projectLicense.cmakeObjects(action.license);
   }
 
   toCMakeListTxt(action: ProjectCommand): string {
-    if (action.enabledLicense) {
-      return `SPDX_LICENSE "${action.license}"`;
-    } else {
-      return "";
-    }
+    return this.projectLicense.toCMakeListTxt(action.license);
   }
 }
