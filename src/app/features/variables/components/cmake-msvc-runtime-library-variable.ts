@@ -12,8 +12,8 @@ import { CMakeProvider } from "../../cmake-project/interfaces/cmake-provider";
 export class CMakeMsvcRuntimeLibraryVariable implements CMakeProvider {
   private msvcRuntimeService = inject(CMakeMsvcRuntimeLibraryVariableService);
 
-  enabled: boolean = false;
-  defaultValue: boolean = false;
+  enabled = false;
+  defaultValue = false;
 
   toto() {
     console.log(this.msvcRuntimeService.cmakeMinVersion(this));

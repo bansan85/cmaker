@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, ContentChildren, QueryList } from "@angular/core";
+import { AfterContentInit, Component, ContentChildren, QueryList } from "@angular/core";
 import { TabItem } from "./tab-item";
 
 @Component({
@@ -8,7 +8,7 @@ import { TabItem } from "./tab-item";
   templateUrl: "./tabs.html",
   styleUrl: "./tabs.css",
 })
-export class Tabs {
+export class Tabs implements AfterContentInit {
   @ContentChildren(TabItem) tabs!: QueryList<TabItem>;
   activeComponent!: TabItem;
 

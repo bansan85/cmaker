@@ -3,7 +3,6 @@ import { CMakeFeatureInterface } from "./cmake-feature-interface";
 import { Version } from "../../../shared/models/version";
 import { ProjectCommand } from "../components/project-command";
 import { CMakeAvailableData } from "../models/cmake-available-data";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 import { ProjectLicenseService } from "./project-license-service";
 
 @Injectable({

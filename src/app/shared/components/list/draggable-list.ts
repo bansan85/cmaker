@@ -17,8 +17,8 @@ export class DraggableListComponent implements AfterContentInit {
   items!: QueryList<DraggableItemComponent>;
   draggableItem!: HTMLElement;
 
-  from: number = 0;
-  to: number = 0;
+  from = 0;
+  to = 0;
 
   @Output() orderChanged = new EventEmitter<{ from: number; to: number }>();
 

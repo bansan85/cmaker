@@ -21,7 +21,7 @@ export class DraggableItemComponent {
     this.dragOverEvent.emit(e.target as HTMLElement);
   }
 
-  dragEnd(e: DragEvent) {
+  dragEnd() {
     this.dragEndEvent.emit();
   }
 }

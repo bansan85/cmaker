@@ -2,11 +2,11 @@
   <div class="nav">
     @for(tab of tabs; track tab) {
     <div
-      [ngClass]="{active: tab == activeComponent}"
+      [ngClass]="{active: tab === activeComponent}"
       (click)="activateTab(tab)"
       class="nav-item"
     >
-      <span>{{tab.tabName}}</span>
+      {{tab.tabName}}
     </div>
     }
   </div>
