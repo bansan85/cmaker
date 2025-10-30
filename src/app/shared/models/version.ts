@@ -8,16 +8,28 @@ export class Version {
     this.minor = parseInt(parts[1], 10);
   }
 
-  isGreaterThan(other: Version): boolean {
+  isGreater(other: Version): boolean {
     if (this.major > other.major) return true;
     if (this.major < other.major) return false;
     return this.minor > other.minor;
   }
 
-  isLessThan(other: Version): boolean {
+  isGreaterOrEqual(other: Version): boolean {
+    if (this.major > other.major) return true;
+    if (this.major < other.major) return false;
+    return this.minor >= other.minor;
+  }
+
+  isLess(other: Version): boolean {
     if (this.major < other.major) return true;
     if (this.major > other.major) return false;
     return this.minor < other.minor;
+  }
+
+  isLessOrEqual(other: Version): boolean {
+    if (this.major < other.major) return true;
+    if (this.major > other.major) return false;
+    return this.minor <= other.minor;
   }
 
   equals(other: Version): boolean {
@@ -36,7 +48,7 @@ export class Version {
   }
 
   max(other: Version): Version {
-    if (this.isGreaterThan(other)) {
+    if (this.isGreater(other)) {
       return this;
     } else {
       return other;
@@ -44,7 +56,7 @@ export class Version {
   }
 
   min(other: Version): Version {
-    if (this.isGreaterThan(other)) {
+    if (this.isGreater(other)) {
       return other;
     } else {
       return this;

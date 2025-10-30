@@ -4,6 +4,7 @@ import { CMakeMsvcRuntimeLibraryVariable } from "../../variables/components/cmak
 import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-interface";
 import { DataToCMakeService } from "../../commands/services/data-to-cmake-service";
 import { CMakeAvailableData } from "../../commands/models/cmake-available-data";
+import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 
 @Injectable({
   providedIn: "root",
@@ -15,16 +16,29 @@ export class CMakeMsvcRuntimeLibraryVariableService
   private readonly helpText = "Build using CRT shared libraries";
 
   private dataToCMake = inject(DataToCMakeService);
+  private projectContext = inject(ProjectContextService);
 
-  cmakeMinVersion(action: CMakeMsvcRuntimeLibraryVariable): Version | null {
-    if (action.enabled) {
-      return new Version("3.15");
+  cmakeMinVersion: Version = new Version("3.15");
+
+  cmakeRequiredVersion(action: CMakeMsvcRuntimeLibraryVariable): Version | null {
+    if (
+      action.enabled &&
+      !action.msvcRuntimeService.cmakeMinVersion.isGreater(
+        this.projectContext.version
+      )
+    ) {
+      return this.cmakeMinVersion;
     } else {
       return null;
     }
   }
   cmakeObjects(action: CMakeMsvcRuntimeLibraryVariable): CMakeAvailableData {
-    if (action.enabled) {
+    if (
+      action.enabled &&
+      !action.msvcRuntimeService.cmakeMinVersion.isGreater(
+        this.projectContext.version
+      )
+    ) {
       return {
         options: [
           {
@@ -39,7 +53,12 @@ export class CMakeMsvcRuntimeLibraryVariableService
     }
   }
   toCMakeListTxt(action: CMakeMsvcRuntimeLibraryVariable): string {
-    if (action.enabled) {
+    if (
+      action.enabled &&
+      !action.msvcRuntimeService.cmakeMinVersion.isGreater(
+        this.projectContext.version
+      )
+    ) {
       return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
         action.defaultValue

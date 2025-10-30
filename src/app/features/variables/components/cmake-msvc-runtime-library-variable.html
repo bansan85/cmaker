@@ -1,5 +1,8 @@
 <h3>Visual Studio</h3>
-<input [(ngModel)]="enabled" type="checkbox" />
-<span [class.disabled]="!enabled">MSVC Runtime Library</span>
-<input [(ngModel)]="defaultValue" type="checkbox" [disabled]="!enabled" />
- <button (click)="toto()">TOTO</button>
+<div
+  [hidden]="msvcRuntimeService.cmakeMinVersion.isGreater(projectContext.version)"
+>
+  <input [(ngModel)]="enabled" type="checkbox" />
+  <span [class.disabled]="!enabled">MSVC Runtime Library</span>
+  <input [(ngModel)]="defaultValue" type="checkbox" [disabled]="!enabled" />
+</div>

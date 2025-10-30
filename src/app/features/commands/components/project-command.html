@@ -1,3 +1,6 @@
 <h3>Project</h3>
-<app-project-license-option #license></app-project-license-option>
+<app-project-license-option
+  #license
+  [hidden]="license.projectLicenseService.cmakeMinVersion.isGreater(projectContext.version)"
+></app-project-license-option>
 <button (click)="toto()">TOTO</button>

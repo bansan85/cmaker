@@ -9,7 +9,7 @@ import { ProjectLicenseService } from "../services/project-license-service";
   styleUrl: "./project-license-option.css",
 })
 export class ProjectLicenseOption {
-  private projectLicenseService = inject(ProjectLicenseService);
+  projectLicenseService = inject(ProjectLicenseService);
 
   enabledLicense = false;
   license = "";

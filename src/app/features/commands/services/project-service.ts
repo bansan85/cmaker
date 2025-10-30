@@ -14,8 +14,10 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
 
   projectLicense = inject(ProjectLicenseService);
 
-  cmakeMinVersion(action: ProjectCommand): Version | null {
-    return this.projectLicense.cmakeMinVersion(action.license);
+  cmakeMinVersion: Version = new Version("3.0");
+
+  cmakeRequiredVersion(action: ProjectCommand): Version | null {
+    return this.projectLicense.cmakeRequiredVersion(action.license);
   }
 
   cmakeObjects(action: ProjectCommand): CMakeAvailableData {
