@@ -8,6 +8,10 @@ export class Version {
     this.minor = parseInt(parts[1], 10);
   }
 
+  public static isValid(version: string): boolean {
+    return /^\d+\.\d+$/.test(version);
+  }
+
   isGreater(other: Version): boolean {
     if (this.major > other.major) return true;
     if (this.major < other.major) return false;

@@ -17,6 +17,8 @@ export class TabOptions {
   }
 
   set versionString(value: string) {
-    this.projectContext.version = new Version(value);
+    if (Version.isValid(value)) {
+      this.projectContext.version = new Version(value);
+    }
   }
 }
