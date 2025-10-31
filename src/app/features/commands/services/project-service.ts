@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { CMakeFeatureInterface } from "./cmake-feature-interface";
 import { Version } from "../../../shared/models/version";
 import { ProjectCommand } from "../components/project-command";
-import { CMakeAvailableData } from "../models/cmake-available-data";
+import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
 import { ProjectLicenseService } from "./project-license-service";
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { ProjectLicenseOption } from "../components/project-license-option";
 import { Version } from "../../../shared/models/version";
-import { CMakeAvailableData } from "../models/cmake-available-data";
+import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
 import { CMakeFeatureInterface } from "./cmake-feature-interface";
 import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 

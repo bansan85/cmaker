@@ -3,7 +3,7 @@ import { Version } from "../../../shared/models/version";
 import { CMakeMsvcRuntimeLibraryVariable } from "../../variables/components/cmake-msvc-runtime-library-variable";
 import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-interface";
 import { DataToCMakeService } from "../../commands/services/data-to-cmake-service";
-import { CMakeAvailableData } from "../../commands/models/cmake-available-data";
+import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
 import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 
 @Injectable({

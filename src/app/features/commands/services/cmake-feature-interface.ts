@@ -1,5 +1,5 @@
 import { Version } from "../../../shared/models/version";
-import { CMakeAvailableData } from "../models/cmake-available-data";
+import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
 
 export interface CMakeFeatureInterface<Feature> {
   cmakeMinVersion: Version;

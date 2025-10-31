@@ -1,5 +1,5 @@
 import { CMakeVariable } from "../../variables/models/cmake-variable";
-import { CMakeOption } from "./cmake-option";
+import { CMakeOption } from "../../commands/models/cmake-option";
 
 export interface CMakeAvailableData {
   options?: CMakeOption[];
