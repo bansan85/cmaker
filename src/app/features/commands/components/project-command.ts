@@ -13,14 +13,14 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   styleUrl: "./project-command.css",
   providers: [ProjectService, ProjectLicenseService],
 })
-export class ProjectCommand implements CMakeProvider {
+export class ProjectCommand implements CMakeProvider<ProjectService> {
   @ViewChild("license") license!: ProjectLicenseOption;
 
-  private projectService = inject(ProjectService);
+  service = inject(ProjectService);
   projectContext = inject(ProjectContextService);
 
   toto() {
-    console.log(this.projectService.cmakeRequiredVersion(this));
-    console.log(this.projectService.toCMakeListTxt(this));
+    console.log(this.service.cmakeRequiredVersion(this));
+    console.log(this.service.toCMakeListTxt(this));
   }
 }

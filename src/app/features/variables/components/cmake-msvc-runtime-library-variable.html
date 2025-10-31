@@ -1,7 +1,5 @@
 <h3>Visual Studio</h3>
-<div
-  [hidden]="msvcRuntimeService.cmakeMinVersion.isGreater(projectContext.version)"
->
+<div [hidden]="service.cmakeMinVersion.isGreater(projectContext.version)">
   <input [(ngModel)]="enabled" type="checkbox" />
   <span [class.disabled]="!enabled">MSVC Runtime Library</span>
   <input [(ngModel)]="defaultValue" type="checkbox" [disabled]="!enabled" />

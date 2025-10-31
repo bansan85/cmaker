@@ -11,8 +11,8 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   styleUrl: "./cmake-msvc-runtime-library-variable.css",
   providers: [CMakeMsvcRuntimeLibraryVariableService],
 })
-export class CMakeMsvcRuntimeLibraryVariable implements CMakeProvider {
-  msvcRuntimeService = inject(CMakeMsvcRuntimeLibraryVariableService);
+export class CMakeMsvcRuntimeLibraryVariable implements CMakeProvider<CMakeMsvcRuntimeLibraryVariableService> {
+  service = inject(CMakeMsvcRuntimeLibraryVariableService);
   projectContext = inject(ProjectContextService);
 
   enabled = false;

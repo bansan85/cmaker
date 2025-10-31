@@ -5,6 +5,7 @@ import { DraggableListComponent } from "../../../shared/components/list/draggabl
 import { DraggableItemComponent } from "../../../shared/components/list/draggable-item";
 import { CMakeProvider } from "../../cmake-project/interfaces/cmake-provider";
 import { CommonModule } from "@angular/common";
+import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-interface";
 
 @Component({
   selector: "app-tab-project",
@@ -13,7 +14,7 @@ import { CommonModule } from "@angular/common";
   styleUrl: "./tab-project.css",
 })
 export class TabProject {
-  items: Type<CMakeProvider>[] = [
+  items: Type<CMakeProvider<CMakeFeatureInterface<any>>>[] = [
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
   ];

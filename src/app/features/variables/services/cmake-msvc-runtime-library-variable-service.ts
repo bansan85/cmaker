@@ -10,8 +10,7 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   providedIn: "root",
 })
 export class CMakeMsvcRuntimeLibraryVariableService
-  implements CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable>
-{
+  implements CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable> {
   private readonly variable = "CRT_SHARED_LIBS";
   private readonly helpText = "Build using CRT shared libraries";
 
@@ -23,7 +22,7 @@ export class CMakeMsvcRuntimeLibraryVariableService
   cmakeRequiredVersion(action: CMakeMsvcRuntimeLibraryVariable): Version | null {
     if (
       action.enabled &&
-      !action.msvcRuntimeService.cmakeMinVersion.isGreater(
+      !action.service.cmakeMinVersion.isGreater(
         this.projectContext.version
       )
     ) {
@@ -35,7 +34,7 @@ export class CMakeMsvcRuntimeLibraryVariableService
   cmakeObjects(action: CMakeMsvcRuntimeLibraryVariable): CMakeAvailableData {
     if (
       action.enabled &&
-      !action.msvcRuntimeService.cmakeMinVersion.isGreater(
+      !action.service.cmakeMinVersion.isGreater(
         this.projectContext.version
       )
     ) {
@@ -55,7 +54,7 @@ export class CMakeMsvcRuntimeLibraryVariableService
   toCMakeListTxt(action: CMakeMsvcRuntimeLibraryVariable): string {
     if (
       action.enabled &&
-      !action.msvcRuntimeService.cmakeMinVersion.isGreater(
+      !action.service.cmakeMinVersion.isGreater(
         this.projectContext.version
       )
     ) {
