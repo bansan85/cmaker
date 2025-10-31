@@ -9,8 +9,7 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   providedIn: null,
 })
 export class ProjectLicenseService
-  implements CMakeFeatureInterface<ProjectLicenseOption>
-{
+  implements CMakeFeatureInterface<ProjectLicenseOption> {
   private projectContext = inject(ProjectContextService);
 
   cmakeMinVersion: Version = new Version("4.2");
@@ -18,7 +17,7 @@ export class ProjectLicenseService
   cmakeRequiredVersion(license: ProjectLicenseOption): Version | null {
     if (
       license.enabledLicense &&
-      !license.projectLicenseService.cmakeMinVersion.isGreater(
+      !license.service.cmakeMinVersion.isGreater(
         this.projectContext.version
       )
     ) {
@@ -31,7 +30,7 @@ export class ProjectLicenseService
   cmakeObjects(license: ProjectLicenseOption): CMakeAvailableData {
     if (
       license.enabledLicense &&
-      !license.projectLicenseService.cmakeMinVersion.isGreater(
+      !license.service.cmakeMinVersion.isGreater(
         this.projectContext.version
       )
     ) {
@@ -53,7 +52,7 @@ export class ProjectLicenseService
   toCMakeListTxt(license: ProjectLicenseOption): string {
     if (
       license.enabledLicense &&
-      !license.projectLicenseService.cmakeMinVersion.isGreater(
+      !license.service.cmakeMinVersion.isGreater(
         this.projectContext.version
       )
     ) {

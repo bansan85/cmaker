@@ -18,9 +18,4 @@ export class ProjectCommand implements CMakeProvider<ProjectService> {
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);
-
-  toto() {
-    console.log(this.service.cmakeRequiredVersion(this));
-    console.log(this.service.toCMakeListTxt(this));
-  }
 }

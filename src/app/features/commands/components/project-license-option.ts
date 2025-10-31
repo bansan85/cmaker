@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ProjectLicenseService } from "../services/project-license-service";
+import { CMakeProvider } from "../../cmake-project/interfaces/cmake-provider";
 
 @Component({
   selector: "app-project-license-option",
@@ -8,8 +9,8 @@ import { ProjectLicenseService } from "../services/project-license-service";
   templateUrl: "./project-license-option.html",
   styleUrl: "./project-license-option.css",
 })
-export class ProjectLicenseOption {
-  projectLicenseService = inject(ProjectLicenseService);
+export class ProjectLicenseOption implements CMakeProvider<ProjectLicenseService> {
+  service = inject(ProjectLicenseService);
 
   enabledLicense = false;
   license = "";
