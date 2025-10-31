@@ -9,9 +9,6 @@ import { ProjectLicenseService } from "./project-license-service";
   providedIn: null,
 })
 export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
-  private readonly variable = "CRT_SHARED_LIBS";
-  private readonly helpText = "Build using CRT shared libraries";
-
   projectLicense = inject(ProjectLicenseService);
 
   cmakeMinVersion: Version = new Version("3.0");

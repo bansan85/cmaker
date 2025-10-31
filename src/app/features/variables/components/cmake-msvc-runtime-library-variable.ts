@@ -17,9 +17,4 @@ export class CMakeMsvcRuntimeLibraryVariable implements CMakeProvider<CMakeMsvcR
 
   enabled = false;
   defaultValue = false;
-
-  toto() {
-    //  console.log(this.msvcRuntimeService.cmakeRequiredVersion(this));
-    //  console.log(this.msvcRuntimeService.toCMakeListTxt(this));
-  }
 }
