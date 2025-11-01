@@ -9,6 +9,7 @@
     "tauri": "tauri",
     "lint": "ng lint"
   },
+  "type": "module",
   "private": true,
   "dependencies": {
     "@angular/common": "^20.1.4",

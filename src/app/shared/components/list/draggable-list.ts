@@ -70,7 +70,7 @@ export class DraggableListComponent implements AfterContentInit {
   }
 
   onDragEnd() {
-    if (this.from == this.to) {
+    if (this.from === this.to) {
       return;
     }
 
