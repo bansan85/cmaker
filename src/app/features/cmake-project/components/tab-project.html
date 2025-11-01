@@ -2,8 +2,9 @@
   <app-draggable-list (orderChanged)="reorderItems($event)">
     @for (item of items; track item) {
     <app-draggable-item>
-      <ng-container *ngComponentOutlet="item" />
+      <ng-template #container></ng-template>
     </app-draggable-item>
     }
   </app-draggable-list>
+  <button (click)="toto()"></button>
 </div>
