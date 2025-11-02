@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ProjectVersionService } from './project-version-service';
+import { ProjectVersionService } from "./project-version-service";
 
-describe('ProjectVersionService', () => {
+describe("ProjectVersionService", () => {
   let service: ProjectVersionService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [ProjectVersionService] });
     service = TestBed.inject(ProjectVersionService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

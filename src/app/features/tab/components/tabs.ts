@@ -1,5 +1,10 @@
 import { CommonModule } from "@angular/common";
-import { AfterContentInit, Component, ContentChildren, QueryList } from "@angular/core";
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  QueryList,
+} from "@angular/core";
 import { TabItem } from "./tab-item";
 
 @Component({
@@ -10,7 +15,7 @@ import { TabItem } from "./tab-item";
 })
 export class Tabs implements AfterContentInit {
   @ContentChildren(TabItem) tabs!: QueryList<TabItem>;
-  activeComponent!: TabItem;
+  activeComponent?: TabItem;
 
   ngAfterContentInit() {
     this.activeComponent = this.tabs.first;

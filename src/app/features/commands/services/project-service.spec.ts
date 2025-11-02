@@ -1,16 +1,32 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ProjectService } from './project-service';
+import { ProjectService } from "./project-service";
+import { ProjectLicenseService } from "./project-license-service";
+import { ProjectContextService } from "../../cmake-project/services/project-context-service";
+import { Version } from "../../../shared/models/version";
+import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
+import { ProjectVersionService } from "./project-version-service";
 
-describe('ProjectService', () => {
+describe("ProjectService", () => {
   let service: ProjectService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        ProjectService,
+        ProjectLicenseService,
+        ProjectContextService,
+        ProjectVersionService,
+        {
+          provide: DEFAULT_MAX_VERSION,
+          useValue: new Version(4, 3),
+        },
+      ],
+    });
     service = TestBed.inject(ProjectService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

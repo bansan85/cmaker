@@ -10,5 +10,7 @@
     </div>
     }
   </div>
-  <ng-container *ngComponentOutlet="activeComponent.component"></ng-container>
+  <ng-container
+    *ngComponentOutlet="activeComponent?activeComponent.component : null"
+  ></ng-container>
 </div>
