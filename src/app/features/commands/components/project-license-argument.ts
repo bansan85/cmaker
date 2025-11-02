@@ -4,12 +4,12 @@ import { ProjectLicenseService } from "../services/project-license-service";
 import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
 
 @Component({
-  selector: "app-project-license-option",
+  selector: "app-project-license-argument",
   imports: [FormsModule],
-  templateUrl: "./project-license-option.html",
-  styleUrl: "./project-license-option.css",
+  templateUrl: "./project-license-argument.html",
+  styleUrl: "./project-license-argument.css",
 })
-export class ProjectLicenseOption
+export class ProjectLicenseArgument
   implements CMakeComponentInterface<ProjectLicenseService>
 {
   service = inject(ProjectLicenseService);

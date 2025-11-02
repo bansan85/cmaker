@@ -5,12 +5,12 @@ import { Version } from "../../../shared/models/version";
 import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: "app-project-version-option",
+  selector: "app-project-version-argument",
   imports: [FormsModule],
-  templateUrl: "./project-version-option.html",
-  styleUrl: "./project-version-option.css",
+  templateUrl: "./project-version-argument.html",
+  styleUrl: "./project-version-argument.css",
 })
-export class ProjectVersionOption
+export class ProjectVersionArgument
   implements CMakeComponentInterface<ProjectVersionService>
 {
   service = inject(ProjectVersionService);

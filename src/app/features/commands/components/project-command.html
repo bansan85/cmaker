@@ -1,9 +1,9 @@
 <h3>Project</h3>
-<app-project-license-option
+<app-project-license-argument
   #license
   [hidden]="license.service.cmakeMinVersion.isGreater(projectContext.version)"
-></app-project-license-option>
-<app-project-version-option
+></app-project-license-argument>
+<app-project-version-argument
   #version
   [hidden]="version.service.cmakeMinVersion.isGreater(projectContext.version)"
-></app-project-version-option>
+></app-project-version-argument>

@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { ProjectLicenseOption } from "../components/project-license-option";
+import { ProjectLicenseArgument } from "../components/project-license-argument";
 import { Version } from "../../../shared/models/version";
 import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
 import { CMakeFeatureInterface } from "./cmake-feature-interface";
@@ -9,13 +9,13 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   providedIn: null,
 })
 export class ProjectLicenseService
-  implements CMakeFeatureInterface<ProjectLicenseOption>
+  implements CMakeFeatureInterface<ProjectLicenseArgument>
 {
   private projectContext = inject(ProjectContextService);
 
   cmakeMinVersion: Version = new Version(4, 2);
 
-  cmakeRequiredVersion(license: ProjectLicenseOption): Version {
+  cmakeRequiredVersion(license: ProjectLicenseArgument): Version {
     if (
       license.enabled &&
       !license.service.cmakeMinVersion.isGreater(this.projectContext.version)
@@ -26,7 +26,7 @@ export class ProjectLicenseService
     }
   }
 
-  cmakeObjects(license: ProjectLicenseOption): CMakeAvailableData {
+  cmakeObjects(license: ProjectLicenseArgument): CMakeAvailableData {
     if (
       license.enabled &&
       !license.service.cmakeMinVersion.isGreater(this.projectContext.version)
@@ -46,7 +46,7 @@ export class ProjectLicenseService
     }
   }
 
-  toCMakeListTxt(action: ProjectLicenseOption): string {
+  toCMakeListTxt(action: ProjectLicenseArgument): string {
     if (
       action.enabled &&
       !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
