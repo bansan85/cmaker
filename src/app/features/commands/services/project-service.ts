@@ -2,26 +2,42 @@ import { inject, Injectable } from "@angular/core";
 import { CMakeFeatureInterface } from "./cmake-feature-interface";
 import { Version } from "../../../shared/models/version";
 import { ProjectCommand } from "../components/project-command";
-import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
+import {
+  CMakeAvailableData,
+  mergeCMakeAvailableData,
+} from "../../cmake-project/interfaces/cmake-available-data";
 import { ProjectLicenseService } from "./project-license-service";
+import { ProjectVersionService } from "./project-version-service";
 
 @Injectable({
   providedIn: null,
 })
 export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
-  projectLicense = inject(ProjectLicenseService);
+  license = inject(ProjectLicenseService);
+  version = inject(ProjectVersionService);
 
-  cmakeMinVersion: Version = new Version("3.0");
+  cmakeMinVersion: Version = new Version(3);
 
-  cmakeRequiredVersion(action: ProjectCommand): Version | null {
-    return this.projectLicense.cmakeRequiredVersion(action.license);
+  cmakeRequiredVersion(action: ProjectCommand): Version {
+    return this.license
+      .cmakeRequiredVersion(action.license)
+      .max(this.version.cmakeRequiredVersion(action.version));
   }
 
   cmakeObjects(action: ProjectCommand): CMakeAvailableData {
-    return this.projectLicense.cmakeObjects(action.license);
+    return mergeCMakeAvailableData(
+      this.license.cmakeObjects(action.license),
+      this.version.cmakeObjects(action.version)
+    );
   }
 
   toCMakeListTxt(action: ProjectCommand): string {
-    return this.projectLicense.toCMakeListTxt(action.license);
+    return (
+      "project(\n" +
+      this.license.toCMakeListTxt(action.license) +
+      "\n" +
+      this.version.toCMakeListTxt(action.version) +
+      ")"
+    );
   }
 }

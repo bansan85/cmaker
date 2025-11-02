@@ -9,30 +9,27 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   providedIn: null,
 })
 export class ProjectLicenseService
-  implements CMakeFeatureInterface<ProjectLicenseOption> {
+  implements CMakeFeatureInterface<ProjectLicenseOption>
+{
   private projectContext = inject(ProjectContextService);
 
-  cmakeMinVersion: Version = new Version("4.2");
+  cmakeMinVersion: Version = new Version(4, 2);
 
-  cmakeRequiredVersion(license: ProjectLicenseOption): Version | null {
+  cmakeRequiredVersion(license: ProjectLicenseOption): Version {
     if (
-      license.enabledLicense &&
-      !license.service.cmakeMinVersion.isGreater(
-        this.projectContext.version
-      )
+      license.enabled &&
+      !license.service.cmakeMinVersion.isGreater(this.projectContext.version)
     ) {
       return this.cmakeMinVersion;
     } else {
-      return null;
+      return new Version(3);
     }
   }
 
   cmakeObjects(license: ProjectLicenseOption): CMakeAvailableData {
     if (
-      license.enabledLicense &&
-      !license.service.cmakeMinVersion.isGreater(
-        this.projectContext.version
-      )
+      license.enabled &&
+      !license.service.cmakeMinVersion.isGreater(this.projectContext.version)
     ) {
       return {
         variables: [
@@ -49,14 +46,12 @@ export class ProjectLicenseService
     }
   }
 
-  toCMakeListTxt(license: ProjectLicenseOption): string {
+  toCMakeListTxt(action: ProjectLicenseOption): string {
     if (
-      license.enabledLicense &&
-      !license.service.cmakeMinVersion.isGreater(
-        this.projectContext.version
-      )
+      action.enabled &&
+      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
     ) {
-      return `SPDX_LICENSE "${license.license}"`;
+      return `SPDX_LICENSE "${action.value}"`;
     } else {
       return "";
     }

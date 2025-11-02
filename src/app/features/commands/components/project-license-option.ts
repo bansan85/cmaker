@@ -9,9 +9,11 @@ import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-co
   templateUrl: "./project-license-option.html",
   styleUrl: "./project-license-option.css",
 })
-export class ProjectLicenseOption implements CMakeComponentInterface<ProjectLicenseService> {
+export class ProjectLicenseOption
+  implements CMakeComponentInterface<ProjectLicenseService>
+{
   service = inject(ProjectLicenseService);
 
-  enabledLicense = false;
-  license = "";
+  enabled = false;
+  value = "";
 }

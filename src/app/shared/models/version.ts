@@ -4,17 +4,31 @@ export class Version {
   patch?: number;
   tweak?: number;
 
-  constructor(version: string) {
-    const parts = version.split(".");
-    this.major = parseInt(parts[0], 10);
-    if (parts.length > 1) {
-      this.minor = parseInt(parts[1], 10);
-    }
-    if (parts.length > 2) {
-      this.patch = parseInt(parts[2], 10);
-    }
-    if (parts.length > 3) {
-      this.tweak = parseInt(parts[3], 10);
+  constructor(version: string);
+  constructor(major: number, minor?: number, patch?: number, tweak?: number);
+  constructor(
+    arg1: string | number,
+    arg2?: number,
+    arg3?: number,
+    arg4?: number
+  ) {
+    if (typeof arg1 === "string") {
+      const parts = arg1.split(".");
+      this.major = parseInt(parts[0], 10);
+      if (parts.length > 1) {
+        this.minor = parseInt(parts[1], 10);
+      }
+      if (parts.length > 2) {
+        this.patch = parseInt(parts[2], 10);
+      }
+      if (parts.length > 3) {
+        this.tweak = parseInt(parts[3], 10);
+      }
+    } else {
+      this.major = arg1;
+      this.minor = arg2;
+      this.patch = arg3;
+      this.tweak = arg4;
     }
   }
 

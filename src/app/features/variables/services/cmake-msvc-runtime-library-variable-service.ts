@@ -10,33 +10,30 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
   providedIn: "root",
 })
 export class CMakeMsvcRuntimeLibraryVariableService
-  implements CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable> {
+  implements CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable>
+{
   private readonly variable = "CRT_SHARED_LIBS";
   private readonly helpText = "Build using CRT shared libraries";
 
   private dataToCMake = inject(DataToCMakeService);
   private projectContext = inject(ProjectContextService);
 
-  cmakeMinVersion: Version = new Version("3.15");
+  cmakeMinVersion: Version = new Version(3, 15);
 
-  cmakeRequiredVersion(action: CMakeMsvcRuntimeLibraryVariable): Version | null {
+  cmakeRequiredVersion(action: CMakeMsvcRuntimeLibraryVariable): Version {
     if (
       action.enabled &&
-      !action.service.cmakeMinVersion.isGreater(
-        this.projectContext.version
-      )
+      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
     ) {
       return this.cmakeMinVersion;
     } else {
-      return null;
+      return new Version(3);
     }
   }
   cmakeObjects(action: CMakeMsvcRuntimeLibraryVariable): CMakeAvailableData {
     if (
       action.enabled &&
-      !action.service.cmakeMinVersion.isGreater(
-        this.projectContext.version
-      )
+      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
     ) {
       return {
         options: [
@@ -54,9 +51,7 @@ export class CMakeMsvcRuntimeLibraryVariableService
   toCMakeListTxt(action: CMakeMsvcRuntimeLibraryVariable): string {
     if (
       action.enabled &&
-      !action.service.cmakeMinVersion.isGreater(
-        this.projectContext.version
-      )
+      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
     ) {
       return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(

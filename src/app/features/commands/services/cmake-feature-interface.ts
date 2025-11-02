@@ -3,7 +3,7 @@ import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-availab
 
 export interface CMakeFeatureInterface<Feature> {
   cmakeMinVersion: Version;
-  cmakeRequiredVersion(action: Feature): Version | null;
+  cmakeRequiredVersion(action: Feature): Version;
   cmakeObjects(action: Feature): CMakeAvailableData;
   toCMakeListTxt(action: Feature): string;
 }

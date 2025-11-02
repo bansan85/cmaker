@@ -5,3 +5,13 @@ export interface CMakeAvailableData {
   options?: CMakeOption[];
   variables?: CMakeVariable[];
 }
+
+export function mergeCMakeAvailableData(
+  a: CMakeAvailableData,
+  b: CMakeAvailableData
+): CMakeAvailableData {
+  return {
+    options: [...(a.options || []), ...(b.options || [])],
+    variables: [...(a.variables || []), ...(b.variables || [])],
+  };
+}

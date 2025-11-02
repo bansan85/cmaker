@@ -14,6 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    { provide: DEFAULT_MAX_VERSION, useValue: new Version("4.3") }
+    { provide: DEFAULT_MAX_VERSION, useValue: new Version(4, 3) },
   ],
 };
