@@ -10,7 +10,7 @@ import { ProjectCommand } from "../../commands/components/project-command";
 import { CMakeMsvcRuntimeLibraryVariable } from "../../variables/components/cmake-msvc-runtime-library-variable";
 import { DraggableListComponent } from "../../../shared/components/list/draggable-list";
 import { DraggableItemComponent } from "../../../shared/components/list/draggable-item";
-import { CMakeProvider } from "../../cmake-project/interfaces/cmake-provider";
+import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
 import { CommonModule } from "@angular/common";
 import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-interface";
 
@@ -21,7 +21,7 @@ import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-int
   styleUrl: "./tab-project.css",
 })
 export class TabProject implements AfterViewInit {
-  items: Type<CMakeProvider<CMakeFeatureInterface<any>>>[] = [
+  items: Type<CMakeComponentInterface<CMakeFeatureInterface<any>>>[] = [
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
   ];
@@ -29,7 +29,7 @@ export class TabProject implements AfterViewInit {
   @ViewChildren("container", { read: ViewContainerRef })
   containers!: QueryList<ViewContainerRef>;
   container!: ViewContainerRef;
-  private instances: CMakeProvider<CMakeFeatureInterface<any>>[] = [];
+  private instances: CMakeComponentInterface<CMakeFeatureInterface<any>>[] = [];
 
   ngAfterViewInit() {
     this.instances = [];
