@@ -1,4 +1,7 @@
 <h3>Project</h3>
+<label for="project-name">Name:</label>
+<input id="project-name" name="project-name" [(ngModel)]="name" />
+<br />
 <app-project-license-argument
   #license
   [hidden]="license.service.cmakeMinVersion.isGreater(projectContext.version)"

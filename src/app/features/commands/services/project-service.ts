@@ -26,7 +26,33 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
 
   cmakeObjects(action: ProjectCommand): CMakeAvailableData {
     return mergeCMakeAvailableData(
-      this.license.cmakeObjects(action.license),
+      mergeCMakeAvailableData(
+        {
+          variables: [
+            {
+              name: "PROJECT_SOURCE_DIR",
+            },
+            {
+              name: "<PROJECT-NAME>_SOURCE_DIR",
+            },
+            {
+              name: "PROJECT_BINARY_DIR",
+            },
+            {
+              name: "<PROJECT-NAME>_BINARY_DIR",
+            },
+            {
+              name: "PROJECT_IS_TOP_LEVEL",
+              version: new Version(3, 21),
+            },
+            {
+              name: "<PROJECT-NAME>_IS_TOP_LEVEL",
+              version: new Version(3, 21),
+            },
+          ],
+        },
+        this.license.cmakeObjects(action.license)
+      ),
       this.version.cmakeObjects(action.version)
     );
   }
@@ -34,6 +60,8 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
   toCMakeListTxt(action: ProjectCommand): string {
     return (
       "project(\n" +
+      action.name +
+      "\n" +
       this.license.toCMakeListTxt(action.license) +
       "\n" +
       this.version.toCMakeListTxt(action.version) +

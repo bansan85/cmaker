@@ -21,4 +21,6 @@ export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);
+
+  name: string = "";
 }

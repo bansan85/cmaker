@@ -66,7 +66,7 @@ export class ProjectVersionService
             version: new Version(3),
           },
           {
-            name: "CMAKE_VERSION_TWEAK",
+            name: "CMAKE_PROJECT_VERSION",
             version: new Version(3, 12),
           },
         ],
