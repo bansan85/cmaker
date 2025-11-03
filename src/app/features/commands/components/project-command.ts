@@ -7,17 +7,30 @@ import { ProjectLicenseService } from "../services/project-license-service";
 import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 import { ProjectVersionService } from "../services/project-version-service";
 import { ProjectVersionArgument } from "./project-version-argument";
+import { ProjectCompatVersionService } from "../services/project-compat-version-service";
+import { ProjectCompatVersionArgument } from "./project-compat-version-argument";
 
 @Component({
   selector: "app-project-command",
-  imports: [FormsModule, ProjectLicenseArgument, ProjectVersionArgument],
+  imports: [
+    FormsModule,
+    ProjectLicenseArgument,
+    ProjectVersionArgument,
+    ProjectCompatVersionArgument,
+  ],
   templateUrl: "./project-command.html",
   styleUrl: "./project-command.css",
-  providers: [ProjectService, ProjectLicenseService, ProjectVersionService],
+  providers: [
+    ProjectService,
+    ProjectLicenseService,
+    ProjectVersionService,
+    ProjectCompatVersionService,
+  ],
 })
 export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
   @ViewChild("license") license!: ProjectLicenseArgument;
   @ViewChild("version") version!: ProjectVersionArgument;
+  @ViewChild("compatVersion") compatVersion!: ProjectCompatVersionArgument;
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);

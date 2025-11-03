@@ -3,7 +3,6 @@ import { CMakeFeatureInterface } from "./cmake-feature-interface";
 import { ProjectVersionArgument } from "../components/project-version-argument";
 import { Version } from "../../../shared/models/version";
 import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 
 @Injectable({
   providedIn: null,

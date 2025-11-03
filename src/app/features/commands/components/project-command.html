@@ -10,3 +10,7 @@
   #version
   [hidden]="version.service.cmakeMinVersion.isGreater(projectContext.version)"
 ></app-project-version-argument>
+<app-project-compat-version-argument
+  #compatVersion
+  [hidden]="compatVersion.service.cmakeMinVersion.isGreater(projectContext.version)"
+></app-project-compat-version-argument>
