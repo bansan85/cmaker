@@ -10,13 +10,13 @@ import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-availab
 export class ProjectCompatVersionService
   implements CMakeFeatureInterface<ProjectCompatVersionArgument>
 {
-  cmakeMinVersion: Version = new Version(4, 1);
+  cmakeMinVersion: Version | null = new Version(4, 1);
 
-  cmakeRequiredVersion(action: ProjectCompatVersionArgument): Version {
+  cmakeRequiredVersion(action: ProjectCompatVersionArgument): Version | null {
     if (action.enabled) {
       return this.cmakeMinVersion;
     } else {
-      return new Version(3);
+      return null;
     }
   }
 

@@ -13,6 +13,7 @@ import { ProjectDescriptionService } from "../services/project-description-servi
 import { ProjectDescriptionArgument } from "./project-description-argument";
 import { ProjectHomepageUrlArgument } from "./project-homepage-url-argument";
 import { ProjectHomepageUrlService } from "../services/project-homepage-url-service";
+import { VersionService } from "../../../shared/services/version-service";
 
 @Component({
   selector: "app-project-command",
@@ -44,6 +45,7 @@ export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);
+  versionService = inject(VersionService);
 
   name: string = "";
 }

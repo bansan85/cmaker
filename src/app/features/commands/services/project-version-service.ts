@@ -10,13 +10,13 @@ import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-availab
 export class ProjectVersionService
   implements CMakeFeatureInterface<ProjectVersionArgument>
 {
-  cmakeMinVersion: Version = new Version(3);
+  cmakeMinVersion: Version | null = null;
 
-  cmakeRequiredVersion(action: ProjectVersionArgument): Version {
+  cmakeRequiredVersion(action: ProjectVersionArgument): Version | null {
     if (action.enabled) {
       return this.cmakeMinVersion;
     } else {
-      return new Version(3);
+      return null;
     }
   }
 
@@ -26,49 +26,50 @@ export class ProjectVersionService
         variables: [
           {
             name: "PROJECT_VERSION",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "<PROJECT-NAME>_VERSION",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "PROJECT_VERSION_MAJOR",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "<PROJECT-NAME>_VERSION_MAJOR",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "PROJECT_VERSION_MINOR",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "<PROJECT-NAME>_VERSION_MINOR",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "PROJECT_VERSION_PATCH",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "<PROJECT-NAME>_VERSION_PATCH",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "PROJECT_VERSION_TWEAK",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "<PROJECT-NAME>_VERSION_TWEAK",
-            version: new Version(3),
+            version: null,
           },
           {
             name: "CMAKE_PROJECT_VERSION",
             version: new Version(3, 12),
           },
         ],
+        policies: new Map<number, boolean>([[48, true]]),
       };
     } else {
       return {};

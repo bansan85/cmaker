@@ -5,6 +5,7 @@ import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-int
 import { DataToCMakeService } from "../../cmake-project/services/data-to-cmake-service";
 import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
 import { ProjectContextService } from "../../cmake-project/services/project-context-service";
+import { VersionService } from "../../../shared/services/version-service";
 
 @Injectable({
   providedIn: "root",
@@ -17,23 +18,32 @@ export class CMakeMsvcRuntimeLibraryVariableService
 
   private dataToCMake = inject(DataToCMakeService);
   private projectContext = inject(ProjectContextService);
+  private versionService = inject(VersionService);
 
-  cmakeMinVersion: Version = new Version(3, 15);
+  cmakeMinVersion: Version | null = new Version(3, 15);
 
-  cmakeRequiredVersion(action: CMakeMsvcRuntimeLibraryVariable): Version {
+  cmakeRequiredVersion(
+    action: CMakeMsvcRuntimeLibraryVariable
+  ): Version | null {
     if (
       action.enabled &&
-      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
+      !this.versionService.isGreater(
+        action.service.cmakeMinVersion,
+        this.projectContext.version
+      )
     ) {
       return this.cmakeMinVersion;
     } else {
-      return new Version(3);
+      return null;
     }
   }
   cmakeObjects(action: CMakeMsvcRuntimeLibraryVariable): CMakeAvailableData {
     if (
       action.enabled &&
-      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
+      !this.versionService.isGreater(
+        action.service.cmakeMinVersion,
+        this.projectContext.version
+      )
     ) {
       return {
         options: [
@@ -51,7 +61,10 @@ export class CMakeMsvcRuntimeLibraryVariableService
   toCMakeListTxt(action: CMakeMsvcRuntimeLibraryVariable): string {
     if (
       action.enabled &&
-      !action.service.cmakeMinVersion.isGreater(this.projectContext.version)
+      !this.versionService.isGreater(
+        action.service.cmakeMinVersion,
+        this.projectContext.version
+      )
     ) {
       return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
