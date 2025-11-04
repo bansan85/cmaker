@@ -35,42 +35,34 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
 
   cmakeObjects(action: ProjectCommand): CMakeAvailableData {
     return mergeCMakeAvailableData(
-      mergeCMakeAvailableData(
-        mergeCMakeAvailableData(
-          mergeCMakeAvailableData(
-            mergeCMakeAvailableData(
-              {
-                variables: [
-                  {
-                    name: "PROJECT_SOURCE_DIR",
-                  },
-                  {
-                    name: "<PROJECT-NAME>_SOURCE_DIR",
-                  },
-                  {
-                    name: "PROJECT_BINARY_DIR",
-                  },
-                  {
-                    name: "<PROJECT-NAME>_BINARY_DIR",
-                  },
-                  {
-                    name: "PROJECT_IS_TOP_LEVEL",
-                    version: new Version(3, 21),
-                  },
-                  {
-                    name: "<PROJECT-NAME>_IS_TOP_LEVEL",
-                    version: new Version(3, 21),
-                  },
-                ],
-              },
-              this.license.cmakeObjects(action.license)
-            ),
-            this.version.cmakeObjects(action.version)
-          ),
-          this.compatVersion.cmakeObjects(action.compatVersion)
-        ),
-        this.description.cmakeObjects(action.description)
-      ),
+      {
+        variables: [
+          {
+            name: "PROJECT_SOURCE_DIR",
+          },
+          {
+            name: "<PROJECT-NAME>_SOURCE_DIR",
+          },
+          {
+            name: "PROJECT_BINARY_DIR",
+          },
+          {
+            name: "<PROJECT-NAME>_BINARY_DIR",
+          },
+          {
+            name: "PROJECT_IS_TOP_LEVEL",
+            version: new Version(3, 21),
+          },
+          {
+            name: "<PROJECT-NAME>_IS_TOP_LEVEL",
+            version: new Version(3, 21),
+          },
+        ],
+      },
+      this.license.cmakeObjects(action.license),
+      this.version.cmakeObjects(action.version),
+      this.compatVersion.cmakeObjects(action.compatVersion),
+      this.description.cmakeObjects(action.description),
       this.homepageUrl.cmakeObjects(action.homepageUrl)
     );
   }

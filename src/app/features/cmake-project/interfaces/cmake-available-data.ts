@@ -7,11 +7,9 @@ export interface CMakeAvailableData {
 }
 
 export function mergeCMakeAvailableData(
-  a: CMakeAvailableData,
-  b: CMakeAvailableData
-): CMakeAvailableData {
+  ...items: CMakeAvailableData[]): CMakeAvailableData {
   return {
-    options: [...(a.options || []), ...(b.options || [])],
-    variables: [...(a.variables || []), ...(b.variables || [])],
+    options: items.flatMap(item => item.options || []),
+    variables: items.flatMap(item => item.variables || []),
   };
 }
