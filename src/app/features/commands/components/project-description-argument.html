@@ -1,0 +1,4 @@
+<input [(ngModel)]="enabled" type="checkbox" />
+<label for="project-description" [class.disabled]="!enabled">Description:</label>
+<input id="project-description" name="project-description" [disabled]="!enabled" [(ngModel)]="value" />
+<br />

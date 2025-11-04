@@ -2,15 +2,11 @@
 <label for="project-name">Name:</label>
 <input id="project-name" name="project-name" [(ngModel)]="name" />
 <br />
-<app-project-license-argument
-  #license
-  [hidden]="license.service.cmakeMinVersion.isGreater(projectContext.version)"
-></app-project-license-argument>
-<app-project-version-argument
-  #version
-  [hidden]="version.service.cmakeMinVersion.isGreater(projectContext.version)"
-></app-project-version-argument>
-<app-project-compat-version-argument
-  #compatVersion
-  [hidden]="compatVersion.service.cmakeMinVersion.isGreater(projectContext.version)"
-></app-project-compat-version-argument>
+<app-project-license-argument #license
+  [hidden]="license.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-license-argument>
+<app-project-version-argument #version
+  [hidden]="version.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-version-argument>
+<app-project-compat-version-argument #compatVersion
+  [hidden]="compatVersion.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-compat-version-argument>
+<app-project-description-argument #description
+  [hidden]="description.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-description-argument>
