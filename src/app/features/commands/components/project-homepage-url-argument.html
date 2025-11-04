@@ -1,4 +1,14 @@
 <input [(ngModel)]="enabled" type="checkbox" />
-<label for="project-homepage-url" [class.disabled]="!enabled">Homepage URL:</label>
-<input id="project-homepage-url" name="project-homepage-url" [disabled]="!enabled" [(ngModel)]="value" />
+<label for="project-homepage-url" [class.disabled]="!enabled"
+  >Homepage URL:</label
+>
+<input
+  type="url"
+  id="project-homepage-url"
+  name="project-homepage-url"
+  pattern="https?:\/\/.+"
+  [disabled]="!enabled"
+  [(ngModel)]="value"
+  required
+/>
 <br />
