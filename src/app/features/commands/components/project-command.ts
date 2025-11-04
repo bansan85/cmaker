@@ -11,6 +11,8 @@ import { ProjectCompatVersionService } from "../services/project-compat-version-
 import { ProjectCompatVersionArgument } from "./project-compat-version-argument";
 import { ProjectDescriptionService } from "../services/project-description-service";
 import { ProjectDescriptionArgument } from "./project-description-argument";
+import { ProjectHomepageUrlArgument } from "./project-homepage-url-argument";
+import { ProjectHomepageUrlService } from "../services/project-homepage-url-service";
 
 @Component({
   selector: "app-project-command",
@@ -19,7 +21,8 @@ import { ProjectDescriptionArgument } from "./project-description-argument";
     ProjectLicenseArgument,
     ProjectVersionArgument,
     ProjectCompatVersionArgument,
-    ProjectDescriptionArgument
+    ProjectDescriptionArgument,
+    ProjectHomepageUrlArgument,
   ],
   templateUrl: "./project-command.html",
   styleUrl: "./project-command.css",
@@ -28,7 +31,8 @@ import { ProjectDescriptionArgument } from "./project-description-argument";
     ProjectLicenseService,
     ProjectVersionService,
     ProjectCompatVersionService,
-    ProjectDescriptionService
+    ProjectDescriptionService,
+    ProjectHomepageUrlService,
   ],
 })
 export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
@@ -36,6 +40,7 @@ export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
   @ViewChild("version") version!: ProjectVersionArgument;
   @ViewChild("compatVersion") compatVersion!: ProjectCompatVersionArgument;
   @ViewChild("description") description!: ProjectDescriptionArgument;
+  @ViewChild("homepageUrl") homepageUrl!: ProjectHomepageUrlArgument;
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);

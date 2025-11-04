@@ -1,0 +1,4 @@
+<input [(ngModel)]="enabled" type="checkbox" />
+<label for="project-homepage-url" [class.disabled]="!enabled">Homepage URL:</label>
+<input id="project-homepage-url" name="project-homepage-url" [disabled]="!enabled" [(ngModel)]="value" />
+<br />

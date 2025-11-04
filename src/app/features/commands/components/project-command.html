@@ -10,3 +10,5 @@
   [hidden]="compatVersion.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-compat-version-argument>
 <app-project-description-argument #description
   [hidden]="description.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-description-argument>
+<app-project-homepage-url-argument #homepageUrl
+  [hidden]="homepageUrl.service.cmakeMinVersion.isGreater(projectContext.version)"></app-project-homepage-url-argument>

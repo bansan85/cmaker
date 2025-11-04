@@ -10,6 +10,7 @@ import { ProjectLicenseService } from "./project-license-service";
 import { ProjectVersionService } from "./project-version-service";
 import { ProjectCompatVersionService } from "./project-compat-version-service";
 import { ProjectDescriptionService } from "./project-description-service";
+import { ProjectHomepageUrlService } from "./project-homepage-url-service";
 
 @Injectable({
   providedIn: null,
@@ -19,6 +20,7 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
   version = inject(ProjectVersionService);
   compatVersion = inject(ProjectCompatVersionService);
   description = inject(ProjectDescriptionService);
+  homepageUrl = inject(ProjectHomepageUrlService);
 
   cmakeMinVersion: Version = new Version(3);
 
@@ -27,7 +29,8 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
       .cmakeRequiredVersion(action.license)
       .max(this.version.cmakeRequiredVersion(action.version))
       .max(this.compatVersion.cmakeRequiredVersion(action.compatVersion))
-      .max(this.description.cmakeRequiredVersion(action.description));
+      .max(this.description.cmakeRequiredVersion(action.description))
+      .max(this.homepageUrl.cmakeRequiredVersion(action.homepageUrl));
   }
 
   cmakeObjects(action: ProjectCommand): CMakeAvailableData {
@@ -35,37 +38,40 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
       mergeCMakeAvailableData(
         mergeCMakeAvailableData(
           mergeCMakeAvailableData(
-            {
-              variables: [
-                {
-                  name: "PROJECT_SOURCE_DIR",
-                },
-                {
-                  name: "<PROJECT-NAME>_SOURCE_DIR",
-                },
-                {
-                  name: "PROJECT_BINARY_DIR",
-                },
-                {
-                  name: "<PROJECT-NAME>_BINARY_DIR",
-                },
-                {
-                  name: "PROJECT_IS_TOP_LEVEL",
-                  version: new Version(3, 21),
-                },
-                {
-                  name: "<PROJECT-NAME>_IS_TOP_LEVEL",
-                  version: new Version(3, 21),
-                },
-              ],
-            },
-            this.license.cmakeObjects(action.license)
+            mergeCMakeAvailableData(
+              {
+                variables: [
+                  {
+                    name: "PROJECT_SOURCE_DIR",
+                  },
+                  {
+                    name: "<PROJECT-NAME>_SOURCE_DIR",
+                  },
+                  {
+                    name: "PROJECT_BINARY_DIR",
+                  },
+                  {
+                    name: "<PROJECT-NAME>_BINARY_DIR",
+                  },
+                  {
+                    name: "PROJECT_IS_TOP_LEVEL",
+                    version: new Version(3, 21),
+                  },
+                  {
+                    name: "<PROJECT-NAME>_IS_TOP_LEVEL",
+                    version: new Version(3, 21),
+                  },
+                ],
+              },
+              this.license.cmakeObjects(action.license)
+            ),
+            this.version.cmakeObjects(action.version)
           ),
-          this.version.cmakeObjects(action.version)
+          this.compatVersion.cmakeObjects(action.compatVersion)
         ),
-        this.compatVersion.cmakeObjects(action.compatVersion)
+        this.description.cmakeObjects(action.description)
       ),
-      this.description.cmakeObjects(action.description)
+      this.homepageUrl.cmakeObjects(action.homepageUrl)
     );
   }
 
@@ -81,6 +87,8 @@ export class ProjectService implements CMakeFeatureInterface<ProjectCommand> {
       this.compatVersion.toCMakeListTxt(action.compatVersion) +
       "\n" +
       this.description.toCMakeListTxt(action.description) +
+      "\n" +
+      this.homepageUrl.toCMakeListTxt(action.homepageUrl) +
       ")"
     );
   }
