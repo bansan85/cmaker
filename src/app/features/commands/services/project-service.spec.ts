@@ -6,6 +6,9 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
 import { Version } from "../../../shared/models/version";
 import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
 import { ProjectVersionService } from "./project-version-service";
+import { ProjectCompatVersionService } from "./project-compat-version-service";
+import { ProjectDescriptionService } from "./project-description-service";
+import { ProjectHomepageUrlService } from "./project-homepage-url-service";
 
 describe("ProjectService", () => {
   let service: ProjectService;
@@ -17,6 +20,9 @@ describe("ProjectService", () => {
         ProjectLicenseService,
         ProjectContextService,
         ProjectVersionService,
+        ProjectCompatVersionService,
+        ProjectDescriptionService,
+        ProjectHomepageUrlService,
         {
           provide: DEFAULT_MAX_VERSION,
           useValue: new Version(4, 3),
