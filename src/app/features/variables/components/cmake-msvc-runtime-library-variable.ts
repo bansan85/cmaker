@@ -19,6 +19,6 @@ export class CMakeMsvcRuntimeLibraryVariable
   projectContext = inject(ProjectContextService);
   versionService = inject(VersionService);
 
-  enabled = false;
+  enabled = true;
   defaultValue = false;
 }

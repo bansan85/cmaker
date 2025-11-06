@@ -1,24 +1,29 @@
-<input [(ngModel)]="enabled" type="checkbox" />
-<label for="project-license" [class.disabled]="!enabled">License:</label>
-<input
-  list="license-list"
-  id="project-license"
-  name="project-license"
-  [disabled]="!enabled"
-  [(ngModel)]="value"
-/>
-<br />
-<span [class.disabled]="!enabled"
-  ><a
-    target="_blank"
-    rel="noopener noreferrer"
-    href="https://spdx.github.io/spdx-spec/v3.0.1/annexes/spdx-license-expressions/"
-    >SPDX license(s)</a
-  >
-  of the project (i.e. <code>MIT</code>, <code>MIT or LGPL-2.0-or-later</code>,
-  <code>MIT and BSD-3-Clause</code>).</span
+<div
+  [hidden]="!enabled || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-<br />
+  <input [(ngModel)]="enabled" type="checkbox" />
+  <label for="project-license" [class.disabled]="!enabled">License:</label>
+  <input
+    list="license-list"
+    id="project-license"
+    name="project-license"
+    [disabled]="!enabled"
+    [(ngModel)]="value"
+  />
+  <br />
+  <span [class.disabled]="!enabled"
+    ><a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://spdx.github.io/spdx-spec/v3.0.1/annexes/spdx-license-expressions/"
+      >SPDX license(s)</a
+    >
+    of the project (i.e. <code>MIT</code>,
+    <code>MIT or LGPL-2.0-or-later</code>,
+    <code>MIT and BSD-3-Clause</code>).</span
+  >
+  <br />
+</div>
 <!-- https://spdx.org/licenses/ -->
 <datalist id="license-list">
   <option value="0BSD"></option>

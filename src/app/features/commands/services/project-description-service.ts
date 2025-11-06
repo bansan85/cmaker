@@ -17,14 +17,18 @@ export class ProjectDescriptionService
 
   cmakeMinVersion: Version | null = new Version(3, 9);
 
-  cmakeRequiredVersion(action: ProjectDescriptionArgument): Version | null {
-    if (
+  isValid(action: ProjectDescriptionArgument): boolean {
+    return (
       action.enabled &&
       !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
+        this.cmakeMinVersion,
         this.projectContext.version
       )
-    ) {
+    );
+  }
+
+  cmakeRequiredVersion(action: ProjectDescriptionArgument): Version | null {
+    if (this.isValid(action)) {
       return this.cmakeMinVersion;
     } else {
       return null;
@@ -32,13 +36,7 @@ export class ProjectDescriptionService
   }
 
   cmakeObjects(action: ProjectDescriptionArgument): CMakeAvailableData {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
+    if (this.isValid(action)) {
       return {
         variables: [
           {
@@ -57,14 +55,8 @@ export class ProjectDescriptionService
   }
 
   toCMakeListTxt(action: ProjectDescriptionArgument): string {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
-      return `DESCRIPTION "${action.value}"`;
+    if (this.isValid(action)) {
+      return `DESCRIPTION "${action.value}"\n`;
     } else {
       return "";
     }

@@ -1,14 +1,18 @@
-<input [(ngModel)]="enabled" type="checkbox" />
-<label for="project-homepage-url" [class.disabled]="!enabled"
-  >Homepage URL:</label
+<div
+  [hidden]="!enabled || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-<input
-  type="url"
-  id="project-homepage-url"
-  name="project-homepage-url"
-  pattern="https?:\/\/.+"
-  [disabled]="!enabled"
-  [(ngModel)]="value"
-  required
-/>
-<br />
+  <input [(ngModel)]="enabled" type="checkbox" />
+  <label for="project-homepage-url" [class.disabled]="!enabled"
+    >Homepage URL:</label
+  >
+  <input
+    type="url"
+    id="project-homepage-url"
+    name="project-homepage-url"
+    pattern="https?:\/\/.+"
+    [disabled]="!enabled"
+    [(ngModel)]="value"
+    required
+  />
+  <br />
+</div>

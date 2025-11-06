@@ -17,14 +17,18 @@ export class ProjectHomepageUrlService
 
   cmakeMinVersion: Version | null = new Version(3, 12);
 
-  cmakeRequiredVersion(action: ProjectHomepageUrlArgument): Version | null {
-    if (
+  isValid(action: ProjectHomepageUrlArgument): boolean {
+    return (
       action.enabled &&
       !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
+        this.cmakeMinVersion,
         this.projectContext.version
       )
-    ) {
+    );
+  }
+
+  cmakeRequiredVersion(action: ProjectHomepageUrlArgument): Version | null {
+    if (this.isValid(action)) {
       return this.cmakeMinVersion;
     } else {
       return null;
@@ -32,13 +36,7 @@ export class ProjectHomepageUrlService
   }
 
   cmakeObjects(action: ProjectHomepageUrlArgument): CMakeAvailableData {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
+    if (this.isValid(action)) {
       return {
         variables: [
           {
@@ -61,14 +59,8 @@ export class ProjectHomepageUrlService
   }
 
   toCMakeListTxt(action: ProjectHomepageUrlArgument): string {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
-      return `HOMEPAGE_URL "${action.value}"`;
+    if (this.isValid(action)) {
+      return `HOMEPAGE_URL "${action.value}"\n`;
     } else {
       return "";
     }

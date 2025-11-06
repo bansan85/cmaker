@@ -22,29 +22,27 @@ export class CMakeMsvcRuntimeLibraryVariableService
 
   cmakeMinVersion: Version | null = new Version(3, 15);
 
+  isValid(action: CMakeMsvcRuntimeLibraryVariable): boolean {
+    return (
+      action.enabled &&
+      !this.versionService.isGreater(
+        this.cmakeMinVersion,
+        this.projectContext.version
+      )
+    );
+  }
+
   cmakeRequiredVersion(
     action: CMakeMsvcRuntimeLibraryVariable
   ): Version | null {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
+    if (this.isValid(action)) {
       return this.cmakeMinVersion;
     } else {
       return null;
     }
   }
   cmakeObjects(action: CMakeMsvcRuntimeLibraryVariable): CMakeAvailableData {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
+    if (this.isValid(action)) {
       return {
         options: [
           {
@@ -59,13 +57,7 @@ export class CMakeMsvcRuntimeLibraryVariableService
     }
   }
   toCMakeListTxt(action: CMakeMsvcRuntimeLibraryVariable): string {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
+    if (this.isValid(action)) {
       return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
         action.defaultValue

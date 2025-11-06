@@ -1,8 +1,10 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { CMakeFeatureInterface } from "./cmake-feature-interface";
 import { ProjectVersionArgument } from "../components/project-version-argument";
 import { Version } from "../../../shared/models/version";
 import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
+import { ProjectContextService } from "../../cmake-project/services/project-context-service";
+import { VersionService } from "../../../shared/services/version-service";
 
 @Injectable({
   providedIn: null,
@@ -10,10 +12,24 @@ import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-availab
 export class ProjectVersionService
   implements CMakeFeatureInterface<ProjectVersionArgument>
 {
+  private projectContext = inject(ProjectContextService);
+  private versionService = inject(VersionService);
+
   cmakeMinVersion: Version | null = null;
 
+  isValid(action: ProjectVersionArgument): boolean {
+    return (
+      action.enabled &&
+      action.value !== undefined &&
+      !this.versionService.isGreater(
+        this.cmakeMinVersion,
+        this.projectContext.version
+      )
+    );
+  }
+
   cmakeRequiredVersion(action: ProjectVersionArgument): Version | null {
-    if (action.enabled) {
+    if (this.isValid(action)) {
       return this.cmakeMinVersion;
     } else {
       return null;
@@ -21,7 +37,7 @@ export class ProjectVersionService
   }
 
   cmakeObjects(action: ProjectVersionArgument): CMakeAvailableData {
-    if (action.enabled) {
+    if (this.isValid(action)) {
       return {
         variables: [
           {
@@ -77,8 +93,8 @@ export class ProjectVersionService
   }
 
   toCMakeListTxt(action: ProjectVersionArgument): string {
-    if (action.enabled && action.value) {
-      return `VERSION ${action.value.toString()}`;
+    if (this.isValid(action)) {
+      return `VERSION ${action.value!.toString()}\n`;
     } else {
       return "";
     }

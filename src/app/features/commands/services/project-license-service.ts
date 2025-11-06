@@ -17,14 +17,18 @@ export class ProjectLicenseService
 
   cmakeMinVersion: Version | null = new Version(4, 2);
 
-  cmakeRequiredVersion(action: ProjectLicenseArgument): Version | null {
-    if (
+  isValid(action: ProjectLicenseArgument): boolean {
+    return (
       action.enabled &&
       !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
+        this.cmakeMinVersion,
         this.projectContext.version
       )
-    ) {
+    );
+  }
+
+  cmakeRequiredVersion(action: ProjectLicenseArgument): Version | null {
+    if (this.isValid(action)) {
       return this.cmakeMinVersion;
     } else {
       return null;
@@ -32,22 +36,16 @@ export class ProjectLicenseService
   }
 
   cmakeObjects(action: ProjectLicenseArgument): CMakeAvailableData {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
+    if (this.isValid(action)) {
       return {
         variables: [
           {
             name: "PROJECT_SPDX_LICENSE",
-            version: null,
+            version: this.cmakeMinVersion,
           },
           {
             name: "<PROJECT-NAME>_SPDX_LICENSE",
-            version: null,
+            version: this.cmakeMinVersion,
           },
         ],
       };
@@ -57,14 +55,8 @@ export class ProjectLicenseService
   }
 
   toCMakeListTxt(action: ProjectLicenseArgument): string {
-    if (
-      action.enabled &&
-      !this.versionService.isGreater(
-        action.service.cmakeMinVersion,
-        this.projectContext.version
-      )
-    ) {
-      return `SPDX_LICENSE "${action.value}"`;
+    if (this.isValid(action)) {
+      return `SPDX_LICENSE "${action.value}"\n`;
     } else {
       return "";
     }

@@ -3,6 +3,8 @@ import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-co
 import { Version } from "../../../shared/models/version";
 import { ProjectCompatVersionService } from "../services/project-compat-version-service";
 import { FormsModule } from "@angular/forms";
+import { VersionService } from "../../../shared/services/version-service";
+import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 
 @Component({
   selector: "app-project-compat-version-argument",
@@ -14,8 +16,10 @@ export class ProjectCompatVersionArgument
   implements CMakeComponentInterface<ProjectCompatVersionService>
 {
   service = inject(ProjectCompatVersionService);
+  projectContext = inject(ProjectContextService);
+  versionService = inject(VersionService);
 
-  enabled = false;
+  enabled = true;
   value?: Version;
 
   get versionString(): string {
