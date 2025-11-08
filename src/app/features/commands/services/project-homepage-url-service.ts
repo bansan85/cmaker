@@ -9,15 +9,13 @@ import { VersionService } from "../../../shared/services/version-service";
 @Injectable({
   providedIn: null,
 })
-export class ProjectHomepageUrlService
-  implements CMakeFeatureInterface<ProjectHomepageUrlArgument>
-{
+export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHomepageUrlArgument> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(3, 12);
 
-  isValid(action: ProjectHomepageUrlArgument): boolean {
+  isEnabled(action: ProjectHomepageUrlArgument): boolean {
     return (
       action.enabled &&
       !this.versionService.isGreater(
@@ -27,42 +25,38 @@ export class ProjectHomepageUrlService
     );
   }
 
-  cmakeRequiredVersion(action: ProjectHomepageUrlArgument): Version | null {
-    if (this.isValid(action)) {
-      return this.cmakeMinVersion;
-    } else {
-      return null;
-    }
+  isValid(action: ProjectHomepageUrlArgument): boolean {
+    return /https?:\/\/.+/.test(action.value);
   }
 
-  cmakeObjects(action: ProjectHomepageUrlArgument): CMakeAvailableData {
-    if (this.isValid(action)) {
-      return {
-        variables: [
-          {
-            name: "PROJECT_HOMEPAGE_URL",
-            version: new Version(3, 12),
-          },
-          {
-            name: "<PROJECT-NAME>_HOMEPAGE_URL",
-            version: new Version(3, 12),
-          },
-          {
-            name: "CMAKE_PROJECT_HOMEPAGE_URL",
-            version: new Version(3, 12),
-          },
-        ],
-      };
-    } else {
-      return {};
-    }
+  protected cmakeRequiredVersionImpl(
+    _action: ProjectHomepageUrlArgument
+  ): Version | null {
+    return this.cmakeMinVersion;
   }
 
-  toCMakeListTxt(action: ProjectHomepageUrlArgument): string {
-    if (this.isValid(action)) {
-      return `HOMEPAGE_URL "${action.value}"\n`;
-    } else {
-      return "";
-    }
+  protected cmakeObjectsImpl(
+    _action: ProjectHomepageUrlArgument
+  ): CMakeAvailableData {
+    return {
+      variables: [
+        {
+          name: "PROJECT_HOMEPAGE_URL",
+          version: new Version(3, 12),
+        },
+        {
+          name: "<PROJECT-NAME>_HOMEPAGE_URL",
+          version: new Version(3, 12),
+        },
+        {
+          name: "CMAKE_PROJECT_HOMEPAGE_URL",
+          version: new Version(3, 12),
+        },
+      ],
+    };
+  }
+
+  protected toCMakeListTxtImpl(action: ProjectHomepageUrlArgument): string {
+    return `HOMEPAGE_URL "${action.value}"\n`;
   }
 }

@@ -11,4 +11,8 @@ export class DataToCMakeService {
       return "OFF";
     }
   }
+
+  isValidTargetName(name: string): boolean {
+    return /^[A-Za-z0-9_\.+-]+$/.test(name);
+  }
 }

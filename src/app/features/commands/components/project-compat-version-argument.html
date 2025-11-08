@@ -1,13 +1,9 @@
 <div
   [hidden]="!enabled || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <input [(ngModel)]="enabled" type="checkbox" />
-  <label for="compat-version" [class.disabled]="!enabled"
-    >Compat version:</label
-  >
+  <label for="compat-version">Compat version:</label>
   <input
     [(ngModel)]="versionString"
-    [disabled]="!enabled"
     type="text"
     id="compat-version"
     name="compat-version"

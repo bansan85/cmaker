@@ -9,18 +9,15 @@ import { VersionService } from "../../../shared/services/version-service";
 @Injectable({
   providedIn: null,
 })
-export class ProjectVersionService
-  implements CMakeFeatureInterface<ProjectVersionArgument>
-{
+export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionArgument> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = null;
 
-  isValid(action: ProjectVersionArgument): boolean {
+  isEnabled(action: ProjectVersionArgument): boolean {
     return (
       action.enabled &&
-      action.value !== undefined &&
       !this.versionService.isGreater(
         this.cmakeMinVersion,
         this.projectContext.version
@@ -28,75 +25,71 @@ export class ProjectVersionService
     );
   }
 
-  cmakeRequiredVersion(action: ProjectVersionArgument): Version | null {
-    if (this.isValid(action)) {
-      return this.cmakeMinVersion;
-    } else {
-      return null;
-    }
+  isValid(action: ProjectVersionArgument): boolean {
+    return action.value !== undefined;
   }
 
-  cmakeObjects(action: ProjectVersionArgument): CMakeAvailableData {
-    if (this.isValid(action)) {
-      return {
-        variables: [
-          {
-            name: "PROJECT_VERSION",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_VERSION",
-            version: null,
-          },
-          {
-            name: "PROJECT_VERSION_MAJOR",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_VERSION_MAJOR",
-            version: null,
-          },
-          {
-            name: "PROJECT_VERSION_MINOR",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_VERSION_MINOR",
-            version: null,
-          },
-          {
-            name: "PROJECT_VERSION_PATCH",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_VERSION_PATCH",
-            version: null,
-          },
-          {
-            name: "PROJECT_VERSION_TWEAK",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_VERSION_TWEAK",
-            version: null,
-          },
-          {
-            name: "CMAKE_PROJECT_VERSION",
-            version: new Version(3, 12),
-          },
-        ],
-        policies: new Map<number, boolean>([[48, true]]),
-      };
-    } else {
-      return {};
-    }
+  protected cmakeRequiredVersionImpl(
+    _action: ProjectVersionArgument
+  ): Version | null {
+    return this.cmakeMinVersion;
   }
 
-  toCMakeListTxt(action: ProjectVersionArgument): string {
-    if (this.isValid(action)) {
-      return `VERSION ${action.value!.toString()}\n`;
-    } else {
-      return "";
-    }
+  protected cmakeObjectsImpl(
+    _action: ProjectVersionArgument
+  ): CMakeAvailableData {
+    return {
+      variables: [
+        {
+          name: "PROJECT_VERSION",
+          version: null,
+        },
+        {
+          name: "<PROJECT-NAME>_VERSION",
+          version: null,
+        },
+        {
+          name: "PROJECT_VERSION_MAJOR",
+          version: null,
+        },
+        {
+          name: "<PROJECT-NAME>_VERSION_MAJOR",
+          version: null,
+        },
+        {
+          name: "PROJECT_VERSION_MINOR",
+          version: null,
+        },
+        {
+          name: "<PROJECT-NAME>_VERSION_MINOR",
+          version: null,
+        },
+        {
+          name: "PROJECT_VERSION_PATCH",
+          version: null,
+        },
+        {
+          name: "<PROJECT-NAME>_VERSION_PATCH",
+          version: null,
+        },
+        {
+          name: "PROJECT_VERSION_TWEAK",
+          version: null,
+        },
+        {
+          name: "<PROJECT-NAME>_VERSION_TWEAK",
+          version: null,
+        },
+        {
+          name: "CMAKE_PROJECT_VERSION",
+          version: new Version(3, 12),
+        },
+      ],
+      policies: new Map<number, boolean>([[48, true]]),
+    };
+  }
+
+  protected toCMakeListTxtImpl(action: ProjectVersionArgument): string {
+    return `VERSION ${action.value?.toString()}\n`;
   }
 }

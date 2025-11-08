@@ -9,15 +9,13 @@ import { VersionService } from "../../../shared/services/version-service";
 @Injectable({
   providedIn: null,
 })
-export class ProjectLicenseService
-  implements CMakeFeatureInterface<ProjectLicenseArgument>
-{
+export class ProjectLicenseService extends CMakeFeatureInterface<ProjectLicenseArgument> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(4, 2);
 
-  isValid(action: ProjectLicenseArgument): boolean {
+  isEnabled(action: ProjectLicenseArgument): boolean {
     return (
       action.enabled &&
       !this.versionService.isGreater(
@@ -27,38 +25,34 @@ export class ProjectLicenseService
     );
   }
 
-  cmakeRequiredVersion(action: ProjectLicenseArgument): Version | null {
-    if (this.isValid(action)) {
-      return this.cmakeMinVersion;
-    } else {
-      return null;
-    }
+  isValid(_action: ProjectLicenseArgument): boolean {
+    return true;
   }
 
-  cmakeObjects(action: ProjectLicenseArgument): CMakeAvailableData {
-    if (this.isValid(action)) {
-      return {
-        variables: [
-          {
-            name: "PROJECT_SPDX_LICENSE",
-            version: this.cmakeMinVersion,
-          },
-          {
-            name: "<PROJECT-NAME>_SPDX_LICENSE",
-            version: this.cmakeMinVersion,
-          },
-        ],
-      };
-    } else {
-      return {};
-    }
+  protected cmakeRequiredVersionImpl(
+    action: ProjectLicenseArgument
+  ): Version | null {
+    return this.cmakeMinVersion;
   }
 
-  toCMakeListTxt(action: ProjectLicenseArgument): string {
-    if (this.isValid(action)) {
-      return `SPDX_LICENSE "${action.value}"\n`;
-    } else {
-      return "";
-    }
+  protected cmakeObjectsImpl(
+    action: ProjectLicenseArgument
+  ): CMakeAvailableData {
+    return {
+      variables: [
+        {
+          name: "PROJECT_SPDX_LICENSE",
+          version: this.cmakeMinVersion,
+        },
+        {
+          name: "<PROJECT-NAME>_SPDX_LICENSE",
+          version: this.cmakeMinVersion,
+        },
+      ],
+    };
+  }
+
+  protected toCMakeListTxtImpl(action: ProjectLicenseArgument): string {
+    return `SPDX_LICENSE "${action.value}"\n`;
   }
 }

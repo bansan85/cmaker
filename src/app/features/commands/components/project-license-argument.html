@@ -1,17 +1,15 @@
 <div
   [hidden]="!enabled || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <input [(ngModel)]="enabled" type="checkbox" />
-  <label for="project-license" [class.disabled]="!enabled">License:</label>
+  <label for="project-license">License:</label>
   <input
     list="license-list"
     id="project-license"
     name="project-license"
-    [disabled]="!enabled"
     [(ngModel)]="value"
   />
   <br />
-  <span [class.disabled]="!enabled"
+  <span
     ><a
       target="_blank"
       rel="noopener noreferrer"

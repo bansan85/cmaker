@@ -10,9 +10,7 @@ import { VersionService } from "../../../shared/services/version-service";
 @Injectable({
   providedIn: "root",
 })
-export class CMakeMsvcRuntimeLibraryVariableService
-  implements CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable>
-{
+export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable> {
   private readonly variable = "CRT_SHARED_LIBS";
   private readonly helpText = "Build using CRT shared libraries";
 
@@ -22,7 +20,7 @@ export class CMakeMsvcRuntimeLibraryVariableService
 
   cmakeMinVersion: Version | null = new Version(3, 15);
 
-  isValid(action: CMakeMsvcRuntimeLibraryVariable): boolean {
+  isEnabled(action: CMakeMsvcRuntimeLibraryVariable): boolean {
     return (
       action.enabled &&
       !this.versionService.isGreater(
@@ -32,44 +30,42 @@ export class CMakeMsvcRuntimeLibraryVariableService
     );
   }
 
-  cmakeRequiredVersion(
-    action: CMakeMsvcRuntimeLibraryVariable
+  isValid(_action: CMakeMsvcRuntimeLibraryVariable): boolean {
+    return true;
+  }
+
+  protected cmakeRequiredVersionImpl(
+    _action: CMakeMsvcRuntimeLibraryVariable
   ): Version | null {
-    if (this.isValid(action)) {
-      return this.cmakeMinVersion;
-    } else {
-      return null;
-    }
+    return this.cmakeMinVersion;
   }
-  cmakeObjects(action: CMakeMsvcRuntimeLibraryVariable): CMakeAvailableData {
-    if (this.isValid(action)) {
-      return {
-        options: [
-          {
-            variable: this.variable,
-            helpText: this.helpText,
-            value: this.dataToCMake.booleanToString(action.defaultValue),
-          },
-        ],
-      };
-    } else {
-      return {};
-    }
+
+  protected cmakeObjectsImpl(
+    action: CMakeMsvcRuntimeLibraryVariable
+  ): CMakeAvailableData {
+    return {
+      options: [
+        {
+          variable: this.variable,
+          helpText: this.helpText,
+          value: this.dataToCMake.booleanToString(action.value),
+        },
+      ],
+    };
   }
-  toCMakeListTxt(action: CMakeMsvcRuntimeLibraryVariable): string {
-    if (this.isValid(action)) {
-      return `# Windows only
+
+  protected toCMakeListTxtImpl(
+    action: CMakeMsvcRuntimeLibraryVariable
+  ): string {
+    return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
-        action.defaultValue
-      )})
+      action.value
+    )})
 
 if(NOT ${this.variable})
   cmake_policy(SET CMP0091 NEW)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 `;
-    } else {
-      return "";
-    }
   }
 }

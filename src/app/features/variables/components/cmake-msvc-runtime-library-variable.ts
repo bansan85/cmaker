@@ -20,5 +20,5 @@ export class CMakeMsvcRuntimeLibraryVariable
   versionService = inject(VersionService);
 
   enabled = true;
-  defaultValue = false;
+  value = false;
 }

@@ -9,15 +9,13 @@ import { VersionService } from "../../../shared/services/version-service";
 @Injectable({
   providedIn: null,
 })
-export class ProjectDescriptionService
-  implements CMakeFeatureInterface<ProjectDescriptionArgument>
-{
+export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDescriptionArgument> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(3, 9);
 
-  isValid(action: ProjectDescriptionArgument): boolean {
+  isEnabled(action: ProjectDescriptionArgument): boolean {
     return (
       action.enabled &&
       !this.versionService.isGreater(
@@ -27,38 +25,34 @@ export class ProjectDescriptionService
     );
   }
 
-  cmakeRequiredVersion(action: ProjectDescriptionArgument): Version | null {
-    if (this.isValid(action)) {
-      return this.cmakeMinVersion;
-    } else {
-      return null;
-    }
+  isValid(action: ProjectDescriptionArgument): boolean {
+    return true;
   }
 
-  cmakeObjects(action: ProjectDescriptionArgument): CMakeAvailableData {
-    if (this.isValid(action)) {
-      return {
-        variables: [
-          {
-            name: "PROJECT_DESCRIPTION",
-            version: new Version(3, 9),
-          },
-          {
-            name: "<PROJECT-NAME>_DESCRIPTION",
-            version: new Version(3, 12),
-          },
-        ],
-      };
-    } else {
-      return {};
-    }
+  protected cmakeRequiredVersionImpl(
+    _action: ProjectDescriptionArgument
+  ): Version | null {
+    return this.cmakeMinVersion;
   }
 
-  toCMakeListTxt(action: ProjectDescriptionArgument): string {
-    if (this.isValid(action)) {
-      return `DESCRIPTION "${action.value}"\n`;
-    } else {
-      return "";
-    }
+  protected cmakeObjectsImpl(
+    _action: ProjectDescriptionArgument
+  ): CMakeAvailableData {
+    return {
+      variables: [
+        {
+          name: "PROJECT_DESCRIPTION",
+          version: new Version(3, 9),
+        },
+        {
+          name: "<PROJECT-NAME>_DESCRIPTION",
+          version: new Version(3, 12),
+        },
+      ],
+    };
+  }
+
+  protected toCMakeListTxtImpl(action: ProjectDescriptionArgument): string {
+    return `DESCRIPTION "${action.value}"\n`;
   }
 }

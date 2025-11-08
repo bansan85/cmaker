@@ -9,15 +9,13 @@ import { ProjectContextService } from "../../cmake-project/services/project-cont
 @Injectable({
   providedIn: null,
 })
-export class ProjectCompatVersionService
-  implements CMakeFeatureInterface<ProjectCompatVersionArgument>
-{
+export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCompatVersionArgument> {
   cmakeMinVersion: Version | null = new Version(4, 1);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isValid(action: ProjectCompatVersionArgument): boolean {
+  isEnabled(action: ProjectCompatVersionArgument): boolean {
     return (
       action.enabled &&
       !this.versionService.isGreater(
@@ -27,38 +25,34 @@ export class ProjectCompatVersionService
     );
   }
 
-  cmakeRequiredVersion(action: ProjectCompatVersionArgument): Version | null {
-    if (this.isValid(action)) {
-      return this.cmakeMinVersion;
-    } else {
-      return null;
-    }
+  isValid(action: ProjectCompatVersionArgument): boolean {
+    return action.value !== undefined;
   }
 
-  cmakeObjects(action: ProjectCompatVersionArgument): CMakeAvailableData {
-    if (this.isValid(action)) {
-      return {
-        variables: [
-          {
-            name: "PROJECT_COMPAT_VERSION",
-            version: this.cmakeMinVersion,
-          },
-          {
-            name: "<PROJECT-NAME>_COMPAT_VERSION",
-            version: this.cmakeMinVersion,
-          },
-        ],
-      };
-    } else {
-      return {};
-    }
+  protected cmakeRequiredVersionImpl(
+    _action: ProjectCompatVersionArgument
+  ): Version | null {
+    return this.cmakeMinVersion;
   }
 
-  toCMakeListTxt(action: ProjectCompatVersionArgument): string {
-    if (action.enabled && action.value) {
-      return `COMPAT_VERSION ${action.value.toString()}\n`;
-    } else {
-      return "";
-    }
+  protected cmakeObjectsImpl(
+    _action: ProjectCompatVersionArgument
+  ): CMakeAvailableData {
+    return {
+      variables: [
+        {
+          name: "PROJECT_COMPAT_VERSION",
+          version: this.cmakeMinVersion,
+        },
+        {
+          name: "<PROJECT-NAME>_COMPAT_VERSION",
+          version: this.cmakeMinVersion,
+        },
+      ],
+    };
+  }
+
+  protected toCMakeListTxtImpl(action: ProjectCompatVersionArgument): string {
+    return `COMPAT_VERSION ${action.value?.toString()}\n`;
   }
 }
