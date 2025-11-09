@@ -14,6 +14,8 @@ import { ProjectDescriptionArgument } from "./project-description-argument";
 import { ProjectHomepageUrlArgument } from "./project-homepage-url-argument";
 import { ProjectHomepageUrlService } from "../services/project-homepage-url-service";
 import { VersionService } from "../../../shared/services/version-service";
+import { CheckboxesItem } from "../../../shared/components/checkbox/checkboxes-item";
+import { CheckboxesList } from "../../../shared/components/checkbox/checkboxes-list";
 
 @Component({
   selector: "app-project-command",
@@ -24,6 +26,8 @@ import { VersionService } from "../../../shared/services/version-service";
     ProjectCompatVersionArgument,
     ProjectDescriptionArgument,
     ProjectHomepageUrlArgument,
+    CheckboxesList,
+    CheckboxesItem,
   ],
   templateUrl: "./project-command.html",
   styleUrl: "./project-command.css",

@@ -1,4 +1,4 @@
-<div [hidden]="service.isEnabled(this)">
+<div [hidden]="!service.isEnabled(this)">
   <label for="version">Version:</label>
   <input
     [(ngModel)]="versionString"

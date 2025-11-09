@@ -12,7 +12,6 @@ import { ProjectCompatVersionService } from "./project-compat-version-service";
 import { ProjectDescriptionService } from "./project-description-service";
 import { ProjectHomepageUrlService } from "./project-homepage-url-service";
 import { VersionService } from "../../../shared/services/version-service";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
 import { DataToCMakeService } from "../../cmake-project/services/data-to-cmake-service";
 
 @Injectable({
@@ -26,16 +25,12 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
   homepageUrl = inject(ProjectHomepageUrlService);
   dataToCMake = inject(DataToCMakeService);
 
-  private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = null;
 
   isEnabled(_action: ProjectCommand): boolean {
-    return !this.versionService.isGreater(
-      this.cmakeMinVersion,
-      this.projectContext.version
-    );
+    return true;
   }
 
   isValid(action: ProjectCommand): boolean {

@@ -1,5 +1,5 @@
 <h3>Visual Studio</h3>
-<div [hidden]="service.isEnabled(this)">
+<div [hidden]="!service.isEnabled(this)">
   <span>MSVC Runtime Library</span>
   <input [(ngModel)]="value" type="checkbox" />
 </div>

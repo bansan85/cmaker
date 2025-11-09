@@ -1,5 +1,5 @@
 <div
-  [hidden]="!enabled || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
+  [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
   <label for="project-license">License:</label>
   <input

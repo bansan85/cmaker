@@ -1,0 +1,8 @@
+<label for="name-{{element().name}}">
+  <input
+    type="checkbox"
+    id="name-{{element().name}}"
+    [checked]="element().enabled"
+    (change)="element().enabled = $event.target.checked"
+  />{{element().name}}</label
+>
