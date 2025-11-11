@@ -16,6 +16,8 @@ import { ProjectHomepageUrlService } from "../services/project-homepage-url-serv
 import { VersionService } from "../../../shared/services/version-service";
 import { CheckboxesItem } from "../../../shared/components/checkbox/checkboxes-item";
 import { CheckboxesList } from "../../../shared/components/checkbox/checkboxes-list";
+import { ProjectLanguagesArgument } from "./project-languages-argument";
+import { ProjectLanguagesService } from "../services/project-languages-service";
 
 @Component({
   selector: "app-project-command",
@@ -26,6 +28,7 @@ import { CheckboxesList } from "../../../shared/components/checkbox/checkboxes-l
     ProjectCompatVersionArgument,
     ProjectDescriptionArgument,
     ProjectHomepageUrlArgument,
+    ProjectLanguagesArgument,
     CheckboxesList,
     CheckboxesItem,
   ],
@@ -38,6 +41,7 @@ import { CheckboxesList } from "../../../shared/components/checkbox/checkboxes-l
     ProjectCompatVersionService,
     ProjectDescriptionService,
     ProjectHomepageUrlService,
+    ProjectLanguagesService,
   ],
 })
 export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
@@ -46,6 +50,7 @@ export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
   @ViewChild("compatVersion") compatVersion!: ProjectCompatVersionArgument;
   @ViewChild("description") description!: ProjectDescriptionArgument;
   @ViewChild("homepageUrl") homepageUrl!: ProjectHomepageUrlArgument;
+  @ViewChild("languages") languages!: ProjectLanguagesArgument;
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);

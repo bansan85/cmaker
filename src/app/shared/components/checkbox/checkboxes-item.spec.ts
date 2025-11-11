@@ -1,23 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CheckboxesItem } from './checkboxes-item';
+import { CheckboxesItem } from "./checkboxes-item";
+import { ProjectContextService } from "../../../features/cmake-project/services/project-context-service";
+import { Version } from "../../models/version";
+import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
 
-describe('CheckboxesItem', () => {
+describe("CheckboxesItem", () => {
   let component: CheckboxesItem;
   let fixture: ComponentFixture<CheckboxesItem>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CheckboxesItem]
-    })
-    .compileComponents();
+      imports: [CheckboxesItem],
+      providers: [
+        ProjectContextService,
+        { provide: DEFAULT_MAX_VERSION, useValue: new Version(4, 3) },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CheckboxesItem);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput("element", {
+      enabled: false,
+      name: "ASM-ATT",
+    });
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

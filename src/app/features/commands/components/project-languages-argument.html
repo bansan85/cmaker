@@ -1,0 +1,24 @@
+<div
+  [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
+>
+  <label for="project-languages">Languages:</label>
+  <app-checkboxes-list>
+    <app-checkboxes-item [element]="c()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="cxx()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="cSharp()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="cuda()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="objC()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="objCxx()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="fortran()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="hip()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="ispc()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="swift()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="asm()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="asmNasm()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="asmMarmasm()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="asmMasm()"></app-checkboxes-item>
+    <app-checkboxes-item [element]="asmAtt()"></app-checkboxes-item>
+  </app-checkboxes-list>
+  <br />
+  {{toString()}}
+</div>

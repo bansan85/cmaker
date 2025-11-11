@@ -9,6 +9,7 @@ import { ProjectVersionService } from "./project-version-service";
 import { ProjectCompatVersionService } from "./project-compat-version-service";
 import { ProjectDescriptionService } from "./project-description-service";
 import { ProjectHomepageUrlService } from "./project-homepage-url-service";
+import { ProjectLanguagesService } from "./project-languages-service";
 
 describe("ProjectService", () => {
   let service: ProjectService;
@@ -23,6 +24,7 @@ describe("ProjectService", () => {
         ProjectCompatVersionService,
         ProjectDescriptionService,
         ProjectHomepageUrlService,
+        ProjectLanguagesService,
         {
           provide: DEFAULT_MAX_VERSION,
           useValue: new Version(4, 3),

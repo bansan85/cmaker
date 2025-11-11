@@ -13,6 +13,7 @@ import { ProjectDescriptionService } from "./project-description-service";
 import { ProjectHomepageUrlService } from "./project-homepage-url-service";
 import { VersionService } from "../../../shared/services/version-service";
 import { DataToCMakeService } from "../../cmake-project/services/data-to-cmake-service";
+import { ProjectLanguagesService } from "./project-languages-service";
 
 @Injectable({
   providedIn: null,
@@ -23,6 +24,7 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
   compatVersion = inject(ProjectCompatVersionService);
   description = inject(ProjectDescriptionService);
   homepageUrl = inject(ProjectHomepageUrlService);
+  languages = inject(ProjectLanguagesService);
   dataToCMake = inject(DataToCMakeService);
 
   private versionService = inject(VersionService);
@@ -45,7 +47,9 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
       (!this.description.isEnabled(action.description) ||
         this.description.isValid(action.description)) &&
       (!this.homepageUrl.isEnabled(action.homepageUrl) ||
-        this.homepageUrl.isValid(action.homepageUrl))
+        this.homepageUrl.isValid(action.homepageUrl)) &&
+      (!this.languages.isEnabled(action.languages) ||
+        this.languages.isValid(action.languages))
     );
   }
 
@@ -56,7 +60,8 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
       this.compatVersion.cmakeRequiredVersion(action.compatVersion),
       this.license.cmakeRequiredVersion(action.license),
       this.description.cmakeRequiredVersion(action.description),
-      this.homepageUrl.cmakeRequiredVersion(action.homepageUrl)
+      this.homepageUrl.cmakeRequiredVersion(action.homepageUrl),
+      this.languages.cmakeRequiredVersion(action.languages)
     );
   }
 
@@ -102,7 +107,8 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
       this.compatVersion.cmakeObjects(action.compatVersion),
       this.license.cmakeObjects(action.license),
       this.description.cmakeObjects(action.description),
-      this.homepageUrl.cmakeObjects(action.homepageUrl)
+      this.homepageUrl.cmakeObjects(action.homepageUrl),
+      this.languages.cmakeObjects(action.languages)
     );
   }
 
@@ -116,6 +122,7 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
       this.compatVersion.toCMakeListTxt(action.compatVersion) +
       this.description.toCMakeListTxt(action.description) +
       this.homepageUrl.toCMakeListTxt(action.homepageUrl) +
+      this.languages.toCMakeListTxt(action.languages) +
       ")\n"
     );
   }

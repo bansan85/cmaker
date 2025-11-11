@@ -48,6 +48,10 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
           name: "<PROJECT-NAME>_DESCRIPTION",
           version: new Version(3, 12),
         },
+        {
+          name: "CMAKE_PROJECT_DESCRIPTION",
+          version: new Version(3, 9),
+        },
       ],
     };
   }
