@@ -1,4 +1,4 @@
-<label for="name-{{element().name}}">
+<label for="name-{{element().name}}" (click)="$event.stopPropagation()">
   <input
     type="checkbox"
     id="name-{{element().name}}"

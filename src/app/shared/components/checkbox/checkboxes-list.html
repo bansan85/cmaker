@@ -1,9 +1,6 @@
 <div class="multiselect">
   <div class="selectBox" (click)="showCheckboxes()">
-    <select>
-      <option>Select an option</option>
-    </select>
-    <div class="overSelect"></div>
+    <lucide-icon name="menu"></lucide-icon>
     <div id="checkboxes" [style.display]="expanded ? 'block' : 'none'">
       <ng-content></ng-content>
     </div>

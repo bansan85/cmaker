@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
+import { LucideAngularModule, Menu } from "lucide-angular";
 
 @Component({
   selector: "app-checkboxes-list",
-  imports: [],
+  imports: [LucideAngularModule],
   templateUrl: "./checkboxes-list.html",
   styleUrl: "./checkboxes-list.css",
 })

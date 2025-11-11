@@ -1,14 +1,15 @@
-<h3>Project</h3>
+<h3>
+  Project<app-checkboxes-list>
+    <app-checkboxes-item [element]="license"></app-checkboxes-item>
+    <app-checkboxes-item [element]="version"></app-checkboxes-item>
+    <app-checkboxes-item [element]="compatVersion"></app-checkboxes-item>
+    <app-checkboxes-item [element]="description"></app-checkboxes-item>
+    <app-checkboxes-item [element]="homepageUrl"></app-checkboxes-item>
+  </app-checkboxes-list>
+</h3>
 <label for="project-name">Name:</label>
 <input id="project-name" name="project-name" [(ngModel)]="name" />
 <br />
-<app-checkboxes-list>
-  <app-checkboxes-item [element]="license"></app-checkboxes-item>
-  <app-checkboxes-item [element]="version"></app-checkboxes-item>
-  <app-checkboxes-item [element]="compatVersion"></app-checkboxes-item>
-  <app-checkboxes-item [element]="description"></app-checkboxes-item>
-  <app-checkboxes-item [element]="homepageUrl"></app-checkboxes-item>
-</app-checkboxes-list>
 <app-project-license-argument #license></app-project-license-argument>
 <app-project-version-argument #version></app-project-version-argument>
 <app-project-compat-version-argument
