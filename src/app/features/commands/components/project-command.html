@@ -1,6 +1,6 @@
 <div class="project-command">
   <h3>
-    Project<app-checkboxes-list>
+    Project<app-checkboxes-list icon="menu">
       <app-checkboxes-item [element]="license"></app-checkboxes-item>
       <app-checkboxes-item [element]="version"></app-checkboxes-item>
       <app-checkboxes-item [element]="compatVersion"></app-checkboxes-item>
@@ -9,19 +9,13 @@
       <app-checkboxes-item [element]="languages"></app-checkboxes-item>
     </app-checkboxes-list>
   </h3>
-  <label for="project-name">Name:</label>
-  <input id="project-name" name="project-name" [(ngModel)]="name" />
-  <br />
-  <app-project-license-argument #license></app-project-license-argument>
-  <app-project-version-argument #version></app-project-version-argument>
-  <app-project-compat-version-argument
-    #compatVersion
-  ></app-project-compat-version-argument>
-  <app-project-description-argument
-    #description
-  ></app-project-description-argument>
-  <app-project-homepage-url-argument
-    #homepageUrl
-  ></app-project-homepage-url-argument>
-  <app-project-languages-argument #languages></app-project-languages-argument>
 </div>
+<label for="project-name">Name:</label>
+<input id="project-name" name="project-name" [(ngModel)]="name" />
+<br />
+<app-project-license-argument #license></app-project-license-argument>
+<app-project-version-argument #version></app-project-version-argument>
+<app-project-compat-version-argument #compatVersion></app-project-compat-version-argument>
+<app-project-description-argument #description></app-project-description-argument>
+<app-project-homepage-url-argument #homepageUrl></app-project-homepage-url-argument>
+<app-project-languages-argument #languages></app-project-languages-argument>

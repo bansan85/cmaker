@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { LucideAngularModule, Menu } from "lucide-angular";
+import { Component, input } from "@angular/core";
+import { LucideAngularModule } from "lucide-angular";
 
 @Component({
   selector: "app-checkboxes-list",
@@ -9,6 +9,8 @@ import { LucideAngularModule, Menu } from "lucide-angular";
 })
 export class CheckboxesList {
   expanded: boolean = false;
+
+  icon = input<string>("menu");
 
   showCheckboxes() {
     this.expanded = !this.expanded;
