@@ -1,9 +1,3 @@
-label.disabled,
-span.disabled,
-span.disabled a {
-  color: #808080;
-}
-
 app-checkboxes-list {
   display: none;
   position: absolute;
