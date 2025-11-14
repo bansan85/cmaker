@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+.argument:hover {
+    background-color: grey;
+}
+
+.argument label {
+    display: block;
+}
+
+.argument input:invalid {
+    color: red;
+}
