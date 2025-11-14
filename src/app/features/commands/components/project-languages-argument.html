@@ -1,5 +1,7 @@
-<div [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)">
-  <label for="project-languages">Languages:</label>
+<div
+  [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
+>
+  <label for="project-languages">Languages</label>
   <app-checkboxes-list icon="chevron-down">
     <app-checkboxes-item [element]="c()"></app-checkboxes-item>
     <app-checkboxes-item [element]="cxx()"></app-checkboxes-item>

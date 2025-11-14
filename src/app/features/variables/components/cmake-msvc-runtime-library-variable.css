@@ -1,0 +1,7 @@
+label {
+    display: block;
+}
+
+div:hover {
+    background-color: grey;
+}

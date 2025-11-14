@@ -1,7 +1,7 @@
 <div
   [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <label for="compat-version">Compat version:</label>
+  <label for="compat-version">Compat version</label>
   <input
     [(ngModel)]="versionString"
     type="text"
