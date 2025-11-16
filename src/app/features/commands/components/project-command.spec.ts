@@ -1,26 +1,25 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectCommand } from "./project-command";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { Version } from "../../../shared/models/version";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
-import { importProvidersFrom } from "@angular/core";
-import { LucideAngularModule, Menu } from "lucide-angular";
+import { ProjectCommand } from './project-command';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { Version } from '../../../shared/models/version';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { importProvidersFrom } from '@angular/core';
+import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 
-describe("ProjectCommand", () => {
+describe('ProjectCommand', () => {
   let component: ProjectCommand;
   let fixture: ComponentFixture<ProjectCommand>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectCommand],
       providers: [
         ProjectContextService,
         {
           provide: DEFAULT_MAX_VERSION,
           useValue: new Version(4, 3),
         },
-        importProvidersFrom(LucideAngularModule.pick({ Menu })),
+        importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
       ],
     }).compileComponents();
 
@@ -29,7 +28,7 @@ describe("ProjectCommand", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

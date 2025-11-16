@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabProject } from "./tab-project";
-import { ProjectContextService } from "../services/project-context-service";
-import { Version } from "../../../shared/models/version";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
-import { importProvidersFrom } from "@angular/core";
-import { LucideAngularModule, Menu } from "lucide-angular";
+import { TabProject } from './tab-project';
+import { ProjectContextService } from '../services/project-context-service';
+import { Version } from '../../../shared/models/version';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { importProvidersFrom } from '@angular/core';
+import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 
-describe("TabProject", () => {
+describe('TabProject', () => {
   let component: TabProject;
   let fixture: ComponentFixture<TabProject>;
 
@@ -20,7 +20,7 @@ describe("TabProject", () => {
           provide: DEFAULT_MAX_VERSION,
           useValue: new Version(4, 3),
         },
-        importProvidersFrom(LucideAngularModule.pick({ Menu })),
+        importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
       ],
     }).compileComponents();
 
@@ -29,7 +29,7 @@ describe("TabProject", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

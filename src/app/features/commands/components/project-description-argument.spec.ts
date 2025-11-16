@@ -12,7 +12,6 @@ describe('ProjectDescriptionArgument', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectDescriptionArgument],
       providers: [
         ProjectContextService,
         ProjectDescriptionService,
@@ -21,8 +20,7 @@ describe('ProjectDescriptionArgument', () => {
           useValue: new Version(4, 3),
         },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectDescriptionArgument);
     component = fixture.componentInstance;

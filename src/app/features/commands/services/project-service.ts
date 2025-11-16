@@ -1,24 +1,26 @@
-import { inject, Injectable } from "@angular/core";
-import { CMakeFeatureInterface } from "./cmake-feature-interface";
-import { Version } from "../../../shared/models/version";
-import { ProjectCommand } from "../components/project-command";
+import { inject, Injectable } from '@angular/core';
+import { CMakeFeatureInterface } from './cmake-feature-interface';
+import { Version } from '../../../shared/models/version';
+import { ProjectCommand } from '../components/project-command';
 import {
   CMakeAvailableData,
   mergeCMakeAvailableData,
-} from "../../cmake-project/interfaces/cmake-available-data";
-import { ProjectLicenseService } from "./project-license-service";
-import { ProjectVersionService } from "./project-version-service";
-import { ProjectCompatVersionService } from "./project-compat-version-service";
-import { ProjectDescriptionService } from "./project-description-service";
-import { ProjectHomepageUrlService } from "./project-homepage-url-service";
-import { VersionService } from "../../../shared/services/version-service";
-import { DataToCMakeService } from "../../cmake-project/services/data-to-cmake-service";
-import { ProjectLanguagesService } from "./project-languages-service";
+} from '../../cmake-project/interfaces/cmake-available-data';
+import { ProjectLicenseService } from './project-license-service';
+import { ProjectVersionService } from './project-version-service';
+import { ProjectCompatVersionService } from './project-compat-version-service';
+import { ProjectDescriptionService } from './project-description-service';
+import { ProjectHomepageUrlService } from './project-homepage-url-service';
+import { VersionService } from '../../../shared/services/version-service';
+import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
+import { ProjectLanguagesService } from './project-languages-service';
+import { ProjectNameService } from './project-name-service';
 
 @Injectable({
   providedIn: null,
 })
 export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
+  name = inject(ProjectNameService);
   license = inject(ProjectLicenseService);
   version = inject(ProjectVersionService);
   compatVersion = inject(ProjectCompatVersionService);
@@ -37,7 +39,7 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
 
   isValid(action: ProjectCommand): boolean {
     return (
-      this.dataToCMake.isValidTargetName(action.name) &&
+      (!this.name.isEnabled(action.name) || this.name.isValid(action.name)) &&
       (!this.version.isEnabled(action.version) ||
         this.version.isValid(action.version)) &&
       (!this.compatVersion.isEnabled(action.compatVersion) ||
@@ -55,7 +57,7 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
 
   protected cmakeRequiredVersionImpl(action: ProjectCommand): Version | null {
     return this.versionService.max(
-      this.cmakeMinVersion,
+      this.name.cmakeRequiredVersion(action.name),
       this.version.cmakeRequiredVersion(action.version),
       this.compatVersion.cmakeRequiredVersion(action.compatVersion),
       this.license.cmakeRequiredVersion(action.license),
@@ -70,39 +72,24 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
       {
         variables: [
           {
-            name: "PROJECT_NAME",
+            name: 'PROJECT_BINARY_DIR',
             version: null,
           },
           {
-            name: "CMAKE_PROJECT_NAME",
+            name: '<PROJECT-NAME>_BINARY_DIR',
             version: null,
           },
           {
-            name: "PROJECT_SOURCE_DIR",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_SOURCE_DIR",
-            version: null,
-          },
-          {
-            name: "PROJECT_BINARY_DIR",
-            version: null,
-          },
-          {
-            name: "<PROJECT-NAME>_BINARY_DIR",
-            version: null,
-          },
-          {
-            name: "PROJECT_IS_TOP_LEVEL",
+            name: 'PROJECT_IS_TOP_LEVEL',
             version: new Version(3, 21),
           },
           {
-            name: "<PROJECT-NAME>_IS_TOP_LEVEL",
+            name: '<PROJECT-NAME>_IS_TOP_LEVEL',
             version: new Version(3, 21),
           },
         ],
       },
+      this.name.cmakeObjects(action.name),
       this.version.cmakeObjects(action.version),
       this.compatVersion.cmakeObjects(action.compatVersion),
       this.license.cmakeObjects(action.license),
@@ -114,16 +101,15 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
 
   protected toCMakeListTxtImpl(action: ProjectCommand): string {
     return (
-      "project(\n" +
-      action.name +
-      "\n" +
+      'project(\n' +
+      this.name.toCMakeListTxt(action.name) +
       this.license.toCMakeListTxt(action.license) +
       this.version.toCMakeListTxt(action.version) +
       this.compatVersion.toCMakeListTxt(action.compatVersion) +
       this.description.toCMakeListTxt(action.description) +
       this.homepageUrl.toCMakeListTxt(action.homepageUrl) +
       this.languages.toCMakeListTxt(action.languages) +
-      ")\n"
+      ')\n'
     );
   }
 }

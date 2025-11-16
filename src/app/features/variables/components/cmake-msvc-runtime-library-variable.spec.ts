@@ -1,17 +1,16 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CMakeMsvcRuntimeLibraryVariable } from "./cmake-msvc-runtime-library-variable";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { Version } from "../../../shared/models/version";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
+import { CMakeMsvcRuntimeLibraryVariable } from './cmake-msvc-runtime-library-variable';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { Version } from '../../../shared/models/version';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 
-describe("CMakeMsvcRuntimeLibraryVariable", () => {
+describe('CMakeMsvcRuntimeLibraryVariable', () => {
   let component: CMakeMsvcRuntimeLibraryVariable;
   let fixture: ComponentFixture<CMakeMsvcRuntimeLibraryVariable>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CMakeMsvcRuntimeLibraryVariable],
       providers: [
         ProjectContextService,
         {
@@ -26,7 +25,7 @@ describe("CMakeMsvcRuntimeLibraryVariable", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

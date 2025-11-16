@@ -1,18 +1,17 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectCompatVersionArgument } from "./project-compat-version-argument";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { ProjectCompatVersionService } from "../services/project-compat-version-service";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
-import { Version } from "../../../shared/models/version";
+import { ProjectCompatVersionArgument } from './project-compat-version-argument';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { ProjectCompatVersionService } from '../services/project-compat-version-service';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
 
-describe("ProjectCompatVersionArgument", () => {
+describe('ProjectCompatVersionArgument', () => {
   let component: ProjectCompatVersionArgument;
   let fixture: ComponentFixture<ProjectCompatVersionArgument>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectCompatVersionArgument],
       providers: [
         ProjectContextService,
         ProjectCompatVersionService,
@@ -28,7 +27,7 @@ describe("ProjectCompatVersionArgument", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

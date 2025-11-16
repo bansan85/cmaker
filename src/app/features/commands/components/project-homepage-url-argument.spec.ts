@@ -12,7 +12,6 @@ describe('ProjectHomepageUrlArgument', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectHomepageUrlArgument],
       providers: [
         ProjectContextService,
         ProjectHomepageUrlService,
@@ -21,8 +20,7 @@ describe('ProjectHomepageUrlArgument', () => {
           useValue: new Version(4, 3),
         },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectHomepageUrlArgument);
     component = fixture.componentInstance;
