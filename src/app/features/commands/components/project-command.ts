@@ -1,26 +1,28 @@
-import { Component, inject, ViewChild } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { ProjectService } from "../services/project-service";
-import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
-import { ProjectLicenseArgument } from "./project-license-argument";
-import { ProjectLicenseService } from "../services/project-license-service";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { ProjectVersionService } from "../services/project-version-service";
-import { ProjectVersionArgument } from "./project-version-argument";
-import { ProjectCompatVersionService } from "../services/project-compat-version-service";
-import { ProjectCompatVersionArgument } from "./project-compat-version-argument";
-import { ProjectDescriptionService } from "../services/project-description-service";
-import { ProjectDescriptionArgument } from "./project-description-argument";
-import { ProjectHomepageUrlArgument } from "./project-homepage-url-argument";
-import { ProjectHomepageUrlService } from "../services/project-homepage-url-service";
-import { VersionService } from "../../../shared/services/version-service";
-import { CheckboxesItem } from "../../../shared/components/checkbox/checkboxes-item";
-import { CheckboxesList } from "../../../shared/components/checkbox/checkboxes-list";
-import { ProjectLanguagesArgument } from "./project-languages-argument";
-import { ProjectLanguagesService } from "../services/project-languages-service";
+import { Component, inject, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ProjectService } from '../services/project-service';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectLicenseArgument } from './project-license-argument';
+import { ProjectLicenseService } from '../services/project-license-service';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { ProjectVersionService } from '../services/project-version-service';
+import { ProjectVersionArgument } from './project-version-argument';
+import { ProjectCompatVersionService } from '../services/project-compat-version-service';
+import { ProjectCompatVersionArgument } from './project-compat-version-argument';
+import { ProjectDescriptionService } from '../services/project-description-service';
+import { ProjectDescriptionArgument } from './project-description-argument';
+import { ProjectHomepageUrlArgument } from './project-homepage-url-argument';
+import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
+import { VersionService } from '../../../shared/services/version-service';
+import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
+import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
+import { ProjectLanguagesArgument } from './project-languages-argument';
+import { ProjectLanguagesService } from '../services/project-languages-service';
+import { ProjectNameArgument } from './project-name-argument';
+import { ProjectNameService } from '../services/project-name-service';
 
 @Component({
-  selector: "app-project-command",
+  selector: 'app-project-command',
   imports: [
     FormsModule,
     ProjectLicenseArgument,
@@ -29,11 +31,12 @@ import { ProjectLanguagesService } from "../services/project-languages-service";
     ProjectDescriptionArgument,
     ProjectHomepageUrlArgument,
     ProjectLanguagesArgument,
+    ProjectNameArgument,
     CheckboxesList,
     CheckboxesItem,
   ],
-  templateUrl: "./project-command.html",
-  styleUrl: "./project-command.css",
+  templateUrl: './project-command.html',
+  styleUrl: './project-command.css',
   providers: [
     ProjectService,
     ProjectLicenseService,
@@ -42,19 +45,19 @@ import { ProjectLanguagesService } from "../services/project-languages-service";
     ProjectDescriptionService,
     ProjectHomepageUrlService,
     ProjectLanguagesService,
+    ProjectNameService,
   ],
 })
 export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
-  @ViewChild("license") license!: ProjectLicenseArgument;
-  @ViewChild("version") version!: ProjectVersionArgument;
-  @ViewChild("compatVersion") compatVersion!: ProjectCompatVersionArgument;
-  @ViewChild("description") description!: ProjectDescriptionArgument;
-  @ViewChild("homepageUrl") homepageUrl!: ProjectHomepageUrlArgument;
-  @ViewChild("languages") languages!: ProjectLanguagesArgument;
+  @ViewChild('name') name!: ProjectNameArgument;
+  @ViewChild('license') license!: ProjectLicenseArgument;
+  @ViewChild('version') version!: ProjectVersionArgument;
+  @ViewChild('compatVersion') compatVersion!: ProjectCompatVersionArgument;
+  @ViewChild('description') description!: ProjectDescriptionArgument;
+  @ViewChild('homepageUrl') homepageUrl!: ProjectHomepageUrlArgument;
+  @ViewChild('languages') languages!: ProjectLanguagesArgument;
 
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);
   versionService = inject(VersionService);
-
-  name: string = "";
 }

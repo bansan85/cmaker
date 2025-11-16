@@ -10,12 +10,16 @@
     </app-checkboxes-list>
   </h1>
 </div>
-<label for="project-name">Name:</label>
-<input id="project-name" name="project-name" [(ngModel)]="name" />
-<br />
+<app-project-name-argument #name></app-project-name-argument>
 <app-project-license-argument #license></app-project-license-argument>
 <app-project-version-argument #version></app-project-version-argument>
-<app-project-compat-version-argument #compatVersion></app-project-compat-version-argument>
-<app-project-description-argument #description></app-project-description-argument>
-<app-project-homepage-url-argument #homepageUrl></app-project-homepage-url-argument>
+<app-project-compat-version-argument
+  #compatVersion
+></app-project-compat-version-argument>
+<app-project-description-argument
+  #description
+></app-project-description-argument>
+<app-project-homepage-url-argument
+  #homepageUrl
+></app-project-homepage-url-argument>
 <app-project-languages-argument #languages></app-project-languages-argument>
