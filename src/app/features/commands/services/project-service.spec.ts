@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ProjectService } from './project-service';
-import { ProjectLicenseService } from '../../arguments/services/project-license-service';
+import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
@@ -18,7 +18,7 @@ describe('ProjectService', () => {
     TestBed.configureTestingModule({
       providers: [
         ProjectService,
-        ProjectLicenseService,
+        ProjectSpdxLicenseService,
         ProjectContextService,
         ProjectVersionService,
         ProjectCompatVersionService,

@@ -2,8 +2,8 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../services/project-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { ProjectLicenseArgument } from '../../arguments/components/project-license-argument';
-import { ProjectLicenseService } from '../../arguments/services/project-license-service';
+import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
+import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { ProjectVersionService } from '../../arguments/services/project-version-service';
 import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
@@ -25,7 +25,7 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
   selector: 'app-project-command',
   imports: [
     FormsModule,
-    ProjectLicenseArgument,
+    ProjectSpdxLicenseArgument,
     ProjectVersionArgument,
     ProjectCompatVersionArgument,
     ProjectDescriptionArgument,
@@ -39,7 +39,7 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
   styleUrl: './project-command.css',
   providers: [
     ProjectService,
-    ProjectLicenseService,
+    ProjectSpdxLicenseService,
     ProjectVersionService,
     ProjectCompatVersionService,
     ProjectDescriptionService,
@@ -50,7 +50,7 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
 })
 export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
   @ViewChild('name') name!: ProjectNameArgument;
-  @ViewChild('license') license!: ProjectLicenseArgument;
+  @ViewChild('spdxLicense') license!: ProjectSpdxLicenseArgument;
   @ViewChild('version') version!: ProjectVersionArgument;
   @ViewChild('compatVersion') compatVersion!: ProjectCompatVersionArgument;
   @ViewChild('description') description!: ProjectDescriptionArgument;

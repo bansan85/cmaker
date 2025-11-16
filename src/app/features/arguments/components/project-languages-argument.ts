@@ -1,18 +1,18 @@
-import { Component, inject, signal } from "@angular/core";
-import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
-import { ProjectLanguagesService } from "../services/project-languages-service";
-import { CheckboxesItemInterface } from "../../../shared/interface/checkboxes-item-interface";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { VersionService } from "../../../shared/services/version-service";
-import { CheckboxesList } from "../../../shared/components/checkbox/checkboxes-list";
-import { CheckboxesItem } from "../../../shared/components/checkbox/checkboxes-item";
-import { Version } from "../../../shared/models/version";
+import { Component, inject, signal } from '@angular/core';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectLanguagesService } from '../services/project-languages-service';
+import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { VersionService } from '../../../shared/services/version-service';
+import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
+import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
+import { Version } from '../../../shared/models/version';
 
 @Component({
-  selector: "app-project-languages-argument",
+  selector: 'app-project-languages-argument',
   imports: [CheckboxesList, CheckboxesItem],
-  templateUrl: "./project-languages-argument.html",
-  styleUrl: "./project-languages-argument.css",
+  templateUrl: './project-languages-argument.html',
+  styleUrl: './project-languages-argument.css',
 })
 export class ProjectLanguagesArgument
   implements
@@ -24,75 +24,75 @@ export class ProjectLanguagesArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = "Languages";
+  readonly name: string = 'Languages';
 
   c = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "C",
+    name: 'C',
   });
   cxx = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "CXX",
+    name: 'CXX',
   });
   cSharp = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "CSharp",
+    name: 'CSharp',
     version: new Version(3, 8),
   });
   cuda = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "CUDA",
+    name: 'CUDA',
     version: new Version(3, 8),
   });
   objC = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "OBJC",
+    name: 'OBJC',
     version: new Version(3, 16),
   });
   objCxx = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "OBJCXX",
+    name: 'OBJCXX',
     version: new Version(3, 16),
   });
   fortran = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "Fortran",
+    name: 'Fortran',
   });
   hip = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "HIP",
+    name: 'HIP',
     version: new Version(3, 21),
   });
   ispc = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "ISPC",
+    name: 'ISPC',
     version: new Version(3, 18),
   });
   swift = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "Swift",
+    name: 'Swift',
     version: new Version(3, 15),
   });
   asm = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "ASM",
+    name: 'ASM',
   });
   asmNasm = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "ASM_NASM",
+    name: 'ASM_NASM',
   });
   asmMarmasm = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "ASM_MARMASM",
+    name: 'ASM_MARMASM',
     version: new Version(3, 26),
   });
   asmMasm = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "ASM_MASM",
+    name: 'ASM_MASM',
   });
   asmAtt = signal<CheckboxesItemInterface>({
     enabled: false,
-    name: "ASM-ATT",
+    name: 'ASM-ATT',
   });
 
   items = [
@@ -118,7 +118,7 @@ export class ProjectLanguagesArgument
       this.items
         .filter((item) => item.enabled)
         .map((item) => item.name)
-        .join(" ") || "NONE"
+        .join(' ') || 'NONE'
     );
   }
 }

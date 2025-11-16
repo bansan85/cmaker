@@ -6,7 +6,7 @@ import {
   CMakeAvailableData,
   mergeCMakeAvailableData,
 } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectLicenseService } from '../../arguments/services/project-license-service';
+import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
 import { ProjectVersionService } from '../../arguments/services/project-version-service';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
@@ -21,7 +21,7 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
 })
 export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
   name = inject(ProjectNameService);
-  license = inject(ProjectLicenseService);
+  license = inject(ProjectSpdxLicenseService);
   version = inject(ProjectVersionService);
   compatVersion = inject(ProjectCompatVersionService);
   description = inject(ProjectDescriptionService);

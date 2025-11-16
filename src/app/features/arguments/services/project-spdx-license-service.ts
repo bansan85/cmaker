@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ProjectLicenseArgument } from '../components/project-license-argument';
+import { ProjectSpdxLicenseArgument } from '../components/project-spdx-license-argument';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
@@ -9,13 +9,13 @@ import { VersionService } from '../../../shared/services/version-service';
 @Injectable({
   providedIn: null,
 })
-export class ProjectLicenseService extends CMakeFeatureInterface<ProjectLicenseArgument> {
+export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdxLicenseArgument> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(4, 2);
 
-  isEnabled(action: ProjectLicenseArgument): boolean {
+  isEnabled(action: ProjectSpdxLicenseArgument): boolean {
     return (
       action.enabled &&
       !this.versionService.isGreater(
@@ -25,18 +25,18 @@ export class ProjectLicenseService extends CMakeFeatureInterface<ProjectLicenseA
     );
   }
 
-  isValid(_action: ProjectLicenseArgument): boolean {
+  isValid(_action: ProjectSpdxLicenseArgument): boolean {
     return true;
   }
 
   protected cmakeRequiredVersionImpl(
-    action: ProjectLicenseArgument
+    action: ProjectSpdxLicenseArgument
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
   protected cmakeObjectsImpl(
-    action: ProjectLicenseArgument
+    action: ProjectSpdxLicenseArgument
   ): CMakeAvailableData {
     return {
       variables: [
@@ -52,7 +52,7 @@ export class ProjectLicenseService extends CMakeFeatureInterface<ProjectLicenseA
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectLicenseArgument): string {
+  protected toCMakeListTxtImpl(action: ProjectSpdxLicenseArgument): string {
     return `SPDX_LICENSE "${action.value}"\n`;
   }
 }
