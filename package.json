@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "test-ci": "ng test --no-watch --no-progress --browsers ChromeHeadless",
     "tauri": "tauri",
     "lint": "ng lint"
   },
@@ -45,5 +47,6 @@
     "karma-jasmine-html-reporter": "^2.1.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "8.46.1"
-  }
+  },
+  "packageManager": "pnpm@10.18.3"
 }
