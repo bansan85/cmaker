@@ -48,6 +48,10 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
           name: '<PROJECT-NAME>_COMPAT_VERSION',
           version: this.cmakeMinVersion,
         },
+        {
+          name: 'CMAKE_COMPAT_VERSION',
+          version: this.cmakeMinVersion,
+        },
       ],
     };
   }

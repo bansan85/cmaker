@@ -48,6 +48,10 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdx
           name: '<PROJECT-NAME>_SPDX_LICENSE',
           version: this.cmakeMinVersion,
         },
+        {
+          name: 'CMAKE_PROJECT_SPDX_LICENSE',
+          version: this.cmakeMinVersion,
+        },
       ],
     };
   }

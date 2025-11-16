@@ -73,6 +73,22 @@ export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionA
           name: 'CMAKE_PROJECT_VERSION',
           version: new Version(3, 12),
         },
+        {
+          name: 'CMAKE_PROJECT_VERSION_MAJOR',
+          version: new Version(3, 12),
+        },
+        {
+          name: 'CMAKE_PROJECT_VERSION_MINOR',
+          version: new Version(3, 12),
+        },
+        {
+          name: 'CMAKE_PROJECT_VERSION_PATCH',
+          version: new Version(3, 12),
+        },
+        {
+          name: 'CMAKE_PROJECT_VERSION_TWEAK',
+          version: new Version(3, 12),
+        },
       ],
       policies: new Map<number, boolean>([[48, true]]),
     };

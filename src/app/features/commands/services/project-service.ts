@@ -72,6 +72,14 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
       {
         variables: [
           {
+            name: 'PROJECT_SOURCE_DIR',
+            version: null,
+          },
+          {
+            name: '<PROJECT-NAME>_SOURCE_DIR',
+            version: null,
+          },
+          {
             name: 'PROJECT_BINARY_DIR',
             version: null,
           },
