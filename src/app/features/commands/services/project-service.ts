@@ -6,15 +6,15 @@ import {
   CMakeAvailableData,
   mergeCMakeAvailableData,
 } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectLicenseService } from './project-license-service';
-import { ProjectVersionService } from './project-version-service';
-import { ProjectCompatVersionService } from './project-compat-version-service';
-import { ProjectDescriptionService } from './project-description-service';
-import { ProjectHomepageUrlService } from './project-homepage-url-service';
+import { ProjectLicenseService } from '../../arguments/services/project-license-service';
+import { ProjectVersionService } from '../../arguments/services/project-version-service';
+import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
+import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
+import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
-import { ProjectLanguagesService } from './project-languages-service';
-import { ProjectNameService } from './project-name-service';
+import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
+import { ProjectNameService } from '../../arguments/services/project-name-service';
 
 @Injectable({
   providedIn: null,

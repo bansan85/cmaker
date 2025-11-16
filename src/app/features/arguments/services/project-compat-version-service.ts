@@ -1,10 +1,10 @@
-import { inject, Injectable } from "@angular/core";
-import { CMakeFeatureInterface } from "./cmake-feature-interface";
-import { ProjectCompatVersionArgument } from "../components/project-compat-version-argument";
-import { Version } from "../../../shared/models/version";
-import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
-import { VersionService } from "../../../shared/services/version-service";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
+import { inject, Injectable } from '@angular/core';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { ProjectCompatVersionArgument } from '../components/project-compat-version-argument';
+import { Version } from '../../../shared/models/version';
+import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { VersionService } from '../../../shared/services/version-service';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 
 @Injectable({
   providedIn: null,
@@ -41,11 +41,11 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
     return {
       variables: [
         {
-          name: "PROJECT_COMPAT_VERSION",
+          name: 'PROJECT_COMPAT_VERSION',
           version: this.cmakeMinVersion,
         },
         {
-          name: "<PROJECT-NAME>_COMPAT_VERSION",
+          name: '<PROJECT-NAME>_COMPAT_VERSION',
           version: this.cmakeMinVersion,
         },
       ],

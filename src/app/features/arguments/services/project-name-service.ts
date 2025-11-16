@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from './cmake-feature-interface';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { ProjectNameArgument } from '../components/project-name-argument';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';

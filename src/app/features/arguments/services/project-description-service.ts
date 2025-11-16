@@ -1,10 +1,10 @@
-import { inject, Injectable } from "@angular/core";
-import { CMakeFeatureInterface } from "./cmake-feature-interface";
-import { ProjectDescriptionArgument } from "../components/project-description-argument";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { Version } from "../../../shared/models/version";
-import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
-import { VersionService } from "../../../shared/services/version-service";
+import { inject, Injectable } from '@angular/core';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { ProjectDescriptionArgument } from '../components/project-description-argument';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { Version } from '../../../shared/models/version';
+import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { VersionService } from '../../../shared/services/version-service';
 
 @Injectable({
   providedIn: null,
@@ -41,15 +41,15 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
     return {
       variables: [
         {
-          name: "PROJECT_DESCRIPTION",
+          name: 'PROJECT_DESCRIPTION',
           version: new Version(3, 9),
         },
         {
-          name: "<PROJECT-NAME>_DESCRIPTION",
+          name: '<PROJECT-NAME>_DESCRIPTION',
           version: new Version(3, 12),
         },
         {
-          name: "CMAKE_PROJECT_DESCRIPTION",
+          name: 'CMAKE_PROJECT_DESCRIPTION',
           version: new Version(3, 9),
         },
       ],

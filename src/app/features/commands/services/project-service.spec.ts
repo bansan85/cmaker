@@ -1,17 +1,17 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed } from '@angular/core/testing';
 
-import { ProjectService } from "./project-service";
-import { ProjectLicenseService } from "./project-license-service";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { Version } from "../../../shared/models/version";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
-import { ProjectVersionService } from "./project-version-service";
-import { ProjectCompatVersionService } from "./project-compat-version-service";
-import { ProjectDescriptionService } from "./project-description-service";
-import { ProjectHomepageUrlService } from "./project-homepage-url-service";
-import { ProjectLanguagesService } from "./project-languages-service";
+import { ProjectService } from './project-service';
+import { ProjectLicenseService } from '../../arguments/services/project-license-service';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { Version } from '../../../shared/models/version';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { ProjectVersionService } from '../../arguments/services/project-version-service';
+import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
+import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
+import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
+import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 
-describe("ProjectService", () => {
+describe('ProjectService', () => {
   let service: ProjectService;
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe("ProjectService", () => {
     service = TestBed.inject(ProjectService);
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });
