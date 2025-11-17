@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../services/project-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
@@ -48,7 +48,7 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
     ProjectNameService,
   ],
 })
-export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
+export class ProjectCommand implements CMakeComponentInterface<ProjectService>, AfterViewInit {
   @ViewChild('name') name!: ProjectNameArgument;
   @ViewChild('spdxLicense') license!: ProjectSpdxLicenseArgument;
   @ViewChild('version') version!: ProjectVersionArgument;
@@ -60,4 +60,10 @@ export class ProjectCommand implements CMakeComponentInterface<ProjectService> {
   service = inject(ProjectService);
   projectContext = inject(ProjectContextService);
   versionService = inject(VersionService);
+
+  viewInitialized = signal(false);
+
+  ngAfterViewInit() {
+    this.viewInitialized.set(true);
+  }
 }

@@ -2,7 +2,10 @@
   class="argument"
   [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <label for="project-languages">Languages</label>
+  <label for="project-languages"
+    >Languages
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <app-checkboxes-list icon="chevron-down">
     <app-checkboxes-item [element]="c()"></app-checkboxes-item>
     <app-checkboxes-item [element]="cxx()"></app-checkboxes-item>

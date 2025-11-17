@@ -1,5 +1,8 @@
 <div class="argument" [hidden]="!service.isEnabled(this)">
-  <label for="version">Version</label>
+  <label for="version"
+    >Version
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <input
     [(ngModel)]="versionString"
     type="text"

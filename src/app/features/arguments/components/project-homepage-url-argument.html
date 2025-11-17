@@ -2,7 +2,10 @@
   class="argument"
   [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <label for="project-homepage-url">Homepage URL</label>
+  <label for="project-homepage-url"
+    >Homepage URL
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <input
     type="url"
     id="project-homepage-url"

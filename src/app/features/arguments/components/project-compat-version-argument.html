@@ -2,7 +2,10 @@
   class="argument"
   [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <label for="compat-version">Compat version</label>
+  <label for="compat-version"
+    >Compat version
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <input
     [(ngModel)]="versionString"
     type="text"

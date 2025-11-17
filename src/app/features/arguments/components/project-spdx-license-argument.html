@@ -2,7 +2,10 @@
   class="argument"
   [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <label for="project-license">License</label>
+  <label for="project-license"
+    >License
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <input
     list="license-list"
     id="project-license"

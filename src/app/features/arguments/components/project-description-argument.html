@@ -2,7 +2,10 @@
   class="argument"
   [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
 >
-  <label for="project-description">Description</label>
+  <label for="project-description"
+    >Description
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <input
     id="project-description"
     name="project-description"

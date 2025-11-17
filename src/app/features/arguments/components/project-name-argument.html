@@ -1,5 +1,8 @@
 <div class="argument">
-  <label for="project-name">Name</label>
+  <label for="project-name"
+    >Name
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+  >
   <input id="project-name" name="project-name" [(ngModel)]="value" />
   <br />
 </div>

@@ -1,6 +1,9 @@
 <div class="project-command">
   <h1>
-    Project<app-checkboxes-list icon="menu">
+    Project @if (viewInitialized()) {
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span>
+    }
+    <app-checkboxes-list icon="menu">
       <app-checkboxes-item [element]="spdxLicense"></app-checkboxes-item>
       <app-checkboxes-item [element]="version"></app-checkboxes-item>
       <app-checkboxes-item [element]="compatVersion"></app-checkboxes-item>

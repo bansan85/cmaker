@@ -1,5 +1,8 @@
 <h1>Visual Studio</h1>
 <div class="argument" [hidden]="!service.isEnabled(this)">
-  <span>MSVC Runtime Library</span>
+  <span
+    >MSVC Runtime Library
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></span
+  >
   <input [(ngModel)]="value" type="checkbox" />
 </div>
