@@ -12,8 +12,8 @@ export class Version {
     arg3?: number,
     arg4?: number
   ) {
-    if (typeof arg1 === "string") {
-      const parts = arg1.split(".");
+    if (typeof arg1 === 'string') {
+      const parts = arg1.split('.');
       this.major = parseInt(parts[0], 10);
       if (parts.length > 1) {
         this.minor = parseInt(parts[1], 10);

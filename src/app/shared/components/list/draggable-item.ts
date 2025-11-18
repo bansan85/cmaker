@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: "app-draggable-item",
-  templateUrl: "./draggable-item.html",
+  selector: 'app-draggable-item',
+  templateUrl: './draggable-item.html',
 })
 export class DraggableItemComponent {
   @Input() text!: string;
@@ -12,8 +12,8 @@ export class DraggableItemComponent {
   @Output() dragEndEvent = new EventEmitter();
 
   dragStart(e: DragEvent) {
-    e.dataTransfer!.effectAllowed = "move";
-    e.dataTransfer!.setData("text/plain", "");
+    e.dataTransfer!.effectAllowed = 'move';
+    e.dataTransfer!.setData('text/plain', '');
     this.dragStartEvent.emit(e.target as HTMLElement);
   }
 

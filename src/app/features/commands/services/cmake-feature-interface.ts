@@ -1,5 +1,5 @@
-import { Version } from "../../../shared/models/version";
-import { CMakeAvailableData } from "../../cmake-project/interfaces/cmake-available-data";
+import { Version } from '../../../shared/models/version';
+import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 
 export abstract class CMakeFeatureInterface<Feature> {
   abstract cmakeMinVersion: Version | null;
@@ -28,13 +28,13 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   toCMakeListTxt(action: Feature): string {
     if (this.isEnabled(action)) {
-      let retval: string = "";
+      let retval: string = '';
       if (!this.isValid(action)) {
-        retval += "# Invalid\n";
+        retval += '# Invalid\n';
       }
       return retval + this.toCMakeListTxtImpl(action);
     } else {
-      return "";
+      return '';
     }
   }
 

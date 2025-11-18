@@ -8,9 +8,8 @@ describe('UiCheckboxIndeterminate', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UiCheckboxIndeterminate]
-    })
-    .compileComponents();
+      imports: [UiCheckboxIndeterminate],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UiCheckboxIndeterminate);
     component = fixture.componentInstance;

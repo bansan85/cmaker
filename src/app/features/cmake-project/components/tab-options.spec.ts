@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabOptions } from "./tab-options";
-import { ProjectContextService } from "../services/project-context-service";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
-import { Version } from "../../../shared/models/version";
+import { TabOptions } from './tab-options';
+import { ProjectContextService } from '../services/project-context-service';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
 
-describe("TabOptions", () => {
+describe('TabOptions', () => {
   let component: TabOptions;
   let fixture: ComponentFixture<TabOptions>;
 
@@ -26,7 +26,7 @@ describe("TabOptions", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

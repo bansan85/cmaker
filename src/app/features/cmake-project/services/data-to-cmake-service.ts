@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class DataToCMakeService {
   booleanToString(value: boolean): string {
     if (value) {
-      return "ON";
+      return 'ON';
     } else {
-      return "OFF";
+      return 'OFF';
     }
   }
 

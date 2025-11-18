@@ -1,5 +1,5 @@
-import { Component, ElementRef, inject, input } from '@angular/core'
-import { LucideAngularModule } from 'lucide-angular'
+import { Component, ElementRef, inject, input } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-checkboxes-list',
@@ -11,19 +11,19 @@ import { LucideAngularModule } from 'lucide-angular'
   },
 })
 export class CheckboxesList {
-  expanded: boolean = false
+  expanded: boolean = false;
 
-  elementRef = inject(ElementRef)
+  elementRef = inject(ElementRef);
 
-  icon = input<string>('menu')
+  icon = input<string>('menu');
 
   showCheckboxes() {
-    this.expanded = !this.expanded
+    this.expanded = !this.expanded;
   }
 
   onClickOutside(event: MouseEvent) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.expanded = false
+      this.expanded = false;
     }
   }
 }

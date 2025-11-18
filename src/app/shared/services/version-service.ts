@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Version } from "../models/version";
+import { Injectable } from '@angular/core';
+import { Version } from '../models/version';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class VersionService {
   isGreater(a: Version | null, b: Version | null): boolean {

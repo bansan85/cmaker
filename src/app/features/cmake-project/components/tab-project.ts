@@ -5,20 +5,20 @@ import {
   Type,
   ViewChildren,
   ViewContainerRef,
-} from "@angular/core";
-import { ProjectCommand } from "../../commands/components/project-command";
-import { CMakeMsvcRuntimeLibraryVariable } from "../../variables/components/cmake-msvc-runtime-library-variable";
-import { DraggableListComponent } from "../../../shared/components/list/draggable-list";
-import { DraggableItemComponent } from "../../../shared/components/list/draggable-item";
-import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
-import { CommonModule } from "@angular/common";
-import { CMakeFeatureInterface } from "../../commands/services/cmake-feature-interface";
+} from '@angular/core';
+import { ProjectCommand } from '../../commands/components/project-command';
+import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
+import { DraggableListComponent } from '../../../shared/components/list/draggable-list';
+import { DraggableItemComponent } from '../../../shared/components/list/draggable-item';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CommonModule } from '@angular/common';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 
 @Component({
-  selector: "app-tab-project",
+  selector: 'app-tab-project',
   imports: [DraggableListComponent, DraggableItemComponent, CommonModule],
-  templateUrl: "./tab-project.html",
-  styleUrl: "./tab-project.css",
+  templateUrl: './tab-project.html',
+  styleUrl: './tab-project.css',
 })
 export class TabProject implements AfterViewInit {
   items: Type<CMakeComponentInterface<CMakeFeatureInterface<any>>>[] = [
@@ -26,7 +26,7 @@ export class TabProject implements AfterViewInit {
     CMakeMsvcRuntimeLibraryVariable,
   ];
 
-  @ViewChildren("container", { read: ViewContainerRef })
+  @ViewChildren('container', { read: ViewContainerRef })
   containers!: QueryList<ViewContainerRef>;
   container!: ViewContainerRef;
   private instances: CMakeComponentInterface<CMakeFeatureInterface<any>>[] = [];

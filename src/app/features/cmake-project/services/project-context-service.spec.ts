@@ -1,10 +1,10 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed } from '@angular/core/testing';
 
-import { ProjectContextService } from "./project-context-service";
-import { Version } from "../../../shared/models/version";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
+import { ProjectContextService } from './project-context-service';
+import { Version } from '../../../shared/models/version';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 
-describe("ProjectContextService", () => {
+describe('ProjectContextService', () => {
   let service: ProjectContextService;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe("ProjectContextService", () => {
     service = TestBed.inject(ProjectContextService);
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

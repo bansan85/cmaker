@@ -1,5 +1,5 @@
-import { CMakeFeatureInterface } from "../../features/commands/services/cmake-feature-interface";
-import { Version } from "../models/version";
+import { CMakeFeatureInterface } from '../../features/commands/services/cmake-feature-interface';
+import { Version } from '../models/version';
 
 export interface CheckboxesItemInterface {
   enabled: boolean;

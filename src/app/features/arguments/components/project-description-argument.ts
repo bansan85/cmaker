@@ -1,16 +1,16 @@
-import { Component, inject } from "@angular/core";
-import { ProjectDescriptionService } from "../services/project-description-service";
-import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
-import { FormsModule } from "@angular/forms";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { VersionService } from "../../../shared/services/version-service";
-import { CheckboxesItemInterface } from "../../../shared/interface/checkboxes-item-interface";
+import { Component, inject } from '@angular/core';
+import { ProjectDescriptionService } from '../services/project-description-service';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { FormsModule } from '@angular/forms';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { VersionService } from '../../../shared/services/version-service';
+import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 
 @Component({
-  selector: "app-project-description-argument",
+  selector: 'app-project-description-argument',
   imports: [FormsModule],
-  templateUrl: "./project-description-argument.html",
-  styleUrl: "./project-description-argument.css",
+  templateUrl: './project-description-argument.html',
+  styleUrl: './project-description-argument.css',
 })
 export class ProjectDescriptionArgument
   implements
@@ -22,7 +22,7 @@ export class ProjectDescriptionArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = "Description";
+  readonly name: string = 'Description';
 
-  value = "";
+  value = '';
 }

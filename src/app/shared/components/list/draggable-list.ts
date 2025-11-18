@@ -5,12 +5,12 @@ import {
   EventEmitter,
   Output,
   QueryList,
-} from "@angular/core";
-import { DraggableItemComponent } from "./draggable-item";
+} from '@angular/core';
+import { DraggableItemComponent } from './draggable-item';
 
 @Component({
-  selector: "app-draggable-list",
-  templateUrl: "./draggable-list.html",
+  selector: 'app-draggable-list',
+  templateUrl: './draggable-list.html',
 })
 export class DraggableListComponent implements AfterContentInit {
   @ContentChildren(DraggableItemComponent)
@@ -31,7 +31,7 @@ export class DraggableListComponent implements AfterContentInit {
   }
 
   private getDraggableItemEl(el: HTMLElement): HTMLElement {
-    while (el && !el.hasAttribute("draggable")) {
+    while (el && !el.hasAttribute('draggable')) {
       el = el.parentElement as HTMLElement;
     }
     return el!;

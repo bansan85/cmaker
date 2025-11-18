@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CheckboxesList } from "./checkboxes-list";
-import { importProvidersFrom } from "@angular/core";
-import { LucideAngularModule, Menu } from "lucide-angular";
+import { CheckboxesList } from './checkboxes-list';
+import { importProvidersFrom } from '@angular/core';
+import { LucideAngularModule, Menu } from 'lucide-angular';
 
-describe("CheckboxesList", () => {
+describe('CheckboxesList', () => {
   let component: CheckboxesList;
   let fixture: ComponentFixture<CheckboxesList>;
 
@@ -19,7 +19,7 @@ describe("CheckboxesList", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

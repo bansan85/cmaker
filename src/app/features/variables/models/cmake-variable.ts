@@ -1,4 +1,4 @@
-import { Version } from "../../../shared/models/version";
+import { Version } from '../../../shared/models/version';
 
 export interface CMakeVariable {
   name: string;

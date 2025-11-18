@@ -1,17 +1,17 @@
-import { Component, inject, Input } from "@angular/core";
-import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
-import { Version } from "../../../shared/models/version";
-import { ProjectCompatVersionService } from "../services/project-compat-version-service";
-import { FormsModule } from "@angular/forms";
-import { VersionService } from "../../../shared/services/version-service";
-import { ProjectContextService } from "../../cmake-project/services/project-context-service";
-import { CheckboxesItemInterface } from "../../../shared/interface/checkboxes-item-interface";
+import { Component, inject, Input } from '@angular/core';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { Version } from '../../../shared/models/version';
+import { ProjectCompatVersionService } from '../services/project-compat-version-service';
+import { FormsModule } from '@angular/forms';
+import { VersionService } from '../../../shared/services/version-service';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 
 @Component({
-  selector: "app-project-compat-version-argument",
+  selector: 'app-project-compat-version-argument',
   imports: [FormsModule],
-  templateUrl: "./project-compat-version-argument.html",
-  styleUrl: "./project-compat-version-argument.css",
+  templateUrl: './project-compat-version-argument.html',
+  styleUrl: './project-compat-version-argument.css',
 })
 export class ProjectCompatVersionArgument
   implements
@@ -23,24 +23,24 @@ export class ProjectCompatVersionArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = "Compat version";
+  readonly name: string = 'Compat version';
 
   private _value?: Version;
 
   @Input()
   set value(v: Version | undefined) {
     this._value = v;
-    this.valueString = v ? v.toString() : "";
+    this.valueString = v ? v.toString() : '';
   }
 
   get value(): Version | undefined {
     return this._value;
   }
 
-  private valueString: string = "";
+  private valueString: string = '';
 
   get versionString(): string {
-    return this.valueString;  
+    return this.valueString;
   }
 
   set versionString(value: string) {

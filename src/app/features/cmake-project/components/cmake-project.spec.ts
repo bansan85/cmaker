@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CMakeProject } from "./cmake-project";
-import { Version } from "../../../shared/models/version";
-import { DEFAULT_MAX_VERSION } from "../../../app.tokens";
+import { CMakeProject } from './cmake-project';
+import { Version } from '../../../shared/models/version';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 
-describe("CMakeProject", () => {
+describe('CMakeProject', () => {
   let component: CMakeProject;
   let fixture: ComponentFixture<CMakeProject>;
 
@@ -24,7 +24,7 @@ describe("CMakeProject", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

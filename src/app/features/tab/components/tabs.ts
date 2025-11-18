@@ -1,17 +1,17 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import {
   AfterContentInit,
   Component,
   ContentChildren,
   QueryList,
-} from "@angular/core";
-import { TabItem } from "./tab-item";
+} from '@angular/core';
+import { TabItem } from './tab-item';
 
 @Component({
-  selector: "app-ui-tabs",
+  selector: 'app-ui-tabs',
   imports: [CommonModule],
-  templateUrl: "./tabs.html",
-  styleUrl: "./tabs.css",
+  templateUrl: './tabs.html',
+  styleUrl: './tabs.css',
 })
 export class Tabs implements AfterContentInit {
   @ContentChildren(TabItem) tabs!: QueryList<TabItem>;

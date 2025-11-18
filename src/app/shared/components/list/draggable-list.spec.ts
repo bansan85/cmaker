@@ -8,9 +8,8 @@ describe('DraggableListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DraggableListComponent]
-    })
-      .compileComponents();
+      imports: [DraggableListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DraggableListComponent);
     component = fixture.componentInstance;
