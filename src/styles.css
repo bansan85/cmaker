@@ -19,3 +19,13 @@
     font-size: initial;
     font-weight: initial;
 }
+
+.invalid {
+    background-color: red;
+    border-radius: 0.25em;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    display: inline-block;
+    font-size: initial;
+    font-weight: initial;
+}

@@ -2,7 +2,10 @@
 <div class="argument" [hidden]="!service.isEnabled(this)">
   <span
     >MSVC Runtime Library
-    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></span
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span
+    ><span class="invalid">
+      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ></span
   >
   <input [(ngModel)]="value" type="checkbox" />
 </div>

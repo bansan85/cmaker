@@ -28,7 +28,7 @@ export class ProjectNameService extends CMakeFeatureInterface<ProjectNameArgumen
   }
 
   isValid(action: ProjectNameArgument): boolean {
-    return this.dataToCMake.isValidTargetName(action.name);
+    return this.dataToCMake.isValidTargetName(action.value);
   }
 
   protected cmakeRequiredVersionImpl(

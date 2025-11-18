@@ -4,7 +4,10 @@
 >
   <label for="project-languages"
     >Languages
-    <span class="version">{{service.cmakeRequiredVersion(this)}}</span></label
+    <span class="version">{{service.cmakeRequiredVersion(this)}}</span
+    ><span class="invalid">
+      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ></label
   >
   <app-checkboxes-list icon="chevron-down">
     <app-checkboxes-item [element]="c()"></app-checkboxes-item>

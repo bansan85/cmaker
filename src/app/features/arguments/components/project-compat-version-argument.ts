@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { CMakeComponentInterface } from "../../cmake-project/interfaces/cmake-component-interface";
 import { Version } from "../../../shared/models/version";
 import { ProjectCompatVersionService } from "../services/project-compat-version-service";
@@ -25,15 +25,30 @@ export class ProjectCompatVersionArgument
   enabled = true;
   readonly name: string = "Compat version";
 
-  value?: Version;
+  private _value?: Version;
+
+  @Input()
+  set value(v: Version | undefined) {
+    this._value = v;
+    this.valueString = v ? v.toString() : "";
+  }
+
+  get value(): Version | undefined {
+    return this._value;
+  }
+
+  private valueString: string = "";
 
   get versionString(): string {
-    return this.value ? this.value.toString() : "";
+    return this.valueString;  
   }
 
   set versionString(value: string) {
+    this.valueString = value;
     if (Version.isValid(value)) {
-      this.value = new Version(value);
+      this._value = new Version(value);
+    } else {
+      this._value = undefined;
     }
   }
 }
