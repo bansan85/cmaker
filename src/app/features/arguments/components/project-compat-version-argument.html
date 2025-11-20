@@ -1,7 +1,4 @@
-<div
-  class="argument"
-  [hidden]="!service.isEnabled(this) || versionService.isGreater( service.cmakeMinVersion, projectContext.version)"
->
+<div class="argument" [hidden]="!service.isEnabled(this)">
   <label for="compat-version"
     >Compat version
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
