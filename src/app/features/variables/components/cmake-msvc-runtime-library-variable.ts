@@ -4,6 +4,7 @@ import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-r
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
+import { CMakeMsvcRuntimeLibraryVariableModel } from '../models/cmake-msvc-runtime-library.model';
 
 @Component({
   selector: 'app-cmake-msvc-runtime-library-variable',
@@ -13,7 +14,9 @@ import { VersionService } from '../../../shared/services/version-service';
   providers: [CMakeMsvcRuntimeLibraryVariableService],
 })
 export class CMakeMsvcRuntimeLibraryVariable
-  implements CMakeComponentInterface<CMakeMsvcRuntimeLibraryVariableService>
+  implements
+    CMakeComponentInterface<CMakeMsvcRuntimeLibraryVariableService>,
+    CMakeMsvcRuntimeLibraryVariableModel
 {
   service = inject(CMakeMsvcRuntimeLibraryVariableService);
   projectContext = inject(ProjectContextService);

@@ -1,23 +1,23 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { ProjectHomepageUrlArgument } from '../components/project-homepage-url-argument';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { VersionService } from '../../../shared/services/version-service';
+import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHomepageUrlArgument> {
+export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHomepageUrlModel> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(3, 12);
 
-  isEnabled(action: ProjectHomepageUrlArgument): boolean {
+  isEnabled(action: ProjectHomepageUrlModel): boolean {
     return (
-      action.enabled &&
+      (action.enabled ?? true) &&
       !this.versionService.isGreater(
         this.cmakeMinVersion,
         this.projectContext.version
@@ -25,18 +25,18 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHome
     );
   }
 
-  isValid(action: ProjectHomepageUrlArgument): boolean {
+  isValid(action: ProjectHomepageUrlModel): boolean {
     return /https?:\/\/.+/.test(action.value);
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectHomepageUrlArgument
+    _action: ProjectHomepageUrlModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
   protected cmakeObjectsImpl(
-    _action: ProjectHomepageUrlArgument
+    _action: ProjectHomepageUrlModel
   ): CMakeAvailableData {
     return {
       variables: [
@@ -56,7 +56,7 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHome
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectHomepageUrlArgument): string {
+  protected toCMakeListTxtImpl(action: ProjectHomepageUrlModel): string {
     return `HOMEPAGE_URL "${action.value}"\n`;
   }
 }

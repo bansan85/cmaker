@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
+import { ProjectDescriptionModel } from '../models/project-description.model';
 
 @Component({
   selector: 'app-project-description-argument',
@@ -15,7 +16,8 @@ import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-it
 export class ProjectDescriptionArgument
   implements
     CMakeComponentInterface<ProjectDescriptionService>,
-    CheckboxesItemInterface
+    CheckboxesItemInterface,
+    ProjectDescriptionModel
 {
   service = inject(ProjectDescriptionService);
   projectContext = inject(ProjectContextService);

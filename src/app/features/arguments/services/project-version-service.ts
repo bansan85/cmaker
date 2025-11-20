@@ -1,32 +1,30 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { ProjectVersionArgument } from '../components/project-version-argument';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { ProjectVersionModel } from '../models/project-version.model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionArgument> {
+export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionModel> {
   cmakeMinVersion: Version | null = null;
 
-  isEnabled(action: ProjectVersionArgument): boolean {
-    return action.enabled;
+  isEnabled(action: ProjectVersionModel): boolean {
+    return action.enabled ?? true;
   }
 
-  isValid(action: ProjectVersionArgument): boolean {
+  isValid(action: ProjectVersionModel): boolean {
     return action.value !== undefined;
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectVersionArgument
+    _action: ProjectVersionModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    _action: ProjectVersionArgument
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: ProjectVersionModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -94,7 +92,7 @@ export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionA
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectVersionArgument): string {
+  protected toCMakeListTxtImpl(action: ProjectVersionModel): string {
     return `VERSION ${action.value?.toString()}\n`;
   }
 }

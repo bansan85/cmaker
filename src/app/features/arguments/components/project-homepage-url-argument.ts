@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
+import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
 
 @Component({
   selector: 'app-project-homepage-url-argument',
@@ -15,7 +16,8 @@ import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-it
 export class ProjectHomepageUrlArgument
   implements
     CMakeComponentInterface<ProjectHomepageUrlService>,
-    CheckboxesItemInterface
+    CheckboxesItemInterface,
+    ProjectHomepageUrlModel
 {
   service = inject(ProjectHomepageUrlService);
   projectContext = inject(ProjectContextService);

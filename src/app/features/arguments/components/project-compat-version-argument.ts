@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { VersionService } from '../../../shared/services/version-service';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
+import { ProjectCompatVersionModel } from '../models/project-compat-version.model';
 
 @Component({
   selector: 'app-project-compat-version-argument',
@@ -16,7 +17,8 @@ import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-it
 export class ProjectCompatVersionArgument
   implements
     CMakeComponentInterface<ProjectCompatVersionService>,
-    CheckboxesItemInterface
+    CheckboxesItemInterface,
+    ProjectCompatVersionModel
 {
   service = inject(ProjectCompatVersionService);
   projectContext = inject(ProjectContextService);

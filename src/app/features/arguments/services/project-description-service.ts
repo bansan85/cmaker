@@ -1,23 +1,23 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { ProjectDescriptionArgument } from '../components/project-description-argument';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { VersionService } from '../../../shared/services/version-service';
+import { ProjectDescriptionModel } from '../models/project-description.model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDescriptionArgument> {
+export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDescriptionModel> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(3, 9);
 
-  isEnabled(action: ProjectDescriptionArgument): boolean {
+  isEnabled(action: ProjectDescriptionModel): boolean {
     return (
-      action.enabled &&
+      (action.enabled ?? true) &&
       !this.versionService.isGreater(
         this.cmakeMinVersion,
         this.projectContext.version
@@ -25,18 +25,18 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
     );
   }
 
-  isValid(action: ProjectDescriptionArgument): boolean {
+  isValid(_action: ProjectDescriptionModel): boolean {
     return true;
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectDescriptionArgument
+    _action: ProjectDescriptionModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
   protected cmakeObjectsImpl(
-    _action: ProjectDescriptionArgument
+    _action: ProjectDescriptionModel
   ): CMakeAvailableData {
     return {
       variables: [
@@ -56,7 +56,7 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectDescriptionArgument): string {
+  protected toCMakeListTxtImpl(action: ProjectDescriptionModel): string {
     return `DESCRIPTION "${action.value}"\n`;
   }
 }

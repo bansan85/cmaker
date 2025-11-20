@@ -1,16 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { Version } from '../../../shared/models/version';
-import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
+import { CMakeMsvcRuntimeLibraryVariableModel } from '../models/cmake-msvc-runtime-library.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariable> {
+export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariableModel> {
   private readonly variable = 'CRT_SHARED_LIBS';
   private readonly helpText = 'Build using CRT shared libraries';
 
@@ -20,9 +20,9 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
 
   cmakeMinVersion: Version | null = new Version(3, 15);
 
-  isEnabled(action: CMakeMsvcRuntimeLibraryVariable): boolean {
+  isEnabled(action: CMakeMsvcRuntimeLibraryVariableModel): boolean {
     return (
-      action.enabled &&
+      (action.enabled ?? true) &&
       !this.versionService.isGreater(
         this.cmakeMinVersion,
         this.projectContext.version
@@ -30,18 +30,18 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
     );
   }
 
-  isValid(_action: CMakeMsvcRuntimeLibraryVariable): boolean {
+  isValid(_action: CMakeMsvcRuntimeLibraryVariableModel): boolean {
     return true;
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: CMakeMsvcRuntimeLibraryVariable
+    _action: CMakeMsvcRuntimeLibraryVariableModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
   protected cmakeObjectsImpl(
-    action: CMakeMsvcRuntimeLibraryVariable
+    action: CMakeMsvcRuntimeLibraryVariableModel
   ): CMakeAvailableData {
     return {
       options: [
@@ -55,7 +55,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
   }
 
   protected toCMakeListTxtImpl(
-    action: CMakeMsvcRuntimeLibraryVariable
+    action: CMakeMsvcRuntimeLibraryVariableModel
   ): string {
     return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(

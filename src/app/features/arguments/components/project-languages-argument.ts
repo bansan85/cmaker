@@ -7,6 +7,7 @@ import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
 import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
 import { Version } from '../../../shared/models/version';
+import { ProjectLanguagesModel } from '../models/project-languages.model';
 
 @Component({
   selector: 'app-project-languages-argument',
@@ -17,7 +18,8 @@ import { Version } from '../../../shared/models/version';
 export class ProjectLanguagesArgument
   implements
     CMakeComponentInterface<ProjectLanguagesService>,
-    CheckboxesItemInterface
+    CheckboxesItemInterface,
+    ProjectLanguagesModel
 {
   service = inject(ProjectLanguagesService);
   projectContext = inject(ProjectContextService);
@@ -25,6 +27,10 @@ export class ProjectLanguagesArgument
 
   enabled = true;
   readonly name: string = 'Languages';
+
+  get value(): string {
+    return this.toString();
+  }
 
   c = signal<CheckboxesItemInterface>({
     enabled: false,

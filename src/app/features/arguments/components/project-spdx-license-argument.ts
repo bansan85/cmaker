@@ -5,6 +5,7 @@ import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-co
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
+import { ProjectSpdxLicenseModel } from '../models/project-spdx-license.model';
 
 @Component({
   selector: 'app-project-spdx-license-argument',
@@ -15,7 +16,8 @@ import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-it
 export class ProjectSpdxLicenseArgument
   implements
     CMakeComponentInterface<ProjectSpdxLicenseService>,
-    CheckboxesItemInterface
+    CheckboxesItemInterface,
+    ProjectSpdxLicenseModel
 {
   service = inject(ProjectSpdxLicenseService);
   projectContext = inject(ProjectContextService);

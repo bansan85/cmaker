@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from './cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
-import { ProjectCommand } from '../components/project-command';
 import {
   CMakeAvailableData,
   mergeCMakeAvailableData,
@@ -15,13 +14,14 @@ import { VersionService } from '../../../shared/services/version-service';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
+import { ProjectModel } from '../models/project.model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
+export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
   name = inject(ProjectNameService);
-  license = inject(ProjectSpdxLicenseService);
+  spdxLicense = inject(ProjectSpdxLicenseService);
   version = inject(ProjectVersionService);
   compatVersion = inject(ProjectCompatVersionService);
   description = inject(ProjectDescriptionService);
@@ -33,41 +33,57 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
 
   cmakeMinVersion: Version | null = null;
 
-  isEnabled(_action: ProjectCommand): boolean {
+  isEnabled(_action: ProjectModel): boolean {
     return true;
   }
 
-  isValid(action: ProjectCommand): boolean {
+  isValid(action: ProjectModel): boolean {
     return (
       (!this.name.isEnabled(action.name) || this.name.isValid(action.name)) &&
-      (!this.version.isEnabled(action.version) ||
+      (action.version === undefined ||
+        !this.version.isEnabled(action.version) ||
         this.version.isValid(action.version)) &&
-      (!this.compatVersion.isEnabled(action.compatVersion) ||
+      (action.compatVersion === undefined ||
+        !this.compatVersion.isEnabled(action.compatVersion) ||
         this.compatVersion.isValid(action.compatVersion)) &&
-      (!this.license.isEnabled(action.license) ||
-        this.license.isValid(action.license)) &&
-      (!this.description.isEnabled(action.description) ||
+      (action.spdxLicense === undefined ||
+        !this.spdxLicense.isEnabled(action.spdxLicense) ||
+        this.spdxLicense.isValid(action.spdxLicense)) &&
+      (action.description === undefined ||
+        !this.description.isEnabled(action.description) ||
         this.description.isValid(action.description)) &&
-      (!this.homepageUrl.isEnabled(action.homepageUrl) ||
+      (action.homepageUrl === undefined ||
+        !this.homepageUrl.isEnabled(action.homepageUrl) ||
         this.homepageUrl.isValid(action.homepageUrl)) &&
-      (!this.languages.isEnabled(action.languages) ||
+      (action.languages === undefined ||
+        !this.languages.isEnabled(action.languages) ||
         this.languages.isValid(action.languages))
     );
   }
 
-  protected cmakeRequiredVersionImpl(action: ProjectCommand): Version | null {
+  protected cmakeRequiredVersionImpl(action: ProjectModel): Version | null {
     return this.versionService.max(
       this.name.cmakeRequiredVersion(action.name),
-      this.version.cmakeRequiredVersion(action.version),
-      this.compatVersion.cmakeRequiredVersion(action.compatVersion),
-      this.license.cmakeRequiredVersion(action.license),
-      this.description.cmakeRequiredVersion(action.description),
-      this.homepageUrl.cmakeRequiredVersion(action.homepageUrl),
-      this.languages.cmakeRequiredVersion(action.languages)
+      action.version ? this.version.cmakeRequiredVersion(action.version) : null,
+      action.compatVersion
+        ? this.compatVersion.cmakeRequiredVersion(action.compatVersion)
+        : null,
+      action.spdxLicense
+        ? this.spdxLicense.cmakeRequiredVersion(action.spdxLicense)
+        : null,
+      action.description
+        ? this.description.cmakeRequiredVersion(action.description)
+        : null,
+      action.homepageUrl
+        ? this.homepageUrl.cmakeRequiredVersion(action.homepageUrl)
+        : null,
+      action.languages
+        ? this.languages.cmakeRequiredVersion(action.languages)
+        : null
     );
   }
 
-  protected cmakeObjectsImpl(action: ProjectCommand): CMakeAvailableData {
+  protected cmakeObjectsImpl(action: ProjectModel): CMakeAvailableData {
     return mergeCMakeAvailableData(
       {
         variables: [
@@ -98,25 +114,43 @@ export class ProjectService extends CMakeFeatureInterface<ProjectCommand> {
         ],
       },
       this.name.cmakeObjects(action.name),
-      this.version.cmakeObjects(action.version),
-      this.compatVersion.cmakeObjects(action.compatVersion),
-      this.license.cmakeObjects(action.license),
-      this.description.cmakeObjects(action.description),
-      this.homepageUrl.cmakeObjects(action.homepageUrl),
-      this.languages.cmakeObjects(action.languages)
+      action.version ? this.version.cmakeObjects(action.version) : {},
+      action.compatVersion
+        ? this.compatVersion.cmakeObjects(action.compatVersion)
+        : {},
+      action.spdxLicense
+        ? this.spdxLicense.cmakeObjects(action.spdxLicense)
+        : {},
+      action.description
+        ? this.description.cmakeObjects(action.description)
+        : {},
+      action.homepageUrl
+        ? this.homepageUrl.cmakeObjects(action.homepageUrl)
+        : {},
+      action.languages ? this.languages.cmakeObjects(action.languages) : {}
     );
   }
 
-  protected toCMakeListTxtImpl(action: ProjectCommand): string {
+  protected toCMakeListTxtImpl(action: ProjectModel): string {
     return (
       'project(\n' +
       this.name.toCMakeListTxt(action.name) +
-      this.license.toCMakeListTxt(action.license) +
-      this.version.toCMakeListTxt(action.version) +
-      this.compatVersion.toCMakeListTxt(action.compatVersion) +
-      this.description.toCMakeListTxt(action.description) +
-      this.homepageUrl.toCMakeListTxt(action.homepageUrl) +
-      this.languages.toCMakeListTxt(action.languages) +
+      (action.version ? this.version.toCMakeListTxt(action.version) : '') +
+      (action.compatVersion
+        ? this.compatVersion.toCMakeListTxt(action.compatVersion)
+        : '') +
+      (action.spdxLicense
+        ? this.spdxLicense.toCMakeListTxt(action.spdxLicense)
+        : '') +
+      (action.description
+        ? this.description.toCMakeListTxt(action.description)
+        : '') +
+      (action.homepageUrl
+        ? this.homepageUrl.toCMakeListTxt(action.homepageUrl)
+        : '') +
+      (action.languages
+        ? this.languages.toCMakeListTxt(action.languages)
+        : '') +
       ')\n'
     );
   }

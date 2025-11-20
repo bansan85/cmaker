@@ -5,6 +5,7 @@ import { ProjectNameService } from '../services/project-name-service';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { FormsModule } from '@angular/forms';
+import { ProjectNameModel } from '../models/project-name.model';
 
 @Component({
   selector: 'app-project-name-argument',
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
 export class ProjectNameArgument
   implements
     CMakeComponentInterface<ProjectNameService>,
-    CheckboxesItemInterface
+    CheckboxesItemInterface,
+    ProjectNameModel
 {
   service = inject(ProjectNameService);
   projectContext = inject(ProjectContextService);

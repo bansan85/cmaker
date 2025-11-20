@@ -26,6 +26,7 @@ import { ProjectLanguagesArgument } from '../../arguments/components/project-lan
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
+import { ProjectModel } from '../models/project.model';
 
 @Component({
   selector: 'app-project-command',
@@ -55,10 +56,13 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
   ],
 })
 export class ProjectCommand
-  implements CMakeComponentInterface<ProjectService>, AfterViewInit
+  implements
+    CMakeComponentInterface<ProjectService>,
+    AfterViewInit,
+    ProjectModel
 {
   @ViewChild('name') name!: ProjectNameArgument;
-  @ViewChild('spdxLicense') license!: ProjectSpdxLicenseArgument;
+  @ViewChild('spdxLicense') spdxLicense!: ProjectSpdxLicenseArgument;
   @ViewChild('version') version!: ProjectVersionArgument;
   @ViewChild('compatVersion') compatVersion!: ProjectCompatVersionArgument;
   @ViewChild('description') description!: ProjectDescriptionArgument;

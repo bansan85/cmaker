@@ -1,23 +1,23 @@
 import { inject, Injectable } from '@angular/core';
-import { ProjectSpdxLicenseArgument } from '../components/project-spdx-license-argument';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
+import { ProjectSpdxLicenseModel } from '../models/project-spdx-license.model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdxLicenseArgument> {
+export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdxLicenseModel> {
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
   cmakeMinVersion: Version | null = new Version(4, 2);
 
-  isEnabled(action: ProjectSpdxLicenseArgument): boolean {
+  isEnabled(action: ProjectSpdxLicenseModel): boolean {
     return (
-      action.enabled &&
+      (action.enabled ?? true) &&
       !this.versionService.isGreater(
         this.cmakeMinVersion,
         this.projectContext.version
@@ -25,18 +25,18 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdx
     );
   }
 
-  isValid(_action: ProjectSpdxLicenseArgument): boolean {
+  isValid(_action: ProjectSpdxLicenseModel): boolean {
     return true;
   }
 
   protected cmakeRequiredVersionImpl(
-    action: ProjectSpdxLicenseArgument
+    action: ProjectSpdxLicenseModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
   protected cmakeObjectsImpl(
-    action: ProjectSpdxLicenseArgument
+    action: ProjectSpdxLicenseModel
   ): CMakeAvailableData {
     return {
       variables: [
@@ -56,7 +56,7 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdx
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectSpdxLicenseArgument): string {
+  protected toCMakeListTxtImpl(action: ProjectSpdxLicenseModel): string {
     return `SPDX_LICENSE "${action.value}"\n`;
   }
 }

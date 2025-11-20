@@ -1,23 +1,23 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { ProjectCompatVersionArgument } from '../components/project-compat-version-argument';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { VersionService } from '../../../shared/services/version-service';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { ProjectCompatVersionModel } from '../models/project-compat-version.model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCompatVersionArgument> {
+export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCompatVersionModel> {
   cmakeMinVersion: Version | null = new Version(4, 1);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectCompatVersionArgument): boolean {
+  isEnabled(action: ProjectCompatVersionModel): boolean {
     return (
-      action.enabled &&
+      (action.enabled ?? true) &&
       !this.versionService.isGreater(
         this.cmakeMinVersion,
         this.projectContext.version
@@ -25,18 +25,18 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
     );
   }
 
-  isValid(action: ProjectCompatVersionArgument): boolean {
+  isValid(action: ProjectCompatVersionModel): boolean {
     return action.value !== undefined;
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectCompatVersionArgument
+    _action: ProjectCompatVersionModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
   protected cmakeObjectsImpl(
-    _action: ProjectCompatVersionArgument
+    _action: ProjectCompatVersionModel
   ): CMakeAvailableData {
     return {
       variables: [
@@ -56,7 +56,7 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectCompatVersionArgument): string {
+  protected toCMakeListTxtImpl(action: ProjectCompatVersionModel): string {
     return `COMPAT_VERSION ${action.value?.toString()}\n`;
   }
 }
