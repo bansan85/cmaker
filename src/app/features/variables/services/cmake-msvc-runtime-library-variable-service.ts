@@ -8,7 +8,7 @@ import { VersionService } from '../../../shared/services/version-service';
 import { CMakeMsvcRuntimeLibraryVariableModel } from '../models/cmake-msvc-runtime-library.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: null,
 })
 export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariableModel> {
   private readonly variable = 'CRT_SHARED_LIBS';
