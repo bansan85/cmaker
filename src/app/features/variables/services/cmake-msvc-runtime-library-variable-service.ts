@@ -8,10 +8,10 @@ import { VersionService } from '../../../shared/services/version-service';
 import { CMakeMsvcRuntimeLibraryVariableModel } from '../models/cmake-msvc-runtime-library.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: null,
 })
 export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariableModel> {
-  private readonly variable = 'CRT_SHARED_LIBS';
+  private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
   private readonly helpText = 'Build using CRT shared libraries';
 
   private dataToCMake = inject(DataToCMakeService);
