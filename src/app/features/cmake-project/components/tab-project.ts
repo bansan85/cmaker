@@ -13,6 +13,7 @@ import { DraggableItemComponent } from '../../../shared/components/list/draggabl
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CommonModule } from '@angular/common';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { CMakeProjectIncludeBeforeVariable } from '../../variables/components/cmake-project-include-before-variable';
 
 @Component({
   selector: 'app-tab-project',
@@ -24,6 +25,7 @@ export class TabProject implements AfterViewInit {
   items: Type<CMakeComponentInterface<CMakeFeatureInterface<any>>>[] = [
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
+    CMakeProjectIncludeBeforeVariable,
   ];
 
   @ViewChildren('container', { read: ViewContainerRef })

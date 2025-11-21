@@ -4,7 +4,7 @@ import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-availab
 export abstract class CMakeFeatureInterface<Feature> {
   abstract cmakeMinVersion: Version | null;
   abstract isEnabled(action: Feature): boolean;
-  abstract isValid(action: Feature): boolean;
+  abstract isValid(action: Feature): boolean | Promise<boolean>;
 
   cmakeRequiredVersion(action: Feature): Version | null {
     if (this.isEnabled(action)) {
