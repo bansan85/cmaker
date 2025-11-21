@@ -1,12 +1,12 @@
-.argument:hover {
+.field:hover {
     background-color: grey;
 }
 
-.argument label {
+.field label {
     display: block;
 }
 
-.argument input:invalid {
+.field input:invalid {
     color: red;
 }
 
