@@ -9,12 +9,16 @@ import { Component, output } from '@angular/core';
 export class UiCheckboxIndeterminate {
   value: boolean | null = null;
 
-  checked = output<boolean | null>();
+  readonly checked = output<boolean | null>();
 
   toggle(): void {
-    if (this.value === true) this.value = null;
-    else if (this.value === null) this.value = false;
-    else this.value = true;
+    if (this.value === true) {
+      this.value = null;
+    } else if (this.value === null) {
+      this.value = false;
+    } else {
+      this.value = true;
+    }
 
     this.checked.emit(this.value);
   }

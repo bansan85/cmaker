@@ -33,7 +33,7 @@ export class Version {
   }
 
   public static isValid(version: string): boolean {
-    return /^\d+(\.\d+){0,3}$/.test(version);
+    return /^\d+(?:\.\d+){0,3}$/u.test(version);
   }
 
   toString(): string {

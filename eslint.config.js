@@ -2,8 +2,9 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
+import { defineConfig } from 'eslint/config';
 
-export default tseslint.config(
+export default defineConfig(
   {
     files: ['**/*.ts'],
     extends: [
@@ -36,6 +37,32 @@ export default tseslint.config(
           style: 'kebab-case',
         },
       ],
+      'no-console': 'off',
+      'id-length': 'off',
+      'one-var': 'off',
+      'no-ternary': 'off',
+      'no-undefined': 'off',
+      'no-magic-numbers': 'off',
+      'sort-keys': 'off',
+      'sort-imports': 'off',
+      'max-statements': 'off',
+      'max-params': 'off',
+      'no-param-reassign': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@angular-eslint/component-class-suffix': 'off',
+      '@angular-eslint/use-injectable-provided-in': 'off',
+      'no-else-return': 'off',
+      // False positive in .spec.ts.
+      'init-declarations': 'off',
+      // False position with decorators.
+      'new-cap': 'off',
+      // Service shouldn't have static methods.
+      'class-methods-use-this': 'off',
+      // False positive.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+      // False positive.
+      '@typescript-eslint/restrict-template-expressions': 'off',
     },
   },
   {

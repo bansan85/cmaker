@@ -25,7 +25,7 @@ export class ProjectVersionArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'Version';
+  readonly name = 'Version';
 
   private _value?: Version;
 

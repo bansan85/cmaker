@@ -7,5 +7,5 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 })
 export class ProjectContextService {
   version: Version = inject(DEFAULT_MAX_VERSION);
-  rootPath: string = '';
+  rootPath = '';
 }

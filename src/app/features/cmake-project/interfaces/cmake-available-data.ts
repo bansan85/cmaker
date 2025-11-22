@@ -18,8 +18,8 @@ export function mergeCMakeAvailableData(
   });
 
   return {
-    options: items.flatMap((item) => item.options || []),
-    variables: items.flatMap((item) => item.variables || []),
+    options: items.flatMap((item) => item.options ?? []),
+    variables: items.flatMap((item) => item.variables ?? []),
     policies: mergedPolicy,
   };
 }

@@ -5,27 +5,19 @@
     ><span class="invalid"> {{service.isValid(this) ? "" : "Invalid"}}</span>
     }
     <app-checkboxes-list icon="menu">
-      <app-checkboxes-item [element]="spdxLicense"></app-checkboxes-item>
-      <app-checkboxes-item [element]="version"></app-checkboxes-item>
-      <app-checkboxes-item [element]="compatVersion"></app-checkboxes-item>
-      <app-checkboxes-item [element]="description"></app-checkboxes-item>
-      <app-checkboxes-item [element]="homepageUrl"></app-checkboxes-item>
-      <app-checkboxes-item [element]="languages"></app-checkboxes-item>
+      <app-checkboxes-item [element]="spdxLicense" />
+      <app-checkboxes-item [element]="version" />
+      <app-checkboxes-item [element]="compatVersion" />
+      <app-checkboxes-item [element]="description" />
+      <app-checkboxes-item [element]="homepageUrl" />
+      <app-checkboxes-item [element]="languages" />
     </app-checkboxes-list>
   </h1>
 </div>
-<app-project-name-argument #name></app-project-name-argument>
-<app-project-spdx-license-argument
-  #spdxLicense
-></app-project-spdx-license-argument>
-<app-project-version-argument #version></app-project-version-argument>
-<app-project-compat-version-argument
-  #compatVersion
-></app-project-compat-version-argument>
-<app-project-description-argument
-  #description
-></app-project-description-argument>
-<app-project-homepage-url-argument
-  #homepageUrl
-></app-project-homepage-url-argument>
-<app-project-languages-argument #languages></app-project-languages-argument>
+<app-project-name-argument #name />
+<app-project-spdx-license-argument #spdxLicense />
+<app-project-version-argument #version />
+<app-project-compat-version-argument #compatVersion />
+<app-project-description-argument #description />
+<app-project-homepage-url-argument #homepageUrl />
+<app-project-languages-argument #languages />

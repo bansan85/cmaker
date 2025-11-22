@@ -1,10 +1,8 @@
 import {
   AfterContentInit,
   Component,
-  ContentChildren,
-  EventEmitter,
-  Output,
-  QueryList,
+  contentChildren,
+  output,
 } from '@angular/core';
 import { DraggableItemComponent } from './draggable-item';
 
@@ -13,26 +11,31 @@ import { DraggableItemComponent } from './draggable-item';
   templateUrl: './draggable-list.html',
 })
 export class DraggableListComponent implements AfterContentInit {
-  @ContentChildren(DraggableItemComponent)
-  items!: QueryList<DraggableItemComponent>;
+  readonly items = contentChildren(DraggableItemComponent);
   draggableItem!: HTMLElement;
 
   from = 0;
   to = 0;
 
-  @Output() orderChanged = new EventEmitter<{ from: number; to: number }>();
+  readonly orderChanged = output<{ from: number; to: number }>();
 
   ngAfterContentInit() {
-    this.items.forEach((item) => {
-      item.dragStartEvent.subscribe((target) => this.onDragStart(target));
-      item.dragOverEvent.subscribe((target) => this.onDragOver(target));
-      item.dragEndEvent.subscribe(() => this.onDragEnd());
+    this.items().forEach((item) => {
+      item.dragStartEvent.subscribe((target) => {
+        this.onDragStart(target);
+      });
+      item.dragOverEvent.subscribe((target) => {
+        this.onDragOver(target);
+      });
+      item.dragEndEvent.subscribe(() => {
+        this.onDragEnd();
+      });
     });
   }
 
-  private getDraggableItemEl(el: HTMLElement): HTMLElement {
+  private getDraggableItemEl(el: HTMLElement | null): HTMLElement {
     while (el && !el.hasAttribute('draggable')) {
-      el = el.parentElement as HTMLElement;
+      el = el.parentElement;
     }
     return el!;
   }
@@ -78,13 +81,17 @@ export class DraggableListComponent implements AfterContentInit {
   }
 
   private isBefore(el1: HTMLElement, el2: HTMLElement) {
-    if (el2.parentNode === el1.parentNode)
+    if (el2.parentNode === el1.parentNode) {
       for (
         let cur = el1.previousSibling as HTMLElement | null;
         cur;
         cur = cur.previousSibling as HTMLElement | null
-      )
-        if (cur === el2) return true;
+      ) {
+        if (cur === el2) {
+          return true;
+        }
+      }
+    }
     return false;
   }
 }

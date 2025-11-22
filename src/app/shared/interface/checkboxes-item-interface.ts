@@ -6,6 +6,6 @@ export interface CheckboxesItemInterface {
 
   readonly name: string;
 
-  service?: CMakeFeatureInterface<any>;
+  service?: CMakeFeatureInterface<unknown>;
   version?: Version;
 }

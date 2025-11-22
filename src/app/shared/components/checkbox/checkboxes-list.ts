@@ -11,11 +11,11 @@ import { LucideAngularModule } from 'lucide-angular';
   },
 })
 export class CheckboxesList {
-  expanded: boolean = false;
+  expanded = false;
 
   elementRef = inject(ElementRef);
 
-  icon = input<string>('menu');
+  readonly icon = input<string>('menu');
 
   showCheckboxes() {
     this.expanded = !this.expanded;

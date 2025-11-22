@@ -6,147 +6,107 @@ import { Version } from '../models/version';
 })
 export class VersionService {
   isGreater(a: Version | null, b: Version | null): boolean {
-    if (a === null && b === null) {
-      return false;
-    }
-    if (a === null && b !== null) {
-      return false;
-    }
-    if (a !== null && b === null) {
-      return true;
-    }
-    // To make Typescript compiler happy.
     if (a === null || b === null) {
-      return false;
+      return a !== null && b === null;
     }
 
     if (a.major !== b.major) {
       return a.major > b.major;
     }
 
-    const a_minor = a.minor ?? -1;
-    const b_minor = b.minor ?? -1;
-    if (a_minor !== b_minor) {
-      return a_minor > b_minor;
+    const aMinor = a.minor ?? -1;
+    const bMinor = b.minor ?? -1;
+    if (aMinor !== bMinor) {
+      return aMinor > bMinor;
     }
 
-    const a_patch = a.patch ?? -1;
-    const b_patch = b.patch ?? -1;
-    if (a_patch !== b_patch) {
-      return a_patch > b_patch;
+    const aPatch = a.patch ?? -1;
+    const bPatch = b.patch ?? -1;
+    if (aPatch !== bPatch) {
+      return aPatch > bPatch;
     }
 
-    const a_tweak = a.tweak ?? -1;
-    const b_tweak = b.tweak ?? -1;
-    return a_tweak > b_tweak;
+    const aTweak = a.tweak ?? -1;
+    const bTweak = b.tweak ?? -1;
+    return aTweak > bTweak;
   }
 
   isGreaterOrEqual(a: Version | null, b: Version | null): boolean {
-    if (a === null && b === null) {
-      return true;
-    }
-    if (a === null && b !== null) {
-      return false;
-    }
-    if (a !== null && b === null) {
-      return true;
-    }
-    // To make Typescript compiler happy.
     if (a === null || b === null) {
-      return false;
+      return b === null;
     }
 
     if (a.major !== b.major) {
       return a.major >= b.major;
     }
 
-    const a_minor = a.minor ?? -1;
-    const b_minor = b.minor ?? -1;
-    if (a_minor !== b_minor) {
-      return a_minor >= b_minor;
+    const aMinor = a.minor ?? -1;
+    const bMinor = b.minor ?? -1;
+    if (aMinor !== bMinor) {
+      return aMinor >= bMinor;
     }
 
-    const a_patch = a.patch ?? -1;
-    const b_patch = b.patch ?? -1;
-    if (a_patch !== b_patch) {
-      return a_patch >= b_patch;
+    const aPatch = a.patch ?? -1;
+    const bPatch = b.patch ?? -1;
+    if (aPatch !== bPatch) {
+      return aPatch >= bPatch;
     }
 
-    const a_tweak = a.tweak ?? -1;
-    const b_tweak = b.tweak ?? -1;
-    return a_tweak >= b_tweak;
+    const aTweak = a.tweak ?? -1;
+    const bTweak = b.tweak ?? -1;
+    return aTweak >= bTweak;
   }
 
   isLess(a: Version | null, b: Version | null): boolean {
-    if (a === null && b === null) {
-      return false;
-    }
-    if (a === null && b !== null) {
-      return true;
-    }
-    if (a !== null && b === null) {
-      return false;
-    }
-    // To make Typescript compiler happy.
     if (a === null || b === null) {
-      return false;
+      return b !== null;
     }
 
     if (a.major !== b.major) {
       return a.major < b.major;
     }
 
-    const a_minor = a.minor ?? -1;
-    const b_minor = b.minor ?? -1;
-    if (a_minor !== b_minor) {
-      return a_minor < b_minor;
+    const aMinor = a.minor ?? -1;
+    const bMinor = b.minor ?? -1;
+    if (aMinor !== bMinor) {
+      return aMinor < bMinor;
     }
 
-    const a_patch = a.patch ?? -1;
-    const b_patch = b.patch ?? -1;
-    if (a_patch !== b_patch) {
-      return a_patch < b_patch;
+    const aPatch = a.patch ?? -1;
+    const bPatch = b.patch ?? -1;
+    if (aPatch !== bPatch) {
+      return aPatch < bPatch;
     }
 
-    const a_tweak = a.tweak ?? -1;
-    const b_tweak = b.tweak ?? -1;
-    return a_tweak < b_tweak;
+    const aTweak = a.tweak ?? -1;
+    const bTweak = b.tweak ?? -1;
+    return aTweak < bTweak;
   }
 
   isLessOrEqual(a: Version | null, b: Version | null): boolean {
-    if (a === null && b === null) {
-      return true;
-    }
-    if (a === null && b !== null) {
-      return true;
-    }
-    if (a !== null && b === null) {
-      return false;
-    }
-    // To make Typescript compiler happy.
     if (a === null || b === null) {
-      return false;
+      return a === null;
     }
 
     if (a.major !== b.major) {
       return a.major <= b.major;
     }
 
-    const a_minor = a.minor ?? -1;
-    const b_minor = b.minor ?? -1;
-    if (a_minor !== b_minor) {
-      return a_minor <= b_minor;
+    const aMinor = a.minor ?? -1;
+    const bMinor = b.minor ?? -1;
+    if (aMinor !== bMinor) {
+      return aMinor <= bMinor;
     }
 
-    const a_patch = a.patch ?? -1;
-    const b_patch = b.patch ?? -1;
-    if (a_patch !== b_patch) {
-      return a_patch <= b_patch;
+    const aPatch = a.patch ?? -1;
+    const bPatch = b.patch ?? -1;
+    if (aPatch !== bPatch) {
+      return aPatch <= bPatch;
     }
 
-    const a_tweak = a.tweak ?? -1;
-    const b_tweak = b.tweak ?? -1;
-    return a_tweak <= b_tweak;
+    const aTweak = a.tweak ?? -1;
+    const bTweak = b.tweak ?? -1;
+    return aTweak <= bTweak;
   }
 
   equals(a: Version | null, b: Version | null): boolean {

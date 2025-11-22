@@ -1,8 +1,8 @@
 <div class="multiselect">
   <div class="selectBox" (click)="showCheckboxes()">
-    <lucide-icon name={{icon()}}></lucide-icon>
+    <lucide-icon name="{{icon()}}"></lucide-icon>
     <div id="checkboxes" [style.display]="expanded ? 'block' : 'none'">
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   </div>
 </div>

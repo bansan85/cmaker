@@ -1,6 +1,6 @@
 <div class="tab-container">
   <div class="nav">
-    @for(tab of tabs; track tab; let i = $index) {
+    @for(tab of tabs(); track tab; let i = $index) {
     <div
       [ngClass]="{active: i === activeComponent}"
       (click)="activateTab(i)"

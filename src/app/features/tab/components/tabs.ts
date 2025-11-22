@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  QueryList,
-} from '@angular/core';
+import { AfterContentInit, Component, contentChildren } from '@angular/core';
 import { TabItem } from './tab-item';
 
 @Component({
@@ -14,7 +9,8 @@ import { TabItem } from './tab-item';
   styleUrl: './tabs.css',
 })
 export class Tabs implements AfterContentInit {
-  @ContentChildren(TabItem) tabs!: QueryList<TabItem>;
+  readonly tabs = contentChildren(TabItem);
+
   activeComponent = 0;
 
   ngAfterContentInit() {
@@ -23,8 +19,8 @@ export class Tabs implements AfterContentInit {
 
   activateTab(index: number) {
     this.activeComponent = index;
-    this.tabs.forEach((tab, i) => {
-      tab.activate = i == index;
+    this.tabs().forEach((tab, i) => {
+      tab.activate = i === index;
     });
   }
 }

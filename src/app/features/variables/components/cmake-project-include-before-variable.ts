@@ -39,7 +39,12 @@ export class CMakeProjectIncludeBeforeVariable
   public set valueSingleLine(value: string) {
     this.value = value.split('\n');
     this.rows = this.value.length + 2;
-    this.service.isValid(this).then((isValid) => (this.isValid = isValid));
+    this.service
+      .isValid(this)
+      .then((isValid) => (this.isValid = isValid))
+      .catch((err: unknown) => {
+        console.log(err);
+      });
   }
 
   async addPath() {
@@ -59,8 +64,11 @@ export class CMakeProjectIncludeBeforeVariable
           if (this.valueSingleLine === '') {
             this.valueSingleLine = relativePath;
           } else {
-            this.valueSingleLine += '\n' + relativePath;
+            this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
           }
+        })
+        .catch((err: unknown) => {
+          console.log(err);
         });
     }
   }

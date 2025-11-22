@@ -10,17 +10,14 @@ import { ProjectContextService } from '../../../features/cmake-project/services/
   styleUrl: './checkboxes-item.css',
 })
 export class CheckboxesItem {
-  element = input.required<CheckboxesItemInterface>();
+  readonly element = input.required<CheckboxesItemInterface>();
 
   projectContext = inject(ProjectContextService);
   versionService = inject(VersionService);
 
   isHidden(): boolean {
-    const version = this.element().service
-      ? this.element().service!.cmakeMinVersion
-      : this.element().version
-        ? this.element().version!
-        : null;
+    const version =
+      this.element().service?.cmakeMinVersion ?? this.element().version ?? null;
     if (!version) {
       return false;
     }
