@@ -1,6 +1,6 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label for="path"
-    >CMAKE_PROJECT_INCLUDE_BEFORE
+    >CMAKE_PROJECT_INCLUDE_BEFORE <button (click)="addPath()">+</button>
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid"> {{isValid ? "" : "Invalid"}}</span></label
   >

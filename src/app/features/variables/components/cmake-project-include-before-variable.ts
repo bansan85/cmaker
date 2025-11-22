@@ -5,6 +5,8 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { CMakeProjectIncludeBeforeVariableModel } from '../models/cmake-project-include-before-variable.model';
 import { FormsModule } from '@angular/forms';
+import { open } from '@tauri-apps/plugin-dialog';
+import { RustBackendService } from '../../../shared/services/rust-backend-service';
 
 @Component({
   selector: 'app-cmake-project-include-before-variable',
@@ -21,6 +23,7 @@ export class CMakeProjectIncludeBeforeVariable
   service = inject(CMakeProjectIncludeBeforeVariableService);
   projectContext = inject(ProjectContextService);
   versionService = inject(VersionService);
+  rustBackendService = inject(RustBackendService);
 
   enabled = true;
 
@@ -37,5 +40,28 @@ export class CMakeProjectIncludeBeforeVariable
     this.value = value.split('\n');
     this.rows = this.value.length + 2;
     this.service.isValid(this).then((isValid) => (this.isValid = isValid));
+  }
+
+  async addPath() {
+    const absolutePath = await open({
+      multiple: false,
+      directory: false,
+      filters: [
+        { name: 'CMake files', extensions: ['cmake'] },
+        { name: 'All files', extensions: ['*'] },
+      ],
+    });
+
+    if (absolutePath !== null) {
+      this.rustBackendService
+        .diffPath(this.projectContext.rootPath, absolutePath)
+        .then((relativePath) => {
+          if (this.valueSingleLine === '') {
+            this.valueSingleLine = relativePath;
+          } else {
+            this.valueSingleLine += '\n' + relativePath;
+          }
+        });
+    }
   }
 }

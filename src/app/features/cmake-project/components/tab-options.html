@@ -1,9 +1,25 @@
-<label for="max-cmake">Max CMake version:</label>
-<input
-  [(ngModel)]="versionString"
-  type="text"
-  id="max-cmake"
-  name="max-cmake"
-  pattern="\d+\.\d+"
-  required
-/>
+<div class="field">
+  <label for="max-cmake">Max CMake version:</label>
+  <input
+    [(ngModel)]="versionString"
+    type="text"
+    id="max-cmake"
+    name="max-cmake"
+    pattern="\d+\.\d+"
+    required
+  />
+</div>
+<div class="field">
+  <label for="root-path"
+    >Root path: <button (click)="selectPath()">...</button></label
+  >
+  <span>
+    <input
+      [(ngModel)]="rootPath"
+      type="text"
+      id="root-path"
+      name="root-path"
+      required
+    />
+  </span>
+</div>

@@ -481,6 +481,7 @@ dependencies = [
 name = "cmaker"
 version = "0.1.0"
 dependencies = [
+ "pathdiff",
  "serde",
  "serde_json",
  "tauri",

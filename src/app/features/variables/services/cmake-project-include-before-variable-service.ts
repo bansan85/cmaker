@@ -32,7 +32,11 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterf
   async isValid(
     action: CMakeProjectIncludeBeforeVariableModel
   ): Promise<boolean> {
-    return this.rustBackendService.directoriesExists(action.value);
+    return this.rustBackendService.relativePathsExists(
+      this.projectContext.rootPath,
+      action.value,
+      false
+    );
   }
 
   protected cmakeRequiredVersionImpl(
