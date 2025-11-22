@@ -1,12 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CMakeProjectIncludeBeforeVariableService } from './cmake-project-include-before-variable-service';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
 
 describe('CMakeProjectIncludeBeforeVariableService', () => {
   let service: CMakeProjectIncludeBeforeVariableService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        CMakeProjectIncludeBeforeVariableService,
+        ProjectContextService,
+        {
+          provide: DEFAULT_MAX_VERSION,
+          useValue: new Version(4, 3),
+        },
+      ],
+    });
     service = TestBed.inject(CMakeProjectIncludeBeforeVariableService);
   });
 

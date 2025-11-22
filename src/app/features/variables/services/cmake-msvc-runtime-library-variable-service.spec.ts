@@ -11,6 +11,7 @@ describe('CMakeMsvcRuntimeLibraryVariableService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        CMakeMsvcRuntimeLibraryVariableService,
         ProjectContextService,
         {
           provide: DEFAULT_MAX_VERSION,
