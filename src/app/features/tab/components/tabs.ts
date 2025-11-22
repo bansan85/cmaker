@@ -15,13 +15,16 @@ import { TabItem } from './tab-item';
 })
 export class Tabs implements AfterContentInit {
   @ContentChildren(TabItem) tabs!: QueryList<TabItem>;
-  activeComponent?: TabItem;
+  activeComponent = 0;
 
   ngAfterContentInit() {
-    this.activeComponent = this.tabs.first;
+    this.activateTab(0);
   }
 
-  activateTab(tab: TabItem) {
-    this.activeComponent = tab;
+  activateTab(index: number) {
+    this.activeComponent = index;
+    this.tabs.forEach((tab, i) => {
+      tab.activate = i == index;
+    });
   }
 }

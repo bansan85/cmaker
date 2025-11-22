@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
 })
 export class TabItem {
   @Input() tabName? = 'default';
-  @Input() component: Type<any> | null = null;
+  activate = true;
 }

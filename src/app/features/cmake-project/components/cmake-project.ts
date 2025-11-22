@@ -8,13 +8,9 @@ import { TabOptions } from './tab-options';
 
 @Component({
   selector: 'app-cmake-project',
-  imports: [Tabs, TabItem],
+  imports: [Tabs, TabItem, TabOptions, TabProject, TabTarget],
   templateUrl: './cmake-project.html',
   styleUrl: './cmake-project.css',
   providers: [ProjectContextService],
 })
-export class CMakeProject {
-  tabOptions = TabOptions;
-  tabProject = TabProject;
-  tabTarget = TabTarget;
-}
+export class CMakeProject {}
