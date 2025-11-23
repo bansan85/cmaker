@@ -3,6 +3,7 @@ import {
   Component,
   QueryList,
   Type,
+  viewChildren,
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
@@ -21,12 +22,10 @@ import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components
 
 @Component({
   selector: 'app-tab-project',
-  imports: [DraggableListComponent, DraggableItemComponent, CommonModule],
-  templateUrl: './tab-project.html',
-  styleUrl: './tab-project.css',
-})
-export class TabProject implements AfterViewInit {
-  items: Type<CMakeComponentInterface<CMakeFeatureInterface<any>>>[] = [
+  imports: [
+    DraggableListComponent,
+    DraggableItemComponent,
+    CommonModule,
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
     CMakeProjectIncludeBeforeVariable,
@@ -34,39 +33,36 @@ export class TabProject implements AfterViewInit {
     CMakeProjectProjectNameIncludeBeforeVariable,
     CMakeProjectProjectNameIncludeVariable,
     CMakeProjectTopLevelIncludesVariable,
-  ];
+  ],
+  templateUrl: './tab-project.html',
+  styleUrl: './tab-project.css',
+})
+export class TabProject implements AfterViewInit {
+  draggableItems = viewChildren(DraggableItemComponent);
 
-  @ViewChildren('container', { read: ViewContainerRef })
-  containers!: QueryList<ViewContainerRef>;
-  container!: ViewContainerRef;
-  private instances: CMakeComponentInterface<CMakeFeatureInterface<any>>[] = [];
+  itemsOrder!: number[];
 
   ngAfterViewInit() {
-    this.instances = [];
-    const containers = this.containers.toArray();
-    containers.forEach((vcRef, i) => {
-      vcRef.clear();
-      const ref = vcRef.createComponent(this.items[i]);
-      this.instances.push(ref.instance);
-    });
+    this.itemsOrder = Array.from(
+      { length: this.draggableItems().length },
+      (_, k) => k
+    );
   }
 
   reorderItems(event: { from: number; to: number }) {
-    [this.items[event.from], this.items[event.to]] = [
-      this.items[event.to],
-      this.items[event.from],
-    ];
-    [this.instances[event.from], this.instances[event.to]] = [
-      this.instances[event.to],
-      this.instances[event.from],
-    ];
+    var element = this.itemsOrder[event.from];
+    this.itemsOrder.splice(event.from, 1);
+    this.itemsOrder.splice(event.to, 0, element);
   }
 
   toto() {
-    console.log(this.instances);
-    this.instances.forEach((i) => {
-      console.log(i.service.cmakeRequiredVersion(i));
-      console.log(i.service.toCMakeListTxt(i));
+    const draggableItemsList = this.draggableItems();
+    console.log('this.itemsOrder');
+    console.log(this.itemsOrder);
+    this.itemsOrder.forEach((i) => {
+      const child = draggableItemsList[i].child;
+      console.log(child.service.cmakeRequiredVersion(child));
+      console.log(child.service.toCMakeListTxt(child));
     });
   }
 }

@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  forwardRef,
   inject,
   signal,
   ViewChild,
@@ -27,6 +28,7 @@ import { ProjectLanguagesService } from '../../arguments/services/project-langua
 import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
 import { ProjectModel } from '../models/project.model';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-project-command',
@@ -53,6 +55,10 @@ import { ProjectModel } from '../models/project.model';
     ProjectHomepageUrlService,
     ProjectLanguagesService,
     ProjectNameService,
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => ProjectCommand),
+    },
   ],
 })
 export class ProjectCommand

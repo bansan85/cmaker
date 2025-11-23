@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, forwardRef, inject, signal } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectLanguagesService } from '../services/project-languages-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
@@ -8,12 +8,19 @@ import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-l
 import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
 import { Version } from '../../../shared/models/version';
 import { ProjectLanguagesModel } from '../models/project-languages.model';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-project-languages-argument',
   imports: [CheckboxesList, CheckboxesItem],
   templateUrl: './project-languages-argument.html',
   styleUrl: './project-languages-argument.css',
+  providers: [
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => ProjectLanguagesArgument),
+    },
+  ],
 })
 export class ProjectLanguagesArgument
   implements

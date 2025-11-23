@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMakeProjectIncludeVariableService } from '../services/cmake-project-include-variable-service';
@@ -7,13 +7,20 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { open } from '@tauri-apps/plugin-dialog';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-cmake-project-include-variable',
   imports: [FormsModule],
   templateUrl: './cmake-project-include-variable.html',
   styleUrl: './cmake-project-include-variable.css',
-  providers: [CMakeProjectIncludeVariableService],
+  providers: [
+    CMakeProjectIncludeVariableService,
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => CMakeProjectIncludeVariable),
+    },
+  ],
 })
 export class CMakeProjectIncludeVariable
   implements

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 import { ProjectNameService } from '../services/project-name-service';
@@ -6,12 +6,19 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { FormsModule } from '@angular/forms';
 import { ProjectNameModel } from '../models/project-name.model';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-project-name-argument',
   imports: [FormsModule],
   templateUrl: './project-name-argument.html',
   styleUrl: './project-name-argument.css',
+  providers: [
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => ProjectNameArgument),
+    },
+  ],
 })
 export class ProjectNameArgument
   implements

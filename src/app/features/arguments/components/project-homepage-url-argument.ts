@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
@@ -6,12 +6,19 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-project-homepage-url-argument',
   imports: [FormsModule],
   templateUrl: './project-homepage-url-argument.html',
   styleUrl: './project-homepage-url-argument.css',
+  providers: [
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => ProjectHomepageUrlArgument),
+    },
+  ],
 })
 export class ProjectHomepageUrlArgument
   implements

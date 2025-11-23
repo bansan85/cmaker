@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, forwardRef, inject, Input } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectVersionService } from '../services/project-version-service';
 import { Version } from '../../../shared/models/version';
@@ -7,12 +7,19 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 import { ProjectVersionModel } from '../models/project-version.model';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-project-version-argument',
   imports: [FormsModule],
   templateUrl: './project-version-argument.html',
   styleUrl: './project-version-argument.css',
+  providers: [
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => ProjectVersionArgument),
+    },
+  ],
 })
 export class ProjectVersionArgument
   implements

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { CMakeProjectIncludeBeforeVariableService } from '../services/cmake-project-include-before-variable-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
@@ -7,13 +7,20 @@ import { CMakeProjectIncludeBeforeVariableModel } from '../models/cmake-project-
 import { FormsModule } from '@angular/forms';
 import { open } from '@tauri-apps/plugin-dialog';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-cmake-project-include-before-variable',
   imports: [FormsModule],
   templateUrl: './cmake-project-include-before-variable.html',
   styleUrl: './cmake-project-include-before-variable.css',
-  providers: [CMakeProjectIncludeBeforeVariableService],
+  providers: [
+    CMakeProjectIncludeBeforeVariableService,
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => CMakeProjectIncludeBeforeVariable),
+    },
+  ],
 })
 export class CMakeProjectIncludeBeforeVariable
   implements

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { ProjectDescriptionService } from '../services/project-description-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
@@ -6,12 +6,19 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 import { ProjectDescriptionModel } from '../models/project-description.model';
+import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 
 @Component({
   selector: 'app-project-description-argument',
   imports: [FormsModule],
   templateUrl: './project-description-argument.html',
   styleUrl: './project-description-argument.css',
+  providers: [
+    {
+      provide: CMAKE_COMPONENT_ITEM,
+      useExisting: forwardRef(() => ProjectDescriptionArgument),
+    },
+  ],
 })
 export class ProjectDescriptionArgument
   implements
