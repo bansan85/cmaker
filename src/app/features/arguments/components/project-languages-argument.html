@@ -1,5 +1,5 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <label for="project-languages"
+  <label [for]="projectLanguagesId"
     >Languages
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid">

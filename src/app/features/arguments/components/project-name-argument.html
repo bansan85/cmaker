@@ -1,10 +1,10 @@
 <div class="field">
-  <label for="project-name"
+  <label [for]="projectNameId"
     >Name <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid">
       {{service.isValid(this) ? "" : "Invalid"}}</span
     ></label
   >
-  <input id="project-name" name="project-name" [(ngModel)]="value" />
+  <input [id]="projectNameId" name="project-name" [(ngModel)]="value" />
   <br />
 </div>

@@ -26,7 +26,8 @@ export class ProjectLanguagesArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'Languages';
+  readonly name = 'Languages';
+  readonly projectLanguagesId = `project-languages-${crypto.randomUUID()}`;
 
   get value(): string {
     return this.toString();

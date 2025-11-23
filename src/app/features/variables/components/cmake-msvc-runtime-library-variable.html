@@ -1,10 +1,15 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <span
+  <label [for]="cmakeMsvcRuntimeLibraryCheckboxId"
     >CMAKE_MSVC_RUNTIME_LIBRARY
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid">
       {{service.isValid(this) ? "" : "Invalid"}}</span
-    ></span
+    ></label
   >
-  <input type="checkbox" [(ngModel)]="value" />
+  <input
+    type="checkbox"
+    [(ngModel)]="value"
+    [id]="cmakeMsvcRuntimeLibraryCheckboxId"
+    name="cmake-msvc-runtime-library-checkbox"
+  />
 </div>

@@ -25,9 +25,12 @@ export class CMakeProjectProjectNameIncludeBeforeVariable
   versionService = inject(VersionService);
   rustBackendService = inject(RustBackendService);
 
+  readonly cmakeProjectProjectNameIncludeBeforeProjectNameId = `cmake-project-project-name-include-before-project-name-${crypto.randomUUID()}`;
+  readonly cmakeProjectProjectNameIncludeBeforePathId = `cmake-project-project-name-include-before-path-${crypto.randomUUID()}`;
+
   enabled = true;
 
-  private _projectName: string = '';
+  private _projectName = '';
 
   get projectName(): string {
     return this._projectName;

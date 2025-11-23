@@ -22,6 +22,8 @@ export class CMakeMsvcRuntimeLibraryVariable
   projectContext = inject(ProjectContextService);
   versionService = inject(VersionService);
 
+  readonly cmakeMsvcRuntimeLibraryCheckboxId = `cmake-msvc-runtime-library-checkbox-${crypto.randomUUID()}`;
+
   enabled = true;
   value = false;
 }

@@ -1,5 +1,5 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <label for="path"
+  <label [for]="cmakeProjectIncludePathId"
     >CMAKE_PROJECT_INCLUDE <button (click)="addPath()">+</button>
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid"> {{isValid ? "" : "Invalid"}}</span></label
@@ -7,8 +7,8 @@
   <textarea
     [(ngModel)]="valueSingleLine"
     type="text"
-    id="path"
-    name="path"
+    [id]="cmakeProjectIncludePathId"
+    name="cmake-project-include-path"
     cols="80"
     rows="{{rows}}"
   ></textarea>

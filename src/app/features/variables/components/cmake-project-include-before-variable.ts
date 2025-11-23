@@ -25,6 +25,8 @@ export class CMakeProjectIncludeBeforeVariable
   versionService = inject(VersionService);
   rustBackendService = inject(RustBackendService);
 
+  readonly cmakeProjectIncludeBeforePathId = `cmake-project-include-before-path-${crypto.randomUUID()}`;
+
   enabled = true;
 
   value: string[] = [];

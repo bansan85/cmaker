@@ -1,14 +1,14 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <label for="project-license"
+  <label [for]="projectSpdxLicenseId"
     >License <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid">
       {{service.isValid(this) ? "" : "Invalid"}}</span
     ></label
   >
   <input
-    list="license-list"
-    id="project-license"
-    name="project-license"
+    [attr.list]="projectSpdxLicenseListId"
+    [id]="projectSpdxLicenseId"
+    name="project-spdx-license"
     [(ngModel)]="value"
   />
   <br />
@@ -26,7 +26,7 @@
   <br />
 </div>
 <!-- https://spdx.org/licenses/ -->
-<datalist id="license-list">
+<datalist [id]="projectSpdxLicenseListId">
   <option value="0BSD"></option>
   <option value="3D-Slicer-1.0"></option>
   <option value="AAL"></option>

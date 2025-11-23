@@ -25,6 +25,8 @@ export class CMakeProjectIncludeVariable
   versionService = inject(VersionService);
   rustBackendService = inject(RustBackendService);
 
+  readonly cmakeProjectIncludePathId = `cmake-project-include-path-${crypto.randomUUID()}`;
+
   enabled = true;
 
   value: string[] = [];

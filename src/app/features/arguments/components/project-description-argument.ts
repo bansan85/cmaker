@@ -24,7 +24,8 @@ export class ProjectDescriptionArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'Description';
+  readonly name = 'Description';
+  readonly labelDescriptionId = `project-description-${crypto.randomUUID()}`;
 
   value = '';
 }

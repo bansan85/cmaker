@@ -24,7 +24,8 @@ export class ProjectHomepageUrlArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'Homepage';
+  readonly name = 'Homepage';
+  readonly projectHomepageUrlId = `project-homepage-url-${crypto.randomUUID()}`;
 
   value = '';
 }

@@ -25,7 +25,8 @@ export class ProjectCompatVersionArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'Compat version';
+  readonly name = 'Compat version';
+  readonly labelVersionId = `project-compat-version-${crypto.randomUUID()}`;
 
   private _value?: Version;
 
@@ -39,7 +40,7 @@ export class ProjectCompatVersionArgument
     return this._value;
   }
 
-  private valueString: string = '';
+  private valueString = '';
 
   get versionString(): string {
     return this.valueString;

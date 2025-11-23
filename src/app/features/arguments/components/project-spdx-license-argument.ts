@@ -24,7 +24,9 @@ export class ProjectSpdxLicenseArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'License';
+  readonly name = 'License';
+  readonly projectSpdxLicenseId = `project-spdx-license-${crypto.randomUUID()}`;
+  readonly projectSpdxLicenseListId = `project-spdx-license-list-${crypto.randomUUID()}`;
 
   value = '';
 }

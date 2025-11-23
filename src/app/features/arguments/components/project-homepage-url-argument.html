@@ -1,5 +1,5 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <label for="project-homepage-url"
+  <label [for]="projectHomepageUrlId"
     >Homepage URL
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid">
@@ -8,7 +8,7 @@
   >
   <input
     type="url"
-    id="project-homepage-url"
+    [id]="projectHomepageUrlId"
     name="project-homepage-url"
     pattern="https?:\/\/.+"
     [(ngModel)]="value"

@@ -24,7 +24,8 @@ export class ProjectNameArgument
   versionService = inject(VersionService);
 
   enabled = true;
-  readonly name: string = 'Name';
+  readonly name = 'Name';
+  readonly projectNameId = `project-name-${crypto.randomUUID()}`;
 
   value = '';
 }

@@ -26,6 +26,7 @@ export class ProjectVersionArgument
 
   enabled = true;
   readonly name = 'Version';
+  readonly projectVersionId = `project-version-${crypto.randomUUID()}`;
 
   private _value?: Version;
 
@@ -39,7 +40,7 @@ export class ProjectVersionArgument
     return this._value;
   }
 
-  private valueString: string = '';
+  private valueString = '';
 
   get versionString(): string {
     return this.valueString;

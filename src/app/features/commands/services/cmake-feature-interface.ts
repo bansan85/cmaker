@@ -28,7 +28,7 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   toCMakeListTxt(action: Feature): string {
     if (this.isEnabled(action)) {
-      let retval: string = '';
+      let retval = '';
       if (!this.isValid(action)) {
         retval += '# Invalid\n';
       }
