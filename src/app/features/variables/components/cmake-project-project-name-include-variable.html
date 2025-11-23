@@ -1,24 +1,24 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <label [for]="cmakeProjectProjectNameIncludeBeforePathId"
-    >CMAKE_PROJECT_{{projectName}}_INCLUDE_BEFORE
+  <label [for]="cmakeProjectProjectNameIncludePathId"
+    >CMAKE_PROJECT_{{projectName}}_INCLUDE
     <button (click)="addPath()">+</button>
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
     ><span class="invalid"> {{isValid ? "" : "Invalid"}}</span></label
   >
-  <label [for]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
+  <label [for]="cmakeProjectProjectNameIncludeProjectNameId"
     >Project name:
     <input
       type="text"
-      [id]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
-      name="cmake-project-project-name-include-before-project-name"
+      [id]="cmakeProjectProjectNameIncludeProjectNameId"
+      name="cmake-project-project-name-include-project-name"
       [(ngModel)]="projectName"
     />
   </label>
   <textarea
     [(ngModel)]="valueSingleLine"
     type="text"
-    [id]="cmakeProjectProjectNameIncludeBeforePathId"
-    name="cmake-project-project-name-include-before-path"
+    [id]="cmakeProjectProjectNameIncludePathId"
+    name="cmake-project-project-name-include-path"
     cols="80"
     rows="{{rows}}"
   ></textarea>
