@@ -37,11 +37,11 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeFe
     return (
       this.dataToCMake.isValidTargetName(action.projectName) &&
       action.value.length > 0 &&
-      this.rustBackendService.relativePathsExists(
+      (await this.rustBackendService.relativePathsExists(
         this.projectContext.rootPath,
         action.value,
         false
-      )
+      ))
     );
   }
 

@@ -34,11 +34,11 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterf
   ): Promise<boolean> {
     return (
       action.value.length > 0 &&
-      this.rustBackendService.relativePathsExists(
+      (await this.rustBackendService.relativePathsExists(
         this.projectContext.rootPath,
         action.value,
         false
-      )
+      ))
     );
   }
 
