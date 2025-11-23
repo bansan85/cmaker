@@ -17,6 +17,7 @@ import { CMakeProjectIncludeBeforeVariable } from '../../variables/components/cm
 import { CMakeProjectIncludeVariable } from '../../variables/components/cmake-project-include-variable';
 import { CMakeProjectProjectNameIncludeBeforeVariable } from '../../variables/components/cmake-project-project-name-include-before-variable';
 import { CMakeProjectProjectNameIncludeVariable } from '../../variables/components/cmake-project-project-name-include-variable';
+import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
 
 @Component({
   selector: 'app-tab-project',
@@ -32,6 +33,7 @@ export class TabProject implements AfterViewInit {
     CMakeProjectIncludeVariable,
     CMakeProjectProjectNameIncludeBeforeVariable,
     CMakeProjectProjectNameIncludeVariable,
+    CMakeProjectTopLevelIncludesVariable,
   ];
 
   @ViewChildren('container', { read: ViewContainerRef })
