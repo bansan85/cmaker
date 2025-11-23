@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeProjectIncludeBeforeVariable } from '../../variables/components/cmake-project-include-before-variable';
 import { CMakeProjectIncludeVariable } from '../../variables/components/cmake-project-include-variable';
+import { CMakeProjectProjectNameIncludeBeforeVariable } from '../../variables/components/cmake-project-project-name-include-before-variable';
 
 @Component({
   selector: 'app-tab-project',
@@ -28,6 +29,7 @@ export class TabProject implements AfterViewInit {
     CMakeMsvcRuntimeLibraryVariable,
     CMakeProjectIncludeBeforeVariable,
     CMakeProjectIncludeVariable,
+    CMakeProjectProjectNameIncludeBeforeVariable,
   ];
 
   @ViewChildren('container', { read: ViewContainerRef })
