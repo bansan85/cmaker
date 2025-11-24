@@ -2,15 +2,15 @@
   <label [for]="labelVersionId"
     >Compat version
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid">
-      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
     ></label
   >
   <input
-    [(ngModel)]="versionString"
     type="text"
-    [id]="labelVersionId"
     name="project-compat-version"
+    [id]="labelVersionId"
+    [(ngModel)]="versionString"
     pattern="\d+(\.\d+){0,3}"
     required
   />

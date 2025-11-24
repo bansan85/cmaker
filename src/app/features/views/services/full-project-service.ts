@@ -8,24 +8,20 @@ import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-availab
   providedIn: 'root',
 })
 export class FullProjectService extends CMakeFeatureInterface<FullProjectView> {
-  override cmakeMinVersion: Version | null = null;
-  override isEnabled(action: FullProjectView): boolean {
+  cmakeMinVersion: Version | null = null;
+  isEnabled(action: FullProjectView): boolean {
     throw new Error('Method not implemented.');
   }
-  override isValid(action: FullProjectView): boolean {
+  isValid(action: FullProjectView): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-  protected override cmakeRequiredVersionImpl(
-    action: FullProjectView
-  ): Version | null {
+  protected cmakeRequiredVersionImpl(action: FullProjectView): Version | null {
     throw new Error('Method not implemented.');
   }
-  protected override cmakeObjectsImpl(
-    action: FullProjectView
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(action: FullProjectView): CMakeAvailableData {
     throw new Error('Method not implemented.');
   }
-  protected override toCMakeListTxtImpl(action: FullProjectView): string {
+  protected toCMakeListTxtImpl(action: FullProjectView): string {
     throw new Error('Method not implemented.');
   }
 }

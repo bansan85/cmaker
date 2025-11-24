@@ -15,7 +15,7 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 })
 export class DraggableItemComponent {
   @ContentChild(CMAKE_COMPONENT_ITEM)
-  child!: CMakeComponentInterface<CMakeFeatureInterface<any>>;
+  readonly child!: CMakeComponentInterface<CMakeFeatureInterface<any>>;
 
   readonly text = input<string>();
 

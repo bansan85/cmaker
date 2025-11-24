@@ -10,7 +10,7 @@ import { ProjectCompatVersionModel } from '../models/project-compat-version.mode
   providedIn: null,
 })
 export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCompatVersionModel> {
-  cmakeMinVersion: Version | null = new Version(4, 1);
+  readonly cmakeMinVersion: Version | null = new Version(4, 1);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
@@ -25,8 +25,8 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
     );
   }
 
-  isValid(action: ProjectCompatVersionModel): boolean {
-    return action.value !== undefined;
+  isValid(action: ProjectCompatVersionModel): Promise<boolean> {
+    return Promise.resolve(action.value !== undefined);
   }
 
   protected cmakeRequiredVersionImpl(

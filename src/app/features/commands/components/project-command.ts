@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  effect,
   forwardRef,
   inject,
   signal,
@@ -67,21 +68,31 @@ export class ProjectCommand
     AfterViewInit,
     ProjectModel
 {
-  @ViewChild('name') name!: ProjectNameArgument;
-  @ViewChild('spdxLicense') spdxLicense!: ProjectSpdxLicenseArgument;
-  @ViewChild('version') version!: ProjectVersionArgument;
-  @ViewChild('compatVersion') compatVersion!: ProjectCompatVersionArgument;
-  @ViewChild('description') description!: ProjectDescriptionArgument;
-  @ViewChild('homepageUrl') homepageUrl!: ProjectHomepageUrlArgument;
-  @ViewChild('languages') languages!: ProjectLanguagesArgument;
+  @ViewChild('name') readonly name!: ProjectNameArgument;
+  @ViewChild('spdxLicense') readonly spdxLicense!: ProjectSpdxLicenseArgument;
+  @ViewChild('version') readonly version!: ProjectVersionArgument;
+  @ViewChild('compatVersion')
+  readonly compatVersion!: ProjectCompatVersionArgument;
+  @ViewChild('description') readonly description!: ProjectDescriptionArgument;
+  @ViewChild('homepageUrl') readonly homepageUrl!: ProjectHomepageUrlArgument;
+  @ViewChild('languages') readonly languages!: ProjectLanguagesArgument;
 
-  service = inject(ProjectService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
+  readonly service = inject(ProjectService);
 
-  viewInitialized = signal(false);
+  protected readonly viewInitialized = signal(false);
 
   ngAfterViewInit() {
     this.viewInitialized.set(true);
   }
+
+  constructor() {
+    effect(async () => {
+      if (!this.viewInitialized()) {
+        return;
+      }
+      this.isValid.set(await this.service.isValid(this));
+    });
+  }
+
+  protected isValid = signal(false);
 }

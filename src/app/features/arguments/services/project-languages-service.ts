@@ -10,7 +10,7 @@ import { ProjectLanguagesModel } from '../models/project-languages.model';
   providedIn: null,
 })
 export class ProjectLanguagesService extends CMakeFeatureInterface<ProjectLanguagesModel> {
-  cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion: Version | null = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
@@ -25,8 +25,8 @@ export class ProjectLanguagesService extends CMakeFeatureInterface<ProjectLangua
     );
   }
 
-  isValid(_action: ProjectLanguagesModel): boolean {
-    return true;
+  isValid(_action: ProjectLanguagesModel): Promise<boolean> {
+    return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(

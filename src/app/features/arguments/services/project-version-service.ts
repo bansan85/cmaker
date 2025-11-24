@@ -3,19 +3,30 @@ import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-int
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { ProjectVersionModel } from '../models/project-version.model';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { VersionService } from '../../../shared/services/version-service';
 
 @Injectable({
   providedIn: null,
 })
 export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionModel> {
-  cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion: Version | null = null;
+
+  private projectContext = inject(ProjectContextService);
+  private versionService = inject(VersionService);
 
   isEnabled(action: ProjectVersionModel): boolean {
-    return action.enabled ?? true;
+    return (
+      (action.enabled ?? true) &&
+      !this.versionService.isGreater(
+        this.cmakeMinVersion,
+        this.projectContext.version
+      )
+    );
   }
 
-  isValid(action: ProjectVersionModel): boolean {
-    return action.value !== undefined;
+  isValid(action: ProjectVersionModel): Promise<boolean> {
+    return Promise.resolve(action.value !== undefined);
   }
 
   protected cmakeRequiredVersionImpl(

@@ -1,26 +1,24 @@
-<div class="first-wrapper">
-  <app-draggable-list (orderChanged)="reorderItems($event)">
-    <app-draggable-item>
-      <app-project-command />
-    </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-msvc-runtime-library-variable />
-    </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-project-include-before-variable />
-    </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-project-include-variable />
-    </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-project-project-name-include-before-variable />
-    </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-project-project-name-include-variable />
-    </app-draggable-item>
-    <app-draggable-item>
-      <app-cmake-project-top-level-includes-variable />
-    </app-draggable-item>
-  </app-draggable-list>
-  <button (click)="toto()"></button>
-</div>
+<app-draggable-list (orderChanged)="reorderItems($event)">
+  <app-draggable-item>
+    <app-project-command />
+  </app-draggable-item>
+  <app-draggable-item>
+    <app-cmake-msvc-runtime-library-variable />
+  </app-draggable-item>
+  <app-draggable-item>
+    <app-cmake-project-include-before-variable />
+  </app-draggable-item>
+  <app-draggable-item>
+    <app-cmake-project-include-variable />
+  </app-draggable-item>
+  <app-draggable-item>
+    <app-cmake-project-project-name-include-before-variable />
+  </app-draggable-item>
+  <app-draggable-item>
+    <app-cmake-project-project-name-include-variable />
+  </app-draggable-item>
+  <app-draggable-item>
+    <app-cmake-project-top-level-includes-variable />
+  </app-draggable-item>
+</app-draggable-list>
+<button (click)="toto()"></button>

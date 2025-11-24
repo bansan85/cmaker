@@ -1,9 +1,7 @@
-import { Component, forwardRef, inject, signal } from '@angular/core';
+import { Component, effect, forwardRef, inject, signal } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectLanguagesService } from '../services/project-languages-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
 import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
 import { Version } from '../../../shared/models/version';
@@ -28,88 +26,96 @@ export class ProjectLanguagesArgument
     CheckboxesItemInterface,
     ProjectLanguagesModel
 {
-  service = inject(ProjectLanguagesService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
+  readonly name = 'Languages';
+
+  protected readonly projectLanguagesId = `project-languages-${crypto.randomUUID()}`;
+
+  readonly service = inject(ProjectLanguagesService);
+
+  constructor() {
+    effect(async () => {
+      this.isValid.set(await this.service.isValid(this));
+    });
+  }
+
+  protected isValid = signal(true);
 
   enabled = true;
-  readonly name = 'Languages';
-  readonly projectLanguagesId = `project-languages-${crypto.randomUUID()}`;
 
   get value(): string {
     return this.toString();
   }
 
-  c = signal<CheckboxesItemInterface>({
+  protected c = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'C',
   });
-  cxx = signal<CheckboxesItemInterface>({
+  protected cxx = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'CXX',
   });
-  cSharp = signal<CheckboxesItemInterface>({
+  protected cSharp = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'CSharp',
     version: new Version(3, 8),
   });
-  cuda = signal<CheckboxesItemInterface>({
+  protected cuda = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'CUDA',
     version: new Version(3, 8),
   });
-  objC = signal<CheckboxesItemInterface>({
+  protected objC = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'OBJC',
     version: new Version(3, 16),
   });
-  objCxx = signal<CheckboxesItemInterface>({
+  protected objCxx = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'OBJCXX',
     version: new Version(3, 16),
   });
-  fortran = signal<CheckboxesItemInterface>({
+  protected fortran = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'Fortran',
   });
-  hip = signal<CheckboxesItemInterface>({
+  protected hip = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'HIP',
     version: new Version(3, 21),
   });
-  ispc = signal<CheckboxesItemInterface>({
+  protected ispc = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ISPC',
     version: new Version(3, 18),
   });
-  swift = signal<CheckboxesItemInterface>({
+  protected swift = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'Swift',
     version: new Version(3, 15),
   });
-  asm = signal<CheckboxesItemInterface>({
+  protected asm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM',
   });
-  asmNasm = signal<CheckboxesItemInterface>({
+  protected asmNasm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM_NASM',
   });
-  asmMarmasm = signal<CheckboxesItemInterface>({
+  protected asmMarmasm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM_MARMASM',
     version: new Version(3, 26),
   });
-  asmMasm = signal<CheckboxesItemInterface>({
+  protected asmMasm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM_MASM',
   });
-  asmAtt = signal<CheckboxesItemInterface>({
+  protected asmAtt = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM-ATT',
   });
 
-  items = [
+  private allLanguages = [
     this.c(),
     this.cxx(),
     this.cSharp(),
@@ -129,7 +135,7 @@ export class ProjectLanguagesArgument
 
   toString(): string {
     return (
-      this.items
+      this.allLanguages
         .filter((item) => item.enabled)
         .map((item) => item.name)
         .join(' ') || 'NONE'

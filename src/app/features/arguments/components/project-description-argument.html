@@ -2,14 +2,15 @@
   <label [for]="labelDescriptionId"
     >Description
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid">
-      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
     ></label
   >
   <input
-    [id]="labelDescriptionId"
+    type="text"
     name="project-description"
-    [(ngModel)]="value"
+    [id]="labelDescriptionId"
+    [(ngModel)]="valueSignal"
   />
   <br />
 </div>

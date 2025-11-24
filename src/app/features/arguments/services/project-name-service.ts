@@ -11,11 +11,11 @@ import { ProjectNameModel } from '../models/project-name.model';
   providedIn: 'root',
 })
 export class ProjectNameService extends CMakeFeatureInterface<ProjectNameModel> {
+  readonly cmakeMinVersion: Version | null = null;
+
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
   private dataToCMake = inject(DataToCMakeService);
-
-  cmakeMinVersion: Version | null = null;
 
   isEnabled(action: ProjectNameModel): boolean {
     return (
@@ -27,8 +27,8 @@ export class ProjectNameService extends CMakeFeatureInterface<ProjectNameModel> 
     );
   }
 
-  isValid(action: ProjectNameModel): boolean {
-    return this.dataToCMake.isValidTargetName(action.value);
+  isValid(action: ProjectNameModel): Promise<boolean> {
+    return Promise.resolve(this.dataToCMake.isValidTargetName(action.value));
   }
 
   protected cmakeRequiredVersionImpl(

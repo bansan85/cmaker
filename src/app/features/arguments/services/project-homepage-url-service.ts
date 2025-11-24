@@ -10,10 +10,10 @@ import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
   providedIn: null,
 })
 export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHomepageUrlModel> {
+  readonly cmakeMinVersion: Version | null = new Version(3, 12);
+
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
-
-  cmakeMinVersion: Version | null = new Version(3, 12);
 
   isEnabled(action: ProjectHomepageUrlModel): boolean {
     return (
@@ -25,8 +25,8 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHome
     );
   }
 
-  isValid(action: ProjectHomepageUrlModel): boolean {
-    return /https?:\/\/.+/.test(action.value);
+  isValid(action: ProjectHomepageUrlModel): Promise<boolean> {
+    return Promise.resolve(/https?:\/\/.+/.test(action.value));
   }
 
   protected cmakeRequiredVersionImpl(

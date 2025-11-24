@@ -1,19 +1,9 @@
-import {
-  AfterViewInit,
-  Component,
-  QueryList,
-  Type,
-  viewChildren,
-  ViewChildren,
-  ViewContainerRef,
-} from '@angular/core';
+import { AfterViewInit, Component, viewChildren } from '@angular/core';
 import { ProjectCommand } from '../../commands/components/project-command';
 import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
 import { DraggableListComponent } from '../../../shared/components/list/draggable-list';
 import { DraggableItemComponent } from '../../../shared/components/list/draggable-item';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CommonModule } from '@angular/common';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeProjectIncludeBeforeVariable } from '../../variables/components/cmake-project-include-before-variable';
 import { CMakeProjectIncludeVariable } from '../../variables/components/cmake-project-include-variable';
 import { CMakeProjectProjectNameIncludeBeforeVariable } from '../../variables/components/cmake-project-project-name-include-before-variable';
@@ -38,9 +28,9 @@ import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components
   styleUrl: './tab-project.css',
 })
 export class TabProject implements AfterViewInit {
-  draggableItems = viewChildren(DraggableItemComponent);
+  private readonly draggableItems = viewChildren(DraggableItemComponent);
 
-  itemsOrder!: number[];
+  private itemsOrder!: number[];
 
   ngAfterViewInit() {
     this.itemsOrder = Array.from(

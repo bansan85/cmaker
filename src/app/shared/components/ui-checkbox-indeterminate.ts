@@ -7,7 +7,7 @@ import { Component, output } from '@angular/core';
   styleUrl: './ui-checkbox-indeterminate.css',
 })
 export class UiCheckboxIndeterminate {
-  value: boolean | null = null;
+  protected value: boolean | null = null;
 
   readonly checked = output<boolean | null>();
 

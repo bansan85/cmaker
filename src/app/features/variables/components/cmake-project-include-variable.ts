@@ -1,4 +1,4 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import { Component, effect, forwardRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMakeProjectIncludeVariableService } from '../services/cmake-project-include-variable-service';
@@ -8,6 +8,7 @@ import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { open } from '@tauri-apps/plugin-dialog';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
+import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 
 @Component({
   selector: 'app-cmake-project-include-variable',
@@ -25,21 +26,37 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 export class CMakeProjectIncludeVariable
   implements
     CMakeComponentInterface<CMakeProjectIncludeVariableService>,
+    CheckboxesItemInterface,
     CMakeProjectIncludeVariableModel
 {
-  service = inject(CMakeProjectIncludeVariableService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
-  rustBackendService = inject(RustBackendService);
+  readonly name = 'CMAKE_PROJECT_INCLUDE';
 
-  readonly cmakeProjectIncludePathId = `cmake-project-include-path-${crypto.randomUUID()}`;
+  protected readonly cmakeProjectIncludePathId = `cmake-project-include-path-${crypto.randomUUID()}`;
+
+  readonly service = inject(CMakeProjectIncludeVariableService);
+
+  private readonly projectContext = inject(ProjectContextService);
+  private readonly rustBackendService = inject(RustBackendService);
+
+  constructor() {
+    effect(async () => {
+      this.isValid.set(await this.service.isValid(this));
+    });
+  }
+
+  protected isValid = signal(false);
 
   enabled = true;
 
-  value: string[] = [];
+  private valueSignal = signal<string[]>([]);
+  public get value(): string[] {
+    return this.valueSignal();
+  }
+  public set value(v: string[]) {
+    this.valueSignal.set(v);
+  }
 
-  isValid = false;
-  rows = 2;
+  rows = 1;
 
   public get valueSingleLine() {
     return this.value.join('\n');
@@ -47,13 +64,8 @@ export class CMakeProjectIncludeVariable
 
   public set valueSingleLine(value: string) {
     this.value = value.split('\n');
+    this.valueSignal.set(this.value);
     this.rows = this.value.length + 2;
-    this.service
-      .isValid(this)
-      .then((isValid) => (this.isValid = isValid))
-      .catch((err: unknown) => {
-        console.log(err);
-      });
   }
 
   async addPath() {
@@ -67,18 +79,15 @@ export class CMakeProjectIncludeVariable
     });
 
     if (absolutePath !== null) {
-      this.rustBackendService
-        .diffPath(this.projectContext.rootPath, absolutePath)
-        .then((relativePath) => {
-          if (this.valueSingleLine === '') {
-            this.valueSingleLine = relativePath;
-          } else {
-            this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
-          }
-        })
-        .catch((err: unknown) => {
-          console.log(err);
-        });
+      const relativePath = await this.rustBackendService.diffPath(
+        this.projectContext.rootPath,
+        absolutePath
+      );
+      if (this.valueSingleLine === '') {
+        this.valueSingleLine = relativePath;
+      } else {
+        this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
+      }
     }
   }
 }

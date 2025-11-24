@@ -14,11 +14,11 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
   private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
   private readonly helpText = 'Build using CRT shared libraries';
 
+  readonly cmakeMinVersion: Version | null = new Version(3, 15);
+
   private dataToCMake = inject(DataToCMakeService);
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
-
-  cmakeMinVersion: Version | null = new Version(3, 15);
 
   isEnabled(action: CMakeMsvcRuntimeLibraryVariableModel): boolean {
     return (
@@ -30,8 +30,8 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
     );
   }
 
-  isValid(_action: CMakeMsvcRuntimeLibraryVariableModel): boolean {
-    return true;
+  isValid(_action: CMakeMsvcRuntimeLibraryVariableModel): Promise<boolean> {
+    return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(

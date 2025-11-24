@@ -2,16 +2,16 @@
   <label [for]="projectHomepageUrlId"
     >Homepage URL
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid">
-      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
     ></label
   >
   <input
     type="url"
-    [id]="projectHomepageUrlId"
     name="project-homepage-url"
+    [id]="projectHomepageUrlId"
+    [(ngModel)]="valueSignal"
     pattern="https?:\/\/.+"
-    [(ngModel)]="value"
     required
   />
   <br />

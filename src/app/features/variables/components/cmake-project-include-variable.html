@@ -2,14 +2,16 @@
   <label [for]="cmakeProjectIncludePathId"
     >CMAKE_PROJECT_INCLUDE <button (click)="addPath()">+</button>
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid"> {{isValid ? "" : "Invalid"}}</span></label
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
+    ></label
   >
   <textarea
-    [(ngModel)]="valueSingleLine"
     type="text"
-    [id]="cmakeProjectIncludePathId"
     name="cmake-project-include-path"
     cols="80"
     rows="{{rows}}"
+    [id]="cmakeProjectIncludePathId"
+    [(ngModel)]="valueSingleLine"
   ></textarea>
 </div>

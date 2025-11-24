@@ -12,12 +12,12 @@ import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-availab
   providedIn: null,
 })
 export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureInterface<CMakeProjectProjectNameIncludeVariableModel> {
+  readonly cmakeMinVersion: Version | null = null;
+
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
   private rustBackendService = inject(RustBackendService);
   private dataToCMake = inject(DataToCMakeService);
-
-  cmakeMinVersion: Version | null = null;
 
   isEnabled(action: CMakeProjectProjectNameIncludeVariableModel): boolean {
     return (

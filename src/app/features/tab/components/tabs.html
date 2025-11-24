@@ -2,9 +2,9 @@
   <div class="nav">
     @for(tab of tabs(); track tab; let i = $index) {
     <div
+      class="nav-item"
       [ngClass]="{active: i === activeComponent}"
       (click)="activateTab(i)"
-      class="nav-item"
     >
       {{tab.tabName}}
     </div>

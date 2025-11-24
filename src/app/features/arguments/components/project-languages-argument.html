@@ -2,8 +2,8 @@
   <label [for]="projectLanguagesId"
     >Languages
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid">
-      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
     ></label
   >
   <app-checkboxes-list icon="chevron-down">

@@ -10,10 +10,10 @@ import { ProjectDescriptionModel } from '../models/project-description.model';
   providedIn: null,
 })
 export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDescriptionModel> {
+  readonly cmakeMinVersion: Version | null = new Version(3, 9);
+
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
-
-  cmakeMinVersion: Version | null = new Version(3, 9);
 
   isEnabled(action: ProjectDescriptionModel): boolean {
     return (
@@ -25,8 +25,8 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
     );
   }
 
-  isValid(_action: ProjectDescriptionModel): boolean {
-    return true;
+  isValid(_action: ProjectDescriptionModel): Promise<boolean> {
+    return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(

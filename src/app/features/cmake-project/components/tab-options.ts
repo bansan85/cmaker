@@ -11,7 +11,10 @@ import { open } from '@tauri-apps/plugin-dialog';
   styleUrl: './tab-options.css',
 })
 export class TabOptions {
-  projectContext = inject(ProjectContextService);
+  protected readonly tabOptionsMaxCMakeVersionId = `max-cmake-version-${crypto.randomUUID()}`;
+  protected readonly tabOptionsRootPathId = `root-path-${crypto.randomUUID()}`;
+
+  protected readonly projectContext = inject(ProjectContextService);
 
   get versionString(): string {
     return this.projectContext.version.toString();
@@ -21,14 +24,6 @@ export class TabOptions {
     if (Version.isValid(value)) {
       this.projectContext.version = new Version(value);
     }
-  }
-
-  get rootPath(): string {
-    return this.projectContext.rootPath;
-  }
-
-  set rootPath(value: string) {
-    this.projectContext.rootPath = value;
   }
 
   async selectPath() {

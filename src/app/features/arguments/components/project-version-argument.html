@@ -1,15 +1,15 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="projectVersionId"
     >Version <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid">
-      {{service.isValid(this) ? "" : "Invalid"}}</span
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
     ></label
   >
   <input
-    [(ngModel)]="versionString"
     type="text"
-    [id]="projectVersionId"
     name="project-version"
+    [id]="projectVersionId"
+    [(ngModel)]="versionString"
     pattern="\d+(\.\d+){0,3}"
     required
   />

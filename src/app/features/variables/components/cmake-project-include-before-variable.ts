@@ -1,13 +1,13 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import { Component, effect, forwardRef, inject, signal } from '@angular/core';
 import { CMakeProjectIncludeBeforeVariableService } from '../services/cmake-project-include-before-variable-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { CMakeProjectIncludeBeforeVariableModel } from '../models/cmake-project-include-before-variable.model';
 import { FormsModule } from '@angular/forms';
 import { open } from '@tauri-apps/plugin-dialog';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
+import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 
 @Component({
   selector: 'app-cmake-project-include-before-variable',
@@ -25,21 +25,37 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 export class CMakeProjectIncludeBeforeVariable
   implements
     CMakeComponentInterface<CMakeProjectIncludeBeforeVariableService>,
+    CheckboxesItemInterface,
     CMakeProjectIncludeBeforeVariableModel
 {
-  service = inject(CMakeProjectIncludeBeforeVariableService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
-  rustBackendService = inject(RustBackendService);
+  readonly name = 'CMAKE_PROJECT_INCLUDE_BEFORE';
 
-  readonly cmakeProjectIncludeBeforePathId = `cmake-project-include-before-path-${crypto.randomUUID()}`;
+  protected readonly cmakeProjectIncludeBeforePathId = `cmake-project-include-before-path-${crypto.randomUUID()}`;
+
+  readonly service = inject(CMakeProjectIncludeBeforeVariableService);
+
+  private readonly projectContext = inject(ProjectContextService);
+  private readonly rustBackendService = inject(RustBackendService);
+
+  constructor() {
+    effect(async () => {
+      this.isValid.set(await this.service.isValid(this));
+    });
+  }
+
+  protected isValid = signal(false);
 
   enabled = true;
 
-  value: string[] = [];
+  private valueSignal = signal<string[]>([]);
+  public get value(): string[] {
+    return this.valueSignal();
+  }
+  public set value(v: string[]) {
+    this.valueSignal.set(v);
+  }
 
-  isValid = false;
-  rows = 2;
+  rows = 1;
 
   public get valueSingleLine() {
     return this.value.join('\n');
@@ -47,13 +63,8 @@ export class CMakeProjectIncludeBeforeVariable
 
   public set valueSingleLine(value: string) {
     this.value = value.split('\n');
-    this.rows = this.value.length + 2;
-    this.service
-      .isValid(this)
-      .then((isValid) => (this.isValid = isValid))
-      .catch((err: unknown) => {
-        console.log(err);
-      });
+    this.valueSignal.set(this.value);
+    this.rows = this.value.length + 1;
   }
 
   async addPath() {
@@ -67,18 +78,15 @@ export class CMakeProjectIncludeBeforeVariable
     });
 
     if (absolutePath !== null) {
-      this.rustBackendService
-        .diffPath(this.projectContext.rootPath, absolutePath)
-        .then((relativePath) => {
-          if (this.valueSingleLine === '') {
-            this.valueSingleLine = relativePath;
-          } else {
-            this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
-          }
-        })
-        .catch((err: unknown) => {
-          console.log(err);
-        });
+      const relativePath = await this.rustBackendService.diffPath(
+        this.projectContext.rootPath,
+        absolutePath
+      );
+      if (this.valueSingleLine === '') {
+        this.valueSingleLine = relativePath;
+      } else {
+        this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
+      }
     }
   }
 }

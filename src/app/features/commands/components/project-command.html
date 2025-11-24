@@ -2,7 +2,7 @@
   <h1>
     Project @if (viewInitialized()) {
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid"> {{service.isValid(this) ? "" : "Invalid"}}</span>
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()">Invalid</span>
     }
     <app-checkboxes-list icon="menu">
       <app-checkboxes-item [element]="spdxLicense" />

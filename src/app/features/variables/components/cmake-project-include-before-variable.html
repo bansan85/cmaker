@@ -2,14 +2,16 @@
   <label [for]="cmakeProjectIncludeBeforePathId"
     >CMAKE_PROJECT_INCLUDE_BEFORE <button (click)="addPath()">+</button>
     <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span class="invalid"> {{isValid ? "" : "Invalid"}}</span></label
+    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
+      >Invalid</span
+    ></label
   >
   <textarea
-    [(ngModel)]="valueSingleLine"
     type="text"
-    [id]="cmakeProjectIncludeBeforePathId"
     name="cmake-project-include-before-path"
     cols="80"
     rows="{{rows}}"
+    [id]="cmakeProjectIncludeBeforePathId"
+    [(ngModel)]="valueSingleLine"
   ></textarea>
 </div>

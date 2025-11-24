@@ -10,10 +10,10 @@ import { ProjectSpdxLicenseModel } from '../models/project-spdx-license.model';
   providedIn: null,
 })
 export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdxLicenseModel> {
+  readonly cmakeMinVersion: Version | null = new Version(4, 2);
+
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
-
-  cmakeMinVersion: Version | null = new Version(4, 2);
 
   isEnabled(action: ProjectSpdxLicenseModel): boolean {
     return (
@@ -25,8 +25,8 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdx
     );
   }
 
-  isValid(_action: ProjectSpdxLicenseModel): boolean {
-    return true;
+  isValid(_action: ProjectSpdxLicenseModel): Promise<boolean> {
+    return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(

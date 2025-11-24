@@ -11,11 +11,11 @@ import { DraggableItemComponent } from './draggable-item';
   templateUrl: './draggable-list.html',
 })
 export class DraggableListComponent implements AfterContentInit {
-  readonly items = contentChildren(DraggableItemComponent);
-  draggableItem!: HTMLElement;
+  private readonly items = contentChildren(DraggableItemComponent);
+  private draggableItem!: HTMLElement;
 
-  from = 0;
-  to = 0;
+  private from = 0;
+  private to = 0;
 
   readonly orderChanged = output<{ from: number; to: number }>();
 

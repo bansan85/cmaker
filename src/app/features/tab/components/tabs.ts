@@ -9,9 +9,9 @@ import { TabItem } from './tab-item';
   styleUrl: './tabs.css',
 })
 export class Tabs implements AfterContentInit {
-  readonly tabs = contentChildren(TabItem);
+  protected readonly tabs = contentChildren(TabItem);
 
-  activeComponent = 0;
+  protected activeComponent = 0;
 
   ngAfterContentInit() {
     this.activateTab(0);

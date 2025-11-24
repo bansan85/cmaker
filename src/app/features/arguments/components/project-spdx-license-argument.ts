@@ -1,9 +1,7 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import { Component, effect, forwardRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 import { ProjectSpdxLicenseModel } from '../models/project-spdx-license.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
@@ -26,14 +24,28 @@ export class ProjectSpdxLicenseArgument
     CheckboxesItemInterface,
     ProjectSpdxLicenseModel
 {
-  service = inject(ProjectSpdxLicenseService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
+  readonly name = 'License';
+
+  protected readonly projectSpdxLicenseId = `project-spdx-license-${crypto.randomUUID()}`;
+  protected readonly projectSpdxLicenseListId = `project-spdx-license-list-${crypto.randomUUID()}`;
+
+  readonly service = inject(ProjectSpdxLicenseService);
+
+  constructor() {
+    effect(async () => {
+      this.isValid.set(await this.service.isValid(this));
+    });
+  }
+
+  protected isValid = signal(false);
 
   enabled = true;
-  readonly name = 'License';
-  readonly projectSpdxLicenseId = `project-spdx-license-${crypto.randomUUID()}`;
-  readonly projectSpdxLicenseListId = `project-spdx-license-list-${crypto.randomUUID()}`;
 
-  value = '';
+  protected valueSignal = signal('');
+  get value(): string {
+    return this.valueSignal();
+  }
+  set value(val: string) {
+    this.valueSignal.set(val);
+  }
 }

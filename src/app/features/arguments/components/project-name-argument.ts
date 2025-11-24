@@ -1,9 +1,7 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import { Component, effect, forwardRef, inject, signal } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 import { ProjectNameService } from '../services/project-name-service';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { FormsModule } from '@angular/forms';
 import { ProjectNameModel } from '../models/project-name.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
@@ -26,13 +24,29 @@ export class ProjectNameArgument
     CheckboxesItemInterface,
     ProjectNameModel
 {
-  service = inject(ProjectNameService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
+  readonly name = 'Name';
+
+  protected readonly projectNameId = `project-name-${crypto.randomUUID()}`;
+
+  readonly service = inject(ProjectNameService);
+
+  constructor() {
+    effect(async () => {
+      console.log('TOTO');
+      this.isValid.set(await this.service.isValid(this));
+      console.log(this.isValid());
+    });
+  }
+
+  protected isValid = signal(false);
 
   enabled = true;
-  readonly name = 'Name';
-  readonly projectNameId = `project-name-${crypto.randomUUID()}`;
 
-  value = '';
+  protected valueSignal = signal('');
+  get value(): string {
+    return this.valueSignal();
+  }
+  set value(val: string) {
+    this.valueSignal.set(val);
+  }
 }

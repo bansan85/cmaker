@@ -12,8 +12,8 @@ import { ProjectContextService } from '../../../features/cmake-project/services/
 export class CheckboxesItem {
   readonly element = input.required<CheckboxesItemInterface>();
 
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
+  private readonly projectContext = inject(ProjectContextService);
+  private readonly versionService = inject(VersionService);
 
   isHidden(): boolean {
     const version =

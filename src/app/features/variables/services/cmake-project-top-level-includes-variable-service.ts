@@ -11,13 +11,13 @@ import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-int
   providedIn: null,
 })
 export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInterface<CMakeProjectTopLevelIncludesVariableModel> {
+  readonly cmakeMinVersion: Version | null = new Version(3, 24);
+
   private readonly variable = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
   private rustBackendService = inject(RustBackendService);
-
-  cmakeMinVersion: Version | null = new Version(3, 24);
 
   isEnabled(action: CMakeProjectTopLevelIncludesVariableModel): boolean {
     return (

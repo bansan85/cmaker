@@ -11,9 +11,9 @@ import { LucideAngularModule } from 'lucide-angular';
   },
 })
 export class CheckboxesList {
-  expanded = false;
+  protected expanded = false;
 
-  elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef);
 
   readonly icon = input<string>('menu');
 

@@ -20,44 +20,44 @@ import { ProjectModel } from '../models/project.model';
   providedIn: null,
 })
 export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
-  name = inject(ProjectNameService);
-  spdxLicense = inject(ProjectSpdxLicenseService);
-  version = inject(ProjectVersionService);
-  compatVersion = inject(ProjectCompatVersionService);
-  description = inject(ProjectDescriptionService);
-  homepageUrl = inject(ProjectHomepageUrlService);
-  languages = inject(ProjectLanguagesService);
-  dataToCMake = inject(DataToCMakeService);
+  private readonly name = inject(ProjectNameService);
+  private readonly spdxLicense = inject(ProjectSpdxLicenseService);
+  private readonly version = inject(ProjectVersionService);
+  private readonly compatVersion = inject(ProjectCompatVersionService);
+  private readonly description = inject(ProjectDescriptionService);
+  private readonly homepageUrl = inject(ProjectHomepageUrlService);
+  private readonly languages = inject(ProjectLanguagesService);
 
-  private versionService = inject(VersionService);
+  private readonly versionService = inject(VersionService);
 
-  cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion: Version | null = null;
 
   isEnabled(_action: ProjectModel): boolean {
     return true;
   }
 
-  isValid(action: ProjectModel): boolean {
-    return (
-      (!this.name.isEnabled(action.name) || this.name.isValid(action.name)) &&
-      (action.version === undefined ||
-        !this.version.isEnabled(action.version) ||
-        this.version.isValid(action.version)) &&
-      (action.compatVersion === undefined ||
-        !this.compatVersion.isEnabled(action.compatVersion) ||
-        this.compatVersion.isValid(action.compatVersion)) &&
-      (action.spdxLicense === undefined ||
-        !this.spdxLicense.isEnabled(action.spdxLicense) ||
-        this.spdxLicense.isValid(action.spdxLicense)) &&
-      (action.description === undefined ||
-        !this.description.isEnabled(action.description) ||
-        this.description.isValid(action.description)) &&
-      (action.homepageUrl === undefined ||
-        !this.homepageUrl.isEnabled(action.homepageUrl) ||
-        this.homepageUrl.isValid(action.homepageUrl)) &&
-      (action.languages === undefined ||
-        !this.languages.isEnabled(action.languages) ||
-        this.languages.isValid(action.languages))
+  async isValid(action: ProjectModel): Promise<boolean> {
+    return Promise.resolve(
+      (!this.name.isEnabled(action.name) ||
+        (await this.name.isValid(action.name))) &&
+        (action.version === undefined ||
+          !this.version.isEnabled(action.version) ||
+          (await this.version.isValid(action.version))) &&
+        (action.compatVersion === undefined ||
+          !this.compatVersion.isEnabled(action.compatVersion) ||
+          (await this.compatVersion.isValid(action.compatVersion))) &&
+        (action.spdxLicense === undefined ||
+          !this.spdxLicense.isEnabled(action.spdxLicense) ||
+          (await this.spdxLicense.isValid(action.spdxLicense))) &&
+        (action.description === undefined ||
+          !this.description.isEnabled(action.description) ||
+          (await this.description.isValid(action.description))) &&
+        (action.homepageUrl === undefined ||
+          !this.homepageUrl.isEnabled(action.homepageUrl) ||
+          (await this.homepageUrl.isValid(action.homepageUrl))) &&
+        (action.languages === undefined ||
+          !this.languages.isEnabled(action.languages) ||
+          (await this.languages.isValid(action.languages)))
     );
   }
 

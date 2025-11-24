@@ -1,13 +1,13 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import { Component, effect, forwardRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CMakeProjectProjectNameIncludeVariableService } from '../services/cmake-project-project-name-include-variable-service';
 import { open } from '@tauri-apps/plugin-dialog';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMakeProjectProjectNameIncludeVariableModel } from '../models/cmake-project-project-name-include-variable.model';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
+import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
 
 @Component({
   selector: 'app-cmake-project-project-name-include-variable',
@@ -25,38 +25,46 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 export class CMakeProjectProjectNameIncludeVariable
   implements
     CMakeComponentInterface<CMakeProjectProjectNameIncludeVariableService>,
+    CheckboxesItemInterface,
     CMakeProjectProjectNameIncludeVariableModel
 {
-  service = inject(CMakeProjectProjectNameIncludeVariableService);
-  projectContext = inject(ProjectContextService);
-  versionService = inject(VersionService);
-  rustBackendService = inject(RustBackendService);
+  readonly name = 'CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE';
 
-  readonly cmakeProjectProjectNameIncludeProjectNameId = `cmake-project-project-name-include-project-name-${crypto.randomUUID()}`;
-  readonly cmakeProjectProjectNameIncludePathId = `cmake-project-project-name-include-path-${crypto.randomUUID()}`;
+  protected readonly cmakeProjectProjectNameIncludeProjectNameId = `cmake-project-project-name-include-project-name-${crypto.randomUUID()}`;
+  protected readonly cmakeProjectProjectNameIncludePathId = `cmake-project-project-name-include-path-${crypto.randomUUID()}`;
+
+  readonly service = inject(CMakeProjectProjectNameIncludeVariableService);
+
+  private readonly projectContext = inject(ProjectContextService);
+  private readonly rustBackendService = inject(RustBackendService);
+
+  constructor() {
+    effect(async () => {
+      this.isValid.set(await this.service.isValid(this));
+    });
+  }
+
+  protected isValid = signal(false);
 
   enabled = true;
 
-  private _projectName = '';
-
-  get projectName(): string {
-    return this._projectName;
+  protected projectNameSignal = signal<string>('');
+  public get projectName(): string {
+    return this.projectNameSignal();
+  }
+  public set projectName(v: string) {
+    this.projectNameSignal.set(v);
   }
 
-  set projectName(value: string) {
-    this._projectName = value;
-    this.service
-      .isValid(this)
-      .then((isValid) => (this.isValid = isValid))
-      .catch((err: unknown) => {
-        console.log(err);
-      });
+  private valueSignal = signal<string[]>([]);
+  public get value(): string[] {
+    return this.valueSignal();
+  }
+  public set value(v: string[]) {
+    this.valueSignal.set(v);
   }
 
-  value: string[] = [];
-
-  isValid = false;
-  rows = 2;
+  rows = 1;
 
   public get valueSingleLine() {
     return this.value.join('\n');
@@ -64,13 +72,8 @@ export class CMakeProjectProjectNameIncludeVariable
 
   public set valueSingleLine(value: string) {
     this.value = value.split('\n');
-    this.rows = this.value.length + 2;
-    this.service
-      .isValid(this)
-      .then((isValid) => (this.isValid = isValid))
-      .catch((err: unknown) => {
-        console.log(err);
-      });
+    this.valueSignal.set(this.value);
+    this.rows = this.value.length + 1;
   }
 
   async addPath() {
@@ -84,18 +87,15 @@ export class CMakeProjectProjectNameIncludeVariable
     });
 
     if (absolutePath !== null) {
-      this.rustBackendService
-        .diffPath(this.projectContext.rootPath, absolutePath)
-        .then((relativePath) => {
-          if (this.valueSingleLine === '') {
-            this.valueSingleLine = relativePath;
-          } else {
-            this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
-          }
-        })
-        .catch((err: unknown) => {
-          console.log(err);
-        });
+      const relativePath = await this.rustBackendService.diffPath(
+        this.projectContext.rootPath,
+        absolutePath
+      );
+      if (this.valueSingleLine === '') {
+        this.valueSingleLine = relativePath;
+      } else {
+        this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
+      }
     }
   }
 }
