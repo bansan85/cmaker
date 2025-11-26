@@ -10,7 +10,7 @@ import { ProjectSpdxLicenseModel } from '../models/project-spdx-license.model';
   providedIn: null,
 })
 export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdxLicenseModel> {
-  readonly cmakeMinVersion: Version | null = new Version(4, 2);
+  readonly cmakeMinVersion = new Version(4, 2);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

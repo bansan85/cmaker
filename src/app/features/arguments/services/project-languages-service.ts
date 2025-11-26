@@ -10,7 +10,7 @@ import { ProjectLanguagesModel } from '../models/project-languages.model';
   providedIn: null,
 })
 export class ProjectLanguagesService extends CMakeFeatureInterface<ProjectLanguagesModel> {
-  readonly cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

@@ -11,7 +11,7 @@ import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-int
   providedIn: null,
 })
 export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInterface<CMakeProjectTopLevelIncludesVariableModel> {
-  readonly cmakeMinVersion: Version | null = new Version(3, 24);
+  readonly cmakeMinVersion = new Version(3, 24);
 
   private readonly variable = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
 

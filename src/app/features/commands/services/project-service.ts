@@ -30,7 +30,7 @@ export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
 
   private readonly versionService = inject(VersionService);
 
-  readonly cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion = null;
 
   isEnabled(_action: ProjectModel): boolean {
     return true;

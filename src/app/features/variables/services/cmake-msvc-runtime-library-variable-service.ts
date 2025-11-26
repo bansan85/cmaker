@@ -14,7 +14,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
   private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
   private readonly helpText = 'Build using CRT shared libraries';
 
-  readonly cmakeMinVersion: Version | null = new Version(3, 15);
+  readonly cmakeMinVersion = new Version(3, 15);
 
   private dataToCMake = inject(DataToCMakeService);
   private projectContext = inject(ProjectContextService);

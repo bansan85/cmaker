@@ -12,7 +12,7 @@ import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-s
   providedIn: null,
 })
 export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeFeatureInterface<CMakeProjectProjectNameIncludeBeforeVariableModel> {
-  readonly cmakeMinVersion: Version | null = new Version(3, 17);
+  readonly cmakeMinVersion = new Version(3, 17);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

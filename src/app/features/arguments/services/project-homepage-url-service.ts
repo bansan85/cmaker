@@ -10,7 +10,7 @@ import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
   providedIn: null,
 })
 export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHomepageUrlModel> {
-  readonly cmakeMinVersion: Version | null = new Version(3, 12);
+  readonly cmakeMinVersion = new Version(3, 12);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

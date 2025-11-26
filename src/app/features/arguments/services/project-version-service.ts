@@ -10,7 +10,7 @@ import { VersionService } from '../../../shared/services/version-service';
   providedIn: null,
 })
 export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionModel> {
-  readonly cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

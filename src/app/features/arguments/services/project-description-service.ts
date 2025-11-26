@@ -10,7 +10,7 @@ import { ProjectDescriptionModel } from '../models/project-description.model';
   providedIn: null,
 })
 export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDescriptionModel> {
-  readonly cmakeMinVersion: Version | null = new Version(3, 9);
+  readonly cmakeMinVersion = new Version(3, 9);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

@@ -11,7 +11,7 @@ import { ProjectNameModel } from '../models/project-name.model';
   providedIn: 'root',
 })
 export class ProjectNameService extends CMakeFeatureInterface<ProjectNameModel> {
-  readonly cmakeMinVersion: Version | null = null;
+  readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

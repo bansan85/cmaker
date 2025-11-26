@@ -13,7 +13,7 @@ import { RustBackendService } from '../../../shared/services/rust-backend-servic
 export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterface<CMakeProjectIncludeBeforeVariableModel> {
   private readonly variable = 'CMAKE_PROJECT_INCLUDE_BEFORE';
 
-  readonly cmakeMinVersion: Version | null = new Version(3, 15);
+  readonly cmakeMinVersion = new Version(3, 15);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

@@ -13,7 +13,7 @@ import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-availab
 export class CMakeProjectIncludeVariableService extends CMakeFeatureInterface<CMakeProjectIncludeVariableModel> {
   private readonly variable = 'CMAKE_PROJECT_INCLUDE';
 
-  readonly cmakeMinVersion: Version | null = new Version(3, 15);
+  readonly cmakeMinVersion = new Version(3, 15);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

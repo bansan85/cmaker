@@ -10,7 +10,7 @@ import { ProjectCompatVersionModel } from '../models/project-compat-version.mode
   providedIn: null,
 })
 export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCompatVersionModel> {
-  readonly cmakeMinVersion: Version | null = new Version(4, 1);
+  readonly cmakeMinVersion = new Version(4, 1);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);

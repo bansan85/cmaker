@@ -2,7 +2,7 @@ import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 
 export abstract class CMakeFeatureInterface<Feature> {
-  abstract cmakeMinVersion: Version | null;
+  abstract readonly cmakeMinVersion: Version | null;
   abstract isEnabled(action: Feature): boolean;
   abstract isValid(action: Feature): Promise<boolean>;
 
