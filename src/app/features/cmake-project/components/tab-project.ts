@@ -51,7 +51,6 @@ export class TabProject implements AfterViewInit {
     console.log(this.itemsOrder);
     this.itemsOrder.forEach((i) => {
       const child = draggableItemsList[i].child;
-      console.log(child.service.cmakeRequiredVersion(child));
       console.log(child.service.toCMakeListTxt(child));
     });
   }

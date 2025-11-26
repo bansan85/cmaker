@@ -4,18 +4,18 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { VersionService } from '../../../shared/services/version-service';
-import { ProjectDescriptionModel } from '../models/project-description.model';
+import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDescriptionModel> {
+export class ProjectDescriptionService extends CMakeFeatureInterface<InputStringModel> {
   readonly cmakeMinVersion = new Version(3, 9);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectDescriptionModel): boolean {
+  isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -25,19 +25,17 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
     );
   }
 
-  isValid(_action: ProjectDescriptionModel): Promise<boolean> {
+  isValid(_action: InputStringModel): Promise<boolean> {
     return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectDescriptionModel
+    _action: InputStringModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    _action: ProjectDescriptionModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputStringModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -56,7 +54,7 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<ProjectDesc
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectDescriptionModel): string {
+  protected toCMakeListTxtImpl(action: InputStringModel): string {
     return `DESCRIPTION "${action.value}"\n`;
   }
 }

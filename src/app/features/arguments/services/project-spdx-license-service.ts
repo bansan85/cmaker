@@ -4,18 +4,18 @@ import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-availab
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
-import { ProjectSpdxLicenseModel } from '../models/project-spdx-license.model';
+import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdxLicenseModel> {
+export class ProjectSpdxLicenseService extends CMakeFeatureInterface<InputStringModel> {
   readonly cmakeMinVersion = new Version(4, 2);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectSpdxLicenseModel): boolean {
+  isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -25,19 +25,15 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdx
     );
   }
 
-  isValid(_action: ProjectSpdxLicenseModel): Promise<boolean> {
+  isValid(_action: InputStringModel): Promise<boolean> {
     return Promise.resolve(true);
   }
 
-  protected cmakeRequiredVersionImpl(
-    action: ProjectSpdxLicenseModel
-  ): Version | null {
+  protected cmakeRequiredVersionImpl(action: InputStringModel): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    action: ProjectSpdxLicenseModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(action: InputStringModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -56,7 +52,7 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<ProjectSpdx
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectSpdxLicenseModel): string {
+  protected toCMakeListTxtImpl(action: InputStringModel): string {
     return `SPDX_LICENSE "${action.value}"\n`;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { CheckboxesItemInterface } from '../../interface/checkboxes-item-interface';
+import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { VersionService } from '../../services/version-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 

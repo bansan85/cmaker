@@ -5,12 +5,12 @@ import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-s
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
-import { CMakeMsvcRuntimeLibraryVariableModel } from '../models/cmake-msvc-runtime-library.model';
+import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<CMakeMsvcRuntimeLibraryVariableModel> {
+export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<InputCheckbox> {
   private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
   private readonly helpText = 'Build using CRT shared libraries';
 
@@ -20,7 +20,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: CMakeMsvcRuntimeLibraryVariableModel): boolean {
+  isEnabled(action: InputCheckbox): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -30,19 +30,15 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
     );
   }
 
-  isValid(_action: CMakeMsvcRuntimeLibraryVariableModel): Promise<boolean> {
+  isValid(_action: InputCheckbox): Promise<boolean> {
     return Promise.resolve(true);
   }
 
-  protected cmakeRequiredVersionImpl(
-    _action: CMakeMsvcRuntimeLibraryVariableModel
-  ): Version | null {
+  protected cmakeRequiredVersionImpl(_action: InputCheckbox): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    action: CMakeMsvcRuntimeLibraryVariableModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(action: InputCheckbox): CMakeAvailableData {
     return {
       options: [
         {
@@ -54,9 +50,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
     };
   }
 
-  protected toCMakeListTxtImpl(
-    action: CMakeMsvcRuntimeLibraryVariableModel
-  ): string {
+  protected toCMakeListTxtImpl(action: InputCheckbox): string {
     return `# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
       action.value

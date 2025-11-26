@@ -4,18 +4,18 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { VersionService } from '../../../shared/services/version-service';
-import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
+import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHomepageUrlModel> {
+export class ProjectHomepageUrlService extends CMakeFeatureInterface<InputStringModel> {
   readonly cmakeMinVersion = new Version(3, 12);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectHomepageUrlModel): boolean {
+  isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -25,19 +25,17 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHome
     );
   }
 
-  isValid(action: ProjectHomepageUrlModel): Promise<boolean> {
+  isValid(action: InputStringModel): Promise<boolean> {
     return Promise.resolve(/https?:\/\/.+/.test(action.value));
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectHomepageUrlModel
+    _action: InputStringModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    _action: ProjectHomepageUrlModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputStringModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -56,7 +54,7 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<ProjectHome
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectHomepageUrlModel): string {
+  protected toCMakeListTxtImpl(action: InputStringModel): string {
     return `HOMEPAGE_URL "${action.value}"\n`;
   }
 }

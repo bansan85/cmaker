@@ -4,18 +4,18 @@ import { Version } from '../../../shared/models/version';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectLanguagesModel } from '../models/project-languages.model';
+import { InputLanguagesModel } from '../../../shared/models/arguments/input-languages-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectLanguagesService extends CMakeFeatureInterface<ProjectLanguagesModel> {
+export class ProjectLanguagesService extends CMakeFeatureInterface<InputLanguagesModel> {
   readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectLanguagesModel): boolean {
+  isEnabled(action: InputLanguagesModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -25,23 +25,21 @@ export class ProjectLanguagesService extends CMakeFeatureInterface<ProjectLangua
     );
   }
 
-  isValid(_action: ProjectLanguagesModel): Promise<boolean> {
+  isValid(_action: InputLanguagesModel): Promise<boolean> {
     return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectLanguagesModel
+    _action: InputLanguagesModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    _action: ProjectLanguagesModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputLanguagesModel): CMakeAvailableData {
     return {};
   }
 
-  protected toCMakeListTxtImpl(action: ProjectLanguagesModel): string {
-    return `LANGUAGES ${action.toString()}\n`;
+  protected toCMakeListTxtImpl(action: InputLanguagesModel): string {
+    return `LANGUAGES ${action.value}\n`;
   }
 }

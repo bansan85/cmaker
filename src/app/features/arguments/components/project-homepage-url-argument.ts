@@ -1,10 +1,9 @@
-import { Component, effect, forwardRef, inject, signal } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
-import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
-import { ProjectHomepageUrlModel } from '../models/project-homepage-url.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
+import { InputString } from '../../../shared/directives/arguments/input-string';
 
 @Component({
   selector: 'app-project-homepage-url-argument',
@@ -19,32 +18,12 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
   ],
 })
 export class ProjectHomepageUrlArgument
-  implements
-    CMakeComponentInterface<ProjectHomepageUrlService>,
-    CheckboxesItemInterface,
-    ProjectHomepageUrlModel
+  extends InputString
+  implements CMakeComponentInterface<ProjectHomepageUrlService>
 {
   readonly name = 'Homepage';
 
   protected readonly projectHomepageUrlId = `project-homepage-url-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectHomepageUrlService);
-
-  constructor() {
-    effect(async () => {
-      this.isValid.set(await this.service.isValid(this));
-    });
-  }
-
-  protected isValid = signal(false);
-
-  enabled = true;
-
-  protected valueSignal = signal('');
-  get value(): string {
-    return this.valueSignal();
-  }
-  set value(val: string) {
-    this.valueSignal.set(val);
-  }
 }

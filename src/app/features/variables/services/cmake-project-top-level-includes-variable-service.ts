@@ -3,14 +3,14 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { Version } from '../../../shared/models/version';
-import { CMakeProjectTopLevelIncludesVariableModel } from '../models/cmake-project-top-level-includes-variable.model';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { InputFilesModel } from '../../../shared/models/arguments/input-files-model';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInterface<CMakeProjectTopLevelIncludesVariableModel> {
+export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInterface<InputFilesModel> {
   readonly cmakeMinVersion = new Version(3, 24);
 
   private readonly variable = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
@@ -19,7 +19,7 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
   private versionService = inject(VersionService);
   private rustBackendService = inject(RustBackendService);
 
-  isEnabled(action: CMakeProjectTopLevelIncludesVariableModel): boolean {
+  isEnabled(action: InputFilesModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -29,9 +29,7 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
     );
   }
 
-  async isValid(
-    action: CMakeProjectTopLevelIncludesVariableModel
-  ): Promise<boolean> {
+  async isValid(action: InputFilesModel): Promise<boolean> {
     return (
       action.value.length > 0 &&
       (await this.rustBackendService.relativePathsExists(
@@ -42,15 +40,11 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
     );
   }
 
-  protected cmakeRequiredVersionImpl(
-    action: CMakeProjectTopLevelIncludesVariableModel
-  ): Version | null {
+  protected cmakeRequiredVersionImpl(action: InputFilesModel): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    action: CMakeProjectTopLevelIncludesVariableModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(action: InputFilesModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -61,9 +55,7 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
     };
   }
 
-  protected toCMakeListTxtImpl(
-    action: CMakeProjectTopLevelIncludesVariableModel
-  ): string {
+  protected toCMakeListTxtImpl(action: InputFilesModel): string {
     return `set(${this.variable} "${action.value.join(';')}")\n`;
   }
 }

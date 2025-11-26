@@ -12,7 +12,6 @@ import { ProjectService } from '../services/project-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
 import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { ProjectVersionService } from '../../arguments/services/project-version-service';
 import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
@@ -21,7 +20,6 @@ import { ProjectDescriptionService } from '../../arguments/services/project-desc
 import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
 import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
 import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
 import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
 import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';

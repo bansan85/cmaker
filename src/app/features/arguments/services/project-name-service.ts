@@ -5,19 +5,19 @@ import { VersionService } from '../../../shared/services/version-service';
 import { Version } from '../../../shared/models/version';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectNameModel } from '../models/project-name.model';
+import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectNameService extends CMakeFeatureInterface<ProjectNameModel> {
+export class ProjectNameService extends CMakeFeatureInterface<InputStringModel> {
   readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
   private dataToCMake = inject(DataToCMakeService);
 
-  isEnabled(action: ProjectNameModel): boolean {
+  isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -27,17 +27,17 @@ export class ProjectNameService extends CMakeFeatureInterface<ProjectNameModel> 
     );
   }
 
-  isValid(action: ProjectNameModel): Promise<boolean> {
+  isValid(action: InputStringModel): Promise<boolean> {
     return Promise.resolve(this.dataToCMake.isValidTargetName(action.value));
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectNameModel
+    _action: InputStringModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(_action: ProjectNameModel): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputStringModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -52,7 +52,7 @@ export class ProjectNameService extends CMakeFeatureInterface<ProjectNameModel> 
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectNameModel): string {
+  protected toCMakeListTxtImpl(action: InputStringModel): string {
     return `${action.value}\n`;
   }
 }

@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { CMakeProjectProjectNameIncludeVariableModel } from '../models/cmake-project-project-name-include-variable.model';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { InputProjectNameFilesModel } from '../../../shared/models/arguments/input-project-name-files-model';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureInterface<CMakeProjectProjectNameIncludeVariableModel> {
+export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureInterface<InputProjectNameFilesModel> {
   readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
@@ -19,7 +19,7 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
   private rustBackendService = inject(RustBackendService);
   private dataToCMake = inject(DataToCMakeService);
 
-  isEnabled(action: CMakeProjectProjectNameIncludeVariableModel): boolean {
+  isEnabled(action: InputProjectNameFilesModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -29,9 +29,7 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
     );
   }
 
-  async isValid(
-    action: CMakeProjectProjectNameIncludeVariableModel
-  ): Promise<boolean> {
+  async isValid(action: InputProjectNameFilesModel): Promise<boolean> {
     return (
       this.dataToCMake.isValidTargetName(action.projectName) &&
       action.value.length > 0 &&
@@ -44,7 +42,7 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
   }
 
   protected cmakeRequiredVersionImpl(
-    action: CMakeProjectProjectNameIncludeVariableModel
+    action: InputProjectNameFilesModel
   ): Version | null {
     if (action.value.length > 1) {
       return new Version(3, 29);
@@ -54,7 +52,7 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
   }
 
   protected cmakeObjectsImpl(
-    action: CMakeProjectProjectNameIncludeVariableModel
+    action: InputProjectNameFilesModel
   ): CMakeAvailableData {
     return {
       variables: [
@@ -66,9 +64,7 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
     };
   }
 
-  protected toCMakeListTxtImpl(
-    action: CMakeProjectProjectNameIncludeVariableModel
-  ): string {
+  protected toCMakeListTxtImpl(action: InputProjectNameFilesModel): string {
     return `set(CMAKE_PROJECT_${
       action.projectName
     }_INCLUDE "${action.value.join(';')}")\n`;

@@ -4,18 +4,18 @@ import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { VersionService } from '../../../shared/services/version-service';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { ProjectCompatVersionModel } from '../models/project-compat-version.model';
+import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCompatVersionModel> {
+export class ProjectCompatVersionService extends CMakeFeatureInterface<InputVersionModel> {
   readonly cmakeMinVersion = new Version(4, 1);
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectCompatVersionModel): boolean {
+  isEnabled(action: InputVersionModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -25,19 +25,17 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
     );
   }
 
-  isValid(action: ProjectCompatVersionModel): Promise<boolean> {
+  isValid(action: InputVersionModel): Promise<boolean> {
     return Promise.resolve(action.value !== undefined);
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectCompatVersionModel
+    _action: InputVersionModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(
-    _action: ProjectCompatVersionModel
-  ): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputVersionModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -56,7 +54,7 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<ProjectCo
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectCompatVersionModel): string {
+  protected toCMakeListTxtImpl(action: InputVersionModel): string {
     return `COMPAT_VERSION ${action.value?.toString()}\n`;
   }
 }

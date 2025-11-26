@@ -2,20 +2,20 @@ import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectVersionModel } from '../models/project-version.model';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
+import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionModel> {
+export class ProjectVersionService extends CMakeFeatureInterface<InputVersionModel> {
   readonly cmakeMinVersion = null;
 
   private projectContext = inject(ProjectContextService);
   private versionService = inject(VersionService);
 
-  isEnabled(action: ProjectVersionModel): boolean {
+  isEnabled(action: InputVersionModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -25,17 +25,17 @@ export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionM
     );
   }
 
-  isValid(action: ProjectVersionModel): Promise<boolean> {
+  isValid(action: InputVersionModel): Promise<boolean> {
     return Promise.resolve(action.value !== undefined);
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: ProjectVersionModel
+    _action: InputVersionModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(_action: ProjectVersionModel): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputVersionModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -103,7 +103,7 @@ export class ProjectVersionService extends CMakeFeatureInterface<ProjectVersionM
     };
   }
 
-  protected toCMakeListTxtImpl(action: ProjectVersionModel): string {
+  protected toCMakeListTxtImpl(action: InputVersionModel): string {
     return `VERSION ${action.value?.toString()}\n`;
   }
 }

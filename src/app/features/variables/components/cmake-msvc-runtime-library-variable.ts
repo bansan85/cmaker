@@ -1,10 +1,9 @@
-import { Component, effect, forwardRef, inject, signal } from '@angular/core';
+import { Component, forwardRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-runtime-library-variable-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { CMakeMsvcRuntimeLibraryVariableModel } from '../models/cmake-msvc-runtime-library.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-item-interface';
+import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
 
 @Component({
   selector: 'app-cmake-msvc-runtime-library-variable',
@@ -20,10 +19,8 @@ import { CheckboxesItemInterface } from '../../../shared/interface/checkboxes-it
   ],
 })
 export class CMakeMsvcRuntimeLibraryVariable
-  implements
-    CMakeComponentInterface<CMakeMsvcRuntimeLibraryVariableService>,
-    CheckboxesItemInterface,
-    CMakeMsvcRuntimeLibraryVariableModel
+  extends InputCheckbox
+  implements CMakeComponentInterface<CMakeMsvcRuntimeLibraryVariableService>
 {
   readonly name = 'CMAKE_MSVC_RUNTIME_LIBRARY';
 
@@ -31,21 +28,5 @@ export class CMakeMsvcRuntimeLibraryVariable
 
   readonly service = inject(CMakeMsvcRuntimeLibraryVariableService);
 
-  constructor() {
-    effect(async () => {
-      this.isValid.set(await this.service.isValid(this));
-    });
-  }
-
-  protected isValid = signal(true);
-
-  enabled = true;
-
-  protected valueSignal = signal(false);
-  get value(): boolean {
-    return this.valueSignal();
-  }
-  set value(val: boolean) {
-    this.valueSignal.set(val);
-  }
+  protected valueSignal = signal(true);
 }
