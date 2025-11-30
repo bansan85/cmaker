@@ -5,10 +5,11 @@ import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-co
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputLicenseDataList } from '../../../shared/components/arguments/input-license-data-list/input-license-data-list';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-project-spdx-license-argument',
-  imports: [FormsModule, InputLicenseDataList],
+  imports: [FormsModule, InputLicenseDataList, ValidTag],
   templateUrl: './project-spdx-license-argument.html',
   styleUrl: './project-spdx-license-argument.css',
   providers: [

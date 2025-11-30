@@ -1,7 +1,13 @@
+import { inject } from '@angular/core';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { VersionService } from '../../../shared/services/version-service';
 
 export abstract class CMakeFeatureInterface<Feature> {
+  protected projectContext = inject(ProjectContextService);
+  protected versionService = inject(VersionService);
+
   abstract readonly cmakeMinVersion: Version | null;
   abstract isEnabled(action: Feature): boolean;
   abstract isValid(action: Feature): Promise<boolean>;
@@ -39,4 +45,11 @@ export abstract class CMakeFeatureInterface<Feature> {
   }
 
   protected abstract toCMakeListTxtImpl(action: Feature): string;
+
+  isEffectiveVersionValid(action: Feature): boolean {
+    return !this.versionService.isGreater(
+      this.cmakeRequiredVersionImpl(action),
+      this.projectContext.version
+    );
+  }
 }

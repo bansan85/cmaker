@@ -4,10 +4,11 @@ import { ProjectCompatVersionService } from '../services/project-compat-version-
 import { FormsModule } from '@angular/forms';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-project-compat-version-argument',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './project-compat-version-argument.html',
   styleUrl: './project-compat-version-argument.css',
   providers: [

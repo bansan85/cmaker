@@ -3,20 +3,21 @@ import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interf
 import { InputVersionModel } from '../../models/arguments/input-version-model';
 import { Version } from '../../models/version';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
+import { ValidatorInterface } from '../../interfaces/validator-interface';
 
 @Directive({
   selector: '[appInputVersion]',
 })
 export abstract class InputVersion
+  extends ValidatorInterface
   implements CheckboxesItemInterface, InputVersionModel
 {
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
 
-  protected isValid = signal(false);
-
   constructor() {
+    super();
     effect(async () => {
       this.isValid.set(await this.service.isValid(this));
     });

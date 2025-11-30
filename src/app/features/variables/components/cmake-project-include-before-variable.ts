@@ -4,10 +4,11 @@ import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-co
 import { FormsModule } from '@angular/forms';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-cmake-project-include-before-variable',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './cmake-project-include-before-variable.html',
   styleUrl: './cmake-project-include-before-variable.css',
   providers: [

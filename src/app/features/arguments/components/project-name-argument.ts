@@ -4,10 +4,11 @@ import { ProjectNameService } from '../services/project-name-service';
 import { FormsModule } from '@angular/forms';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputString } from '../../../shared/directives/arguments/input-string';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-project-name-argument',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './project-name-argument.html',
   styleUrl: './project-name-argument.css',
   providers: [

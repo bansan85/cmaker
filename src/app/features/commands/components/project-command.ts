@@ -28,6 +28,8 @@ import { ProjectNameArgument } from '../../arguments/components/project-name-arg
 import { ProjectNameService } from '../../arguments/services/project-name-service';
 import { ProjectModel } from '../models/project.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
+import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-project-command',
@@ -42,6 +44,7 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
     ProjectNameArgument,
     CheckboxesList,
     CheckboxesItem,
+    ValidTag,
   ],
   templateUrl: './project-command.html',
   styleUrl: './project-command.css',
@@ -61,6 +64,7 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
   ],
 })
 export class ProjectCommand
+  extends ValidatorInterface
   implements
     CMakeComponentInterface<ProjectService>,
     AfterViewInit,
@@ -84,6 +88,7 @@ export class ProjectCommand
   }
 
   constructor() {
+    super();
     effect(async () => {
       if (!this.viewInitialized()) {
         return;
@@ -91,6 +96,4 @@ export class ProjectCommand
       this.isValid.set(await this.service.isValid(this));
     });
   }
-
-  protected isValid = signal(false);
 }

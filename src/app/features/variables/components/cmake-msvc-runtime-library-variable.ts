@@ -4,10 +4,11 @@ import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-r
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-cmake-msvc-runtime-library-variable',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './cmake-msvc-runtime-library-variable.html',
   styleUrl: './cmake-msvc-runtime-library-variable.css',
   providers: [

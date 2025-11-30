@@ -2,8 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { InputFilesModel } from '../../../shared/models/arguments/input-files-model';
 
@@ -15,8 +13,6 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterf
 
   readonly cmakeMinVersion = new Version(3, 15);
 
-  private projectContext = inject(ProjectContextService);
-  private versionService = inject(VersionService);
   private rustBackendService = inject(RustBackendService);
 
   isEnabled(action: InputFilesModel): boolean {

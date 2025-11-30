@@ -4,10 +4,11 @@ import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-co
 import { FormsModule } from '@angular/forms';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputString } from '../../../shared/directives/arguments/input-string';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-project-homepage-url-argument',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './project-homepage-url-argument.html',
   styleUrl: './project-homepage-url-argument.css',
   providers: [

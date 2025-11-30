@@ -2,20 +2,21 @@ import { Directive, effect, signal, WritableSignal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { InputStringModel } from '../../models/arguments/input-string-model';
+import { ValidatorInterface } from '../../interfaces/validator-interface';
 
 @Directive({
   selector: '[appInputString]',
 })
 export abstract class InputString
+  extends ValidatorInterface
   implements CheckboxesItemInterface, InputStringModel
 {
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
 
-  protected isValid = signal(false);
-
   constructor() {
+    super();
     effect(async () => {
       this.isValid.set(await this.service.isValid(this));
     });

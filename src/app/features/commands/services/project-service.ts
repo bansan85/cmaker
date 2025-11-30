@@ -10,8 +10,6 @@ import { ProjectVersionService } from '../../arguments/services/project-version-
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
 import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
-import { VersionService } from '../../../shared/services/version-service';
-import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
 import { ProjectModel } from '../models/project.model';
@@ -27,8 +25,6 @@ export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
   private readonly description = inject(ProjectDescriptionService);
   private readonly homepageUrl = inject(ProjectHomepageUrlService);
   private readonly languages = inject(ProjectLanguagesService);
-
-  private readonly versionService = inject(VersionService);
 
   readonly cmakeMinVersion = null;
 

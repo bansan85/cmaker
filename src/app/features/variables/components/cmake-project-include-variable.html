@@ -1,11 +1,12 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectIncludePathId"
     >CMAKE_PROJECT_INCLUDE <button (click)="addPath()">+</button>
-    <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
-      >Invalid</span
-    ></label
-  >
+    <span
+      class="version"
+      [class.invalid]="!service.isEffectiveVersionValid(this)"
+      >{{service.cmakeRequiredVersion(this)}}</span
+    ><app-valid-tag [validator]="this"
+  /></label>
   <textarea
     type="text"
     name="cmake-project-include-path"

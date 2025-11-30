@@ -1,9 +1,11 @@
 <div class="field">
   <label [for]="projectNameId"
-    >Name <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
-      >Invalid</span
-    ></label
+    >Name
+    <span
+      class="version"
+      [class.invalid]="!service.isEffectiveVersionValid(this)"
+      >{{service.cmakeRequiredVersion(this)}}</span
+    ><app-valid-tag [validator]="this" /></label
   ><input
     type="text"
     name="project-name"

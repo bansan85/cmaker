@@ -1,9 +1,7 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { VersionService } from '../../../shared/services/version-service';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 
 @Injectable({
@@ -11,9 +9,6 @@ import { InputVersionModel } from '../../../shared/models/arguments/input-versio
 })
 export class ProjectCompatVersionService extends CMakeFeatureInterface<InputVersionModel> {
   readonly cmakeMinVersion = new Version(4, 1);
-
-  private projectContext = inject(ProjectContextService);
-  private versionService = inject(VersionService);
 
   isEnabled(action: InputVersionModel): boolean {
     return (

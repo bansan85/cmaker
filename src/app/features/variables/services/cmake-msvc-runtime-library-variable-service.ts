@@ -3,8 +3,6 @@ import { Version } from '../../../shared/models/version';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
 
 @Injectable({
@@ -17,8 +15,6 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
   readonly cmakeMinVersion = new Version(3, 15);
 
   private dataToCMake = inject(DataToCMakeService);
-  private projectContext = inject(ProjectContextService);
-  private versionService = inject(VersionService);
 
   isEnabled(action: InputCheckbox): boolean {
     return (

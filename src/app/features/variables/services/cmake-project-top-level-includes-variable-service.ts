@@ -1,6 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
@@ -15,8 +13,6 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
 
   private readonly variable = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
 
-  private projectContext = inject(ProjectContextService);
-  private versionService = inject(VersionService);
   private rustBackendService = inject(RustBackendService);
 
   isEnabled(action: InputFilesModel): boolean {

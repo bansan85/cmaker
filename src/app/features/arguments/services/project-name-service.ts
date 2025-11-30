@@ -1,7 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { Version } from '../../../shared/models/version';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
@@ -12,9 +10,6 @@ import { InputStringModel } from '../../../shared/models/arguments/input-string-
 })
 export class ProjectNameService extends CMakeFeatureInterface<InputStringModel> {
   readonly cmakeMinVersion = null;
-
-  private projectContext = inject(ProjectContextService);
-  private versionService = inject(VersionService);
   private dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputStringModel): boolean {

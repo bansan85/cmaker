@@ -4,10 +4,11 @@ import { CMakeProjectProjectNameIncludeVariableService } from '../services/cmake
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-cmake-project-project-name-include-variable',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './cmake-project-project-name-include-variable.html',
   styleUrl: './cmake-project-project-name-include-variable.css',
   providers: [

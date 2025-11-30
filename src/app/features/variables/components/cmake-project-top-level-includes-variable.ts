@@ -4,10 +4,11 @@ import { CMakeProjectTopLevelIncludesVariableService } from '../services/cmake-p
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-cmake-project-top-level-includes-variable',
-  imports: [FormsModule],
+  imports: [FormsModule, ValidTag],
   templateUrl: './cmake-project-top-level-includes-variable.html',
   styleUrl: './cmake-project-top-level-includes-variable.css',
   providers: [

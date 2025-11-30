@@ -1,11 +1,12 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="projectHomepageUrlId"
     >Homepage URL
-    <span class="version">{{service.cmakeRequiredVersion(this)}}</span
-    ><span [class.invalid]="!isValid()" [hidden]="isValid()"
-      >Invalid</span
-    ></label
-  >
+    <span
+      class="version"
+      [class.invalid]="!service.isEffectiveVersionValid(this)"
+      >{{service.cmakeRequiredVersion(this)}}</span
+    ><app-valid-tag [validator]="this"
+  /></label>
   <input
     type="url"
     name="project-homepage-url"

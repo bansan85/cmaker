@@ -5,11 +5,13 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { RustBackendService } from '../../services/rust-backend-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
+import { ValidatorInterface } from '../../interfaces/validator-interface';
 
 @Directive({
   selector: '[appInputProjectNameFiles]',
 })
 export abstract class InputProjectNameFiles
+  extends ValidatorInterface
   implements CheckboxesItemInterface, InputProjectNameFilesModel
 {
   enabled = true;
@@ -19,9 +21,8 @@ export abstract class InputProjectNameFiles
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);
 
-  protected isValid = signal(false);
-
   constructor() {
+    super();
     effect(async () => {
       this.isValid.set(await this.service.isValid(this));
     });

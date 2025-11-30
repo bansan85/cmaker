@@ -5,10 +5,11 @@ import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-l
 import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 
 @Component({
   selector: 'app-project-languages-argument',
-  imports: [CheckboxesList, CheckboxesItem],
+  imports: [CheckboxesList, CheckboxesItem, ValidTag],
   templateUrl: './project-languages-argument.html',
   styleUrl: './project-languages-argument.css',
   providers: [

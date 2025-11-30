@@ -2,8 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { Version } from '../../../shared/models/version';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { InputProjectNameFilesModel } from '../../../shared/models/arguments/input-project-name-files-model';
@@ -14,8 +12,6 @@ import { InputProjectNameFilesModel } from '../../../shared/models/arguments/inp
 export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeFeatureInterface<InputProjectNameFilesModel> {
   readonly cmakeMinVersion = new Version(3, 17);
 
-  private projectContext = inject(ProjectContextService);
-  private versionService = inject(VersionService);
   private rustBackendService = inject(RustBackendService);
   private dataToCMake = inject(DataToCMakeService);
 
