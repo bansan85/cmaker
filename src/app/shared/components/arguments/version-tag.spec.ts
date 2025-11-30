@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ValidTag } from './valid-tag';
 
-describe('ValidTag', () => {
-  let component: ValidTag;
-  let fixture: ComponentFixture<ValidTag>;
+import { VersionTag } from './version-tag';
+
+describe('VersionTag', () => {
+  let component: VersionTag;
+  let fixture: ComponentFixture<VersionTag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ValidTag],
+      imports: [VersionTag],
     }).compileComponents();
 
-    // fixture = TestBed.createComponent(ValidTag);
+    // fixture = TestBed.createComponent(VersionTag);
     // component = fixture.componentInstance;
     // fixture.detectChanges();
   });

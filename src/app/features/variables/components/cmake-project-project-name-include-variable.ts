@@ -5,10 +5,11 @@ import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-co
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
+import { VersionTag } from '../../../shared/components/arguments/version-tag';
 
 @Component({
   selector: 'app-cmake-project-project-name-include-variable',
-  imports: [FormsModule, ValidTag],
+  imports: [FormsModule, ValidTag, VersionTag],
   templateUrl: './cmake-project-project-name-include-variable.html',
   styleUrl: './cmake-project-project-name-include-variable.css',
   providers: [

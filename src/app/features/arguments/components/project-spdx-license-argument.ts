@@ -6,10 +6,11 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputLicenseDataList } from '../../../shared/components/arguments/input-license-data-list/input-license-data-list';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
+import { VersionTag } from '../../../shared/components/arguments/version-tag';
 
 @Component({
   selector: 'app-project-spdx-license-argument',
-  imports: [FormsModule, InputLicenseDataList, ValidTag],
+  imports: [FormsModule, InputLicenseDataList, ValidTag, VersionTag],
   templateUrl: './project-spdx-license-argument.html',
   styleUrl: './project-spdx-license-argument.css',
   providers: [

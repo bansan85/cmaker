@@ -1,11 +1,8 @@
 <div class="project-command">
   <h1>
     Project @if (viewInitialized()) {
-    <span
-      class="version"
-      [class.invalid]="!service.isEffectiveVersionValid(this)"
-      >{{service.cmakeRequiredVersion(this)}}</span
-    ><app-valid-tag [validator]="this" />
+    <app-version-tag [element]="this" />
+    <app-valid-tag [validator]="this" />
     }
     <app-checkboxes-list icon="menu">
       <app-checkboxes-item [element]="spdxLicense" />

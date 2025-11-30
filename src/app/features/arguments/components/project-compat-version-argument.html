@@ -1,11 +1,8 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="labelVersionId"
     >Compat version
-    <span
-      class="version"
-      [class.invalid]="!service.isEffectiveVersionValid(this)"
-      >{{service.cmakeRequiredVersion(this)}}</span
-    ><app-valid-tag [validator]="this"
+    <app-version-tag [element]="this" />
+    <app-valid-tag [validator]="this"
   /></label>
   <input
     type="text"

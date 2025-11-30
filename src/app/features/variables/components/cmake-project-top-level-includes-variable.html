@@ -1,11 +1,8 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectTopLevelIncludesPathId"
     >CMAKE_PROJECT_TOP_LEVEL_INCLUDES <button (click)="addPath()">+</button>
-    <span
-      class="version"
-      [class.invalid]="!service.isEffectiveVersionValid(this)"
-      >{{service.cmakeRequiredVersion(this)}}</span
-    ><app-valid-tag [validator]="this"
+    <app-version-tag [element]="this" />
+    <app-valid-tag [validator]="this"
   /></label>
   <textarea
     type="text"

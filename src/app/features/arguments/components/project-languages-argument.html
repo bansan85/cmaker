@@ -1,11 +1,7 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="projectLanguagesId"
-    >Languages
-    <span
-      class="version"
-      [class.invalid]="!service.isEffectiveVersionValid(this)"
-      >{{service.cmakeRequiredVersion(this)}}</span
-    ><app-valid-tag [validator]="this"
+    >Languages <app-version-tag [element]="this" />
+    <app-valid-tag [validator]="this"
   /></label>
   <app-checkboxes-list icon="chevron-down">
     <app-checkboxes-item [element]="c()"></app-checkboxes-item>

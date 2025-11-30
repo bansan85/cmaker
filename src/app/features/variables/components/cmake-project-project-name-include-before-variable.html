@@ -2,11 +2,8 @@
   <label [for]="cmakeProjectProjectNameIncludeBeforePathId"
     >CMAKE_PROJECT_{{projectNameSignal()}}_INCLUDE_BEFORE
     <button (click)="addPath()">+</button>
-    <span
-      class="version"
-      [class.invalid]="!service.isEffectiveVersionValid(this)"
-      >{{service.cmakeRequiredVersion(this)}}</span
-    ><app-valid-tag [validator]="this"
+    <app-version-tag [element]="this" />
+    <app-valid-tag [validator]="this"
   /></label>
   <label [for]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
     >Project name:

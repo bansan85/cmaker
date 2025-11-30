@@ -1,0 +1,5 @@
+<span
+  class="version"
+  [class.invalid]="!element().service.isEffectiveVersionValid(element())"
+  >{{element().service.cmakeRequiredVersion(element())}}</span
+>

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   effect,
   forwardRef,
@@ -30,6 +29,7 @@ import { ProjectModel } from '../models/project.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
+import { VersionTag } from '../../../shared/components/arguments/version-tag';
 
 @Component({
   selector: 'app-project-command',
@@ -45,6 +45,7 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
     CheckboxesList,
     CheckboxesItem,
     ValidTag,
+    VersionTag,
   ],
   templateUrl: './project-command.html',
   styleUrl: './project-command.css',
@@ -65,10 +66,7 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 })
 export class ProjectCommand
   extends ValidatorInterface
-  implements
-    CMakeComponentInterface<ProjectService>,
-    AfterViewInit,
-    ProjectModel
+  implements CMakeComponentInterface<ProjectService>, ProjectModel
 {
   @ViewChild('name') readonly name!: ProjectNameArgument;
   @ViewChild('spdxLicense') readonly spdxLicense!: ProjectSpdxLicenseArgument;
