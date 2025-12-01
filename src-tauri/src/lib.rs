@@ -9,7 +9,7 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn path_exists(path: &str, directory: bool) -> bool {
-    if (directory) {
+    if directory {
         return Path::new(path).is_dir();
     } else {
         return Path::new(path).is_file();
@@ -18,7 +18,7 @@ fn path_exists(path: &str, directory: bool) -> bool {
 
 #[tauri::command]
 fn paths_exists(paths: Vec<String>, directory: bool) -> bool {
-    if (directory) {
+    if directory {
         paths.iter().all(|path| Path::new(path).is_dir())
     } else {
         paths.iter().all(|path| Path::new(path).is_file())
@@ -27,7 +27,7 @@ fn paths_exists(paths: Vec<String>, directory: bool) -> bool {
 
 #[tauri::command]
 fn relative_paths_exists(base: &str, paths: Vec<String>, directory: bool) -> bool {
-    if (directory) {
+    if directory {
         paths
             .iter()
             .all(|path| Path::new(&format!("{}/{}", base, path)).is_dir())
