@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, viewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Type,
+  viewChild,
+  viewChildren,
+  ViewContainerRef,
+} from '@angular/core';
 import { ProjectCommand } from '../../commands/components/project-command';
 import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
 import { DraggableListComponent } from '../../../shared/components/list/draggable-list';
@@ -9,13 +16,21 @@ import { CMakeProjectIncludeVariable } from '../../variables/components/cmake-pr
 import { CMakeProjectProjectNameIncludeBeforeVariable } from '../../variables/components/cmake-project-project-name-include-before-variable';
 import { CMakeProjectProjectNameIncludeVariable } from '../../variables/components/cmake-project-project-name-include-variable';
 import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
+import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 
 @Component({
   selector: 'app-tab-project',
-  imports: [
-    DraggableListComponent,
-    DraggableItemComponent,
-    CommonModule,
+  imports: [DraggableListComponent, DraggableItemComponent, CommonModule],
+  templateUrl: './tab-project.html',
+  styleUrl: './tab-project.css',
+})
+export class TabProject implements AfterViewInit {
+  containers = viewChildren('container', { read: ViewContainerRef });
+
+  defaultInitialFields: Type<
+    CMakeComponentInterface<CMakeFeatureInterface<unknown>>
+  >[] = [
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
     CMakeProjectIncludeBeforeVariable,
@@ -23,20 +38,20 @@ import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components
     CMakeProjectProjectNameIncludeBeforeVariable,
     CMakeProjectProjectNameIncludeVariable,
     CMakeProjectTopLevelIncludesVariable,
-  ],
-  templateUrl: './tab-project.html',
-  styleUrl: './tab-project.css',
-})
-export class TabProject implements AfterViewInit {
-  private readonly draggableItems = viewChildren(DraggableItemComponent);
+  ];
+
+  protected items: CMakeComponentInterface<CMakeFeatureInterface<unknown>>[] =
+    new Array(this.defaultInitialFields.length);
 
   private itemsOrder!: number[];
 
   ngAfterViewInit() {
-    this.itemsOrder = Array.from(
-      { length: this.draggableItems().length },
-      (_, k) => k
-    );
+    this.containers().forEach((container, index) => {
+      this.items[index] = container.createComponent(
+        this.defaultInitialFields[index]
+      ).instance;
+    });
+    this.itemsOrder = Array.from({ length: this.items.length }, (_, k) => k);
   }
 
   reorderItems(event: { from: number; to: number }) {
@@ -46,12 +61,24 @@ export class TabProject implements AfterViewInit {
   }
 
   toto() {
-    const draggableItemsList = this.draggableItems();
+    const draggableItemsList = this.containers;
     console.log('this.itemsOrder');
     console.log(this.itemsOrder);
     this.itemsOrder.forEach((i) => {
-      const child = draggableItemsList[i].child;
+      const child = this.items[i];
       console.log(child.service.toCMakeListTxt(child));
+    });
+  }
+
+  add() {
+    this.items.push(null as any);
+    setTimeout(() => {
+      const newIndex = this.items.length - 1;
+      const newContainer = this.containers()[newIndex]!;
+      this.items[newIndex] = newContainer.createComponent(
+        CMakeProjectIncludeVariable
+      ).instance;
+      this.itemsOrder.push(newIndex);
     });
   }
 }

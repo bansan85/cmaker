@@ -1,34 +1,44 @@
-import {
-  AfterContentInit,
-  Component,
-  contentChildren,
-  output,
-} from '@angular/core';
+import { Component, contentChildren, effect, output } from '@angular/core';
 import { DraggableItemComponent } from './draggable-item';
 
 @Component({
   selector: 'app-draggable-list',
   templateUrl: './draggable-list.html',
 })
-export class DraggableListComponent implements AfterContentInit {
+export class DraggableListComponent {
   private readonly items = contentChildren(DraggableItemComponent);
   private draggableItem!: HTMLElement;
+
+  private subscribedItems = new Set<DraggableItemComponent>();
 
   private from = 0;
   private to = 0;
 
   readonly orderChanged = output<{ from: number; to: number }>();
 
-  ngAfterContentInit() {
-    this.items().forEach((item) => {
-      item.dragStartEvent.subscribe((target) => {
-        this.onDragStart(target);
+  constructor() {
+    effect(() => {
+      const currentItems = this.items();
+
+      this.subscribedItems.forEach((item) => {
+        if (!currentItems.includes(item)) {
+          this.subscribedItems.delete(item);
+        }
       });
-      item.dragOverEvent.subscribe((target) => {
-        this.onDragOver(target);
-      });
-      item.dragEndEvent.subscribe(() => {
-        this.onDragEnd();
+
+      currentItems.forEach((item) => {
+        if (!this.subscribedItems.has(item)) {
+          this.subscribedItems.add(item);
+          item.dragStartEvent.subscribe((target) => {
+            this.onDragStart(target);
+          });
+          item.dragOverEvent.subscribe((target) => {
+            this.onDragOver(target);
+          });
+          item.dragEndEvent.subscribe(() => {
+            this.onDragEnd();
+          });
+        }
       });
     });
   }
