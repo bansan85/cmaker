@@ -76,7 +76,10 @@ export class TabProject implements AfterViewInit {
   }
 
   parse() {
-    const retval = this.registry.parse('project coucou');
+    const retval = this.registry.parse([
+      'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
+    ]);
+    /*
     this.items.push(null as any);
     setTimeout(() => {
       const newIndex = this.items.length - 1;
@@ -84,5 +87,6 @@ export class TabProject implements AfterViewInit {
       this.items[newIndex] = newContainer.createComponent(retval).instance;
       this.itemsOrder.push(newIndex);
     });
+    */
   }
 }
