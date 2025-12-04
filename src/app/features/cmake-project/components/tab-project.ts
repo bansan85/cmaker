@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  inject,
   Type,
   viewChild,
   viewChildren,
@@ -18,6 +19,7 @@ import { CMakeProjectProjectNameIncludeVariable } from '../../variables/componen
 import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { DeserializerRegistry } from '../../serializer/services/deserializer-registry';
 
 @Component({
   selector: 'app-tab-project',
@@ -31,6 +33,7 @@ export class TabProject implements AfterViewInit {
   defaultInitialFields: Type<
     CMakeComponentInterface<CMakeFeatureInterface<unknown>>
   >[] = [
+    /*
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
     CMakeProjectIncludeBeforeVariable,
@@ -38,12 +41,14 @@ export class TabProject implements AfterViewInit {
     CMakeProjectProjectNameIncludeBeforeVariable,
     CMakeProjectProjectNameIncludeVariable,
     CMakeProjectTopLevelIncludesVariable,
+    */
   ];
 
   protected items: CMakeComponentInterface<CMakeFeatureInterface<unknown>>[] =
     new Array(this.defaultInitialFields.length);
 
   private itemsOrder!: number[];
+  private readonly registry = inject(DeserializerRegistry);
 
   ngAfterViewInit() {
     this.containers().forEach((container, index) => {
@@ -70,14 +75,13 @@ export class TabProject implements AfterViewInit {
     });
   }
 
-  add() {
+  parse() {
+    const retval = this.registry.parse('project coucou');
     this.items.push(null as any);
     setTimeout(() => {
       const newIndex = this.items.length - 1;
       const newContainer = this.containers()[newIndex]!;
-      this.items[newIndex] = newContainer.createComponent(
-        CMakeProjectIncludeVariable
-      ).instance;
+      this.items[newIndex] = newContainer.createComponent(retval).instance;
       this.itemsOrder.push(newIndex);
     });
   }
