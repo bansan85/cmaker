@@ -31,6 +31,12 @@ export abstract class InputLanguages
         .join(' ') || 'NONE'
     );
   }
+  set value(value: string) {
+    const values = value.split(' ');
+    this.allLanguages.forEach((item) => {
+      item.enabled = values.indexOf(item.name) != -1;
+    });
+  }
 
   protected c = signal<CheckboxesItemInterface>({
     enabled: false,

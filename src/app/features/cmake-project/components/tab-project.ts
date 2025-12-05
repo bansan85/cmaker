@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   inject,
+  Injector,
   Type,
   viewChild,
   viewChildren,
@@ -28,6 +29,8 @@ import { DeserializerRegistry } from '../../serializer/services/deserializer-reg
   styleUrl: './tab-project.css',
 })
 export class TabProject implements AfterViewInit {
+  private contextInjector = inject(Injector);
+
   containers = viewChildren('container', { read: ViewContainerRef });
 
   defaultInitialFields: Type<
@@ -76,9 +79,26 @@ export class TabProject implements AfterViewInit {
   }
 
   parse() {
-    const retval = this.registry.parse([
-      'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
-    ]);
+    const retval = this.registry.parse(
+      [
+        'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
+        'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
+      ],
+      this.contextInjector
+    );
+    Array.from(Array(retval.length)).forEach((_) =>
+      this.items.push(null as any)
+    );
+
+    setTimeout(() => {
+      retval.forEach((x, i) => {
+        const newIndex = this.items.length - retval.length + i;
+        const newContainer = this.containers()[newIndex]!;
+        newContainer.insert(x.hostView);
+        this.items[newIndex] = x.instance;
+        this.itemsOrder.push(newIndex);
+      });
+    });
     /*
     this.items.push(null as any);
     setTimeout(() => {
