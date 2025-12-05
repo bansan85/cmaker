@@ -25,11 +25,10 @@ import { ProjectLanguagesArgument } from '../../arguments/components/project-lan
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
-import { ProjectModel } from '../models/project.model';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { InputProjectCommand } from '../directives/input-project-command';
 
 @Component({
   selector: 'app-project-command',
@@ -65,8 +64,8 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
   ],
 })
 export class ProjectCommand
-  extends ValidatorInterface
-  implements CMakeComponentInterface<ProjectService>, ProjectModel
+  extends InputProjectCommand
+  implements CMakeComponentInterface<ProjectService>
 {
   @ViewChild('name') readonly name!: ProjectNameArgument;
   @ViewChild('spdxLicense') readonly spdxLicense!: ProjectSpdxLicenseArgument;

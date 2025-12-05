@@ -1,34 +1,85 @@
-import { Injectable, Type } from '@angular/core';
+import {
+  ComponentRef,
+  createComponent,
+  EnvironmentInjector,
+  inject,
+  Injectable,
+  Injector,
+  Type,
+} from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { ProjectCommand } from '../../commands/components/project-command';
+import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
+import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
+import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
+import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
+import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
+import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
+import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
+import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
+import { InputProjectCommand } from '../../commands/directives/input-project-command';
+import { Version } from '../../../shared/models/version';
+import { InputString } from '../../../shared/directives/arguments/input-string';
+import { InputVersion } from '../../../shared/directives/arguments/input-version';
+import { InputLicense } from '../../../shared/directives/arguments/input-license';
+import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
 
 interface ArgumentParser {
-  prefix: string;
+  name: string;
   component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
 }
 
 interface CommandParser {
-  prefix: string;
   component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
-  arguments: ArgumentParser[];
+  arguments: Map<string, ArgumentParser>;
 }
 
 interface CMakeCommand {
   name: string;
   args: string[];
-  line: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeserializerRegistry {
-  private readonly commands: CommandParser[] = [
-    { prefix: 'project', component: ProjectCommand, arguments: [] },
-  ];
+  private envInjector = inject(EnvironmentInjector);
 
-  parseArguments(argsStr: string): string[] {
+  private readonly commandMapping: Map<string, CommandParser> = new Map([
+    [
+      'project',
+      {
+        component: ProjectCommand,
+        arguments: new Map([
+          ['', { name: 'name', component: ProjectNameArgument }],
+          ['VERSION', { name: 'version', component: ProjectVersionArgument }],
+          [
+            'COMPAT_VERSION',
+            { name: 'compatVersion', component: ProjectCompatVersionArgument },
+          ],
+          [
+            'SPDX_LICENSE',
+            { name: 'spdxLicense', component: ProjectSpdxLicenseArgument },
+          ],
+          [
+            'DESCRIPTION',
+            { name: 'description', component: ProjectDescriptionArgument },
+          ],
+          [
+            'HOMEPAGE_URL',
+            { name: 'homepageUrl', component: ProjectHomepageUrlArgument },
+          ],
+          [
+            'LANGUAGES',
+            { name: 'languages', component: ProjectLanguagesArgument },
+          ],
+        ]),
+      },
+    ],
+  ]);
+
+  private parseStrArguments(argsStr: string): string[] {
     const args: string[] = [];
     let current = '';
     let inQuotes = false;
@@ -57,7 +108,7 @@ export class DeserializerRegistry {
     return args;
   }
 
-  parse(lines: string[]): CMakeCommand[] {
+  private parseStrCommands(lines: string[]): CMakeCommand[] {
     const commands: CMakeCommand[] = [];
     let buffer = '';
 
@@ -113,8 +164,8 @@ export class DeserializerRegistry {
         if (depth > 0) break; // Incomplete command
 
         const argsStr = buffer.substring(argsStart, pos - 1);
-        const args = this.parseArguments(argsStr);
-        commands.push({ name, args, line: i + 1 });
+        const args = this.parseStrArguments(argsStr);
+        commands.push({ name, args });
 
         buffer = buffer.substring(pos);
         pos = 0;
@@ -124,5 +175,79 @@ export class DeserializerRegistry {
     }
 
     return commands;
+  }
+
+  private setArgument(component: any, value: string) {
+    if (component instanceof InputString) {
+      (component as InputString).value = value;
+    } else if (component instanceof InputVersion) {
+      (component as InputVersion).value = new Version(value);
+    } else if (component instanceof InputLicense) {
+      (component as InputLicense).value = value;
+    } else if (component instanceof InputLanguages) {
+      (component as InputLanguages).value = value;
+    }
+  }
+
+  private cmakeCommandToComponent(
+    commands: CMakeCommand[],
+    parentContextInjector: Injector
+  ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
+    const retval: ComponentRef<
+      CMakeComponentInterface<CMakeFeatureInterface<unknown>>
+    >[] = [];
+    commands.forEach((command) => {
+      const newCommand = createComponent(
+        this.commandMapping.get(command.name)!.component,
+        {
+          environmentInjector: this.envInjector,
+          elementInjector: parentContextInjector,
+        }
+      );
+      newCommand.changeDetectorRef.detectChanges();
+      const anyCommand = newCommand.instance as any;
+      let instance = newCommand.instance as ProjectCommand;
+      let argument = '';
+      let value = '';
+      command.args.forEach((element) => {
+        const argumentParser = this.commandMapping
+          .get(command.name)!
+          .arguments.get(element);
+        if (argumentParser === undefined) {
+          if (value === '') {
+            value = element;
+          } else {
+            value = value + ' ' + element;
+          }
+        } else {
+          this.setArgument(
+            anyCommand[
+              this.commandMapping.get(command.name)!.arguments.get(argument)!
+                .name
+            ],
+            value
+          );
+          argument = element;
+          value = '';
+        }
+      });
+      this.setArgument(
+        anyCommand[
+          this.commandMapping.get(command.name)!.arguments.get(argument)!.name
+        ],
+        value
+      );
+      retval.push(newCommand);
+    });
+    return retval;
+  }
+
+  parse(
+    lines: string[],
+    parentContextInjector: Injector
+  ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
+    const cmakeCommands = this.parseStrCommands(lines);
+
+    return this.cmakeCommandToComponent(cmakeCommands, parentContextInjector);
   }
 }
