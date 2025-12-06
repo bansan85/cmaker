@@ -24,6 +24,11 @@ import { InputString } from '../../../shared/directives/arguments/input-string';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
+import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
+import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
+import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
+import { InputFiles } from '../../../shared/directives/arguments/input-files';
+import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 
 interface ArgumentParser {
   name: string;
@@ -31,6 +36,7 @@ interface ArgumentParser {
 }
 
 interface CommandParser {
+  firstArgument: string | null;
   component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
   arguments: Map<string, ArgumentParser>;
 }
@@ -45,37 +51,62 @@ interface CMakeCommand {
 })
 export class DeserializerRegistry {
   private envInjector = inject(EnvironmentInjector);
+  private dataToCMakeService = inject(DataToCMakeService);
 
-  private readonly commandMapping: Map<string, CommandParser> = new Map([
+  private readonly commandMapping: Map<string, CommandParser[]> = new Map([
     [
       'project',
-      {
-        component: ProjectCommand,
-        arguments: new Map([
-          ['', { name: 'name', component: ProjectNameArgument }],
-          ['VERSION', { name: 'version', component: ProjectVersionArgument }],
-          [
-            'COMPAT_VERSION',
-            { name: 'compatVersion', component: ProjectCompatVersionArgument },
-          ],
-          [
-            'SPDX_LICENSE',
-            { name: 'spdxLicense', component: ProjectSpdxLicenseArgument },
-          ],
-          [
-            'DESCRIPTION',
-            { name: 'description', component: ProjectDescriptionArgument },
-          ],
-          [
-            'HOMEPAGE_URL',
-            { name: 'homepageUrl', component: ProjectHomepageUrlArgument },
-          ],
-          [
-            'LANGUAGES',
-            { name: 'languages', component: ProjectLanguagesArgument },
-          ],
-        ]),
-      },
+      [
+        {
+          firstArgument: null,
+          component: ProjectCommand,
+          arguments: new Map([
+            ['', { name: 'name', component: ProjectNameArgument }],
+            ['VERSION', { name: 'version', component: ProjectVersionArgument }],
+            [
+              'COMPAT_VERSION',
+              {
+                name: 'compatVersion',
+                component: ProjectCompatVersionArgument,
+              },
+            ],
+            [
+              'SPDX_LICENSE',
+              { name: 'spdxLicense', component: ProjectSpdxLicenseArgument },
+            ],
+            [
+              'DESCRIPTION',
+              { name: 'description', component: ProjectDescriptionArgument },
+            ],
+            [
+              'HOMEPAGE_URL',
+              { name: 'homepageUrl', component: ProjectHomepageUrlArgument },
+            ],
+            [
+              'LANGUAGES',
+              { name: 'languages', component: ProjectLanguagesArgument },
+            ],
+          ]),
+        },
+      ],
+    ],
+    [
+      'set',
+      [
+        {
+          firstArgument: 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES',
+          component: CMakeProjectTopLevelIncludesVariable,
+          arguments: new Map([
+            [
+              '',
+              {
+                name: 'value',
+                component: ProjectLanguagesArgument /*InputCheckbox*/,
+              },
+            ],
+          ]),
+        },
+      ],
     ],
   ]);
 
@@ -186,6 +217,12 @@ export class DeserializerRegistry {
       (component as InputLicense).value = value;
     } else if (component instanceof InputLanguages) {
       (component as InputLanguages).value = value;
+    } else if (component instanceof InputFiles) {
+      (component as InputFiles).value =
+        this.dataToCMakeService.filesToArrayString(value);
+    } else {
+      console.log(`Failed to setArgument ${value}`);
+      console.log(component);
     }
   }
 
@@ -197,47 +234,97 @@ export class DeserializerRegistry {
       CMakeComponentInterface<CMakeFeatureInterface<unknown>>
     >[] = [];
     commands.forEach((command) => {
-      const newCommand = createComponent(
-        this.commandMapping.get(command.name)!.component,
-        {
+      const commandMappingI = this.commandMapping.get(command.name);
+      // Unknown command
+      if (commandMappingI === undefined) {
+        console.log(`Unknown command ${command.name}`);
+        return;
+      }
+
+      // Some component depend on command name and its first argument
+      // set(CMAKE_var...) or file(READ...) / file(CONFIGURE...).
+      let commandComponent:
+        | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
+        | undefined;
+      let anyComponent: any | undefined;
+      let argsComponent: CommandParser | undefined;
+      if (commandMappingI.length === 1) {
+        argsComponent = commandMappingI[0];
+        commandComponent = createComponent(argsComponent.component, {
           environmentInjector: this.envInjector,
           elementInjector: parentContextInjector,
-        }
-      );
-      newCommand.changeDetectorRef.detectChanges();
-      const anyCommand = newCommand.instance as any;
-      let instance = newCommand.instance as ProjectCommand;
-      let argument = '';
-      let value = '';
+        });
+        commandComponent.changeDetectorRef.detectChanges();
+        anyComponent = commandComponent.instance as any;
+      }
+
+      // Init variables
+      let currentArgumentName = '';
+      let currentArgumentValue = '';
       command.args.forEach((element) => {
-        const argumentParser = this.commandMapping
-          .get(command.name)!
-          .arguments.get(element);
-        if (argumentParser === undefined) {
-          if (value === '') {
-            value = element;
-          } else {
-            value = value + ' ' + element;
+        // If undefined, it's a component that needs command name and its first argument.
+        if (commandComponent === undefined) {
+          commandMappingI.forEach((commandI) => {
+            if (commandI.firstArgument! === element) {
+              argsComponent = commandI;
+              commandComponent = createComponent(commandI.component, {
+                environmentInjector: this.envInjector,
+                elementInjector: parentContextInjector,
+              });
+              commandComponent.changeDetectorRef.detectChanges();
+              anyComponent = commandComponent.instance as any;
+            } else {
+              console.log('Failed to found commandMappingI');
+            }
+          });
+          if (commandComponent === undefined) {
+            console.log(
+              `Failed to found component for ${command.name} / ${element}.`
+            );
+            return;
           }
-        } else {
-          this.setArgument(
-            anyCommand[
-              this.commandMapping.get(command.name)!.arguments.get(argument)!
-                .name
-            ],
-            value
+        }
+        if (argsComponent === undefined) {
+          console.log(
+            `Failed to found component for ${command.name} / ${element}.`
           );
-          argument = element;
-          value = '';
+          return;
+        }
+
+        const argumentParser = argsComponent.arguments.get(element);
+        // Argument value
+        if (argumentParser === undefined) {
+          if (currentArgumentValue === '') {
+            currentArgumentValue = element;
+          } else {
+            currentArgumentValue = currentArgumentValue + ' ' + element;
+          }
+        }
+        // Argument name
+        else {
+          this.setArgument(
+            anyComponent[
+              argsComponent.arguments.get(currentArgumentName)!.name
+            ],
+            currentArgumentValue
+          );
+          currentArgumentName = element;
+          currentArgumentValue = '';
         }
       });
+      if (argsComponent === undefined) {
+        console.log(`Failed to found component for ${command.name}.`);
+        return;
+      }
       this.setArgument(
-        anyCommand[
-          this.commandMapping.get(command.name)!.arguments.get(argument)!.name
-        ],
-        value
+        anyComponent[argsComponent.arguments.get(currentArgumentName)!.name],
+        currentArgumentValue
       );
-      retval.push(newCommand);
+      if (commandComponent === undefined) {
+        console.log(`Failed to found component for ${command.name}.`);
+        return;
+      }
+      retval.push(commandComponent);
     });
     return retval;
   }

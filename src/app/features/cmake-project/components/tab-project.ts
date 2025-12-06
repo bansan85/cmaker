@@ -82,7 +82,7 @@ export class TabProject implements AfterViewInit {
     const retval = this.registry.parse(
       [
         'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
-        'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
+        'set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "toto")',
       ],
       this.contextInjector
     );
