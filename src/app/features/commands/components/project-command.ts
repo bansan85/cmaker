@@ -4,7 +4,7 @@ import {
   forwardRef,
   inject,
   signal,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../services/project-service';
@@ -67,29 +67,47 @@ export class ProjectCommand
   extends InputProjectCommand
   implements CMakeComponentInterface<ProjectService>
 {
-  @ViewChild('name') readonly name!: ProjectNameArgument;
-  @ViewChild('spdxLicense') readonly spdxLicense!: ProjectSpdxLicenseArgument;
-  @ViewChild('version') readonly version!: ProjectVersionArgument;
-  @ViewChild('compatVersion')
-  readonly compatVersion!: ProjectCompatVersionArgument;
-  @ViewChild('description') readonly description!: ProjectDescriptionArgument;
-  @ViewChild('homepageUrl') readonly homepageUrl!: ProjectHomepageUrlArgument;
-  @ViewChild('languages') readonly languages!: ProjectLanguagesArgument;
+  private readonly _name = viewChild.required<ProjectNameArgument>('name');
+  private readonly _spdxLicense =
+    viewChild.required<ProjectSpdxLicenseArgument>('spdxLicense');
+  private readonly _version =
+    viewChild.required<ProjectVersionArgument>('version');
+  private readonly _compatVersion =
+    viewChild.required<ProjectCompatVersionArgument>('compatVersion');
+  private readonly _description =
+    viewChild.required<ProjectDescriptionArgument>('description');
+  private readonly _homepageUrl =
+    viewChild.required<ProjectHomepageUrlArgument>('homepageUrl');
+  private readonly _languages =
+    viewChild.required<ProjectLanguagesArgument>('languages');
+
+  get name(): ProjectNameArgument {
+    return this._name();
+  }
+  get spdxLicense(): ProjectSpdxLicenseArgument {
+    return this._spdxLicense();
+  }
+  get version(): ProjectVersionArgument {
+    return this._version();
+  }
+  get compatVersion(): ProjectCompatVersionArgument {
+    return this._compatVersion();
+  }
+  get description(): ProjectDescriptionArgument {
+    return this._description();
+  }
+  get homepageUrl(): ProjectHomepageUrlArgument {
+    return this._homepageUrl();
+  }
+  get languages(): ProjectLanguagesArgument {
+    return this._languages();
+  }
 
   readonly service = inject(ProjectService);
-
-  protected readonly viewInitialized = signal(false);
-
-  ngAfterViewInit() {
-    this.viewInitialized.set(true);
-  }
 
   constructor() {
     super();
     effect(async () => {
-      if (!this.viewInitialized()) {
-        return;
-      }
       this.isValid.set(await this.service.isValid(this));
     });
   }

@@ -1,9 +1,8 @@
 <div class="project-command">
   <h1>
-    Project @if (viewInitialized()) {
+    Project
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this" />
-    }
     <app-checkboxes-list icon="menu">
       <app-checkboxes-item [element]="spdxLicense" />
       <app-checkboxes-item [element]="version" />
