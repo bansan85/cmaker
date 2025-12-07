@@ -10,14 +10,21 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
 export abstract class InputCheckbox
   implements CheckboxesItemInterface, InputCheckboxModel, ValidatorInterface
 {
-  isValid = signal(false);
+  readonly isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
 
   constructor() {
-    effect(async () => {
-      this.isValid.set(await this.service.isValid(this));
+    effect(() => {
+      this.service
+        .isValid(this)
+        .then((result) => {
+          this.isValid.set(result);
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+        });
     });
   }
 

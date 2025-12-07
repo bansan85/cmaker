@@ -9,7 +9,7 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 })
 export class DraggableItemComponent {
   readonly title =
-    contentChild<CMakeComponentInterface<CMakeFeatureInterface<any>>>(
+    contentChild<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>(
       CMAKE_COMPONENT_ITEM
     );
 
@@ -20,8 +20,11 @@ export class DraggableItemComponent {
   readonly dragEndEvent = output();
 
   dragStart(e: DragEvent) {
-    e.dataTransfer!.effectAllowed = 'move';
-    e.dataTransfer!.setData('text/plain', '');
+    if (e.dataTransfer === null) {
+      throw new Error('Invalid event while dragging.');
+    }
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', '');
     this.dragStartEvent.emit(e.target as HTMLElement);
   }
 

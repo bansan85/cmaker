@@ -1,4 +1,4 @@
-import { InputFiles } from './input-files';
+//import { InputFiles } from './input-files';
 
 describe('InputFiles', () => {
   it('should create an instance', () => {

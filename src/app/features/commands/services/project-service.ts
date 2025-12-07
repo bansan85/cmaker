@@ -127,27 +127,31 @@ export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
     );
   }
 
-  protected toCMakeListTxtImpl(action: ProjectModel): string {
-    return (
-      'project(\n' +
-      this.name.toCMakeListTxt(action.name) +
-      (action.version ? this.version.toCMakeListTxt(action.version) : '') +
-      (action.compatVersion
-        ? this.compatVersion.toCMakeListTxt(action.compatVersion)
-        : '') +
-      (action.spdxLicense
-        ? this.spdxLicense.toCMakeListTxt(action.spdxLicense)
-        : '') +
-      (action.description
-        ? this.description.toCMakeListTxt(action.description)
-        : '') +
-      (action.homepageUrl
-        ? this.homepageUrl.toCMakeListTxt(action.homepageUrl)
-        : '') +
-      (action.languages
-        ? this.languages.toCMakeListTxt(action.languages)
-        : '') +
-      ')\n'
+  protected async toCMakeListTxtImpl(action: ProjectModel): Promise<string> {
+    return Promise.resolve(
+      `project(\n${await this.name.toCMakeListTxt(action.name)}${
+        action.version ? await this.version.toCMakeListTxt(action.version) : ''
+      }${
+        action.compatVersion
+          ? await this.compatVersion.toCMakeListTxt(action.compatVersion)
+          : ''
+      }${
+        action.spdxLicense
+          ? await this.spdxLicense.toCMakeListTxt(action.spdxLicense)
+          : ''
+      }${
+        action.description
+          ? await this.description.toCMakeListTxt(action.description)
+          : ''
+      }${
+        action.homepageUrl
+          ? await this.homepageUrl.toCMakeListTxt(action.homepageUrl)
+          : ''
+      }${
+        action.languages
+          ? await this.languages.toCMakeListTxt(action.languages)
+          : ''
+      })`
     );
   }
 }

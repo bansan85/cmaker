@@ -4,7 +4,6 @@ import {
   inject,
   Injector,
   Type,
-  viewChild,
   viewChildren,
   ViewContainerRef,
 } from '@angular/core';
@@ -34,7 +33,7 @@ export class TabProject implements AfterViewInit {
   private readonly contextInjector = inject(Injector);
   private readonly rustBackendService = inject(RustBackendService);
 
-  containers = viewChildren('container', { read: ViewContainerRef });
+  readonly containers = viewChildren('container', { read: ViewContainerRef });
 
   defaultInitialFields: Type<
     CMakeComponentInterface<CMakeFeatureInterface<unknown>>
@@ -48,31 +47,42 @@ export class TabProject implements AfterViewInit {
     CMakeProjectTopLevelIncludesVariable,
   ];
 
-  protected items: CMakeComponentInterface<CMakeFeatureInterface<unknown>>[] =
-    new Array(this.defaultInitialFields.length);
+  protected items: (CMakeComponentInterface<
+    CMakeFeatureInterface<unknown>
+  > | null)[] = new Array<CMakeComponentInterface<
+    CMakeFeatureInterface<unknown>
+  > | null>(this.defaultInitialFields.length);
 
   private itemsOrder!: number[];
   private readonly registry = inject(DeserializerRegistry);
 
   ngAfterViewInit() {
-    this.containers().forEach((container, index) => {
+    for (const [index, container] of this.containers().entries()) {
       this.items[index] = container.createComponent(
         this.defaultInitialFields[index]
       ).instance;
-    });
+    }
     this.itemsOrder = Array.from({ length: this.items.length }, (_, k) => k);
   }
 
   reorderItems(event: { from: number; to: number }) {
-    var element = this.itemsOrder[event.from];
+    const element = this.itemsOrder[event.from];
     this.itemsOrder.splice(event.from, 1);
     this.itemsOrder.splice(event.to, 0, element);
   }
 
-  cmakeListToConsole() {
-    this.itemsOrder.forEach((i) => {
+  async cmakeListToConsole() {
+    const promises = this.itemsOrder.map((i) => {
       const child = this.items[i];
-      console.log(child.service.toCMakeListTxt(child));
+      if (child === null) {
+        return Promise.resolve('null');
+      }
+      return child.service.toCMakeListTxt(child);
+    });
+
+    const results = await Promise.all(promises);
+    results.forEach((result) => {
+      console.log(result);
     });
   }
 
@@ -95,6 +105,7 @@ export class TabProject implements AfterViewInit {
   loadFromText() {
     this.parse([
       'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
+      // eslint-disable-next-line no-template-curly-in-string
       'project(${PROJECT_NAME_FULL} VERSION ${PROJECT_VERSION_FROM_GIT} DESCRIPTION "${PROJECT_DESCRIPTION_ONELINE}" HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}" LANGUAGES ${PROJECT_LANGUAGES})',
       'set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "toto")',
     ]);
@@ -111,29 +122,35 @@ export class TabProject implements AfterViewInit {
     if (absolutePath !== null) {
       await this.rustBackendService.saveToFile(
         absolutePath,
-        this.itemsOrder
-          .map((i) => {
-            return this.items[i].service.toCMakeListTxt(this.items[i]);
-          })
-          .join('\n')
+        (
+          await Promise.all(
+            this.itemsOrder.map(async (i) => {
+              const item = this.items[i];
+              if (item === null) {
+                return Promise.resolve('null');
+              }
+              return await item.service.toCMakeListTxt(item);
+            })
+          )
+        ).join('\n')
       );
     }
   }
 
   parse(content: string[]) {
     const retval = this.registry.parse(content, this.contextInjector);
-    Array.from(Array(retval.length)).forEach((_) =>
-      this.items.push(null as any)
-    );
+    for (const _ of retval) {
+      this.items.push(null);
+    }
 
     setTimeout(() => {
-      retval.forEach((x, i) => {
+      for (const [i, x] of retval.entries()) {
         const newIndex = this.items.length - retval.length + i;
-        const newContainer = this.containers()[newIndex]!;
+        const newContainer = this.containers()[newIndex];
         newContainer.insert(x.hostView);
         this.items[newIndex] = x.instance;
         this.itemsOrder.push(newIndex);
-      });
+      }
     });
   }
 }

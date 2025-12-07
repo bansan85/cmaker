@@ -36,7 +36,7 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
     );
   }
 
-  protected cmakeRequiredVersionImpl(action: InputFilesModel): Version | null {
+  protected cmakeRequiredVersionImpl(_action: InputFilesModel): Version | null {
     return this.cmakeMinVersion;
   }
 
@@ -51,7 +51,9 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputFilesModel): string {
-    return `set(${this.variable} "${action.value.join(';')}")\n`;
+  protected toCMakeListTxtImpl(action: InputFilesModel): Promise<string> {
+    return Promise.resolve(
+      `set(${this.variable} "${action.value.join(';')}")\n`
+    );
   }
 }

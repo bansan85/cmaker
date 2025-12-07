@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Tabs } from '../../tab/components/tabs';
 import { TabItem } from '../../tab/components/tab-item';
 import { ProjectContextService } from '../services/project-context-service';

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,6 +8,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './tab-item.css',
 })
 export class TabItem {
-  @Input() tabName? = 'default';
+  readonly tabName = input<string>('default');
   activate = true;
 }

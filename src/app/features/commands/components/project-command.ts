@@ -28,7 +28,8 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
-import { InputProjectCommand } from '../directives/input-project-command';
+import { ProjectModel } from '../models/project.model';
+import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 
 @Component({
   selector: 'app-project-command',
@@ -64,43 +65,49 @@ import { InputProjectCommand } from '../directives/input-project-command';
   ],
 })
 export class ProjectCommand
-  extends InputProjectCommand
-  implements CMakeComponentInterface<ProjectService>
+  implements
+    CMakeComponentInterface<ProjectService>,
+    ProjectModel,
+    ValidatorInterface
 {
-  private readonly _name = viewChild.required<ProjectNameArgument>('name');
-  private readonly _spdxLicense =
+  readonly isValid = signal(false);
+
+  enabled = true;
+
+  private readonly nameSignal = viewChild.required<ProjectNameArgument>('name');
+  private readonly spdxLicenseSignal =
     viewChild.required<ProjectSpdxLicenseArgument>('spdxLicense');
-  private readonly _version =
+  private readonly versionSignal =
     viewChild.required<ProjectVersionArgument>('version');
-  private readonly _compatVersion =
+  private readonly compatVersionSignal =
     viewChild.required<ProjectCompatVersionArgument>('compatVersion');
-  private readonly _description =
+  private readonly descriptionSignal =
     viewChild.required<ProjectDescriptionArgument>('description');
-  private readonly _homepageUrl =
+  private readonly homepageUrlSignal =
     viewChild.required<ProjectHomepageUrlArgument>('homepageUrl');
-  private readonly _languages =
+  private readonly languagesSignal =
     viewChild.required<ProjectLanguagesArgument>('languages');
 
   get name(): ProjectNameArgument {
-    return this._name();
+    return this.nameSignal();
   }
   get spdxLicense(): ProjectSpdxLicenseArgument {
-    return this._spdxLicense();
+    return this.spdxLicenseSignal();
   }
   get version(): ProjectVersionArgument {
-    return this._version();
+    return this.versionSignal();
   }
   get compatVersion(): ProjectCompatVersionArgument {
-    return this._compatVersion();
+    return this.compatVersionSignal();
   }
   get description(): ProjectDescriptionArgument {
-    return this._description();
+    return this.descriptionSignal();
   }
   get homepageUrl(): ProjectHomepageUrlArgument {
-    return this._homepageUrl();
+    return this.homepageUrlSignal();
   }
   get languages(): ProjectLanguagesArgument {
-    return this._languages();
+    return this.languagesSignal();
   }
 
   readonly service = inject(ProjectService);
@@ -108,9 +115,15 @@ export class ProjectCommand
   protected readonly projectId = `project-${crypto.randomUUID()}`;
 
   constructor() {
-    super();
-    effect(async () => {
-      this.isValid.set(await this.service.isValid(this));
+    effect(() => {
+      this.service
+        .isValid(this)
+        .then((result) => {
+          this.isValid.set(result);
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+        });
     });
   }
 }

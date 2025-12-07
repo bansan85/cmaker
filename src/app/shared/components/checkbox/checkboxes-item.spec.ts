@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { CheckboxesItem } from './checkboxes-item';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
@@ -6,8 +6,8 @@ import { Version } from '../../models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 
 describe('CheckboxesItem', () => {
-  let component: CheckboxesItem;
-  let fixture: ComponentFixture<CheckboxesItem>;
+  //let component: CheckboxesItem;
+  //let fixture: ComponentFixture<CheckboxesItem>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

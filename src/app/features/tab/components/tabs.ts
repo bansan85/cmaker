@@ -19,8 +19,8 @@ export class Tabs implements AfterContentInit {
 
   activateTab(index: number) {
     this.activeComponent = index;
-    this.tabs().forEach((tab, i) => {
+    for (const [i, tab] of this.tabs().entries()) {
       tab.activate = i === index;
-    });
+    }
   }
 }

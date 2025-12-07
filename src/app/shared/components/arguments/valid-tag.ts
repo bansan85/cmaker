@@ -8,5 +8,5 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
   styleUrl: './valid-tag.css',
 })
 export class ValidTag {
-  validator = input.required<ValidatorInterface>();
+  readonly validator = input.required<ValidatorInterface>();
 }

@@ -9,6 +9,6 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
   styleUrl: './version-tag.css',
 })
 export class VersionTag {
-  element =
+  readonly element =
     input.required<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>();
 }

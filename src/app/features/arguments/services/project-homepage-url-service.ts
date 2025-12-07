@@ -20,7 +20,7 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<InputString
   }
 
   isValid(action: InputStringModel): Promise<boolean> {
-    return Promise.resolve(/https?:\/\/.+/.test(action.value));
+    return Promise.resolve(/https?:\/\/.+/u.test(action.value));
   }
 
   protected cmakeRequiredVersionImpl(
@@ -48,7 +48,7 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<InputString
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputStringModel): string {
-    return `HOMEPAGE_URL "${action.value}"\n`;
+  protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
+    return Promise.resolve(`HOMEPAGE_URL "${action.value}"\n`);
   }
 }

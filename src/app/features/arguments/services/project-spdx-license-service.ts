@@ -24,11 +24,13 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<InputString
     return Promise.resolve(true);
   }
 
-  protected cmakeRequiredVersionImpl(action: InputStringModel): Version | null {
+  protected cmakeRequiredVersionImpl(
+    _action: InputStringModel
+  ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(action: InputStringModel): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputStringModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -47,7 +49,7 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<InputString
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputStringModel): string {
-    return `SPDX_LICENSE "${action.value}"\n`;
+  protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
+    return Promise.resolve(`SPDX_LICENSE "${action.value}"\n`);
   }
 }

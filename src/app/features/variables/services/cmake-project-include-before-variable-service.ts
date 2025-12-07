@@ -55,7 +55,9 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterf
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputFilesModel): string {
-    return `set(${this.variable} "${action.value.join(';')}")\n`;
+  protected toCMakeListTxtImpl(action: InputFilesModel): Promise<string> {
+    return Promise.resolve(
+      `set(${this.variable} "${action.value.join(';')}")\n`
+    );
   }
 }

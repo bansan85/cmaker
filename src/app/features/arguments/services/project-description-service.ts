@@ -49,7 +49,7 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<InputString
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputStringModel): string {
-    return `DESCRIPTION "${action.value}"\n`;
+  protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
+    return Promise.resolve(`DESCRIPTION "${action.value}"\n`);
   }
 }

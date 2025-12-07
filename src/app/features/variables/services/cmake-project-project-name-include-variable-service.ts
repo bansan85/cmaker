@@ -60,9 +60,13 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputProjectNameFilesModel): string {
-    return `set(CMAKE_PROJECT_${
-      action.projectName
-    }_INCLUDE "${action.value.join(';')}")\n`;
+  protected toCMakeListTxtImpl(
+    action: InputProjectNameFilesModel
+  ): Promise<string> {
+    return Promise.resolve(
+      `set(CMAKE_PROJECT_${action.projectName}_INCLUDE "${action.value.join(
+        ';'
+      )}")\n`
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { InputCheckbox } from './input-checkbox';
+//import { InputCheckbox } from './input-checkbox';
 
 describe('InputCheckbox', () => {
   it('should create an instance', () => {

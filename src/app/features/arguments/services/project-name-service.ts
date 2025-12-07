@@ -47,7 +47,7 @@ export class ProjectNameService extends CMakeFeatureInterface<InputStringModel> 
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputStringModel): string {
-    return `${action.value}\n`;
+  protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
+    return Promise.resolve(`${action.value}\n`);
   }
 }

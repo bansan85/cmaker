@@ -17,15 +17,11 @@ import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-s
 import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
 import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
 import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
-import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
-import { InputProjectCommand } from '../../commands/directives/input-project-command';
 import { Version } from '../../../shared/models/version';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
-import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
-import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
 import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
@@ -53,7 +49,7 @@ export class DeserializerRegistry {
   private envInjector = inject(EnvironmentInjector);
   private dataToCMakeService = inject(DataToCMakeService);
 
-  private readonly commandMapping: Map<string, CommandParser[]> = new Map([
+  private readonly commandMapping = new Map<string, CommandParser[]>([
     [
       'project',
       [
@@ -105,14 +101,15 @@ export class DeserializerRegistry {
     let current = '';
     let inQuotes = false;
 
-    for (let i = 0; i < argsStr.length; i++) {
+    for (let i = 0; i < argsStr.length; i += 1) {
       const char = argsStr[i];
 
       if (char === '\\' && i + 1 < argsStr.length) {
-        current += argsStr[++i];
+        i += 1;
+        current += argsStr[i];
       } else if (char === '"') {
         inQuotes = !inQuotes;
-      } else if (/\s/.test(char) && !inQuotes) {
+      } else if (/\s/u.test(char) && !inQuotes) {
         if (current) {
           args.push(current);
           current = '';
@@ -133,56 +130,76 @@ export class DeserializerRegistry {
     const commands: CMakeCommand[] = [];
     let buffer = '';
 
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
-
+    for (let line of lines) {
       // Remove comments
       const commentIndex = line.indexOf('#');
       if (commentIndex !== -1) {
         line = line.substring(0, commentIndex);
       }
 
-      buffer += line + ' ';
+      buffer = `${buffer}${line} `;
 
       // Parse all complete commands in buffer
       let pos = 0;
       while (pos < buffer.length) {
         // Skip whitespace
-        while (pos < buffer.length && /\s/.test(buffer[pos])) pos++;
-        if (pos >= buffer.length) break;
+        while (pos < buffer.length && /\s/u.test(buffer[pos])) {
+          pos += 1;
+        }
+        if (pos >= buffer.length) {
+          break;
+        }
 
         // Extract command name
         const nameStart = pos;
-        while (pos < buffer.length && /\w/.test(buffer[pos])) pos++;
-        if (pos >= buffer.length) break;
+        while (pos < buffer.length && /\w/u.test(buffer[pos])) {
+          pos += 1;
+        }
+        if (pos >= buffer.length) {
+          break;
+        }
 
         const name = buffer.substring(nameStart, pos);
 
         // Skip whitespace
-        while (pos < buffer.length && /\s/.test(buffer[pos])) pos++;
-        if (pos >= buffer.length || buffer[pos] !== '(') break;
+        while (pos < buffer.length && /\s/u.test(buffer[pos])) {
+          pos += 1;
+        }
+        if (pos >= buffer.length || buffer[pos] !== '(') {
+          break;
+        }
 
-        pos++; // Skip '('
+        // Skip '('
+        pos += 1;
 
         // Find matching ')'
         let depth = 1;
         const argsStart = pos;
         while (pos < buffer.length && depth > 0) {
           if (buffer[pos] === '"') {
-            pos++;
+            pos += 1;
             while (pos < buffer.length && buffer[pos] !== '"') {
-              if (buffer[pos] === '\\') pos++;
-              pos++;
+              if (buffer[pos] === '\\') {
+                pos += 1;
+              }
+              pos += 1;
             }
-            pos++;
+            pos += 1;
           } else {
-            if (buffer[pos] === '(') depth++;
-            if (buffer[pos] === ')') depth--;
-            pos++;
+            if (buffer[pos] === '(') {
+              depth += 1;
+            }
+            if (buffer[pos] === ')') {
+              depth -= 1;
+            }
+            pos += 1;
           }
         }
 
-        if (depth > 0) break; // Incomplete command
+        // Incomplete command
+        if (depth > 0) {
+          break;
+        }
 
         const argsStr = buffer.substring(argsStart, pos - 1);
         const args = this.parseStrArguments(argsStr);
@@ -198,26 +215,26 @@ export class DeserializerRegistry {
     return commands;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private setArgument(component: any, field: string, value: string) {
-    for (let comp of [component, component[field]]) {
+    for (const comp of [component, component[field]]) {
       if ('enabled' in comp) {
-        comp['enabled'] = true;
+        comp.enabled = true;
       }
       if (comp instanceof InputString) {
-        (comp as InputString).value = value;
+        comp.value = value;
         return;
       } else if (comp instanceof InputVersion) {
-        (comp as InputVersion).value = new Version(value);
+        comp.value = new Version(value);
         return;
       } else if (comp instanceof InputLicense) {
-        (comp as InputLicense).value = value;
+        comp.value = value;
         return;
       } else if (comp instanceof InputLanguages) {
-        (comp as InputLanguages).value = value;
+        comp.value = value;
         return;
       } else if (comp instanceof InputFiles) {
-        (comp as InputFiles).value =
-          this.dataToCMakeService.filesToArrayString(value);
+        comp.value = this.dataToCMakeService.filesToArrayString(value);
         return;
       }
     }
@@ -227,114 +244,146 @@ export class DeserializerRegistry {
   }
 
   private cmakeCommandToComponent(
+    command: CMakeCommand,
+    parentContextInjector: Injector
+  ):
+    | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
+    | undefined {
+    const commandMappingI = this.commandMapping.get(command.name);
+    // Unknown command
+    if (commandMappingI === undefined) {
+      console.log(`Unknown command ${command.name}`);
+      return undefined;
+    }
+
+    // Some component depend on command name and its first argument
+    // set(CMAKE_var...) or file(READ...) / file(CONFIGURE...).
+    let commandComponent:
+      | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
+      | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let anyComponent: any;
+    let argsComponent: CommandParser | undefined;
+
+    const newComponent = (commandParser: CommandParser) => {
+      argsComponent = commandParser;
+      commandComponent = createComponent(argsComponent.component, {
+        environmentInjector: this.envInjector,
+        elementInjector: parentContextInjector,
+      });
+      commandComponent.changeDetectorRef.detectChanges();
+      anyComponent = commandComponent.instance;
+
+      if (argsComponent.arguments !== undefined) {
+        for (const [_, value] of argsComponent.arguments) {
+          if ('enabled' in anyComponent[value.name]) {
+            anyComponent[value.name].enabled = false;
+          }
+        }
+      }
+    };
+
+    if (
+      commandMappingI.length === 1 &&
+      commandMappingI[0].firstArgument === undefined
+    ) {
+      newComponent(commandMappingI[0]);
+    }
+
+    // Init variables
+    let currentArgumentName = '';
+    let currentArgumentValue = '';
+    for (const element of command.args) {
+      // If undefined, it's a component that needs command name and its first argument.
+      if (commandComponent === undefined) {
+        for (const commandI of commandMappingI) {
+          if (commandI.firstArgument === undefined) {
+            console.log(`${command.name} should have a firstArgument`);
+            continue;
+          }
+          if (commandI.firstArgument === element) {
+            newComponent(commandI);
+          } else {
+            console.log('Failed to found commandMappingI');
+          }
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (commandComponent === undefined) {
+          console.log(
+            `Failed to found component for ${command.name} / ${element}.`
+          );
+        }
+        // Go to the next argument.
+        continue;
+      }
+      if (argsComponent === undefined) {
+        console.log(
+          `Failed to found component for ${command.name} / ${element}.`
+        );
+        continue;
+      }
+
+      const argumentParser = argsComponent.arguments?.get(element);
+      // Argument value
+      if (
+        argsComponent.arguments === undefined ||
+        argumentParser === undefined
+      ) {
+        if (currentArgumentValue === '') {
+          currentArgumentValue = element;
+        } else {
+          currentArgumentValue = `${currentArgumentValue} ${element}`;
+        }
+      }
+      // Argument name
+      else {
+        const argumentField = argsComponent.arguments.get(currentArgumentName);
+        const argumentFieldName =
+          argumentField === undefined ? '' : argumentField.name;
+        this.setArgument(anyComponent, argumentFieldName, currentArgumentValue);
+        currentArgumentName = element;
+        currentArgumentValue = '';
+      }
+    }
+    if (argsComponent === undefined) {
+      console.log(`Failed to found component for ${command.name}.`);
+      return commandComponent;
+    }
+
+    const argumentParser = argsComponent.arguments?.get(currentArgumentName);
+    // Argument value
+    if (argsComponent.arguments === undefined || argumentParser === undefined) {
+      return commandComponent;
+    }
+
+    const argumentField = argsComponent.arguments.get(currentArgumentName);
+    const argumentFieldName =
+      argumentField === undefined ? '' : argumentField.name;
+    this.setArgument(anyComponent, argumentFieldName, currentArgumentValue);
+
+    if (commandComponent === undefined) {
+      console.log(`Failed to found component for ${command.name}.`);
+      return commandComponent;
+    }
+    return commandComponent;
+  }
+
+  private cmakeCommandsToComponent(
     commands: CMakeCommand[],
     parentContextInjector: Injector
   ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
     const retval: ComponentRef<
       CMakeComponentInterface<CMakeFeatureInterface<unknown>>
     >[] = [];
-    commands.forEach((command) => {
-      const commandMappingI = this.commandMapping.get(command.name);
-      // Unknown command
-      if (commandMappingI === undefined) {
-        console.log(`Unknown command ${command.name}`);
-        return;
-      }
-
-      // Some component depend on command name and its first argument
-      // set(CMAKE_var...) or file(READ...) / file(CONFIGURE...).
-      let commandComponent:
-        | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
-        | undefined;
-      let anyComponent: any | undefined;
-      let argsComponent: CommandParser | undefined;
-
-      const newComponent = (commandParser: CommandParser) => {
-        argsComponent = commandParser;
-        commandComponent = createComponent(argsComponent.component, {
-          environmentInjector: this.envInjector,
-          elementInjector: parentContextInjector,
-        });
-        commandComponent.changeDetectorRef.detectChanges();
-        anyComponent = commandComponent.instance as any;
-
-        argsComponent.arguments?.forEach((arg) => {
-          if ('enabled' in anyComponent[arg.name]) {
-            anyComponent[arg.name]['enabled'] = false;
-          }
-        });
-      };
-
-      if (
-        commandMappingI.length === 1 &&
-        commandMappingI[0].firstArgument === undefined
-      ) {
-        newComponent(commandMappingI[0]);
-      }
-
-      // Init variables
-      let currentArgumentName = '';
-      let currentArgumentValue = '';
-      command.args.forEach((element) => {
-        // If undefined, it's a component that needs command name and its first argument.
-        if (commandComponent === undefined) {
-          commandMappingI.forEach((commandI) => {
-            if (commandI.firstArgument! === element) {
-              newComponent(commandI);
-            } else {
-              console.log('Failed to found commandMappingI');
-            }
-          });
-          if (commandComponent === undefined) {
-            console.log(
-              `Failed to found component for ${command.name} / ${element}.`
-            );
-          }
-          // Go to the next element.
-          return;
-        }
-        if (argsComponent === undefined) {
-          console.log(
-            `Failed to found component for ${command.name} / ${element}.`
-          );
-          return;
-        }
-
-        const argumentParser = argsComponent.arguments?.get(element);
-        // Argument value
-        if (argumentParser === undefined) {
-          if (currentArgumentValue === '') {
-            currentArgumentValue = element;
-          } else {
-            currentArgumentValue = currentArgumentValue + ' ' + element;
-          }
-        }
-        // Argument name
-        else {
-          this.setArgument(
-            anyComponent,
-            argsComponent.arguments?.get(currentArgumentName)!.name ?? '',
-            currentArgumentValue
-          );
-          currentArgumentName = element;
-          currentArgumentValue = '';
-        }
-      });
-      if (argsComponent === undefined) {
-        console.log(`Failed to found component for ${command.name}.`);
-        return;
-      }
-      this.setArgument(
-        anyComponent,
-        argsComponent.arguments?.get(currentArgumentName)!.name ?? '',
-        currentArgumentValue
+    for (const command of commands) {
+      const component = this.cmakeCommandToComponent(
+        command,
+        parentContextInjector
       );
-      if (commandComponent === undefined) {
-        console.log(`Failed to found component for ${command.name}.`);
-        return;
+      if (component !== undefined) {
+        retval.push(component);
       }
-      retval.push(commandComponent);
-    });
+    }
     return retval;
   }
 
@@ -344,6 +393,6 @@ export class DeserializerRegistry {
   ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
     const cmakeCommands = this.parseStrCommands(lines);
 
-    return this.cmakeCommandToComponent(cmakeCommands, parentContextInjector);
+    return this.cmakeCommandsToComponent(cmakeCommands, parentContextInjector);
   }
 }

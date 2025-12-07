@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { VersionTag } from './version-tag';
 
 describe('VersionTag', () => {
-  let component: VersionTag;
-  let fixture: ComponentFixture<VersionTag>;
+  //let component: VersionTag;
+  //let fixture: ComponentFixture<VersionTag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

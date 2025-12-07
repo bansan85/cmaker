@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProjectContextService } from '../services/project-context-service';
 import { FormsModule } from '@angular/forms';
 import { Version } from '../../../shared/models/version';

@@ -3,12 +3,12 @@ import { Version } from '../../../shared/models/version';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
+import { InputCheckboxModel } from '../../../shared/models/arguments/input-checkbox-model';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<InputCheckbox> {
+export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<InputCheckboxModel> {
   private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
   private readonly helpText = 'Build using CRT shared libraries';
 
@@ -16,7 +16,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
 
   private dataToCMake = inject(DataToCMakeService);
 
-  isEnabled(action: InputCheckbox): boolean {
+  isEnabled(action: InputCheckboxModel): boolean {
     return (
       (action.enabled ?? true) &&
       !this.versionService.isGreater(
@@ -26,15 +26,17 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
     );
   }
 
-  isValid(_action: InputCheckbox): Promise<boolean> {
+  isValid(_action: InputCheckboxModel): Promise<boolean> {
     return Promise.resolve(true);
   }
 
-  protected cmakeRequiredVersionImpl(_action: InputCheckbox): Version | null {
+  protected cmakeRequiredVersionImpl(
+    _action: InputCheckboxModel
+  ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(action: InputCheckbox): CMakeAvailableData {
+  protected cmakeObjectsImpl(action: InputCheckboxModel): CMakeAvailableData {
     return {
       options: [
         {
@@ -46,8 +48,8 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterfac
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputCheckbox): string {
-    return `# Windows only
+  protected toCMakeListTxtImpl(action: InputCheckboxModel): Promise<string> {
+    return Promise.resolve(`# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
       action.value
     )})
@@ -56,6 +58,6 @@ if(NOT ${this.variable})
   cmake_policy(SET CMP0091 NEW)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
-`;
+`);
   }
 }

@@ -1,4 +1,4 @@
-import { InputString } from './input-string';
+//import { InputString } from './input-string';
 
 describe('InputString', () => {
   it('should create an instance', () => {

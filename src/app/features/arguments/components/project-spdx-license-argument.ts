@@ -24,7 +24,7 @@ export class ProjectSpdxLicenseArgument
   extends InputLicense
   implements CMakeComponentInterface<ProjectSpdxLicenseService>
 {
-  protected datalist = viewChild<InputLicenseDataList>('datalist');
+  protected readonly datalist = viewChild<InputLicenseDataList>('datalist');
 
   readonly name = 'License';
 

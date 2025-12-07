@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ValidTag } from './valid-tag';
 
 describe('ValidTag', () => {
-  let component: ValidTag;
-  let fixture: ComponentFixture<ValidTag>;
+  //let component: ValidTag;
+  //let fixture: ComponentFixture<ValidTag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

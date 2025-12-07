@@ -20,13 +20,13 @@ export class DraggableListComponent {
     effect(() => {
       const currentItems = this.items();
 
-      this.subscribedItems.forEach((item) => {
+      for (const item of this.subscribedItems) {
         if (!currentItems.includes(item)) {
           this.subscribedItems.delete(item);
         }
-      });
+      }
 
-      currentItems.forEach((item) => {
+      for (const item of currentItems) {
         if (!this.subscribedItems.has(item)) {
           this.subscribedItems.add(item);
           item.dragStartEvent.subscribe((target) => {
@@ -39,7 +39,7 @@ export class DraggableListComponent {
             this.onDragEnd();
           });
         }
-      });
+      }
     });
   }
 
@@ -47,14 +47,21 @@ export class DraggableListComponent {
     while (el && !el.hasAttribute('draggable')) {
       el = el.parentElement;
     }
-    return el!;
+    if (el === null) {
+      throw new Error('A draggable item must have a draggable attribute.');
+    }
+    return el;
   }
 
   onDragStart(targetEl: HTMLElement) {
     this.draggableItem = this.getDraggableItemEl(targetEl)
       .parentNode as HTMLElement;
 
-    this.from = Array.from(this.draggableItem.parentNode!.children).indexOf(
+    if (this.draggableItem.parentNode === null) {
+      throw new Error('A draggable item must have a parent node.');
+    }
+
+    this.from = Array.from(this.draggableItem.parentNode.children).indexOf(
       this.draggableItem
     );
     this.to = this.from;
@@ -62,20 +69,30 @@ export class DraggableListComponent {
 
   onDragOver(targetEl: HTMLElement) {
     const target = this.getDraggableItemEl(targetEl);
-    // Don't move over itself.
-    if (target.parentNode === this.draggableItem) {
-      return;
-    }
     const draggableItem = target.parentNode as HTMLElement;
 
-    this.to = Array.from(this.draggableItem.parentNode!.children).indexOf(
+    if (
+      // Don't move over itself.
+      target.parentNode === this.draggableItem
+    ) {
+      return;
+    }
+    if (
+      target.parentNode === null ||
+      draggableItem.parentNode === null ||
+      this.draggableItem.parentNode === null
+    ) {
+      throw new Error('A draggable item must have a parent node.');
+    }
+
+    this.to = Array.from(this.draggableItem.parentNode.children).indexOf(
       draggableItem
     );
 
     if (this.isBefore(this.draggableItem, draggableItem)) {
-      draggableItem.parentNode!.insertBefore(this.draggableItem, draggableItem);
+      draggableItem.parentNode.insertBefore(this.draggableItem, draggableItem);
     } else {
-      draggableItem.parentNode!.insertBefore(
+      draggableItem.parentNode.insertBefore(
         this.draggableItem,
         draggableItem.nextSibling
       );

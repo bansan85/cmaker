@@ -11,14 +11,21 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
 export abstract class InputLanguages
   implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
 {
-  isValid = signal(false);
+  readonly isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
 
   constructor() {
-    effect(async () => {
-      this.isValid.set(await this.service.isValid(this));
+    effect(() => {
+      this.service
+        .isValid(this)
+        .then((result) => {
+          this.isValid.set(result);
+        })
+        .catch((err: unknown) => {
+          console.error(err);
+        });
     });
   }
 
@@ -32,76 +39,76 @@ export abstract class InputLanguages
   }
   set value(value: string) {
     const values = value.split(' ');
-    this.allLanguages.forEach((item) => {
-      item.enabled = values.indexOf(item.name) != -1;
-    });
+    for (const item of this.allLanguages) {
+      item.enabled = values.includes(item.name);
+    }
   }
 
-  protected c = signal<CheckboxesItemInterface>({
+  protected readonly c = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'C',
   });
-  protected cxx = signal<CheckboxesItemInterface>({
+  protected readonly cxx = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'CXX',
   });
-  protected cSharp = signal<CheckboxesItemInterface>({
+  protected readonly cSharp = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'CSharp',
     version: new Version(3, 8),
   });
-  protected cuda = signal<CheckboxesItemInterface>({
+  protected readonly cuda = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'CUDA',
     version: new Version(3, 8),
   });
-  protected objC = signal<CheckboxesItemInterface>({
+  protected readonly objC = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'OBJC',
     version: new Version(3, 16),
   });
-  protected objCxx = signal<CheckboxesItemInterface>({
+  protected readonly objCxx = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'OBJCXX',
     version: new Version(3, 16),
   });
-  protected fortran = signal<CheckboxesItemInterface>({
+  protected readonly fortran = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'Fortran',
   });
-  protected hip = signal<CheckboxesItemInterface>({
+  protected readonly hip = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'HIP',
     version: new Version(3, 21),
   });
-  protected ispc = signal<CheckboxesItemInterface>({
+  protected readonly ispc = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ISPC',
     version: new Version(3, 18),
   });
-  protected swift = signal<CheckboxesItemInterface>({
+  protected readonly swift = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'Swift',
     version: new Version(3, 15),
   });
-  protected asm = signal<CheckboxesItemInterface>({
+  protected readonly asm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM',
   });
-  protected asmNasm = signal<CheckboxesItemInterface>({
+  protected readonly asmNasm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM_NASM',
   });
-  protected asmMarmasm = signal<CheckboxesItemInterface>({
+  protected readonly asmMarmasm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM_MARMASM',
     version: new Version(3, 26),
   });
-  protected asmMasm = signal<CheckboxesItemInterface>({
+  protected readonly asmMasm = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM_MASM',
   });
-  protected asmAtt = signal<CheckboxesItemInterface>({
+  protected readonly asmAtt = signal<CheckboxesItemInterface>({
     enabled: false,
     name: 'ASM-ATT',
   });

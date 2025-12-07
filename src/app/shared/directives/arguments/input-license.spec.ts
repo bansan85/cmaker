@@ -1,4 +1,4 @@
-import { InputLicense } from './input-license';
+//import { InputLicense } from './input-license';
 
 describe('InputLicense', () => {
   it('should create an instance', () => {

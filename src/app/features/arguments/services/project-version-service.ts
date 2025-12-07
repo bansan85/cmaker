@@ -98,7 +98,7 @@ export class ProjectVersionService extends CMakeFeatureInterface<InputVersionMod
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputVersionModel): string {
-    return `VERSION ${action.value?.toString()}\n`;
+  protected toCMakeListTxtImpl(action: InputVersionModel): Promise<string> {
+    return Promise.resolve(`VERSION ${action.value?.toString()}\n`);
   }
 }

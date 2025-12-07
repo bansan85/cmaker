@@ -63,6 +63,17 @@ export default defineConfig(
       '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       // False positive.
       '@typescript-eslint/restrict-template-expressions': 'off',
+      'capitalized-comments': 'off',
+      '@angular-eslint/directive-class-suffix': 'off',
+      '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+      '@angular-eslint/no-forward-ref': 'off',
+      'no-continue': 'off',
+      'func-style': 'off',
+      '@typescript-eslint/no-extraneous-class': 'off',
+      'max-lines-per-function': 'off',
+      'complexity': 'off',
+      'max-depth': 'off',
+      'max-lines': 'off',
     },
   },
   {

@@ -1,4 +1,4 @@
-import { Component, forwardRef, inject, signal } from '@angular/core';
+import { Component, forwardRef, inject } from '@angular/core';
 import { ProjectDescriptionService } from '../services/project-description-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';

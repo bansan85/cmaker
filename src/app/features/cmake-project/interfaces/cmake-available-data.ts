@@ -11,11 +11,13 @@ export function mergeCMakeAvailableData(
   ...items: CMakeAvailableData[]
 ): CMakeAvailableData {
   const mergedPolicy = new Map<number, boolean>();
-  items.forEach((item) => {
-    item.policies?.forEach((value, key) => {
-      mergedPolicy.set(key, value);
-    });
-  });
+  for (const item of items) {
+    if (item.policies !== undefined) {
+      for (const [key, value] of item.policies) {
+        mergedPolicy.set(key, value);
+      }
+    }
+  }
 
   return {
     options: items.flatMap((item) => item.options ?? []),

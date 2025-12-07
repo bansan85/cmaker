@@ -32,19 +32,19 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   protected abstract cmakeObjectsImpl(action: Feature): CMakeAvailableData;
 
-  toCMakeListTxt(action: Feature): string {
+  async toCMakeListTxt(action: Feature): Promise<string> {
     if (this.isEnabled(action)) {
       let retval = '';
-      if (!this.isValid(action)) {
+      if (!(await this.isValid(action))) {
         retval += '# Invalid\n';
       }
-      return retval + this.toCMakeListTxtImpl(action);
+      return retval + (await this.toCMakeListTxtImpl(action));
     } else {
-      return '';
+      return Promise.resolve('');
     }
   }
 
-  protected abstract toCMakeListTxtImpl(action: Feature): string;
+  protected abstract toCMakeListTxtImpl(action: Feature): Promise<string>;
 
   isEffectiveVersionValid(action: Feature): boolean {
     return !this.versionService.isGreater(
