@@ -25,4 +25,11 @@ export class RustBackendService {
   async diffPath(base: string, path: string): Promise<string> {
     return await invoke<string>('diff_path', { path, base });
   }
+
+  async loadFromFile(path: string): Promise<string> {
+    return await invoke<string>('load_from_file', { path });
+  }
+  async saveToFile(path: string, content: string) {
+    await invoke('save_to_file', { path, content });
+  }
 }

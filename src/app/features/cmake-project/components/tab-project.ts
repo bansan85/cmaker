@@ -21,6 +21,8 @@ import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { DeserializerRegistry } from '../../serializer/services/deserializer-registry';
+import { open, save } from '@tauri-apps/plugin-dialog';
+import { RustBackendService } from '../../../shared/services/rust-backend-service';
 
 @Component({
   selector: 'app-tab-project',
@@ -29,14 +31,14 @@ import { DeserializerRegistry } from '../../serializer/services/deserializer-reg
   styleUrl: './tab-project.css',
 })
 export class TabProject implements AfterViewInit {
-  private contextInjector = inject(Injector);
+  private readonly contextInjector = inject(Injector);
+  private readonly rustBackendService = inject(RustBackendService);
 
   containers = viewChildren('container', { read: ViewContainerRef });
 
   defaultInitialFields: Type<
     CMakeComponentInterface<CMakeFeatureInterface<unknown>>
   >[] = [
-    /*
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
     CMakeProjectIncludeBeforeVariable,
@@ -44,7 +46,6 @@ export class TabProject implements AfterViewInit {
     CMakeProjectProjectNameIncludeBeforeVariable,
     CMakeProjectProjectNameIncludeVariable,
     CMakeProjectTopLevelIncludesVariable,
-    */
   ];
 
   protected items: CMakeComponentInterface<CMakeFeatureInterface<unknown>>[] =
@@ -68,25 +69,59 @@ export class TabProject implements AfterViewInit {
     this.itemsOrder.splice(event.to, 0, element);
   }
 
-  toto() {
-    const draggableItemsList = this.containers;
-    console.log('this.itemsOrder');
-    console.log(this.itemsOrder);
+  cmakeListToConsole() {
     this.itemsOrder.forEach((i) => {
       const child = this.items[i];
       console.log(child.service.toCMakeListTxt(child));
     });
   }
 
-  parse() {
-    const retval = this.registry.parse(
-      [
-        'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
-        'project(${PROJECT_NAME_FULL} VERSION ${PROJECT_VERSION_FROM_GIT} DESCRIPTION "${PROJECT_DESCRIPTION_ONELINE}" HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}" LANGUAGES ${PROJECT_LANGUAGES})',
-        'set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "toto")',
+  async loadFromFile() {
+    const absolutePath = await open({
+      multiple: false,
+      directory: false,
+      filters: [
+        { name: 'CMake files', extensions: ['txt'] },
+        { name: 'All files', extensions: ['*'] },
       ],
-      this.contextInjector
-    );
+    });
+
+    if (absolutePath !== null) {
+      const content = await this.rustBackendService.loadFromFile(absolutePath);
+      this.parse(content.split('\n'));
+    }
+  }
+
+  loadFromText() {
+    this.parse([
+      'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
+      'project(${PROJECT_NAME_FULL} VERSION ${PROJECT_VERSION_FROM_GIT} DESCRIPTION "${PROJECT_DESCRIPTION_ONELINE}" HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}" LANGUAGES ${PROJECT_LANGUAGES})',
+      'set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "toto")',
+    ]);
+  }
+
+  async saveToFile() {
+    const absolutePath = await save({
+      filters: [
+        { name: 'CMake files', extensions: ['txt'] },
+        { name: 'All files', extensions: ['*'] },
+      ],
+    });
+
+    if (absolutePath !== null) {
+      await this.rustBackendService.saveToFile(
+        absolutePath,
+        this.itemsOrder
+          .map((i) => {
+            return this.items[i].service.toCMakeListTxt(this.items[i]);
+          })
+          .join('\n')
+      );
+    }
+  }
+
+  parse(content: string[]) {
+    const retval = this.registry.parse(content, this.contextInjector);
     Array.from(Array(retval.length)).forEach((_) =>
       this.items.push(null as any)
     );
@@ -100,14 +135,5 @@ export class TabProject implements AfterViewInit {
         this.itemsOrder.push(newIndex);
       });
     });
-    /*
-    this.items.push(null as any);
-    setTimeout(() => {
-      const newIndex = this.items.length - 1;
-      const newContainer = this.containers()[newIndex]!;
-      this.items[newIndex] = newContainer.createComponent(retval).instance;
-      this.itemsOrder.push(newIndex);
-    });
-    */
   }
 }
