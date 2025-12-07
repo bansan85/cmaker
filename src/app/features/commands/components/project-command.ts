@@ -105,6 +105,8 @@ export class ProjectCommand
 
   readonly service = inject(ProjectService);
 
+  protected readonly projectId = `project-${crypto.randomUUID()}`;
+
   constructor() {
     super();
     effect(async () => {

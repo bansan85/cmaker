@@ -1,8 +1,11 @@
 <div [hidden]="isHidden()">
-  <label for="name-{{element().name}}" (click)="$event.stopPropagation()">
+  <label
+    for="name-{{element().name}}-{{parent.itemsId()}}"
+    (click)="$event.stopPropagation()"
+  >
     <input
       type="checkbox"
-      id="name-{{element().name}}"
+      id="name-{{element().name}}-{{parent.itemsId()}}"
       [checked]="element().enabled"
       (change)="element().enabled = $event.target.checked"
     />{{element().name}}</label

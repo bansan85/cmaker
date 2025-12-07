@@ -16,6 +16,7 @@ export class CheckboxesList {
   private readonly elementRef = inject(ElementRef);
 
   readonly icon = input<string>('menu');
+  readonly itemsId = input.required<string>();
 
   showCheckboxes() {
     this.expanded = !this.expanded;

@@ -1,9 +1,9 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
-  <label [for]="projectLanguagesId"
+  <span
     >Languages <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"
-  /></label>
-  <app-checkboxes-list icon="chevron-down">
+  /></span>
+  <app-checkboxes-list icon="chevron-down" [itemsId]="projectLanguagesId">
     <app-checkboxes-item [element]="c()"></app-checkboxes-item>
     <app-checkboxes-item [element]="cxx()"></app-checkboxes-item>
     <app-checkboxes-item [element]="cSharp()"></app-checkboxes-item>

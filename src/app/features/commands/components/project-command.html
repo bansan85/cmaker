@@ -3,7 +3,7 @@
     Project
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this" />
-    <app-checkboxes-list icon="menu">
+    <app-checkboxes-list icon="menu" [itemsId]="projectId">
       <app-checkboxes-item [element]="spdxLicense" />
       <app-checkboxes-item [element]="version" />
       <app-checkboxes-item [element]="compatVersion" />
