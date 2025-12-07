@@ -200,6 +200,9 @@ export class DeserializerRegistry {
 
   private setArgument(component: any, field: string, value: string) {
     for (let comp of [component, component[field]]) {
+      if ('enabled' in comp) {
+        comp['enabled'] = true;
+      }
       if (comp instanceof InputString) {
         (comp as InputString).value = value;
         return;
@@ -245,17 +248,28 @@ export class DeserializerRegistry {
         | undefined;
       let anyComponent: any | undefined;
       let argsComponent: CommandParser | undefined;
-      if (
-        commandMappingI.length === 1 &&
-        commandMappingI[0].firstArgument === undefined
-      ) {
-        argsComponent = commandMappingI[0];
+
+      const newComponent = (commandParser: CommandParser) => {
+        argsComponent = commandParser;
         commandComponent = createComponent(argsComponent.component, {
           environmentInjector: this.envInjector,
           elementInjector: parentContextInjector,
         });
         commandComponent.changeDetectorRef.detectChanges();
         anyComponent = commandComponent.instance as any;
+
+        argsComponent.arguments?.forEach((arg) => {
+          if ('enabled' in anyComponent[arg.name]) {
+            anyComponent[arg.name]['enabled'] = false;
+          }
+        });
+      };
+
+      if (
+        commandMappingI.length === 1 &&
+        commandMappingI[0].firstArgument === undefined
+      ) {
+        newComponent(commandMappingI[0]);
       }
 
       // Init variables
@@ -266,13 +280,7 @@ export class DeserializerRegistry {
         if (commandComponent === undefined) {
           commandMappingI.forEach((commandI) => {
             if (commandI.firstArgument! === element) {
-              argsComponent = commandI;
-              commandComponent = createComponent(commandI.component, {
-                environmentInjector: this.envInjector,
-                elementInjector: parentContextInjector,
-              });
-              commandComponent.changeDetectorRef.detectChanges();
-              anyComponent = commandComponent.instance as any;
+              newComponent(commandI);
             } else {
               console.log('Failed to found commandMappingI');
             }
