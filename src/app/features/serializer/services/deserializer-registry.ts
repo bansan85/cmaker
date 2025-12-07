@@ -36,9 +36,9 @@ interface ArgumentParser {
 }
 
 interface CommandParser {
-  firstArgument: string | null;
+  firstArgument?: string;
   component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
-  arguments: Map<string, ArgumentParser>;
+  arguments?: Map<string, ArgumentParser>;
 }
 
 interface CMakeCommand {
@@ -58,7 +58,6 @@ export class DeserializerRegistry {
       'project',
       [
         {
-          firstArgument: null,
           component: ProjectCommand,
           arguments: new Map([
             ['', { name: 'name', component: ProjectNameArgument }],
@@ -96,15 +95,6 @@ export class DeserializerRegistry {
         {
           firstArgument: 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES',
           component: CMakeProjectTopLevelIncludesVariable,
-          arguments: new Map([
-            [
-              '',
-              {
-                name: 'value',
-                component: ProjectLanguagesArgument /*InputCheckbox*/,
-              },
-            ],
-          ]),
         },
       ],
     ],
@@ -208,22 +198,29 @@ export class DeserializerRegistry {
     return commands;
   }
 
-  private setArgument(component: any, value: string) {
-    if (component instanceof InputString) {
-      (component as InputString).value = value;
-    } else if (component instanceof InputVersion) {
-      (component as InputVersion).value = new Version(value);
-    } else if (component instanceof InputLicense) {
-      (component as InputLicense).value = value;
-    } else if (component instanceof InputLanguages) {
-      (component as InputLanguages).value = value;
-    } else if (component instanceof InputFiles) {
-      (component as InputFiles).value =
-        this.dataToCMakeService.filesToArrayString(value);
-    } else {
-      console.log(`Failed to setArgument ${value}`);
-      console.log(component);
+  private setArgument(component: any, field: string, value: string) {
+    for (let comp of [component, component[field]]) {
+      if (comp instanceof InputString) {
+        (comp as InputString).value = value;
+        return;
+      } else if (comp instanceof InputVersion) {
+        (comp as InputVersion).value = new Version(value);
+        return;
+      } else if (comp instanceof InputLicense) {
+        (comp as InputLicense).value = value;
+        return;
+      } else if (comp instanceof InputLanguages) {
+        (comp as InputLanguages).value = value;
+        return;
+      } else if (comp instanceof InputFiles) {
+        (comp as InputFiles).value =
+          this.dataToCMakeService.filesToArrayString(value);
+        return;
+      }
     }
+
+    console.log(`Failed to set field ${field} with setArgument ${value}`);
+    console.log(component);
   }
 
   private cmakeCommandToComponent(
@@ -248,7 +245,10 @@ export class DeserializerRegistry {
         | undefined;
       let anyComponent: any | undefined;
       let argsComponent: CommandParser | undefined;
-      if (commandMappingI.length === 1) {
+      if (
+        commandMappingI.length === 1 &&
+        commandMappingI[0].firstArgument === undefined
+      ) {
         argsComponent = commandMappingI[0];
         commandComponent = createComponent(argsComponent.component, {
           environmentInjector: this.envInjector,
@@ -281,8 +281,9 @@ export class DeserializerRegistry {
             console.log(
               `Failed to found component for ${command.name} / ${element}.`
             );
-            return;
           }
+          // Go to the next element.
+          return;
         }
         if (argsComponent === undefined) {
           console.log(
@@ -291,7 +292,7 @@ export class DeserializerRegistry {
           return;
         }
 
-        const argumentParser = argsComponent.arguments.get(element);
+        const argumentParser = argsComponent.arguments?.get(element);
         // Argument value
         if (argumentParser === undefined) {
           if (currentArgumentValue === '') {
@@ -303,9 +304,8 @@ export class DeserializerRegistry {
         // Argument name
         else {
           this.setArgument(
-            anyComponent[
-              argsComponent.arguments.get(currentArgumentName)!.name
-            ],
+            anyComponent,
+            argsComponent.arguments?.get(currentArgumentName)!.name ?? '',
             currentArgumentValue
           );
           currentArgumentName = element;
@@ -317,7 +317,8 @@ export class DeserializerRegistry {
         return;
       }
       this.setArgument(
-        anyComponent[argsComponent.arguments.get(currentArgumentName)!.name],
+        anyComponent,
+        argsComponent.arguments?.get(currentArgumentName)!.name ?? '',
         currentArgumentValue
       );
       if (commandComponent === undefined) {
