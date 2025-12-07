@@ -11,9 +11,9 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
   selector: '[appInputFiles]',
 })
 export abstract class InputFiles
-  extends ValidatorInterface
-  implements CheckboxesItemInterface, InputFilesModel
+  implements CheckboxesItemInterface, InputFilesModel, ValidatorInterface
 {
+  isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
@@ -22,7 +22,6 @@ export abstract class InputFiles
   private readonly projectContext = inject(ProjectContextService);
 
   constructor() {
-    super();
     effect(async () => {
       this.isValid.set(await this.service.isValid(this));
     });

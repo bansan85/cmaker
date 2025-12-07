@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, signal, WritableSignal } from '@angular/core';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { ProjectModel } from '../models/project.model';
 import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
@@ -9,9 +9,10 @@ import { InputLanguagesModel } from '../../../shared/models/arguments/input-lang
   selector: '[appInputProjectCommand]',
 })
 export abstract class InputProjectCommand
-  extends ValidatorInterface
-  implements ProjectModel
+  implements ProjectModel, ValidatorInterface
 {
+  isValid = signal(false);
+
   enabled = true;
 
   abstract name: InputStringModel;

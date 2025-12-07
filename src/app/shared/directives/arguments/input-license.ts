@@ -8,15 +8,14 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
   selector: '[appInputLicense]',
 })
 export abstract class InputLicense
-  extends ValidatorInterface
-  implements CheckboxesItemInterface, InputLicenseModel
+  implements CheckboxesItemInterface, InputLicenseModel, ValidatorInterface
 {
+  isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
 
   constructor() {
-    super();
     effect(async () => {
       this.isValid.set(await this.service.isValid(this));
     });

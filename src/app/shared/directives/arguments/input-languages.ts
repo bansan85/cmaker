@@ -9,15 +9,14 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
   selector: '[appInputLanguages]',
 })
 export abstract class InputLanguages
-  extends ValidatorInterface
-  implements CheckboxesItemInterface, InputLanguagesModel
+  implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
 {
+  isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<unknown>;
 
   constructor() {
-    super();
     effect(async () => {
       this.isValid.set(await this.service.isValid(this));
     });

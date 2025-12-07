@@ -1,5 +1,5 @@
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 
-export class ValidatorInterface {
-  isValid = signal(false);
+export interface ValidatorInterface {
+  isValid: WritableSignal<boolean>;
 }
