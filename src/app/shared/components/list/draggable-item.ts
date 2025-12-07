@@ -1,10 +1,4 @@
-import {
-  Component,
-  ContentChild,
-  contentChild,
-  input,
-  output,
-} from '@angular/core';
+import { Component, contentChild, input, output } from '@angular/core';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { CMakeComponentInterface } from '../../../features/cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
@@ -14,8 +8,10 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
   templateUrl: './draggable-item.html',
 })
 export class DraggableItemComponent {
-  @ContentChild(CMAKE_COMPONENT_ITEM)
-  readonly child!: CMakeComponentInterface<CMakeFeatureInterface<any>>;
+  readonly title =
+    contentChild<CMakeComponentInterface<CMakeFeatureInterface<any>>>(
+      CMAKE_COMPONENT_ITEM
+    );
 
   readonly text = input<string>();
 
