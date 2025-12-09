@@ -1,25 +1,25 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectProjectNameIncludeBeforePathId"
     >CMAKE_PROJECT_{{projectNameSignal()}}_INCLUDE_BEFORE
-    <button (click)="addPath()">+</button>
+    <button type="button" (click)="addPath()">+</button>
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"
   /></label>
   <label [for]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
     >Project name:
     <input
-      type="text"
       name="cmake-project-project-name-include-before-project-name"
+      type="text"
       [id]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
       [(ngModel)]="projectNameSignal"
     />
   </label>
   <textarea
-    type="text"
-    name="cmake-project-project-name-include-before-path"
     cols="80"
-    rows="{{rows}}"
+    name="cmake-project-project-name-include-before-path"
+    type="text"
     [id]="cmakeProjectProjectNameIncludeBeforePathId"
+    [rows]="rows"
     [(ngModel)]="valueSingleLine"
   ></textarea>
 </div>

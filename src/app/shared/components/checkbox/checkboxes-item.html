@@ -1,12 +1,13 @@
 <div [hidden]="isHidden()">
+  <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
   <label
-    for="name-{{element().name}}-{{parent.itemsId()}}"
+    [for]="`name-${element().name}-${parent.itemsId()}`"
     (click)="$event.stopPropagation()"
   >
     <input
       type="checkbox"
-      id="name-{{element().name}}-{{parent.itemsId()}}"
       [checked]="element().enabled"
+      [id]="`name-${element().name}-${parent.itemsId()}`"
       (change)="element().enabled = $event.target.checked"
     />{{element().name}}</label
   >

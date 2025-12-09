@@ -1,11 +1,13 @@
 <app-draggable-list (orderChanged)="reorderItems($event)">
   @for (item of items; track $index) {
   <app-draggable-item>
-    <ng-container #container></ng-container>
+    <ng-container #container />
   </app-draggable-item>
   }
 </app-draggable-list>
-<button (click)="cmakeListToConsole()">CMakeLists.txt to console</button>
-<button (click)="loadFromText()">Hardcoded parse</button>
-<button (click)="saveToFile()">save to file</button>
-<button (click)="loadFromFile()">load from file</button>
+<button type="button" (click)="cmakeListToConsole()">
+  CMakeLists.txt to console
+</button>
+<button type="button" (click)="loadFromText()">Hardcoded parse</button>
+<button type="button" (click)="saveToFile()">save to file</button>
+<button type="button" (click)="loadFromFile()">load from file</button>

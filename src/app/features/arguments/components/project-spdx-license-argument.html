@@ -4,8 +4,8 @@
     <app-valid-tag [validator]="this"
   /></label>
   <input
-    type="text"
     name="project-spdx-license"
+    type="text"
     [attr.list]="datalist.inputLicenseListId"
     [id]="projectSpdxLicenseId"
     [(ngModel)]="valueSignal"
@@ -13,9 +13,9 @@
   <br />
   <span
     ><a
-      target="_blank"
-      rel="noopener noreferrer"
       href="https://spdx.github.io/spdx-spec/v3.0.1/annexes/spdx-license-expressions/"
+      rel="noopener noreferrer"
+      target="_blank"
       >SPDX license(s)</a
     >
     of the project (i.e. <code>MIT</code>,

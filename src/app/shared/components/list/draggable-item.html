@@ -1,8 +1,8 @@
 <li
   draggable="true"
+  (dragend)="dragEnd()"
   (dragover)="dragOver($event)"
   (dragstart)="dragStart($event)"
-  (dragend)="dragEnd()"
 >
   <ng-content />
 </li>

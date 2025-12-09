@@ -5,12 +5,12 @@
     <app-valid-tag [validator]="this"
   /></label>
   <input
-    type="text"
     name="project-compat-version"
-    [id]="labelVersionId"
-    [(ngModel)]="versionString"
     pattern="\d+(\.\d+){0,3}"
     required
+    type="text"
+    [id]="labelVersionId"
+    [(ngModel)]="versionString"
   />
   <br />
 </div>

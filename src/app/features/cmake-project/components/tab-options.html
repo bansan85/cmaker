@@ -1,22 +1,22 @@
 <div class="field">
   <label [for]="tabOptionsMaxCMakeVersionId">Max CMake version:</label>
   <input
-    type="text"
     name="max-cmake-version"
-    [id]="tabOptionsMaxCMakeVersionId"
-    [(ngModel)]="versionString"
     pattern="\d+\.\d+"
     required
+    type="text"
+    [id]="tabOptionsMaxCMakeVersionId"
+    [(ngModel)]="versionString"
   />
 </div>
 <div class="field">
   <label [for]="tabOptionsRootPathId"
-    >Root path: <button (click)="selectPath()">...</button></label
+    >Root path: <button type="button" (click)="selectPath()">...</button></label
   >
   <span>
     <input
-      type="text"
       name="root-path"
+      type="text"
       [id]="tabOptionsRootPathId"
       [(ngModel)]="projectContext.rootPath"
     />

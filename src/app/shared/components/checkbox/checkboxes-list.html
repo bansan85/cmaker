@@ -1,7 +1,13 @@
 <div class="multiselect">
-  <div class="selectBox" (click)="showCheckboxes()">
-    <lucide-icon name="{{icon()}}"></lucide-icon>
-    <div id="checkboxes" [style.display]="expanded ? 'block' : 'none'">
+  <div
+    class="selectBox"
+    tabindex="0"
+    (click)="showCheckboxes()"
+    (keydown.enter)="showCheckboxes()"
+    (keydown.space)="showCheckboxes(); $event.preventDefault()"
+  >
+    <lucide-icon [name]="icon()" />
+    <div id="checkboxes" [class.checkboxesShow]="expanded()">
       <ng-content />
     </div>
   </div>

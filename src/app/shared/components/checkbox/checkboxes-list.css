@@ -11,4 +11,9 @@
   position: absolute;
   background-color: #fff;
   width: 100%;
+  display: none;
+}
+
+#checkboxes.checkboxesShow {
+  display: block;
 }

@@ -4,12 +4,12 @@
     <app-valid-tag [validator]="this"
   /></label>
   <input
-    type="url"
     name="project-homepage-url"
-    [id]="projectHomepageUrlId"
-    [(ngModel)]="valueSignal"
     pattern="https?:\/\/.+"
     required
+    type="url"
+    [id]="projectHomepageUrlId"
+    [(ngModel)]="valueSignal"
   />
   <br />
 </div>

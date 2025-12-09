@@ -1,15 +1,15 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectIncludePathId"
-    >CMAKE_PROJECT_INCLUDE <button (click)="addPath()">+</button>
+    >CMAKE_PROJECT_INCLUDE <button type="button" (click)="addPath()">+</button>
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"
   /></label>
   <textarea
-    type="text"
-    name="cmake-project-include-path"
     cols="80"
-    rows="{{rows}}"
+    name="cmake-project-include-path"
+    type="text"
     [id]="cmakeProjectIncludePathId"
+    [rows]="rows"
     [(ngModel)]="valueSingleLine"
   ></textarea>
 </div>

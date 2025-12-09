@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, input } from '@angular/core';
+import { Component, ElementRef, inject, input, signal } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { LucideAngularModule } from 'lucide-angular';
   },
 })
 export class CheckboxesList {
-  protected expanded = false;
+  protected readonly expanded = signal(false);
 
   private readonly elementRef = inject(ElementRef);
 
@@ -19,12 +19,12 @@ export class CheckboxesList {
   readonly itemsId = input.required<string>();
 
   showCheckboxes() {
-    this.expanded = !this.expanded;
+    this.expanded.set(!this.expanded());
   }
 
   onClickOutside(event: MouseEvent) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.expanded = false;
+      this.expanded.set(false);
     }
   }
 }

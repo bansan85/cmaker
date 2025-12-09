@@ -1,25 +1,25 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectProjectNameIncludePathId"
     >CMAKE_PROJECT_{{projectNameSignal()}}_INCLUDE
-    <button (click)="addPath()">+</button>
+    <button type="button" (click)="addPath()">+</button>
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"
   /></label>
   <label [for]="cmakeProjectProjectNameIncludeProjectNameId"
     >Project name:
     <input
-      type="text"
       name="cmake-project-project-name-include-project-name"
+      type="text"
       [id]="cmakeProjectProjectNameIncludeProjectNameId"
       [(ngModel)]="projectName"
     />
   </label>
   <textarea
-    type="text"
-    name="cmake-project-project-name-include-path"
     cols="80"
-    rows="{{rows}}"
+    name="cmake-project-project-name-include-path"
+    type="text"
     [id]="cmakeProjectProjectNameIncludePathId"
+    [rows]="rows"
     [(ngModel)]="valueSingleLine"
   ></textarea>
 </div>

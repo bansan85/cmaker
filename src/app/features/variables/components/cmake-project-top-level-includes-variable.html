@@ -1,15 +1,16 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectTopLevelIncludesPathId"
-    >CMAKE_PROJECT_TOP_LEVEL_INCLUDES <button (click)="addPath()">+</button>
+    >CMAKE_PROJECT_TOP_LEVEL_INCLUDES
+    <button type="button" (click)="addPath()">+</button>
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"
   /></label>
   <textarea
-    type="text"
-    name="cmake-project-top-level-includes-path"
     cols="80"
-    rows="{{rows}}"
+    name="cmake-project-top-level-includes-path"
+    type="text"
     [id]="cmakeProjectTopLevelIncludesPathId"
+    [rows]="rows"
     [(ngModel)]="valueSingleLine"
   ></textarea>
 </div>
