@@ -89,25 +89,43 @@ export class CMakeCommandParser {
     }
   }
 
+  removeComment(buffer: string): string {
+    // Find matching ')'
+    let pos = 0;
+    while (pos < buffer.length) {
+      if (buffer[pos] === '"') {
+        pos += 1;
+        while (pos < buffer.length && buffer[pos] !== '"') {
+          if (buffer[pos] === '\\') {
+            pos += 1;
+          }
+          pos += 1;
+        }
+        pos += 1;
+      } else {
+        if (buffer[pos] === '#') {
+          return buffer.substring(0, pos);
+        }
+        pos += 1;
+      }
+    }
+    return buffer.substring(0, pos);
+  }
+
   *parseStrCommands(lines: string[]): Generator<CMakeCommand> {
     let buffer = '';
     let commandNameStart: number | null = null;
     let commandName: string | null = null;
     let parserStatus = ParserStatus.SEEKING_START_OF_COMMAND_NAME;
+    let pos = 0;
     for (const line of lines) {
-      buffer = `${buffer}${line} `;
+      buffer = this.removeComment(`${buffer}${line} `);
 
       // Parse all complete commands in buffer
-      loop: for (let pos = 0; pos < buffer.length; pos += 1) {
+      buffer_loop: for (; pos < buffer.length; pos += 1) {
         // Skip whitespace
         if (/\s/u.test(buffer[pos])) {
           continue;
-        }
-
-        // Skip comments
-        if (buffer[pos] === '#') {
-          buffer = buffer.substring(0, pos);
-          break;
         }
 
         switch (parserStatus) {
@@ -118,7 +136,7 @@ export class CMakeCommandParser {
               );
               buffer = buffer.substring(0, pos);
               parserStatus = ParserStatus.SEEKING_START_OF_COMMAND_NAME;
-              break loop;
+              break buffer_loop;
             }
 
             commandNameStart = pos;
@@ -151,7 +169,7 @@ export class CMakeCommandParser {
               );
               buffer = buffer.substring(0, pos);
               parserStatus = ParserStatus.SEEKING_START_OF_COMMAND_NAME;
-              break loop;
+              break buffer_loop;
             }
             const argsStart = pos;
 
@@ -159,7 +177,7 @@ export class CMakeCommandParser {
 
             // Need next line to have all arguments.
             if (argsEnd === null) {
-              break loop;
+              break buffer_loop;
             }
 
             const argsStr = buffer.substring(argsStart + 1, argsEnd - 2);
