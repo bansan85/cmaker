@@ -95,8 +95,16 @@ export class DeserializerRegistry {
   ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private setArgument(component: any, field: string, value: string) {
-    for (const comp of [component, component[field]]) {
+  private setArgument(
+    component: any,
+    args: Map<string, ArgumentParser>,
+    field: string,
+    value: string
+  ) {
+    const argumentField = args.get(field);
+    const argumentFieldName =
+      argumentField === undefined ? '' : argumentField.name;
+    for (const comp of [component, component[argumentFieldName]]) {
       if ('enabled' in comp) {
         comp.enabled = true;
       }
@@ -122,90 +130,80 @@ export class DeserializerRegistry {
     console.log(component);
   }
 
+  private getCommandParserFromName(
+    commandName: string,
+    firstArgument: string | undefined
+  ): CommandParser | undefined {
+    const commandMappingI = this.commandMapping.get(commandName);
+    if (commandMappingI === undefined) {
+      console.log(`Unknown command ${commandName}`);
+      return undefined;
+    }
+    if (
+      commandMappingI.length === 1 &&
+      commandMappingI[0].firstArgument === undefined
+    ) {
+      return commandMappingI[0];
+    } else if (firstArgument === undefined) {
+      console.log(`${commandName} should have a firstArgument`);
+      return undefined;
+    } else {
+      for (const commandI of commandMappingI) {
+        if (commandI.firstArgument === undefined) {
+          console.log(`${commandName} should have a firstArgument`);
+          continue;
+        }
+        if (commandI.firstArgument === firstArgument) {
+          return commandI;
+        }
+      }
+      console.log(`Unknown command ${commandName} / ${firstArgument}`);
+      return undefined;
+    }
+  }
+
   private cmakeCommandToComponent(
     command: CMakeCommand,
     parentContextInjector: Injector
   ):
     | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
     | undefined {
-    const commandMappingI = this.commandMapping.get(command.name);
-    // Unknown command
-    if (commandMappingI === undefined) {
+    const commandParser = this.getCommandParserFromName(
+      command.name,
+      command.args[0]
+    );
+    if (commandParser === undefined) {
       console.log(`Unknown command ${command.name}`);
       return undefined;
     }
 
-    // Some component depend on command name and its first argument
-    // set(CMAKE_var...) or file(READ...) / file(CONFIGURE...).
-    let commandComponent:
-      | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
-      | undefined;
+    let commandComponent = createComponent(commandParser.component, {
+      environmentInjector: this.envInjector,
+      elementInjector: parentContextInjector,
+    });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let anyComponent: any;
-    let argsComponent: CommandParser | undefined;
+    let anyComponent: any = commandComponent.instance;
 
-    const newComponent = (commandParser: CommandParser) => {
-      argsComponent = commandParser;
-      commandComponent = createComponent(argsComponent.component, {
-        environmentInjector: this.envInjector,
-        elementInjector: parentContextInjector,
-      });
-      commandComponent.changeDetectorRef.detectChanges();
-      anyComponent = commandComponent.instance;
+    commandComponent.changeDetectorRef.detectChanges();
 
-      if (argsComponent.arguments !== undefined) {
-        for (const [_, value] of argsComponent.arguments) {
-          if ('enabled' in anyComponent[value.name]) {
-            anyComponent[value.name].enabled = false;
-          }
+    if (commandParser.arguments !== undefined) {
+      for (const [_, value] of commandParser.arguments) {
+        if ('enabled' in anyComponent[value.name]) {
+          anyComponent[value.name].enabled = false;
         }
       }
-    };
-
-    if (
-      commandMappingI.length === 1 &&
-      commandMappingI[0].firstArgument === undefined
-    ) {
-      newComponent(commandMappingI[0]);
     }
 
-    // Init variables
     let currentArgumentName = '';
     let currentArgumentValue = '';
-    for (const element of command.args) {
-      // If undefined, it's a component that needs command name and its first argument.
-      if (commandComponent === undefined) {
-        for (const commandI of commandMappingI) {
-          if (commandI.firstArgument === undefined) {
-            console.log(`${command.name} should have a firstArgument`);
-            continue;
-          }
-          if (commandI.firstArgument === element) {
-            newComponent(commandI);
-          } else {
-            console.log('Failed to found commandMappingI');
-          }
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (commandComponent === undefined) {
-          console.log(
-            `Failed to found component for ${command.name} / ${element}.`
-          );
-        }
-        // Go to the next argument.
-        continue;
-      }
-      if (argsComponent === undefined) {
-        console.log(
-          `Failed to found component for ${command.name} / ${element}.`
-        );
-        continue;
-      }
-
-      const argumentParser = argsComponent.arguments?.get(element);
+    const effectiveArgs = commandParser.firstArgument
+      ? command.args.slice(1)
+      : command.args;
+    for (const element of effectiveArgs) {
+      const argumentParser = commandParser.arguments?.get(element);
       // Argument value
       if (
-        argsComponent.arguments === undefined ||
+        commandParser.arguments === undefined ||
         argumentParser === undefined
       ) {
         if (currentArgumentValue === '') {
@@ -216,34 +214,33 @@ export class DeserializerRegistry {
       }
       // Argument name
       else {
-        const argumentField = argsComponent.arguments.get(currentArgumentName);
-        const argumentFieldName =
-          argumentField === undefined ? '' : argumentField.name;
-        this.setArgument(anyComponent, argumentFieldName, currentArgumentValue);
+        this.setArgument(
+          anyComponent,
+          commandParser.arguments,
+          currentArgumentName,
+          currentArgumentValue
+        );
         currentArgumentName = element;
         currentArgumentValue = '';
       }
     }
-    if (argsComponent === undefined) {
-      console.log(`Failed to found component for ${command.name}.`);
+
+    if (commandParser.arguments === undefined) {
+      return commandComponent;
+    }
+    const argumentParser = commandParser.arguments.get(currentArgumentName);
+    if (argumentParser === undefined) {
       return commandComponent;
     }
 
-    const argumentParser = argsComponent.arguments?.get(currentArgumentName);
     // Argument value
-    if (argsComponent.arguments === undefined || argumentParser === undefined) {
-      return commandComponent;
-    }
+    this.setArgument(
+      anyComponent,
+      commandParser.arguments,
+      currentArgumentName,
+      currentArgumentValue
+    );
 
-    const argumentField = argsComponent.arguments.get(currentArgumentName);
-    const argumentFieldName =
-      argumentField === undefined ? '' : argumentField.name;
-    this.setArgument(anyComponent, argumentFieldName, currentArgumentValue);
-
-    if (commandComponent === undefined) {
-      console.log(`Failed to found component for ${command.name}.`);
-      return commandComponent;
-    }
     return commandComponent;
   }
 
