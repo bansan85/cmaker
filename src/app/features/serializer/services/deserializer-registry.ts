@@ -25,6 +25,8 @@ import { InputLanguages } from '../../../shared/directives/arguments/input-langu
 import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
+import { CMakeCommandParser } from './cmake-command-parser';
+import { CMakeCommand } from '../models/cmake-command';
 
 interface ArgumentParser {
   name: string;
@@ -37,17 +39,13 @@ interface CommandParser {
   arguments?: Map<string, ArgumentParser>;
 }
 
-interface CMakeCommand {
-  name: string;
-  args: string[];
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class DeserializerRegistry {
   private envInjector = inject(EnvironmentInjector);
   private dataToCMakeService = inject(DataToCMakeService);
+  private cmakeCommandParser = inject(CMakeCommandParser);
 
   private readonly commandMapping = new Map<string, CommandParser[]>([
     [
@@ -95,125 +93,6 @@ export class DeserializerRegistry {
       ],
     ],
   ]);
-
-  private parseStrArguments(argsStr: string): string[] {
-    const args: string[] = [];
-    let current = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < argsStr.length; i += 1) {
-      const char = argsStr[i];
-
-      if (char === '\\' && i + 1 < argsStr.length) {
-        i += 1;
-        current += argsStr[i];
-      } else if (char === '"') {
-        inQuotes = !inQuotes;
-      } else if (/\s/u.test(char) && !inQuotes) {
-        if (current) {
-          args.push(current);
-          current = '';
-        }
-      } else {
-        current += char;
-      }
-    }
-
-    if (current) {
-      args.push(current);
-    }
-
-    return args;
-  }
-
-  private parseStrCommands(lines: string[]): CMakeCommand[] {
-    const commands: CMakeCommand[] = [];
-    let buffer = '';
-
-    for (let line of lines) {
-      // Remove comments
-      const commentIndex = line.indexOf('#');
-      if (commentIndex !== -1) {
-        line = line.substring(0, commentIndex);
-      }
-
-      buffer = `${buffer}${line} `;
-
-      // Parse all complete commands in buffer
-      let pos = 0;
-      while (pos < buffer.length) {
-        // Skip whitespace
-        while (pos < buffer.length && /\s/u.test(buffer[pos])) {
-          pos += 1;
-        }
-        if (pos >= buffer.length) {
-          break;
-        }
-
-        // Extract command name
-        const nameStart = pos;
-        while (pos < buffer.length && /\w/u.test(buffer[pos])) {
-          pos += 1;
-        }
-        if (pos >= buffer.length) {
-          break;
-        }
-
-        const name = buffer.substring(nameStart, pos);
-
-        // Skip whitespace
-        while (pos < buffer.length && /\s/u.test(buffer[pos])) {
-          pos += 1;
-        }
-        if (pos >= buffer.length || buffer[pos] !== '(') {
-          break;
-        }
-
-        // Skip '('
-        pos += 1;
-
-        // Find matching ')'
-        let depth = 1;
-        const argsStart = pos;
-        while (pos < buffer.length && depth > 0) {
-          if (buffer[pos] === '"') {
-            pos += 1;
-            while (pos < buffer.length && buffer[pos] !== '"') {
-              if (buffer[pos] === '\\') {
-                pos += 1;
-              }
-              pos += 1;
-            }
-            pos += 1;
-          } else {
-            if (buffer[pos] === '(') {
-              depth += 1;
-            }
-            if (buffer[pos] === ')') {
-              depth -= 1;
-            }
-            pos += 1;
-          }
-        }
-
-        // Incomplete command
-        if (depth > 0) {
-          break;
-        }
-
-        const argsStr = buffer.substring(argsStart, pos - 1);
-        const args = this.parseStrArguments(argsStr);
-        commands.push({ name, args });
-
-        buffer = buffer.substring(pos);
-        pos = 0;
-      }
-
-      buffer = buffer.trimStart();
-    }
-
-    return commands;
-  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private setArgument(component: any, field: string, value: string) {
@@ -368,31 +247,12 @@ export class DeserializerRegistry {
     return commandComponent;
   }
 
-  private cmakeCommandsToComponent(
-    commands: CMakeCommand[],
-    parentContextInjector: Injector
-  ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
-    const retval: ComponentRef<
-      CMakeComponentInterface<CMakeFeatureInterface<unknown>>
-    >[] = [];
-    for (const command of commands) {
-      const component = this.cmakeCommandToComponent(
-        command,
-        parentContextInjector
-      );
-      if (component !== undefined) {
-        retval.push(component);
-      }
-    }
-    return retval;
-  }
-
   parse(
     lines: string[],
     parentContextInjector: Injector
   ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
-    const cmakeCommands = this.parseStrCommands(lines);
-
-    return this.cmakeCommandsToComponent(cmakeCommands, parentContextInjector);
+    return Array.from(this.cmakeCommandParser.parseStrCommands(lines))
+      .map((x) => this.cmakeCommandToComponent(x, parentContextInjector))
+      .filter((x) => x !== undefined);
   }
 }
