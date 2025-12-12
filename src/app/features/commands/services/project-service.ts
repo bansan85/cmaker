@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from './cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import {
   CMakeAvailableData,
@@ -13,11 +12,21 @@ import { ProjectHomepageUrlService } from '../../arguments/services/project-home
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
 import { ProjectModel } from '../models/project.model';
+import { CMakeCommandInterface } from './cmake-command-interface';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
+import { ProjectCommand } from '../components/project-command';
+import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
+import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
+import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
+import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
+import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
+import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
+import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
+export class ProjectService extends CMakeCommandInterface<ProjectModel> {
   private readonly name = inject(ProjectNameService);
   private readonly spdxLicense = inject(ProjectSpdxLicenseService);
   private readonly version = inject(ProjectVersionService);
@@ -27,6 +36,35 @@ export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
   private readonly languages = inject(ProjectLanguagesService);
 
   readonly cmakeMinVersion = null;
+
+  readonly serializeCommandName = 'project';
+  readonly serializeCommandParser: CMakeCommandTyped = {
+    component: ProjectCommand,
+    arguments: new Map([
+      ['', { name: 'name', component: ProjectNameArgument }],
+      ['VERSION', { name: 'version', component: ProjectVersionArgument }],
+      [
+        'COMPAT_VERSION',
+        {
+          name: 'compatVersion',
+          component: ProjectCompatVersionArgument,
+        },
+      ],
+      [
+        'SPDX_LICENSE',
+        { name: 'spdxLicense', component: ProjectSpdxLicenseArgument },
+      ],
+      [
+        'DESCRIPTION',
+        { name: 'description', component: ProjectDescriptionArgument },
+      ],
+      [
+        'HOMEPAGE_URL',
+        { name: 'homepageUrl', component: ProjectHomepageUrlArgument },
+      ],
+      ['LANGUAGES', { name: 'languages', component: ProjectLanguagesArgument }],
+    ]),
+  };
 
   isEnabled(_action: ProjectModel): boolean {
     return true;

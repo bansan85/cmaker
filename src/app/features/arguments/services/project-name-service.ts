@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
+import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectNameService extends CMakeFeatureInterface<InputStringModel> {
+export class ProjectNameService extends CMakeArgumentInterface<InputStringModel> {
   readonly cmakeMinVersion = null;
   private dataToCMake = inject(DataToCMakeService);
 

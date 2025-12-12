@@ -1,0 +1,80 @@
+import { Injectable } from '@angular/core';
+import {
+  CMakeCommandTyped,
+  cmakeCommandTypedEqual,
+} from '../models/cmake-command-typed';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CMakeCommandMapping {
+  private readonly commandMapping = new Map<string, CMakeCommandTyped[]>();
+
+  append(
+    serializeCommandName: string,
+    serializeCommandParser: CMakeCommandTyped
+  ) {
+    const commandName = this.commandMapping.get(serializeCommandName);
+
+    if (commandName === undefined) {
+      this.commandMapping.set(serializeCommandName, [serializeCommandParser]);
+      return;
+    }
+
+    const foundSameCommandNameArgs =
+      commandName.findIndex(
+        (x) =>
+          serializeCommandParser.firstArgument === x.firstArgument &&
+          serializeCommandParser.component === x.component &&
+          cmakeCommandTypedEqual(serializeCommandParser.arguments, x.arguments)
+      ) !== -1;
+    if (foundSameCommandNameArgs) {
+      return;
+    }
+
+    const foundAlmostSameCommandNameArgs = commandName.filter(
+      (x) => serializeCommandParser.firstArgument === x.firstArgument
+    );
+    if (foundAlmostSameCommandNameArgs.length > 0) {
+      console.log(
+        `CMake Command Mapping is already done for ${serializeCommandName} / ${serializeCommandParser.firstArgument} but with differents args.`
+      );
+      return;
+    }
+
+    commandName.push(serializeCommandParser);
+  }
+
+  getCMakeCommand(
+    name: string,
+    firstArgument?: string
+  ): CMakeCommandTyped | undefined {
+    const commandsName = this.commandMapping.get(name);
+    if (commandsName === undefined) {
+      console.log(`Unknwon command ${name}.`);
+      return undefined;
+    }
+    if (
+      commandsName.length === 1 &&
+      commandsName[0].firstArgument === undefined
+    ) {
+      return commandsName[0];
+    }
+    const commandsNameArg = commandsName.filter(
+      (x) => x.firstArgument == firstArgument
+    );
+    if (commandsNameArg.length === 0) {
+      console.log(
+        `Failed to found ${name} / ${firstArgument} in CMakeCommandMapping`
+      );
+      return undefined;
+    }
+    if (commandsNameArg.length === 1) {
+      return commandsNameArg[0];
+    }
+    console.log(
+      `Too many possibilities for ${name} / ${firstArgument} in CMakeCommandMapping.`
+    );
+    return undefined;
+  }
+}

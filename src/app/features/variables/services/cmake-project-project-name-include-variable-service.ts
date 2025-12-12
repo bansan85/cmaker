@@ -1,16 +1,26 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputProjectNameFilesModel } from '../../../shared/models/arguments/input-project-name-files-model';
+import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
+import { CMakeProjectProjectNameIncludeVariable } from '../components/cmake-project-project-name-include-variable';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureInterface<InputProjectNameFilesModel> {
+export class CMakeProjectProjectNameIncludeVariableService extends CMakeCommandInterface<InputProjectNameFilesModel> {
   readonly cmakeMinVersion = null;
+
+  private readonly variable = 'CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE';
+
+  readonly serializeCommandName = 'set';
+  readonly serializeCommandParser: CMakeCommandTyped = {
+    firstArgument: this.variable,
+    component: CMakeProjectProjectNameIncludeVariable,
+  };
 
   private rustBackendService = inject(RustBackendService);
   private dataToCMake = inject(DataToCMakeService);
@@ -53,7 +63,9 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
     return {
       variables: [
         {
-          name: `CMAKE_PROJECT_${action.projectName}_INCLUDE`,
+          name: this.dataToCMake.stringToCMakeName(this.variable, {
+            project: action.projectName,
+          }),
           version: this.cmakeRequiredVersionImpl(action),
         },
       ],
@@ -67,8 +79,8 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeFeatureI
   }
 
   toCMakerTxt(action: InputProjectNameFilesModel): string {
-    return `set(CMAKE_PROJECT_${
-      action.projectName
-    }_INCLUDE "${action.value.join(';')}")\n`;
+    return `set(${this.dataToCMake.stringToCMakeName(this.variable, {
+      project: action.projectName,
+    })} "${action.value.join(';')}")\n`;
   }
 }

@@ -1,18 +1,26 @@
 import { inject, Injectable } from '@angular/core';
 import { Version } from '../../../shared/models/version';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputCheckboxModel } from '../../../shared/models/arguments/input-checkbox-model';
+import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
+import { CMakeMsvcRuntimeLibraryVariable } from '../components/cmake-msvc-runtime-library-variable';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeMsvcRuntimeLibraryVariableService extends CMakeFeatureInterface<InputCheckboxModel> {
-  private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
-  private readonly helpText = 'Build using CRT shared libraries';
-
+export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterface<InputCheckboxModel> {
   readonly cmakeMinVersion = new Version(3, 15);
+
+  private readonly variable = 'CMAKE_MSVC_RUNTIME_LIBRARY';
+
+  readonly serializeCommandName = 'cmaker_cmake_msvc_runtime_library';
+  readonly serializeCommandParser: CMakeCommandTyped = {
+    component: CMakeMsvcRuntimeLibraryVariable,
+  };
+
+  private readonly helpText = 'Build using CRT shared libraries';
 
   private dataToCMake = inject(DataToCMakeService);
 
@@ -62,7 +70,7 @@ endif()
   }
 
   toCMakerTxt(action: InputCheckboxModel): string {
-    return `cmaker_cmake_msvc_runtime_library(${this.dataToCMake.booleanToString(
+    return `${this.serializeCommandName}(${this.dataToCMake.booleanToString(
       action.value
     )})\n`;
   }

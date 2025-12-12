@@ -77,6 +77,7 @@ export default defineConfig(
       complexity: 'off',
       'max-depth': 'off',
       'max-lines': 'off',
+      'no-labels': 'off',
     },
   },
   {

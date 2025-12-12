@@ -153,7 +153,7 @@ export class TabProject implements AfterViewInit {
           .map((i) => {
             const item = this.items[i];
             if (item === null) {
-              return Promise.resolve('null');
+              return undefined;
             }
             return item.service.toCMakerTxt(item);
           })

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputLanguagesModel } from '../../../shared/models/arguments/input-languages-model';
+import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectLanguagesService extends CMakeFeatureInterface<InputLanguagesModel> {
+export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguagesModel> {
   readonly cmakeMinVersion = null;
 
   isEnabled(action: InputLanguagesModel): boolean {

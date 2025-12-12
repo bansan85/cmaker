@@ -1,17 +1,25 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { InputFilesModel } from '../../../shared/models/arguments/input-files-model';
+import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
+import { CMakeProjectIncludeBeforeVariable } from '../components/cmake-project-include-before-variable';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterface<InputFilesModel> {
+export class CMakeProjectIncludeBeforeVariableService extends CMakeCommandInterface<InputFilesModel> {
+  readonly cmakeMinVersion = new Version(3, 15);
+
   private readonly variable = 'CMAKE_PROJECT_INCLUDE_BEFORE';
 
-  readonly cmakeMinVersion = new Version(3, 15);
+  readonly serializeCommandName = 'set';
+  readonly serializeCommandParser: CMakeCommandTyped = {
+    firstArgument: this.variable,
+    component: CMakeProjectIncludeBeforeVariable,
+  };
 
   private rustBackendService = inject(RustBackendService);
 
@@ -60,6 +68,8 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeFeatureInterf
   }
 
   toCMakerTxt(action: InputFilesModel): string {
-    return `set(${this.variable} "${action.value.join(';')}")\n`;
+    return `${this.serializeCommandName}(${this.variable} "${action.value.join(
+      ';'
+    )}")\n`;
   }
 }

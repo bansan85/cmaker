@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
+import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectVersionService extends CMakeFeatureInterface<InputVersionModel> {
+export class ProjectVersionService extends CMakeArgumentInterface<InputVersionModel> {
   readonly cmakeMinVersion = null;
 
   isEnabled(action: InputVersionModel): boolean {

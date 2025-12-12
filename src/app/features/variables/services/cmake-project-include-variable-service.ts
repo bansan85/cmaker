@@ -1,17 +1,25 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputFilesModel } from '../../../shared/models/arguments/input-files-model';
+import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
+import { CMakeProjectIncludeVariable } from '../components/cmake-project-include-variable';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeProjectIncludeVariableService extends CMakeFeatureInterface<InputFilesModel> {
+export class CMakeProjectIncludeVariableService extends CMakeCommandInterface<InputFilesModel> {
+  readonly cmakeMinVersion = new Version(3, 15);
+
   private readonly variable = 'CMAKE_PROJECT_INCLUDE';
 
-  readonly cmakeMinVersion = new Version(3, 15);
+  readonly serializeCommandName = 'set';
+  readonly serializeCommandParser: CMakeCommandTyped = {
+    firstArgument: this.variable,
+    component: CMakeProjectIncludeVariable,
+  };
 
   private rustBackendService = inject(RustBackendService);
 
@@ -60,6 +68,8 @@ export class CMakeProjectIncludeVariableService extends CMakeFeatureInterface<In
   }
 
   toCMakerTxt(action: InputFilesModel): string {
-    return `set(${this.variable} "${action.value.join(';')}")\n`;
+    return `${this.serializeCommandName}(${this.variable} "${action.value.join(
+      ';'
+    )}")\n`;
   }
 }

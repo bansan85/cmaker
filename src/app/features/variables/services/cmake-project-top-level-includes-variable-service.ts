@@ -2,18 +2,26 @@ import { inject, Injectable } from '@angular/core';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { InputFilesModel } from '../../../shared/models/arguments/input-files-model';
+import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
+import { CMakeProjectTopLevelIncludesVariable } from '../components/cmake-project-top-level-includes-variable';
 
 @Injectable({
   providedIn: null,
 })
-export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInterface<InputFilesModel> {
+export class CMakeProjectTopLevelIncludesVariableService extends CMakeCommandInterface<InputFilesModel> {
   readonly cmakeMinVersion = new Version(3, 24);
 
   private readonly variable = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
 
-  private rustBackendService = inject(RustBackendService);
+  readonly serializeCommandName = 'set';
+  readonly serializeCommandParser: CMakeCommandTyped = {
+    firstArgument: this.variable,
+    component: CMakeProjectTopLevelIncludesVariable,
+  };
+
+  private readonly rustBackendService = inject(RustBackendService);
 
   isEnabled(action: InputFilesModel): boolean {
     return (
@@ -56,6 +64,8 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeFeatureInt
   }
 
   toCMakerTxt(action: InputFilesModel): string {
-    return `set(${this.variable} "${action.value.join(';')}")\n`;
+    return `${this.serializeCommandName}(${this.variable} "${action.value.join(
+      ';'
+    )}")\n`;
   }
 }

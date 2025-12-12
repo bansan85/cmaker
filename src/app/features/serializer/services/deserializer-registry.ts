@@ -5,40 +5,21 @@ import {
   inject,
   Injectable,
   Injector,
-  Type,
 } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { ProjectCommand } from '../../commands/components/project-command';
-import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
-import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
-import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
-import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
-import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
-import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
-import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
 import { Version } from '../../../shared/models/version';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
-import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeCommandParser } from './cmake-command-parser';
-import { CMakeCommand } from '../models/cmake-command';
-import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
-
-interface ArgumentParser {
-  name: string;
-  component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
-}
-
-interface CommandParser {
-  firstArgument?: string;
-  component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
-  arguments?: Map<string, ArgumentParser>;
-}
+import { CMakeCommandString } from '../models/cmake-command-string';
+import { CMakeCommandTyped } from '../models/cmake-command-typed';
+import { CMakeArgumentTyped } from '../models/cmake-argument-typed';
+import { CMakeCommandMapping } from './cmake-command-mapping';
 
 @Injectable({
   providedIn: 'root',
@@ -47,66 +28,12 @@ export class DeserializerRegistry {
   private envInjector = inject(EnvironmentInjector);
   private dataToCMakeService = inject(DataToCMakeService);
   private cmakeCommandParser = inject(CMakeCommandParser);
-
-  private readonly commandMapping = new Map<string, CommandParser[]>([
-    [
-      'project',
-      [
-        {
-          component: ProjectCommand,
-          arguments: new Map([
-            ['', { name: 'name', component: ProjectNameArgument }],
-            ['VERSION', { name: 'version', component: ProjectVersionArgument }],
-            [
-              'COMPAT_VERSION',
-              {
-                name: 'compatVersion',
-                component: ProjectCompatVersionArgument,
-              },
-            ],
-            [
-              'SPDX_LICENSE',
-              { name: 'spdxLicense', component: ProjectSpdxLicenseArgument },
-            ],
-            [
-              'DESCRIPTION',
-              { name: 'description', component: ProjectDescriptionArgument },
-            ],
-            [
-              'HOMEPAGE_URL',
-              { name: 'homepageUrl', component: ProjectHomepageUrlArgument },
-            ],
-            [
-              'LANGUAGES',
-              { name: 'languages', component: ProjectLanguagesArgument },
-            ],
-          ]),
-        },
-      ],
-    ],
-    [
-      'set',
-      [
-        {
-          firstArgument: 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES',
-          component: CMakeProjectTopLevelIncludesVariable,
-        },
-      ],
-    ],
-    [
-      'cmaker_cmake_msvc_runtime_library',
-      [
-        {
-          component: CMakeMsvcRuntimeLibraryVariable,
-        },
-      ],
-    ],
-  ]);
+  private cmakeCommandMapping = inject(CMakeCommandMapping);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private setArgument(
     component: any,
-    args: Map<string, ArgumentParser>,
+    args: Map<string, CMakeArgumentTyped>,
     field: string,
     value: string
   ) {
@@ -139,45 +66,13 @@ export class DeserializerRegistry {
     console.log(component);
   }
 
-  private getCommandParserFromName(
-    commandName: string,
-    firstArgument: string | undefined
-  ): CommandParser | undefined {
-    const commandMappingI = this.commandMapping.get(commandName);
-    if (commandMappingI === undefined) {
-      console.log(`Unknown command ${commandName}`);
-      return undefined;
-    }
-    if (
-      commandMappingI.length === 1 &&
-      commandMappingI[0].firstArgument === undefined
-    ) {
-      return commandMappingI[0];
-    } else if (firstArgument === undefined) {
-      console.log(`${commandName} should have a firstArgument`);
-      return undefined;
-    } else {
-      for (const commandI of commandMappingI) {
-        if (commandI.firstArgument === undefined) {
-          console.log(`${commandName} should have a firstArgument`);
-          continue;
-        }
-        if (commandI.firstArgument === firstArgument) {
-          return commandI;
-        }
-      }
-      console.log(`Unknown command ${commandName} / ${firstArgument}`);
-      return undefined;
-    }
-  }
-
   private cmakeCommandToComponent(
-    command: CMakeCommand,
+    command: CMakeCommandString,
     parentContextInjector: Injector
   ):
     | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
     | undefined {
-    const commandParser = this.getCommandParserFromName(
+    const commandParser = this.cmakeCommandMapping.getCMakeCommand(
       command.name,
       command.args[0]
     );

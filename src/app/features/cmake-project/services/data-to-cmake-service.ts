@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DataToCMakeOptions } from '../models/data-to-cmake-options';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +19,12 @@ export class DataToCMakeService {
 
   filesToArrayString(value: string): string[] {
     return value.split(',');
+  }
+
+  stringToCMakeName(name: string, options: DataToCMakeOptions): string {
+    if (options.project) {
+      name = name.replace('<PROJECT-NAME>', options.project);
+    }
+    return name;
   }
 }

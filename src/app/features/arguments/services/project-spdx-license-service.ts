@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
+import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectSpdxLicenseService extends CMakeFeatureInterface<InputStringModel> {
+export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputStringModel> {
   readonly cmakeMinVersion = new Version(4, 2);
 
   isEnabled(action: InputStringModel): boolean {

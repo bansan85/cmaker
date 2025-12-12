@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CMakeCommand } from '../models/cmake-command';
+import { CMakeCommandString } from '../models/cmake-command-string';
 
 const enum ParserStatus {
   SEEKING_START_OF_COMMAND_NAME,
@@ -112,7 +112,7 @@ export class CMakeCommandParser {
     return buffer.substring(0, pos);
   }
 
-  *parseStrCommands(lines: string[]): Generator<CMakeCommand> {
+  *parseStrCommands(lines: string[]): Generator<CMakeCommandString> {
     let buffer = '';
     let commandNameStart: number | null = null;
     let commandName: string | null = null;
@@ -122,7 +122,7 @@ export class CMakeCommandParser {
       buffer = this.removeComment(`${buffer}${line} `);
 
       // Parse all complete commands in buffer
-      buffer_loop: for (; pos < buffer.length; pos += 1) {
+      bufferLoop: for (; pos < buffer.length; pos += 1) {
         // Skip whitespace
         if (/\s/u.test(buffer[pos])) {
           continue;
@@ -136,7 +136,7 @@ export class CMakeCommandParser {
               );
               buffer = buffer.substring(0, pos);
               parserStatus = ParserStatus.SEEKING_START_OF_COMMAND_NAME;
-              break buffer_loop;
+              break bufferLoop;
             }
 
             commandNameStart = pos;
@@ -169,7 +169,7 @@ export class CMakeCommandParser {
               );
               buffer = buffer.substring(0, pos);
               parserStatus = ParserStatus.SEEKING_START_OF_COMMAND_NAME;
-              break buffer_loop;
+              break bufferLoop;
             }
             const argsStart = pos;
 
@@ -177,7 +177,7 @@ export class CMakeCommandParser {
 
             // Need next line to have all arguments.
             if (argsEnd === null) {
-              break buffer_loop;
+              break bufferLoop;
             }
 
             const argsStr = buffer.substring(argsStart + 1, argsEnd - 2);
