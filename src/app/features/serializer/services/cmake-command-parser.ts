@@ -131,7 +131,7 @@ export class CMakeCommandParser {
         switch (parserStatus) {
           case ParserStatus.SEEKING_START_OF_COMMAND_NAME: {
             if (!/\w/u.test(buffer[pos])) {
-              console.log(
+              console.warn(
                 `Invalid data ${buffer} at position ${pos}. Expected '0-9A-Za-z_'`
               );
               buffer = buffer.substring(0, pos);
@@ -164,7 +164,7 @@ export class CMakeCommandParser {
               throw new Error();
             }
             if (buffer[pos] !== '(') {
-              console.log(
+              console.warn(
                 `Invalid data ${buffer} at position ${pos}. Expected '('.`
               );
               buffer = buffer.substring(0, pos);

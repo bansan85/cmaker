@@ -6,6 +6,7 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 import { RustBackendService } from '../../services/rust-backend-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { unknownAssertError } from '../../interfaces/errors';
 
 @Directive({
   selector: '[appInputProjectNameFiles]',
@@ -34,7 +35,7 @@ export abstract class InputProjectNameFiles
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

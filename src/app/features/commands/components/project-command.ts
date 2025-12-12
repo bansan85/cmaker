@@ -30,6 +30,7 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { ProjectModel } from '../models/project.model';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
+import { unknownAssertError } from '../../../shared/interfaces/errors';
 
 @Component({
   selector: 'app-project-command',
@@ -122,7 +123,7 @@ export class ProjectCommand
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

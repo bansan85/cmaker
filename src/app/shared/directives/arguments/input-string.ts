@@ -3,6 +3,7 @@ import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interf
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { InputStringModel } from '../../models/arguments/input-string-model';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { unknownAssertError } from '../../interfaces/errors';
 
 @Directive({
   selector: '[appInputString]',
@@ -23,7 +24,7 @@ export abstract class InputString
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

@@ -4,6 +4,7 @@ import { InputVersionModel } from '../../models/arguments/input-version-model';
 import { Version } from '../../models/version';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { unknownAssertError } from '../../interfaces/errors';
 
 @Directive({
   selector: '[appInputVersion]',
@@ -26,7 +27,7 @@ export abstract class InputVersion
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

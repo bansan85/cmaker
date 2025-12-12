@@ -6,6 +6,7 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { RustBackendService } from '../../services/rust-backend-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { unknownAssertError } from '../../interfaces/errors';
 
 @Directive({
   selector: '[appInputFiles]',
@@ -29,7 +30,7 @@ export abstract class InputFiles
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

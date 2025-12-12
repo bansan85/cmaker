@@ -4,6 +4,7 @@ import { Version } from '../../models/version';
 import { InputLanguagesModel } from '../../models/arguments/input-languages-model';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { unknownAssertError } from '../../interfaces/errors';
 
 @Directive({
   selector: '[appInputLanguages]',
@@ -24,7 +25,7 @@ export abstract class InputLanguages
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

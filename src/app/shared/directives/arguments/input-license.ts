@@ -3,6 +3,7 @@ import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interf
 import { InputLicenseModel } from '../../models/arguments/input-license-model';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { unknownAssertError } from '../../interfaces/errors';
 
 @Directive({
   selector: '[appInputLicense]',
@@ -25,7 +26,7 @@ export abstract class InputLicense
           this.isValid.set(result);
         })
         .catch((err: unknown) => {
-          console.error(err);
+          throw unknownAssertError(err);
         });
     });
   }

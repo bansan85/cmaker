@@ -17,9 +17,9 @@ import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeCommandParser } from './cmake-command-parser';
 import { CMakeCommandString } from '../models/cmake-command-string';
-import { CMakeCommandTyped } from '../models/cmake-command-typed';
 import { CMakeArgumentTyped } from '../models/cmake-argument-typed';
 import { CMakeCommandMapping } from './cmake-command-mapping';
+import { assertError } from '../../../shared/interfaces/errors';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +30,8 @@ export class DeserializerRegistry {
   private cmakeCommandParser = inject(CMakeCommandParser);
   private cmakeCommandMapping = inject(CMakeCommandMapping);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private setArgument(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: any,
     args: Map<string, CMakeArgumentTyped>,
     field: string,
@@ -62,8 +62,7 @@ export class DeserializerRegistry {
       }
     }
 
-    console.log(`Failed to set field ${field} with setArgument ${value}`);
-    console.log(component);
+    throw assertError(`Failed to set field ${field} with setArgument ${value}`);
   }
 
   private cmakeCommandToComponent(
@@ -77,16 +76,16 @@ export class DeserializerRegistry {
       command.args[0]
     );
     if (commandParser === undefined) {
-      console.log(`Unknown command ${command.name}`);
+      console.warn(`Unknown command ${command.name}`);
       return undefined;
     }
 
-    let commandComponent = createComponent(commandParser.component, {
+    const commandComponent = createComponent(commandParser.component, {
       environmentInjector: this.envInjector,
       elementInjector: parentContextInjector,
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let anyComponent: any = commandComponent.instance;
+    const anyComponent: any = commandComponent.instance;
 
     commandComponent.changeDetectorRef.detectChanges();
 

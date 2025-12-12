@@ -3,6 +3,7 @@ import {
   CMakeCommandTyped,
   cmakeCommandTypedEqual,
 } from '../models/cmake-command-typed';
+import { assertError } from '../../../shared/interfaces/errors';
 
 @Injectable({
   providedIn: 'root',
@@ -36,10 +37,9 @@ export class CMakeCommandMapping {
       (x) => serializeCommandParser.firstArgument === x.firstArgument
     );
     if (foundAlmostSameCommandNameArgs.length > 0) {
-      console.log(
+      throw assertError(
         `CMake Command Mapping is already done for ${serializeCommandName} / ${serializeCommandParser.firstArgument} but with differents args.`
       );
-      return;
     }
 
     commandName.push(serializeCommandParser);
@@ -51,7 +51,7 @@ export class CMakeCommandMapping {
   ): CMakeCommandTyped | undefined {
     const commandsName = this.commandMapping.get(name);
     if (commandsName === undefined) {
-      console.log(`Unknwon command ${name}.`);
+      console.warn(`Unknwon command ${name}.`);
       return undefined;
     }
     if (
@@ -64,7 +64,7 @@ export class CMakeCommandMapping {
       (x) => x.firstArgument == firstArgument
     );
     if (commandsNameArg.length === 0) {
-      console.log(
+      console.warn(
         `Failed to found ${name} / ${firstArgument} in CMakeCommandMapping`
       );
       return undefined;
@@ -72,9 +72,8 @@ export class CMakeCommandMapping {
     if (commandsNameArg.length === 1) {
       return commandsNameArg[0];
     }
-    console.log(
+    throw assertError(
       `Too many possibilities for ${name} / ${firstArgument} in CMakeCommandMapping.`
     );
-    return undefined;
   }
 }
