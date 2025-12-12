@@ -61,7 +61,7 @@ export class CMakeCommandMapping {
       return commandsName[0];
     }
     const commandsNameArg = commandsName.filter(
-      (x) => x.firstArgument == firstArgument
+      (x) => x.firstArgument === firstArgument
     );
     if (commandsNameArg.length === 0) {
       console.warn(

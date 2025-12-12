@@ -5,6 +5,4 @@ import { CMakeCommandInterface } from '../../commands/services/cmake-command-int
 @Injectable({
   providedIn: 'root',
 })
-export abstract class FullProjectService extends CMakeCommandInterface<FullProjectView> {
-  // todo
-}
+export abstract class FullProjectService extends CMakeCommandInterface<FullProjectView> {}

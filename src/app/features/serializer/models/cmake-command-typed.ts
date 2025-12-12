@@ -13,9 +13,15 @@ export function cmakeCommandTypedEqual(
   a?: Map<string, CMakeArgumentTyped>,
   b?: Map<string, CMakeArgumentTyped>
 ): boolean {
-  if (a === b) return true;
-  if (!a || !b) return false;
-  if (a.size !== b.size) return false;
+  if (a === b) {
+    return true;
+  }
+  if (!a || !b) {
+    return false;
+  }
+  if (a.size !== b.size) {
+    return false;
+  }
 
   for (const [key, valueA] of a) {
     const valueB = b.get(key);

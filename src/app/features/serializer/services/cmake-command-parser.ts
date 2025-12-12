@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CMakeCommandString } from '../models/cmake-command-string';
+import { assertError } from '../../../shared/interfaces/errors';
 
 const enum ParserStatus {
   SEEKING_START_OF_COMMAND_NAME,
@@ -192,6 +193,9 @@ export class CMakeCommandParser {
             parserStatus = ParserStatus.SEEKING_START_OF_COMMAND_NAME;
 
             break;
+          }
+          default: {
+            throw assertError(`Switch wrong value ${parserStatus}.`);
           }
         }
       }
