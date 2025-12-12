@@ -35,6 +35,10 @@ export class ProjectLanguagesService extends CMakeFeatureInterface<InputLanguage
   }
 
   protected toCMakeListTxtImpl(action: InputLanguagesModel): Promise<string> {
-    return Promise.resolve(`LANGUAGES ${action.value}\n`);
+    return Promise.resolve(this.toCMakerTxt(action));
+  }
+
+  toCMakerTxt(action: InputLanguagesModel): string {
+    return `LANGUAGES ${action.value}\n`;
   }
 }

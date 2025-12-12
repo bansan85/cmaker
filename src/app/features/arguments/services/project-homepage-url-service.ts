@@ -49,6 +49,10 @@ export class ProjectHomepageUrlService extends CMakeFeatureInterface<InputString
   }
 
   protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
-    return Promise.resolve(`HOMEPAGE_URL "${action.value}"\n`);
+    return Promise.resolve(this.toCMakerTxt(action));
+  }
+
+  toCMakerTxt(action: InputStringModel): string {
+    return `HOMEPAGE_URL "${action.value}"\n`;
   }
 }

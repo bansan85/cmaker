@@ -50,6 +50,10 @@ export class ProjectCompatVersionService extends CMakeFeatureInterface<InputVers
   }
 
   protected toCMakeListTxtImpl(action: InputVersionModel): Promise<string> {
-    return Promise.resolve(`COMPAT_VERSION ${action.value?.toString()}\n`);
+    return Promise.resolve(this.toCMakerTxt(action));
+  }
+
+  toCMakerTxt(action: InputVersionModel): string {
+    return `COMPAT_VERSION ${action.value?.toString()}\n`;
   }
 }

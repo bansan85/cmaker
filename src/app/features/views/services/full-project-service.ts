@@ -24,4 +24,7 @@ export class FullProjectService extends CMakeFeatureInterface<FullProjectView> {
   protected toCMakeListTxtImpl(_action: FullProjectView): Promise<string> {
     throw new Error('Method not implemented.');
   }
+  toCMakerTxt(_action: FullProjectView): string {
+    throw new Error('Method not implemented.');
+  }
 }

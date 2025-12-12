@@ -46,6 +46,8 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   protected abstract toCMakeListTxtImpl(action: Feature): Promise<string>;
 
+  abstract toCMakerTxt(action: Feature): string;
+
   isEffectiveVersionValid(action: Feature): boolean {
     return !this.versionService.isGreater(
       this.cmakeRequiredVersionImpl(action),

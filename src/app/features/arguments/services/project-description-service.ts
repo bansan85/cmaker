@@ -50,6 +50,10 @@ export class ProjectDescriptionService extends CMakeFeatureInterface<InputString
   }
 
   protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
-    return Promise.resolve(`DESCRIPTION "${action.value}"\n`);
+    return Promise.resolve(this.toCMakerTxt(action));
+  }
+
+  toCMakerTxt(action: InputStringModel): string {
+    return `DESCRIPTION "${action.value}"\n`;
   }
 }

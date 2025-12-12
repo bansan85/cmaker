@@ -60,4 +60,10 @@ if(NOT ${this.variable})
 endif()
 `);
   }
+
+  toCMakerTxt(action: InputCheckboxModel): string {
+    return `cmaker_cmake_msvc_runtime_library(${this.dataToCMake.booleanToString(
+      action.value
+    )})\n`;
+  }
 }

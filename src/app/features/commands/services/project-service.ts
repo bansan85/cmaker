@@ -154,4 +154,20 @@ export class ProjectService extends CMakeFeatureInterface<ProjectModel> {
       })`
     );
   }
+
+  toCMakerTxt(action: ProjectModel): string {
+    return `project(\n${this.name.toCMakerTxt(action.name)}${
+      action.version ? this.version.toCMakerTxt(action.version) : ''
+    }${
+      action.compatVersion
+        ? this.compatVersion.toCMakerTxt(action.compatVersion)
+        : ''
+    }${
+      action.spdxLicense ? this.spdxLicense.toCMakerTxt(action.spdxLicense) : ''
+    }${
+      action.description ? this.description.toCMakerTxt(action.description) : ''
+    }${
+      action.homepageUrl ? this.homepageUrl.toCMakerTxt(action.homepageUrl) : ''
+    }${action.languages ? this.languages.toCMakerTxt(action.languages) : ''})`;
+  }
 }

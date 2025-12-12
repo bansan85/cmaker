@@ -27,6 +27,7 @@ import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeCommandParser } from './cmake-command-parser';
 import { CMakeCommand } from '../models/cmake-command';
+import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
 
 interface ArgumentParser {
   name: string;
@@ -89,6 +90,14 @@ export class DeserializerRegistry {
         {
           firstArgument: 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES',
           component: CMakeProjectTopLevelIncludesVariable,
+        },
+      ],
+    ],
+    [
+      'cmaker_cmake_msvc_runtime_library',
+      [
+        {
+          component: CMakeMsvcRuntimeLibraryVariable,
         },
       ],
     ],

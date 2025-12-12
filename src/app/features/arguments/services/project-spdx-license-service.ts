@@ -50,6 +50,10 @@ export class ProjectSpdxLicenseService extends CMakeFeatureInterface<InputString
   }
 
   protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
-    return Promise.resolve(`SPDX_LICENSE "${action.value}"\n`);
+    return Promise.resolve(this.toCMakerTxt(action));
+  }
+
+  toCMakerTxt(action: InputStringModel): string {
+    return `SPDX_LICENSE "${action.value}"\n`;
   }
 }

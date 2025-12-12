@@ -111,7 +111,7 @@ export class TabProject implements AfterViewInit {
     ]);
   }
 
-  async saveToFile() {
+  async saveToCMakeListsTxt() {
     const absolutePath = await save({
       filters: [
         { name: 'CMake files', extensions: ['txt'] },
@@ -133,6 +133,32 @@ export class TabProject implements AfterViewInit {
             })
           )
         ).join('\n')
+      );
+    }
+  }
+
+  async saveToCMaker() {
+    const absolutePath = await save({
+      filters: [
+        { name: 'CMake files', extensions: ['txt'] },
+        { name: 'All files', extensions: ['*'] },
+      ],
+    });
+
+    if (absolutePath !== null) {
+      await this.rustBackendService.saveToFile(
+        absolutePath,
+
+        this.itemsOrder
+          .map((i) => {
+            const item = this.items[i];
+            if (item === null) {
+              return Promise.resolve('null');
+            }
+            return item.service.toCMakerTxt(item);
+          })
+          .filter((i) => i !== undefined)
+          .join('\n')
       );
     }
   }

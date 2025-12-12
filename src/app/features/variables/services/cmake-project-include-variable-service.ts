@@ -56,8 +56,10 @@ export class CMakeProjectIncludeVariableService extends CMakeFeatureInterface<In
   }
 
   protected toCMakeListTxtImpl(action: InputFilesModel): Promise<string> {
-    return Promise.resolve(
-      `set(${this.variable} "${action.value.join(';')}")\n`
-    );
+    return Promise.resolve(this.toCMakerTxt(action));
+  }
+
+  toCMakerTxt(action: InputFilesModel): string {
+    return `set(${this.variable} "${action.value.join(';')}")\n`;
   }
 }
