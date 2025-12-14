@@ -181,7 +181,7 @@ export class CMakeCommandParser {
               break bufferLoop;
             }
 
-            const argsStr = buffer.substring(argsStart + 1, argsEnd - 2);
+            const argsStr = buffer.substring(argsStart + 1, argsEnd - 1);
             const args = this.splitArguments(argsStr);
             yield { name: commandName, args };
 

@@ -60,9 +60,18 @@ export class CMakeCommandMapping {
     ) {
       return commandsName[0];
     }
-    const commandsNameArg = commandsName.filter(
-      (x) => x.firstArgument === firstArgument
-    );
+    const commandsNameArg = commandsName.filter((x) => {
+      if (x.firstArgument === undefined && firstArgument === undefined) {
+        return true;
+      }
+      if (x.firstArgument === undefined || firstArgument === undefined) {
+        return false;
+      }
+      const pattern = x.firstArgument.replace(/<.*>/u, '(.*)');
+      const regex = new RegExp(`^${pattern}$`, 'u');
+      const match = firstArgument.match(regex);
+      return match !== null;
+    });
     if (commandsNameArg.length === 0) {
       console.warn(
         `Failed to found ${name} / ${firstArgument} in CMakeCommandMapping`

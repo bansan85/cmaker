@@ -13,6 +13,17 @@ export class DataToCMakeService {
     }
   }
 
+  stringToBoolean(value: string): boolean {
+    if (value === 'ON') {
+      return true;
+    } else if (value === 'OFF') {
+      return false;
+    } else {
+      console.warn(`${value} is not boolean.`);
+      return false;
+    }
+  }
+
   isValidTargetName(name: string): boolean {
     return /^[A-Za-z0-9_.+-]+$/u.test(name);
   }

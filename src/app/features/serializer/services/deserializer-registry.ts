@@ -20,6 +20,9 @@ import { CMakeCommandString } from '../models/cmake-command-string';
 import { CMakeArgumentTyped } from '../models/cmake-argument-typed';
 import { CMakeCommandMapping } from './cmake-command-mapping';
 import { assertError } from '../../../shared/interfaces/errors';
+import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
+import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
+import { StringService } from '../../../shared/services/string-service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,18 +32,21 @@ export class DeserializerRegistry {
   private dataToCMakeService = inject(DataToCMakeService);
   private cmakeCommandParser = inject(CMakeCommandParser);
   private cmakeCommandMapping = inject(CMakeCommandMapping);
+  private stringService = inject(StringService);
 
   private setArgument(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: any,
-    args: Map<string, CMakeArgumentTyped>,
+    args: Map<string, CMakeArgumentTyped> | undefined,
     field: string,
     value: string
   ) {
-    const argumentField = args.get(field);
+    const argumentField = args?.get(field);
     const argumentFieldName =
       argumentField === undefined ? '' : argumentField.name;
-    for (const comp of [component, component[argumentFieldName]]) {
+    for (const comp of [component, component[argumentFieldName]].filter(
+      (x) => x !== undefined
+    )) {
       if ('enabled' in comp) {
         comp.enabled = true;
       }
@@ -59,10 +65,57 @@ export class DeserializerRegistry {
       } else if (comp instanceof InputFiles) {
         comp.value = this.dataToCMakeService.filesToArrayString(value);
         return;
+      } else if (comp instanceof InputCheckbox) {
+        comp.value = this.dataToCMakeService.stringToBoolean(value);
+        return;
+      } else if (comp instanceof InputProjectNameFiles) {
+        comp.value = this.dataToCMakeService.filesToArrayString(value);
+        return;
       }
     }
 
-    throw assertError(`Failed to set field ${field} with setArgument ${value}`);
+    throw assertError(
+      `Failed to set field "${field}" with setArgument ${value}.\nComponent: ${JSON.stringify(
+        component
+      )}`
+    );
+  }
+
+  private setArgumentFromFirstArgumentName(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    anyComponent: any,
+    firstArgumentField: string | undefined,
+    firstArgumentValue: string | undefined
+  ) {
+    if (
+      firstArgumentField === undefined ||
+      firstArgumentValue === undefined ||
+      !firstArgumentField.includes('<')
+    ) {
+      return;
+    }
+
+    const pattern = firstArgumentField.replace(/<.*>/u, '(.*)');
+    const regex = new RegExp(`^${pattern}$`, 'u');
+    const matchField = firstArgumentField.match(regex)?.at(1);
+    const matchValue = firstArgumentValue.match(regex)?.at(1);
+    if (matchField === undefined || matchValue === undefined) {
+      return;
+    }
+
+    const camelCaseField = this.stringService
+      .upperToCamelCase(matchField)
+      .substring(1, matchField.length - 2);
+
+    if (camelCaseField in anyComponent) {
+      anyComponent[camelCaseField] = matchValue;
+    } else {
+      console.warn(
+        `Failed to set ${matchValue} in ${camelCaseField} in component ${JSON.stringify(
+          anyComponent
+        )}.`
+      );
+    }
   }
 
   private cmakeCommandToComponent(
@@ -88,6 +141,12 @@ export class DeserializerRegistry {
     const anyComponent: any = commandComponent.instance;
 
     commandComponent.changeDetectorRef.detectChanges();
+
+    this.setArgumentFromFirstArgumentName(
+      anyComponent,
+      commandParser.firstArgument,
+      command.args[0]
+    );
 
     if (commandParser.arguments !== undefined) {
       for (const [_, value] of commandParser.arguments) {
@@ -128,21 +187,15 @@ export class DeserializerRegistry {
       }
     }
 
-    if (commandParser.arguments === undefined) {
-      return commandComponent;
+    if (currentArgumentValue !== '') {
+      // Argument value
+      this.setArgument(
+        anyComponent,
+        commandParser.arguments,
+        currentArgumentName,
+        currentArgumentValue
+      );
     }
-    const argumentParser = commandParser.arguments.get(currentArgumentName);
-    if (argumentParser === undefined) {
-      return commandComponent;
-    }
-
-    // Argument value
-    this.setArgument(
-      anyComponent,
-      commandParser.arguments,
-      currentArgumentName,
-      currentArgumentValue
-    );
 
     return commandComponent;
   }
