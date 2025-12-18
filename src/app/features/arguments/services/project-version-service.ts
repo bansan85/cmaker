@@ -94,7 +94,14 @@ export class ProjectVersionService extends CMakeArgumentInterface<InputVersionMo
           version: new Version(3, 12),
         },
       ],
-      policies: new Map<number, boolean>([[48, true]]),
+      policies: [
+        {
+          name: 'CMP0048',
+          warnIfUnset: true,
+          startVersion: new Version(3, 0),
+          endVersion: new Version(4, 0),
+        },
+      ],
     };
   }
 
