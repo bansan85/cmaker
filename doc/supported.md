@@ -4,8 +4,6 @@
 
 Following lists are based on v4.2.0-rc3.
 
-`Supported` means `Added based on doc CMake vX.Y`.
-
 ## cmake-commands
 
 https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html
@@ -69,7 +67,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html
 
 ### Project Commands
 
-| Command | Supported | Remarks |
+| Command | Up to date with doc v | Remarks |
 | - | - | - |
 | add_compile_definitions | - | |
 | add_compile_options | - | |
@@ -101,7 +99,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html
 | install | - | |
 | link_directories | - | |
 | link_libraries | - | |
-| project | 4.2 | |
+| project | v4.2 | |
 | remove_definitions | - | |
 | set_source_files_properties | - | |
 | set_target_properties | - | |
@@ -879,7 +877,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-policies.7.html
 | - | - | - |
 | CMP0050 | - | |
 | CMP0049 | - | |
-| CMP0048 | 4.2 | New if `project([VERSION])` is set. |
+| CMP0048 | Set by `project(VERSION ...)`. | |
 | CMP0047 | - | |
 | CMP0046 | - | |
 | CMP0045 | - | |
@@ -1597,9 +1595,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 
 ### Provide Information
 
-| Command | Supported | Remarks |
-| - | - | - |
-| Variable | Supported | Depend on |
+| Variable | Up to date with doc v | Set with |
 | - | - |
 | CMAKE_AR | - | |
 | CMAKE_ARGC | - | |
@@ -1697,7 +1693,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 | CMAKE_PROJECT_DESCRIPTION | 4.2 | `project([DESCRIPTION])` |
 | CMAKE_PROJECT_HOMEPAGE_URL | 4.2 | `project([HOMEPAGE_URL])` |
 | CMAKE_PROJECT_NAME | 4.2 | `project(<PROJECT-NAME>)` |
-| CMAKE_PROJECT_SPDX_LICENSE | 4.2 | `project(<SPDX_LICENSE>)` |
+| CMAKE_PROJECT_SPDX_LICENSE | 4.2 | `project([SPDX_LICENSE])` |
 | CMAKE_PROJECT_VERSION | 4.2 | `project([VERSION])` |
 | CMAKE_PROJECT_VERSION_MAJOR | 4.2 | `project([VERSION])` |
 | CMAKE_PROJECT_VERSION_MINOR | 4.2 | `project([VERSION])` |
@@ -1755,7 +1751,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 | <PROJECT-NAME>_HOMEPAGE_URL | 4.2 | `project([HOMEPAGE_URL])` |
 | <PROJECT-NAME>_IS_TOP_LEVEL | 4.2 | `project` |
 | <PROJECT-NAME>_SOURCE_DIR | 4.2 | `project` |
-| <PROJECT-NAME>_SPDX_LICENSE | 4.2 | `project(<SPDX_LICENSE>)` |
+| <PROJECT-NAME>_SPDX_LICENSE | 4.2 | `project([SPDX_LICENSE])` |
 | <PROJECT-NAME>_VERSION | 4.2 | `project([VERSION])` |
 | <PROJECT-NAME>_VERSION_MAJOR | 4.2 | `project([VERSION])` |
 | <PROJECT-NAME>_VERSION_MINOR | 4.2 | `project([VERSION])` |
@@ -1768,7 +1764,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 | PROJECT_IS_TOP_LEVEL | 4.2 | `project` |
 | PROJECT_NAME | 4.2 | `project(<PROJECT-NAME>)` |
 | PROJECT_SOURCE_DIR | 4.2 | `project` |
-| PROJECT_SPDX_LICENSE | 4.2 | `project(<SPDX_LICENSE>)` |
+| PROJECT_SPDX_LICENSE | 4.2 | `project([SPDX_LICENSE])` |
 | PROJECT_VERSION | 4.2 | `project([VERSION])` |
 | PROJECT_VERSION_MAJOR | 4.2 | `project([VERSION])` |
 | PROJECT_VERSION_MINOR | 4.2 | `project([VERSION])` |
@@ -1777,7 +1773,7 @@ https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 
 ### Change Behavior
 
-| Command | Supported | Remarks |
+| Command | Up to date with doc v | Remarks |
 | - | - | - |
 | BUILD_SHARED_LIBS | - | |
 | BUILD_TESTING | - | |

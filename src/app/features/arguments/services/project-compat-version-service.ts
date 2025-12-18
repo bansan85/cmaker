@@ -42,7 +42,7 @@ export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVer
           version: this.cmakeMinVersion,
         },
         {
-          name: 'CMAKE_COMPAT_VERSION',
+          name: 'CMAKE_PROJECT_COMPAT_VERSION',
           version: this.cmakeMinVersion,
         },
       ],
