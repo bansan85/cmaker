@@ -4,13 +4,19 @@ import { TabOptions } from './tab-options';
 import { ProjectContextService } from '../services/project-context-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
-import { RouterTestingHarness } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
 
   get maxCMakeVersionInput() {
-    return this.fixture.debugElement.queryAll;
+    return this.fixture.debugElement.query(
+      By.css('input[name="max-cmake-version"]')
+    );
+  }
+
+  get rootPathInput() {
+    return this.fixture.debugElement.query(By.css('input[name="root-path"]'));
   }
 }
 
@@ -34,10 +40,22 @@ describe('TabOptions', () => {
     fixture = TestBed.createComponent(TabOptions);
     component = fixture.componentInstance;
     page = new Page(fixture);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should change :invalid when invalid input', async () => {
+    await fixture.whenStable();
+
+    const maxCMakeVersionInput = page.maxCMakeVersionInput
+      .nativeElement as HTMLInputElement;
+    expect(maxCMakeVersionInput.value).toEqual('4.3');
+    expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
+
+    maxCMakeVersionInput.value = '4.rez';
+    await fixture.whenStable();
+    expect(maxCMakeVersionInput.matches(':invalid')).toBeTrue();
   });
 });
