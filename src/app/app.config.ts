@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   importProvidersFrom,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { LucideAngularModule, Menu, ChevronDown } from 'lucide-angular';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     { provide: DEFAULT_MAX_VERSION, useValue: new Version(4, 3) },
     importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
