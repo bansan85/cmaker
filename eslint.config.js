@@ -87,6 +87,7 @@ export default defineConfig(
       'max-depth': 'off',
       'max-lines': 'off',
       'no-labels': 'off',
+      'func-names': 'off',
     },
   },
   {

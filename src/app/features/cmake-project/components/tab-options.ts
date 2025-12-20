@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ProjectContextService } from '../services/project-context-service';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormsModule } from '@angular/forms';
 import { Version } from '../../../shared/models/version';
 import { open } from '@tauri-apps/plugin-dialog';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
+import { RustBackendService } from '../../../shared/services/rust-backend-service';
 
 @Component({
   selector: 'app-tab-options',
-  imports: [FormsModule],
+  imports: [FormsModule, AsyncInvalidValidator],
   templateUrl: './tab-options.html',
   styleUrl: './tab-options.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,7 +17,8 @@ export class TabOptions {
   protected readonly tabOptionsMaxCMakeVersionId = `max-cmake-version-${crypto.randomUUID()}`;
   protected readonly tabOptionsRootPathId = `root-path-${crypto.randomUUID()}`;
 
-  protected readonly projectContext = inject(ProjectContextService);
+  readonly projectContext = inject(ProjectContextService);
+  private readonly rustBackendService = inject(RustBackendService);
 
   get versionString(): string {
     return this.projectContext.version.toString();
@@ -37,4 +40,9 @@ export class TabOptions {
       this.projectContext.rootPath = rootPath;
     }
   }
+
+  protected checkPath = async (
+    control: AbstractControl<string>
+  ): Promise<boolean> =>
+    this.rustBackendService.pathExists(control.value, true);
 }

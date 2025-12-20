@@ -11,12 +11,16 @@
 </div>
 <div class="field">
   <label [for]="tabOptionsRootPathId"
-    >Root path: <button type="button" (click)="selectPath()">...</button></label
+    >Root path:
+    <button name="root-path-button" type="button" (click)="selectPath()">
+      ...
+    </button></label
   >
   <span>
     <input
       name="root-path"
       type="text"
+      [appAsyncInvalidValidator]="checkPath"
       [id]="tabOptionsRootPathId"
       [(ngModel)]="projectContext.rootPath"
     />

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 
@@ -7,5 +7,12 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 })
 export class ProjectContextService {
   version: Version = inject(DEFAULT_MAX_VERSION);
-  rootPath = '';
+
+  protected readonly rootPathSignal = signal('');
+  get rootPath(): string {
+    return this.rootPathSignal();
+  }
+  set rootPath(val: string) {
+    this.rootPathSignal.set(val);
+  }
 }
