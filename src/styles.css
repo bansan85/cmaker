@@ -1,31 +1,32 @@
 .field:hover {
-    background-color: #eee;
+  background-color: #eee;
 }
 
 .field label {
-    display: block;
+  display: block;
 }
 
-.field input:invalid {
-    color: red;
+.field input:invalid,
+.field input.ng-invalid {
+  color: red;
 }
 
 .version {
-    background-color: mediumseagreen;
-    border-radius: 0.25em;
-    padding-left: 0.25em;
-    padding-right: 0.25em;
-    display: inline-block;
-    font-size: initial;
-    font-weight: initial;
+  background-color: mediumseagreen;
+  border-radius: 0.25em;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  display: inline-block;
+  font-size: initial;
+  font-weight: initial;
 }
 
 .invalid {
-    background-color: red;
-    border-radius: 0.25em;
-    padding-left: 0.25em;
-    padding-right: 0.25em;
-    display: inline-block;
-    font-size: initial;
-    font-weight: initial;
+  background-color: red;
+  border-radius: 0.25em;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  display: inline-block;
+  font-size: initial;
+  font-weight: initial;
 }
