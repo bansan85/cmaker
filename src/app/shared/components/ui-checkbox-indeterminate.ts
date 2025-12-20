@@ -1,10 +1,11 @@
-import { Component, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-ui-checkbox-indeterminate',
   imports: [],
   templateUrl: './ui-checkbox-indeterminate.html',
   styleUrl: './ui-checkbox-indeterminate.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiCheckboxIndeterminate {
   protected value: boolean | null = null;

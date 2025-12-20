@@ -1,4 +1,11 @@
-import { Component, ElementRef, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -6,6 +13,7 @@ import { LucideAngularModule } from 'lucide-angular';
   imports: [LucideAngularModule],
   templateUrl: './checkboxes-list.html',
   styleUrl: './checkboxes-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:click)': 'onClickOutside($event)',
   },

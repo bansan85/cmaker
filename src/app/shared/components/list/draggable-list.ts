@@ -1,9 +1,16 @@
-import { Component, contentChildren, effect, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  contentChildren,
+  effect,
+  output,
+} from '@angular/core';
 import { DraggableItemComponent } from './draggable-item';
 
 @Component({
   selector: 'app-draggable-list',
   templateUrl: './draggable-list.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DraggableListComponent {
   private readonly items = contentChildren(DraggableItemComponent);

@@ -1,4 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { VersionService } from '../../services/version-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
@@ -9,6 +14,7 @@ import { CheckboxesList } from './checkboxes-list';
   imports: [],
   templateUrl: './checkboxes-item.html',
   styleUrl: './checkboxes-item.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckboxesItem {
   readonly element = input.required<CheckboxesItemInterface>();

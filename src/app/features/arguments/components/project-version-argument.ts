@@ -1,4 +1,9 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+} from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectVersionService } from '../services/project-version-service';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +23,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => ProjectVersionArgument),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectVersionArgument
   extends InputVersion

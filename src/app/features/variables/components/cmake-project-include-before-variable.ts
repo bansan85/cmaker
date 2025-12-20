@@ -1,4 +1,9 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+} from '@angular/core';
 import { CMakeProjectIncludeBeforeVariableService } from '../services/cmake-project-include-before-variable-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +24,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => CMakeProjectIncludeBeforeVariable),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CMakeProjectIncludeBeforeVariable
   extends InputFiles

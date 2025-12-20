@@ -1,4 +1,10 @@
-import { Component, forwardRef, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-runtime-library-variable-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
@@ -19,6 +25,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => CMakeMsvcRuntimeLibraryVariable),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CMakeMsvcRuntimeLibraryVariable
   extends InputCheckbox

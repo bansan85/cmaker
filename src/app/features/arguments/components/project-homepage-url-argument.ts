@@ -1,4 +1,9 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+} from '@angular/core';
 import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +23,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => ProjectHomepageUrlArgument),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectHomepageUrlArgument
   extends InputString

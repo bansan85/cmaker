@@ -1,4 +1,10 @@
-import { Component, contentChild, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  contentChild,
+  input,
+  output,
+} from '@angular/core';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { CMakeComponentInterface } from '../../../features/cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
@@ -6,6 +12,7 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 @Component({
   selector: 'app-draggable-item',
   templateUrl: './draggable-item.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DraggableItemComponent {
   readonly title =

@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, Component, contentChildren } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  contentChildren,
+} from '@angular/core';
 import { TabItem } from './tab-item';
 
 @Component({
@@ -7,6 +12,7 @@ import { TabItem } from './tab-item';
   imports: [CommonModule],
   templateUrl: './tabs.html',
   styleUrl: './tabs.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Tabs implements AfterContentInit {
   protected readonly tabs = contentChildren(TabItem);

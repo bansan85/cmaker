@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   effect,
   forwardRef,
@@ -64,6 +65,7 @@ import { unknownAssertError } from '../../../shared/interfaces/errors';
       useExisting: forwardRef(() => ProjectCommand),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectCommand
   implements

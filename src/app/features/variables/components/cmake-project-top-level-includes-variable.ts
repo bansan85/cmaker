@@ -1,4 +1,9 @@
-import { Component, forwardRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CMakeProjectTopLevelIncludesVariableService } from '../services/cmake-project-top-level-includes-variable-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
@@ -19,6 +24,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => CMakeProjectTopLevelIncludesVariable),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CMakeProjectTopLevelIncludesVariable
   extends InputFiles

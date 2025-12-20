@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FullProjectService } from '../services/full-project-service';
 
@@ -7,6 +7,7 @@ import { FullProjectService } from '../services/full-project-service';
   imports: [],
   templateUrl: './full-project-view.html',
   styleUrl: './full-project-view.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FullProjectView
   implements CMakeComponentInterface<FullProjectService>

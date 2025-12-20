@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Tabs } from '../../tab/components/tabs';
 import { TabItem } from '../../tab/components/tab-item';
 import { ProjectContextService } from '../services/project-context-service';
@@ -12,5 +12,6 @@ import { TabOptions } from './tab-options';
   templateUrl: './cmake-project.html',
   styleUrl: './cmake-project.css',
   providers: [ProjectContextService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CMakeProject {}

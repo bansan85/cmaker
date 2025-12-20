@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ProjectContextService } from '../services/project-context-service';
 import { FormsModule } from '@angular/forms';
 import { Version } from '../../../shared/models/version';
@@ -9,6 +9,7 @@ import { open } from '@tauri-apps/plugin-dialog';
   imports: [FormsModule],
   templateUrl: './tab-options.html',
   styleUrl: './tab-options.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabOptions {
   protected readonly tabOptionsMaxCMakeVersionId = `max-cmake-version-${crypto.randomUUID()}`;

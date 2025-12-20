@@ -1,4 +1,10 @@
-import { Component, forwardRef, inject, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
@@ -19,6 +25,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => ProjectSpdxLicenseArgument),
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectSpdxLicenseArgument
   extends InputLicense

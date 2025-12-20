@@ -3,6 +3,7 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
 import { defineConfig } from 'eslint/config';
+import requireOnPush from './src/eslint-rules/require-onpush.js';
 
 export default defineConfig(
   {
@@ -19,8 +20,16 @@ export default defineConfig(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    plugins: {
+      'local-rules': {
+        rules: {
+          'require-onpush': requireOnPush,
+        },
+      },
+    },
     processor: angular.processInlineTemplates,
     rules: {
+      'local-rules/require-onpush': 'error',
       '@angular-eslint/directive-selector': [
         'error',
         {
