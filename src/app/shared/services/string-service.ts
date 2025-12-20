@@ -13,4 +13,31 @@ export class StringService {
       )
       .join('');
   }
+
+  private censor(censor: unknown) {
+    let i = 0;
+
+    return function (_key: string, value: unknown): unknown {
+      if (
+        i !== 0 &&
+        typeof censor === 'object' &&
+        typeof value === 'object' &&
+        censor === value
+      ) {
+        return '[Circular]';
+      }
+
+      if (i >= 50) {
+        return `[Unknown:${typeof value}]`;
+      }
+
+      i += 1;
+
+      return value;
+    };
+  }
+
+  secureJsonStringify(object: unknown): string {
+    return JSON.stringify(object, this.censor(object));
+  }
 }
