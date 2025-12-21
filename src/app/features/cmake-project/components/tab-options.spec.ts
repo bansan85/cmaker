@@ -75,12 +75,19 @@ describe('TabOptions', () => {
     const { maxCMakeVersionInput } = page;
     expect(maxCMakeVersionInput.value).toEqual('4.3');
     expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
-    expect(component.versionString).toBe('4.3');
+    expect(component.maxCMakeVersionSignal().versionString).toBe('4.3');
 
     maxCMakeVersionInput.value = '4.rez';
     maxCMakeVersionInput.dispatchEvent(new Event('input'));
     await fixture.whenStable();
     expect(maxCMakeVersionInput.matches(':invalid')).toBeTrue();
+
+    maxCMakeVersionInput.value = '4.2';
+    maxCMakeVersionInput.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    expect(maxCMakeVersionInput.value).toEqual('4.2');
+    expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
+    expect(component.maxCMakeVersionSignal().versionString).toBe('4.2');
   });
 
   it('should update root path input', async () => {
@@ -89,13 +96,11 @@ describe('TabOptions', () => {
     rootPathInput.value = 'c:/temp';
     rootPathInput.dispatchEvent(new Event('input'));
     await fixture.whenStable();
-    expect(component.projectContext.rootPath).toEqual('c:/temp');
     expect(service.rootPath).toEqual('c:/temp');
 
     rootPathInput.value = '4.rez';
     rootPathInput.dispatchEvent(new Event('input'));
     await fixture.whenStable();
-    expect(component.projectContext.rootPath).toEqual('4.rez');
     expect(service.rootPath).toEqual('4.rez');
   });
 
@@ -109,7 +114,6 @@ describe('TabOptions', () => {
     rootPathButton.click();
     await fixture.whenStable();
     await fixture.whenStable();
-    expect(component.projectContext.rootPath).toEqual('c:/temp2');
     expect(service.rootPath).toEqual('c:/temp2');
     expect(rootPathInput.matches('.ng-invalid')).toBeTrue();
 
@@ -118,7 +122,6 @@ describe('TabOptions', () => {
     rootPathButton.click();
     await fixture.whenStable();
     await fixture.whenStable();
-    expect(component.projectContext.rootPath).toEqual('.');
     expect(service.rootPath).toEqual('.');
     expect(rootPathInput.matches('.ng-valid')).toBeTrue();
   });

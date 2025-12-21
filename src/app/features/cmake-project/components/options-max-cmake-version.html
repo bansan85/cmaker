@@ -1,0 +1,11 @@
+<div class="field">
+  <label [for]="optionsMaxCMakeVersionId">Max CMake version:</label>
+  <input
+    name="max-cmake-version"
+    pattern="\d+(\.\d+){0,3}"
+    required
+    type="text"
+    [id]="optionsMaxCMakeVersionId"
+    [(ngModel)]="versionString"
+  />
+</div>

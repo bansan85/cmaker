@@ -1,48 +1,49 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { ProjectContextService } from '../services/project-context-service';
-import { AbstractControl, FormsModule } from '@angular/forms';
-import { Version } from '../../../shared/models/version';
-import { open } from '@tauri-apps/plugin-dialog';
-import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { RustBackendService } from '../../../shared/services/rust-backend-service';
+import { OptionsMaxCMakeVersion } from './options-max-cmake-version';
+import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-version-service';
+import { OptionsRootPath } from './options-root-path';
+import { OptionsRootPathService } from '../services/options-root-path-service';
 
 @Component({
   selector: 'app-tab-options',
-  imports: [FormsModule, AsyncInvalidValidator],
+  imports: [OptionsMaxCMakeVersion, OptionsRootPath],
   templateUrl: './tab-options.html',
   styleUrl: './tab-options.css',
+  providers: [OptionsMaxCMakeVersionService, OptionsRootPathService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabOptions {
-  protected readonly tabOptionsMaxCMakeVersionId = `max-cmake-version-${crypto.randomUUID()}`;
-  protected readonly tabOptionsRootPathId = `root-path-${crypto.randomUUID()}`;
+export class TabOptions implements AfterViewInit {
+  private readonly projectContext = inject(ProjectContextService);
 
-  readonly projectContext = inject(ProjectContextService);
-  private readonly rustBackendService = inject(RustBackendService);
+  public readonly maxCMakeVersionSignal =
+    viewChild.required<OptionsMaxCMakeVersion>('maxCMakeVersion');
+  public readonly rootPathSignal =
+    viewChild.required<OptionsRootPath>('rootPath');
 
-  get versionString(): string {
-    return this.projectContext.version.toString();
-  }
-
-  set versionString(value: string) {
-    if (Version.isValid(value)) {
-      this.projectContext.version = new Version(value);
-    }
-  }
-
-  async selectPath() {
-    const rootPath = await open({
-      multiple: false,
-      directory: true,
+  constructor() {
+    effect(() => {
+      const newCMakeVersion = this.maxCMakeVersionSignal().value;
+      if (newCMakeVersion !== undefined) {
+        this.projectContext.version = newCMakeVersion;
+      }
     });
 
-    if (rootPath !== null) {
-      this.projectContext.rootPath = rootPath;
-    }
+    effect(() => {
+      const newRootPath = this.rootPathSignal().value;
+      this.projectContext.rootPath = newRootPath;
+    });
   }
 
-  protected checkPath = async (
-    control: AbstractControl<string>
-  ): Promise<boolean> =>
-    this.rustBackendService.pathExists(control.value, true);
+  ngAfterViewInit() {
+    this.maxCMakeVersionSignal().value = this.projectContext.version;
+    this.rootPathSignal().value = this.projectContext.rootPath;
+  }
 }
