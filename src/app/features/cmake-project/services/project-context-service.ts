@@ -6,7 +6,13 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
   providedIn: null,
 })
 export class ProjectContextService {
-  version: Version = inject(DEFAULT_MAX_VERSION);
+  protected readonly versionSignal = signal(inject(DEFAULT_MAX_VERSION));
+  get version(): Version {
+    return this.versionSignal();
+  }
+  set version(val: Version) {
+    this.versionSignal.set(val);
+  }
 
   protected readonly rootPathSignal = signal('');
   get rootPath(): string {

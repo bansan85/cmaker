@@ -7,7 +7,7 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
   imports: [],
   templateUrl: './version-tag.html',
   styleUrl: './version-tag.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VersionTag {
   readonly element =

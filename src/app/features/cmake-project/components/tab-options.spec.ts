@@ -33,14 +33,17 @@ class Page {
 }
 
 describe('TabOptions', () => {
+  let component: TabOptions;
+  let fixture: ComponentFixture<TabOptions>;
+
+  let mockIpcOpen: Promise<string>;
+  let mockIpcPathExists: boolean;
+
   describe('Shallow Component Testing', () => {
-    let component: TabOptions;
-    let fixture: ComponentFixture<TabOptions>;
-
-    const mockIpcOpen = Promise.resolve('c:/temp2');
-    const mockIpcPathExists = true;
-
     beforeEach(async () => {
+      mockIpcOpen = Promise.resolve('c:/temp2');
+      mockIpcPathExists = true;
+
       await TestBed.configureTestingModule({
         imports: [TabOptions],
         providers: [
@@ -76,15 +79,13 @@ describe('TabOptions', () => {
   });
 
   describe('Full Component Testing', () => {
-    let component: TabOptions;
-    let fixture: ComponentFixture<TabOptions>;
     let page: Page;
     let service: ProjectContextService;
 
-    let mockIpcOpen = Promise.resolve('c:/temp2');
-    let mockIpcPathExists = true;
-
     beforeEach(async () => {
+      mockIpcOpen = Promise.resolve('c:/temp2');
+      mockIpcPathExists = true;
+
       await TestBed.configureTestingModule({
         imports: [TabOptions],
         providers: [
