@@ -8,9 +8,7 @@ import {
 } from '@angular/core';
 import { ProjectContextService } from '../services/project-context-service';
 import { OptionsMaxCMakeVersion } from './options-max-cmake-version';
-import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-version-service';
 import { OptionsRootPath } from './options-root-path';
-import { OptionsRootPathService } from '../services/options-root-path-service';
 
 @Component({
   selector: 'app-tab-options',

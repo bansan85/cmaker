@@ -29,7 +29,7 @@ import { RustBackendService } from '../../../shared/services/rust-backend-servic
   imports: [DraggableListComponent, DraggableItemComponent, CommonModule],
   templateUrl: './tab-project.html',
   styleUrl: './tab-project.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabProject implements AfterViewInit {
   private readonly contextInjector = inject(Injector);

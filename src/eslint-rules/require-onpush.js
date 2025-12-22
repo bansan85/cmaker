@@ -15,6 +15,11 @@ export default {
       Decorator(node) {
         if (node.expression.callee?.name !== 'Component') return;
 
+        const classNode = node.parent;
+        if (classNode?.type === 'ClassDeclaration' && classNode.id?.name.startsWith('Stub')) {
+          return;
+        }
+
         const arg = node.expression.arguments[0];
         if (!arg || arg.type !== 'ObjectExpression') return;
 

@@ -4,6 +4,7 @@ import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
 import { defineConfig } from 'eslint/config';
 import requireOnPush from './src/eslint-rules/require-onpush.js';
+import requireStubImports from './src/eslint-rules/require-stub-imports.js';
 
 export default defineConfig(
   {
@@ -24,12 +25,14 @@ export default defineConfig(
       'local-rules': {
         rules: {
           'require-onpush': requireOnPush,
+          'require-stub-imports': requireStubImports,
         },
       },
     },
     processor: angular.processInlineTemplates,
     rules: {
       'local-rules/require-onpush': 'error',
+      'local-rules/require-stub-imports': 'error',
       '@angular-eslint/directive-selector': [
         'error',
         {

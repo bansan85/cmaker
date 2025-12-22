@@ -6,7 +6,10 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { By } from '@angular/platform-browser';
 import { mockIPC } from '@tauri-apps/api/mocks';
-import { Component } from '@angular/core';
+import {
+  StubOptionsMaxCMakeVersion,
+  StubOptionsRootPath,
+} from '../../tests/components/stubs';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
@@ -29,152 +32,145 @@ class Page {
   }
 }
 
-@Component({ selector: 'app-options-max-cmake-version', template: '' })
-class StubOptionsMaxCMakeVersion {}
-@Component({ selector: 'app-options-root-path', template: '' })
-class StubOptionsRootPath {}
+describe('TabOptions', () => {
+  describe('Shallow Component Testing', () => {
+    let component: TabOptions;
+    let fixture: ComponentFixture<TabOptions>;
 
-describe('TabOptions with mock component', () => {
-  let component: TabOptions;
-  let fixture: ComponentFixture<TabOptions>;
-  let page: Page;
-  let service: ProjectContextService;
+    const mockIpcOpen = Promise.resolve('c:/temp2');
+    const mockIpcPathExists = true;
 
-  let mockIpcOpen = Promise.resolve('c:/temp2');
-  let mockIpcPathExists = true;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TabOptions],
-      providers: [
-        ProjectContextService,
-        {
-          provide: DEFAULT_MAX_VERSION,
-          useValue: new Version(4, 3),
-        },
-      ],
-    })
-      .overrideComponent(TabOptions, {
-        set: { imports: [StubOptionsMaxCMakeVersion, StubOptionsRootPath] },
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [TabOptions],
+        providers: [
+          ProjectContextService,
+          {
+            provide: DEFAULT_MAX_VERSION,
+            useValue: new Version(4, 3),
+          },
+        ],
       })
-      .compileComponents();
+        .overrideComponent(TabOptions, {
+          set: { imports: [StubOptionsMaxCMakeVersion, StubOptionsRootPath] },
+        })
+        .compileComponents();
 
-    mockIPC((cmd, args) => {
-      if (cmd === 'plugin:dialog|open') {
-        return mockIpcOpen;
-      }
-      if (cmd === 'path_exists') {
-        return mockIpcPathExists;
-      }
-      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      mockIPC((cmd, args) => {
+        if (cmd === 'plugin:dialog|open') {
+          return mockIpcOpen;
+        }
+        if (cmd === 'path_exists') {
+          return mockIpcPathExists;
+        }
+        throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      });
+
+      fixture = TestBed.createComponent(TabOptions);
+      component = fixture.componentInstance;
     });
 
-    fixture = TestBed.createComponent(TabOptions);
-    component = fixture.componentInstance;
-    page = new Page(fixture);
-    service = TestBed.inject(ProjectContextService);
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  describe('Full Component Testing', () => {
+    let component: TabOptions;
+    let fixture: ComponentFixture<TabOptions>;
+    let page: Page;
+    let service: ProjectContextService;
 
-describe('TabOptions with real component', () => {
-  let component: TabOptions;
-  let fixture: ComponentFixture<TabOptions>;
-  let page: Page;
-  let service: ProjectContextService;
+    let mockIpcOpen = Promise.resolve('c:/temp2');
+    let mockIpcPathExists = true;
 
-  let mockIpcOpen = Promise.resolve('c:/temp2');
-  let mockIpcPathExists = true;
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [TabOptions],
+        providers: [
+          ProjectContextService,
+          {
+            provide: DEFAULT_MAX_VERSION,
+            useValue: new Version(4, 3),
+          },
+        ],
+      }).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TabOptions],
-      providers: [
-        ProjectContextService,
-        {
-          provide: DEFAULT_MAX_VERSION,
-          useValue: new Version(4, 3),
-        },
-      ],
-    }).compileComponents();
+      mockIPC((cmd, args) => {
+        if (cmd === 'plugin:dialog|open') {
+          return mockIpcOpen;
+        }
+        if (cmd === 'path_exists') {
+          return mockIpcPathExists;
+        }
+        throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      });
 
-    mockIPC((cmd, args) => {
-      if (cmd === 'plugin:dialog|open') {
-        return mockIpcOpen;
-      }
-      if (cmd === 'path_exists') {
-        return mockIpcPathExists;
-      }
-      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      fixture = TestBed.createComponent(TabOptions);
+      component = fixture.componentInstance;
+      page = new Page(fixture);
+      service = TestBed.inject(ProjectContextService);
     });
 
-    fixture = TestBed.createComponent(TabOptions);
-    component = fixture.componentInstance;
-    page = new Page(fixture);
-    service = TestBed.inject(ProjectContextService);
-  });
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should change :invalid when invalid input', async () => {
+      await fixture.whenStable();
 
-  it('should change :invalid when invalid input', async () => {
-    await fixture.whenStable();
+      const { maxCMakeVersionInput } = page;
+      expect(maxCMakeVersionInput.value).toEqual('4.3');
+      expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
+      expect(component.maxCMakeVersionSignal().versionString).toBe('4.3');
 
-    const { maxCMakeVersionInput } = page;
-    expect(maxCMakeVersionInput.value).toEqual('4.3');
-    expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
-    expect(component.maxCMakeVersionSignal().versionString).toBe('4.3');
+      maxCMakeVersionInput.value = '4.rez';
+      maxCMakeVersionInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(maxCMakeVersionInput.matches(':invalid')).toBeTrue();
 
-    maxCMakeVersionInput.value = '4.rez';
-    maxCMakeVersionInput.dispatchEvent(new Event('input'));
-    await fixture.whenStable();
-    expect(maxCMakeVersionInput.matches(':invalid')).toBeTrue();
+      maxCMakeVersionInput.value = '4.2';
+      maxCMakeVersionInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(maxCMakeVersionInput.value).toEqual('4.2');
+      expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
+      expect(component.maxCMakeVersionSignal().versionString).toBe('4.2');
+    });
 
-    maxCMakeVersionInput.value = '4.2';
-    maxCMakeVersionInput.dispatchEvent(new Event('input'));
-    await fixture.whenStable();
-    expect(maxCMakeVersionInput.value).toEqual('4.2');
-    expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
-    expect(component.maxCMakeVersionSignal().versionString).toBe('4.2');
-  });
+    it('should update root path input', async () => {
+      await fixture.whenStable();
+      const { rootPathInput } = page;
+      rootPathInput.value = 'c:/temp';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(service.rootPath).toEqual('c:/temp');
 
-  it('should update root path input', async () => {
-    await fixture.whenStable();
-    const { rootPathInput } = page;
-    rootPathInput.value = 'c:/temp';
-    rootPathInput.dispatchEvent(new Event('input'));
-    await fixture.whenStable();
-    expect(service.rootPath).toEqual('c:/temp');
+      rootPathInput.value = '4.rez';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(service.rootPath).toEqual('4.rez');
+    });
 
-    rootPathInput.value = '4.rez';
-    rootPathInput.dispatchEvent(new Event('input'));
-    await fixture.whenStable();
-    expect(service.rootPath).toEqual('4.rez');
-  });
+    it('should update root path button', async () => {
+      await fixture.whenStable();
 
-  it('should update root path button', async () => {
-    await fixture.whenStable();
+      const { rootPathButton } = page;
+      const { rootPathInput } = page;
+      mockIpcOpen = Promise.resolve('c:/temp2');
+      mockIpcPathExists = false;
+      rootPathButton.click();
+      await fixture.whenStable();
+      await fixture.whenStable();
+      expect(service.rootPath).toEqual('c:/temp2');
+      expect(rootPathInput.matches('.ng-invalid')).toBeTrue();
 
-    const { rootPathButton } = page;
-    const { rootPathInput } = page;
-    mockIpcOpen = Promise.resolve('c:/temp2');
-    mockIpcPathExists = false;
-    rootPathButton.click();
-    await fixture.whenStable();
-    await fixture.whenStable();
-    expect(service.rootPath).toEqual('c:/temp2');
-    expect(rootPathInput.matches('.ng-invalid')).toBeTrue();
-
-    mockIpcOpen = Promise.resolve('.');
-    mockIpcPathExists = true;
-    rootPathButton.click();
-    await fixture.whenStable();
-    await fixture.whenStable();
-    expect(service.rootPath).toEqual('.');
-    expect(rootPathInput.matches('.ng-valid')).toBeTrue();
+      mockIpcOpen = Promise.resolve('.');
+      mockIpcPathExists = true;
+      rootPathButton.click();
+      await fixture.whenStable();
+      await fixture.whenStable();
+      expect(service.rootPath).toEqual('.');
+      expect(rootPathInput.matches('.ng-valid')).toBeTrue();
+    });
   });
 });
