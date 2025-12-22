@@ -50,8 +50,6 @@ export abstract class InputDirectory
       directory: true,
     });
 
-    console.log(`selectPath ${rootPath}`);
-
     if (rootPath !== null) {
       this.value = rootPath;
     }

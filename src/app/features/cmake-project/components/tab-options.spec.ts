@@ -6,6 +6,7 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { By } from '@angular/platform-browser';
 import { mockIPC } from '@tauri-apps/api/mocks';
+import { Component } from '@angular/core';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
@@ -28,7 +29,58 @@ class Page {
   }
 }
 
-describe('TabOptions', () => {
+@Component({ selector: 'app-options-max-cmake-version', template: '' })
+class StubOptionsMaxCMakeVersion {}
+@Component({ selector: 'app-options-root-path', template: '' })
+class StubOptionsRootPath {}
+
+describe('TabOptions with mock component', () => {
+  let component: TabOptions;
+  let fixture: ComponentFixture<TabOptions>;
+  let page: Page;
+  let service: ProjectContextService;
+
+  let mockIpcOpen = Promise.resolve('c:/temp2');
+  let mockIpcPathExists = true;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TabOptions],
+      providers: [
+        ProjectContextService,
+        {
+          provide: DEFAULT_MAX_VERSION,
+          useValue: new Version(4, 3),
+        },
+      ],
+    })
+      .overrideComponent(TabOptions, {
+        set: { imports: [StubOptionsMaxCMakeVersion, StubOptionsRootPath] },
+      })
+      .compileComponents();
+
+    mockIPC((cmd, args) => {
+      if (cmd === 'plugin:dialog|open') {
+        return mockIpcOpen;
+      }
+      if (cmd === 'path_exists') {
+        return mockIpcPathExists;
+      }
+      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+    });
+
+    fixture = TestBed.createComponent(TabOptions);
+    component = fixture.componentInstance;
+    page = new Page(fixture);
+    service = TestBed.inject(ProjectContextService);
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+
+describe('TabOptions with real component', () => {
   let component: TabOptions;
   let fixture: ComponentFixture<TabOptions>;
   let page: Page;

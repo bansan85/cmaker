@@ -5,6 +5,8 @@ import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 import { importProvidersFrom } from '@angular/core';
+import { ProjectContextService } from '../services/project-context-service';
+import { mockIPC } from '@tauri-apps/api/mocks';
 
 describe('CMakeProject', () => {
   let component: CMakeProject;
@@ -14,6 +16,7 @@ describe('CMakeProject', () => {
     await TestBed.configureTestingModule({
       imports: [CMakeProject],
       providers: [
+        ProjectContextService,
         {
           provide: DEFAULT_MAX_VERSION,
           useValue: new Version(4, 3),
@@ -21,6 +24,13 @@ describe('CMakeProject', () => {
         importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
       ],
     }).compileComponents();
+
+    mockIPC((cmd, args) => {
+      if (cmd === 'path_exists') {
+        return true;
+      }
+      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+    });
 
     fixture = TestBed.createComponent(CMakeProject);
     component = fixture.componentInstance;

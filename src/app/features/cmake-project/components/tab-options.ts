@@ -17,7 +17,6 @@ import { OptionsRootPathService } from '../services/options-root-path-service';
   imports: [OptionsMaxCMakeVersion, OptionsRootPath],
   templateUrl: './tab-options.html',
   styleUrl: './tab-options.css',
-  providers: [OptionsMaxCMakeVersionService, OptionsRootPathService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabOptions implements AfterViewInit {

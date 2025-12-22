@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   imports: [AsyncInvalidValidator, FormsModule],
   templateUrl: './options-root-path.html',
   styleUrl: './options-root-path.css',
+  providers: [OptionsRootPathService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionsRootPath

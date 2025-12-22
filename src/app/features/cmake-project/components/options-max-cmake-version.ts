@@ -9,6 +9,7 @@ import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-ver
   imports: [FormsModule],
   templateUrl: './options-max-cmake-version.html',
   styleUrl: './options-max-cmake-version.css',
+  providers: [OptionsMaxCMakeVersionService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionsMaxCMakeVersion
