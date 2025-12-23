@@ -10,7 +10,6 @@ import {
   StubOptionsMaxCMakeVersion,
   StubOptionsRootPath,
 } from '../../tests/components/stubs';
-import { FormsModule } from '@angular/forms';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
@@ -46,7 +45,6 @@ describe('TabOptions', () => {
       mockIpcPathExists = true;
 
       await TestBed.configureTestingModule({
-        imports: [TabOptions],
         providers: [
           ProjectContextService,
           {
@@ -88,7 +86,6 @@ describe('TabOptions', () => {
       mockIpcPathExists = true;
 
       await TestBed.configureTestingModule({
-        imports: [TabOptions, FormsModule],
         providers: [
           ProjectContextService,
           {

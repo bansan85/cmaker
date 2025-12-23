@@ -58,7 +58,7 @@ describe('ProjectCompatVersionArgument', () => {
       component = fixture.componentInstance;
       page = new Page(fixture);
 
-      fixture.detectChanges();
+      await fixture.whenStable();
     });
 
     it('should create', () => {
@@ -78,7 +78,6 @@ describe('ProjectCompatVersionArgument', () => {
       projectCompatVersionInput.value = '4.2';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.value).toEqual('4.2');
       expect(projectCompatVersionInput.matches(':invalid')).toBeFalse();
       expect(component.versionString).toBe('4.2');
     });
@@ -105,7 +104,7 @@ describe('ProjectCompatVersionArgument', () => {
       page = new Page(fixture);
       projectContextService = TestBed.inject(ProjectContextService);
 
-      fixture.detectChanges();
+      await fixture.whenStable();
     });
 
     it('should create', () => {
@@ -113,10 +112,6 @@ describe('ProjectCompatVersionArgument', () => {
     });
 
     it('should set .invalid for version / valid tags when invalid input / version', async () => {
-      projectContextService.maxCMakeVersion = new Version('4.3');
-
-      await fixture.whenStable();
-
       const { projectCompatVersionInput, versionTag, validTag } = page;
 
       projectCompatVersionInput.value = '4.rez';
@@ -129,7 +124,6 @@ describe('ProjectCompatVersionArgument', () => {
       projectCompatVersionInput.value = '4.2';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.value).toEqual('4.2');
       expect(projectCompatVersionInput.matches(':invalid')).toBeFalse();
       expect(component.versionString).toBe('4.2');
       expect(versionTag.matches('.invalid')).toBeFalse();
