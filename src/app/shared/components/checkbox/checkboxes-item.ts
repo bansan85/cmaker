@@ -14,7 +14,7 @@ import { CheckboxesList } from './checkboxes-list';
   imports: [],
   templateUrl: './checkboxes-item.html',
   styleUrl: './checkboxes-item.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxesItem {
   readonly element = input.required<CheckboxesItemInterface>();
@@ -30,6 +30,13 @@ export class CheckboxesItem {
     if (!version) {
       return false;
     }
-    return this.versionService.isGreater(version, this.projectContext.version);
+    if (!this.projectContext.maxCMakeVersion.value) {
+      return false;
+    }
+
+    return this.versionService.isGreater(
+      version,
+      this.projectContext.maxCMakeVersion.value
+    );
   }
 }

@@ -13,10 +13,11 @@ export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVer
   isEnabled(action: InputVersionModel): boolean {
     return (
       (action.enabled ?? true) &&
-      !this.versionService.isGreater(
-        this.cmakeMinVersion,
-        this.projectContext.version
-      )
+      (this.projectContext.maxCMakeVersion.value === undefined ||
+        !this.versionService.isGreater(
+          this.cmakeMinVersion,
+          this.projectContext.maxCMakeVersion.value
+        ))
     );
   }
 

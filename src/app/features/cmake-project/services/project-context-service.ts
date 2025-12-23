@@ -1,24 +1,31 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { Version } from '../../../shared/models/version';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { OptionsModel } from '../models/options.model';
+import { InputDirectoryModel } from '../../../shared/models/arguments/input-directory-model';
+import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
+import { Version } from '../../../shared/models/version';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectContextService {
-  protected readonly versionSignal = signal(inject(DEFAULT_MAX_VERSION));
-  get version(): Version {
-    return this.versionSignal();
+export class ProjectContextService implements OptionsModel {
+  private readonly maxCMakeVersionSignal: WritableSignal<Version | undefined> =
+    signal(inject(DEFAULT_MAX_VERSION));
+  private readonly rootPathSignal = signal('');
+
+  // eslint-disable-next-line @typescript-eslint/related-getter-setter-pairs
+  get maxCMakeVersion(): InputVersionModel {
+    return { enabled: true, value: this.maxCMakeVersionSignal() };
   }
-  set version(val: Version) {
-    this.versionSignal.set(val);
+  set maxCMakeVersion(value: Version | undefined) {
+    this.maxCMakeVersionSignal.set(value);
   }
 
-  protected readonly rootPathSignal = signal('');
-  get rootPath(): string {
-    return this.rootPathSignal();
+  // eslint-disable-next-line @typescript-eslint/related-getter-setter-pairs
+  get rootPath(): InputDirectoryModel {
+    return { enabled: true, value: this.rootPathSignal() };
   }
-  set rootPath(val: string) {
-    this.rootPathSignal.set(val);
+  set rootPath(value: string) {
+    this.rootPathSignal.set(value);
   }
 }

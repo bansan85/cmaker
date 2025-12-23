@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
 import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-version-service';
+import { ProjectContextService } from '../services/project-context-service';
 
 @Component({
   selector: 'app-options-max-cmake-version',
@@ -14,11 +22,32 @@ import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-ver
 })
 export class OptionsMaxCMakeVersion
   extends InputVersion
-  implements CMakeComponentInterface<OptionsMaxCMakeVersionService>
+  implements
+    CMakeComponentInterface<OptionsMaxCMakeVersionService>,
+    AfterViewInit
 {
+  private readonly projectContext = inject(ProjectContextService);
+
   readonly name = 'Max CMake version';
 
   protected readonly optionsMaxCMakeVersionId = `options-max-cmake-version-${crypto.randomUUID()}`;
 
   readonly service = inject(OptionsMaxCMakeVersionService);
+
+  private readonly initialized = signal(false);
+
+  constructor() {
+    super();
+
+    effect(() => {
+      if (this.initialized()) {
+        this.projectContext.maxCMakeVersion = this.value;
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.value = this.projectContext.maxCMakeVersion.value;
+    this.initialized.set(true);
+  }
 }

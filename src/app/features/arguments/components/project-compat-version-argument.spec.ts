@@ -113,7 +113,7 @@ describe('ProjectCompatVersionArgument', () => {
     });
 
     it('should set .invalid for version / valid tags when invalid input / version', async () => {
-      projectContextService.version = new Version('4.3');
+      projectContextService.maxCMakeVersion = new Version('4.3');
 
       await fixture.whenStable();
 
@@ -135,7 +135,7 @@ describe('ProjectCompatVersionArgument', () => {
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();
 
-      projectContextService.version = new Version('3.0');
+      projectContextService.maxCMakeVersion = new Version('3.0');
       await fixture.whenStable();
       expect(versionTag.matches('.invalid')).toBeTrue();
       expect(validTag.matches('.invalid')).toBeFalse();

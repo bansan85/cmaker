@@ -1,14 +1,9 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  inject,
-  viewChild,
-} from '@angular/core';
-import { ProjectContextService } from '../services/project-context-service';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { OptionsMaxCMakeVersion } from './options-max-cmake-version';
 import { OptionsRootPath } from './options-root-path';
+import { OptionsModel } from '../models/options.model';
+import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
+import { InputDirectoryModel } from '../../../shared/models/arguments/input-directory-model';
 
 @Component({
   selector: 'app-tab-options',
@@ -17,30 +12,16 @@ import { OptionsRootPath } from './options-root-path';
   styleUrl: './tab-options.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabOptions implements AfterViewInit {
-  private readonly projectContext = inject(ProjectContextService);
-
+export class TabOptions implements OptionsModel {
   public readonly maxCMakeVersionSignal =
     viewChild.required<OptionsMaxCMakeVersion>('maxCMakeVersion');
   public readonly rootPathSignal =
     viewChild.required<OptionsRootPath>('rootPath');
 
-  constructor() {
-    effect(() => {
-      const newCMakeVersion = this.maxCMakeVersionSignal().value;
-      if (newCMakeVersion !== undefined) {
-        this.projectContext.version = newCMakeVersion;
-      }
-    });
-
-    effect(() => {
-      const newRootPath = this.rootPathSignal().value;
-      this.projectContext.rootPath = newRootPath;
-    });
+  get maxCMakeVersion(): InputVersionModel {
+    return this.maxCMakeVersionSignal();
   }
-
-  ngAfterViewInit() {
-    this.maxCMakeVersionSignal().value = this.projectContext.version;
-    this.rootPathSignal().value = this.projectContext.rootPath;
+  get rootPath(): InputDirectoryModel {
+    return this.rootPathSignal();
   }
 }

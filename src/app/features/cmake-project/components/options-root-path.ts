@@ -1,9 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  AfterViewInit,
+  signal,
+} from '@angular/core';
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
 import { OptionsRootPathService } from '../services/options-root-path-service';
 import { InputDirectory } from '../../../shared/directives/arguments/input-directory';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 import { FormsModule } from '@angular/forms';
+import { ProjectContextService } from '../services/project-context-service';
 
 @Component({
   selector: 'app-options-root-path',
@@ -15,11 +23,30 @@ import { FormsModule } from '@angular/forms';
 })
 export class OptionsRootPath
   extends InputDirectory
-  implements CMakeComponentInterface<OptionsRootPathService>
+  implements CMakeComponentInterface<OptionsRootPathService>, AfterViewInit
 {
+  private readonly projectContext = inject(ProjectContextService);
+
   readonly name = 'Root path';
 
   protected readonly optionsRootPathId = `options-root-path-${crypto.randomUUID()}`;
 
   readonly service = inject(OptionsRootPathService);
+
+  private readonly initialized = signal(false);
+
+  constructor() {
+    super();
+
+    effect(() => {
+      if (this.initialized()) {
+        this.projectContext.rootPath = this.value;
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.value = this.projectContext.rootPath.value;
+    this.initialized.set(true);
+  }
 }

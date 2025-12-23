@@ -49,9 +49,12 @@ export abstract class CMakeFeatureInterface<Feature> {
   abstract toCMakerTxt(action: Feature): string;
 
   isEffectiveVersionValid(action: Feature): boolean {
-    return !this.versionService.isGreater(
-      this.cmakeRequiredVersionImpl(action),
-      this.projectContext.version
+    return (
+      this.projectContext.maxCMakeVersion.value === undefined ||
+      !this.versionService.isGreater(
+        this.cmakeRequiredVersionImpl(action),
+        this.projectContext.maxCMakeVersion.value
+      )
     );
   }
 }

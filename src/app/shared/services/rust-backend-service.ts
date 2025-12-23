@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
+import { InputDirectoryModel } from '../models/arguments/input-directory-model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,18 +13,24 @@ export class RustBackendService {
     return await invoke<boolean>('paths_exists', { paths, directory });
   }
   async relativePathsExists(
-    base: string,
+    base: string | InputDirectoryModel,
     paths: string[],
     directory: boolean
   ): Promise<boolean> {
+    const baseString = typeof base === 'string' ? base : base.value;
     return await invoke<boolean>('relative_paths_exists', {
-      base,
+      baseString,
       paths,
       directory,
     });
   }
-  async diffPath(base: string, path: string): Promise<string> {
-    return await invoke<string>('diff_path', { path, base });
+
+  async diffPath(
+    base: string | InputDirectoryModel,
+    path: string
+  ): Promise<string> {
+    const baseString = typeof base === 'string' ? base : base.value;
+    return await invoke<string>('diff_path', { path, baseString });
   }
 
   async loadFromFile(path: string): Promise<string> {

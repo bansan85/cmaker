@@ -12,10 +12,11 @@ export class ProjectHomepageUrlService extends CMakeArgumentInterface<InputStrin
   isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
-      !this.versionService.isGreater(
-        this.cmakeMinVersion,
-        this.projectContext.version
-      )
+      (this.projectContext.maxCMakeVersion.value === undefined ||
+        !this.versionService.isGreater(
+          this.cmakeMinVersion,
+          this.projectContext.maxCMakeVersion.value
+        ))
     );
   }
 

@@ -10,6 +10,7 @@ import {
   StubOptionsMaxCMakeVersion,
   StubOptionsRootPath,
 } from '../../tests/components/stubs';
+import { FormsModule } from '@angular/forms';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
@@ -87,7 +88,7 @@ describe('TabOptions', () => {
       mockIpcPathExists = true;
 
       await TestBed.configureTestingModule({
-        imports: [TabOptions],
+        imports: [TabOptions, FormsModule],
         providers: [
           ProjectContextService,
           {
@@ -110,6 +111,9 @@ describe('TabOptions', () => {
       fixture = TestBed.createComponent(TabOptions);
       component = fixture.componentInstance;
       page = new Page(fixture);
+
+      await fixture.whenStable();
+
       service = TestBed.inject(ProjectContextService);
     });
 
@@ -118,8 +122,6 @@ describe('TabOptions', () => {
     });
 
     it('should change :invalid when invalid input', async () => {
-      await fixture.whenStable();
-
       const { maxCMakeVersionInput } = page;
       expect(maxCMakeVersionInput.value).toEqual('4.3');
       expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
@@ -139,22 +141,21 @@ describe('TabOptions', () => {
     });
 
     it('should update root path input', async () => {
-      await fixture.whenStable();
       const { rootPathInput } = page;
       rootPathInput.value = 'c:/temp';
-      rootPathInput.dispatchEvent(new Event('input'));
+      rootPathInput.dispatchEvent(new Event('input', { bubbles: true }));
       await fixture.whenStable();
-      expect(service.rootPath).toEqual('c:/temp');
+      expect(component.rootPathSignal().value).toEqual('c:/temp');
+      expect(service.rootPath.value).toEqual('c:/temp');
 
       rootPathInput.value = '4.rez';
       rootPathInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(service.rootPath).toEqual('4.rez');
+      expect(component.rootPathSignal().value).toEqual('4.rez');
+      expect(service.rootPath.value).toEqual('4.rez');
     });
 
     it('should update root path button', async () => {
-      await fixture.whenStable();
-
       const { rootPathButton } = page;
       const { rootPathInput } = page;
       mockIpcOpen = Promise.resolve('c:/temp2');
@@ -162,7 +163,8 @@ describe('TabOptions', () => {
       rootPathButton.click();
       await fixture.whenStable();
       await fixture.whenStable();
-      expect(service.rootPath).toEqual('c:/temp2');
+      expect(component.rootPathSignal().value).toEqual('c:/temp2');
+      expect(service.rootPath.value).toEqual('c:/temp2');
       expect(rootPathInput.matches('.ng-invalid')).toBeTrue();
 
       mockIpcOpen = Promise.resolve('.');
@@ -170,7 +172,8 @@ describe('TabOptions', () => {
       rootPathButton.click();
       await fixture.whenStable();
       await fixture.whenStable();
-      expect(service.rootPath).toEqual('.');
+      expect(component.rootPathSignal().value).toEqual('.');
+      expect(service.rootPath.value).toEqual('.');
       expect(rootPathInput.matches('.ng-valid')).toBeTrue();
     });
   });
