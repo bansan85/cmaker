@@ -24,7 +24,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => ProjectLanguagesArgument),
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectLanguagesArgument
   extends InputLanguages

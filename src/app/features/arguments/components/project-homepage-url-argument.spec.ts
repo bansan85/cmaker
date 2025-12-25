@@ -60,11 +60,10 @@ describe('ProjectHomepageUrlArgument', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
+      expect(page.projectHomepageUrlInput).toBeTruthy();
     });
 
     it('should change input:invalid when invalid input', async () => {
-      await fixture.whenStable();
-
       const { projectHomepageUrlInput } = page;
 
       projectHomepageUrlInput.value = 'example.com';
@@ -111,6 +110,9 @@ describe('ProjectHomepageUrlArgument', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
+      expect(page.projectHomepageUrlInput).toBeTruthy();
+      expect(page.validTag).toBeTruthy();
+      expect(page.versionTag).toBeTruthy();
     });
 
     it('should set .invalid for version / valid tags when invalid input / version', async () => {

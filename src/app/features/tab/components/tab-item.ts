@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,9 +11,9 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './tab-item.html',
   styleUrl: './tab-item.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabItem {
   readonly tabName = input<string>('default');
-  activate = true;
+  readonly activate = signal(true);
 }

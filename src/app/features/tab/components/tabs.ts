@@ -12,7 +12,7 @@ import { TabItem } from './tab-item';
   imports: [CommonModule],
   templateUrl: './tabs.html',
   styleUrl: './tabs.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tabs implements AfterContentInit {
   protected readonly tabs = contentChildren(TabItem);
@@ -26,7 +26,7 @@ export class Tabs implements AfterContentInit {
   activateTab(index: number) {
     this.activeComponent = index;
     for (const [i, tab] of this.tabs().entries()) {
-      tab.activate = i === index;
+      tab.activate.set(i === index);
     }
   }
 }

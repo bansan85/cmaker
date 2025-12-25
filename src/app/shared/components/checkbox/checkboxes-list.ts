@@ -26,6 +26,8 @@ export class CheckboxesList {
   readonly icon = input<string>('menu');
   readonly itemsId = input.required<string>();
 
+  protected readonly checkboxesListId = `checkboxes-list-${crypto.randomUUID()}`;
+
   showCheckboxes() {
     this.expanded.set(!this.expanded());
   }

@@ -60,11 +60,10 @@ describe('ProjectDescriptionArgument', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
+      expect(page.projectDescriptionInput).toBeTruthy();
     });
 
     it('should change input:invalid when invalid input', async () => {
-      await fixture.whenStable();
-
       const { projectDescriptionInput } = page;
 
       projectDescriptionInput.value = 'Describe me';
@@ -100,6 +99,9 @@ describe('ProjectDescriptionArgument', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
+      expect(page.projectDescriptionInput).toBeTruthy();
+      expect(page.validTag).toBeTruthy();
+      expect(page.versionTag).toBeTruthy();
     });
 
     it('should set .invalid for version / valid tags when invalid input / version', async () => {

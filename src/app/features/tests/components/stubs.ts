@@ -3,6 +3,7 @@ import { Component, input } from '@angular/core';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CheckboxesItemInterface } from '../../../shared/interfaces/checkboxes-item-interface';
 
 @Component({ selector: 'app-options-max-cmake-version', template: '' })
 export class StubOptionsMaxCMakeVersion {}
@@ -16,4 +17,13 @@ export class StubValidTag {
 export class StubVersionTag {
   readonly element =
     input.required<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>();
+}
+@Component({ selector: 'app-checkboxes-list', template: '' })
+export class StubCheckboxesList {
+  readonly icon = input<string>('');
+  readonly itemsId = input.required<string>();
+}
+@Component({ selector: 'app-checkboxes-item', template: '' })
+export class StubCheckboxesItem {
+  readonly element = input.required<CheckboxesItemInterface>();
 }

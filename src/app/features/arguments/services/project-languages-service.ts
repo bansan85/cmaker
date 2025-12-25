@@ -26,9 +26,24 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: InputLanguagesModel
+    action: InputLanguagesModel
   ): Version | null {
-    return this.cmakeMinVersion;
+    const languages = action.value.split(' ');
+    if (languages.includes('ASM_MARMASM')) {
+      return new Version(3, 26);
+    } else if (languages.includes('HIP')) {
+      return new Version(3, 21);
+    } else if (languages.includes('ISPC')) {
+      return new Version(3, 18);
+    } else if (languages.includes('OBJC') || languages.includes('OBJCXX')) {
+      return new Version(3, 16);
+    } else if (languages.includes('Swift')) {
+      return new Version(3, 15);
+    } else if (languages.includes('CSharp') || languages.includes('CUDA')) {
+      return new Version(3, 8);
+    } else {
+      return this.cmakeMinVersion;
+    }
   }
 
   protected cmakeObjectsImpl(_action: InputLanguagesModel): CMakeAvailableData {
