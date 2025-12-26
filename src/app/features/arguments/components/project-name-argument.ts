@@ -6,15 +6,16 @@ import {
 } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectNameService } from '../services/project-name-service';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormsModule } from '@angular/forms';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-project-name-argument',
-  imports: [FormsModule, ValidTag, VersionTag],
+  imports: [FormsModule, ValidTag, VersionTag, AsyncInvalidValidator],
   templateUrl: './project-name-argument.html',
   styleUrl: './project-name-argument.css',
   providers: [
@@ -23,7 +24,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => ProjectNameArgument),
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectNameArgument
   extends InputString
@@ -34,4 +35,9 @@ export class ProjectNameArgument
   protected readonly projectNameId = `project-name-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectNameService);
+
+  protected get validateProjectName() {
+    return (control: AbstractControl<string>) =>
+      this.service.isValid({ value: control.value });
+  }
 }

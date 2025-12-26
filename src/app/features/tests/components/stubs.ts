@@ -1,9 +1,16 @@
 // eslint-disable-next-line max-classes-per-file
-import { Component, input } from '@angular/core';
+import { Component, Directive, input } from '@angular/core';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CheckboxesItemInterface } from '../../../shared/interfaces/checkboxes-item-interface';
+import {
+  AbstractControl,
+  AsyncValidator,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({ selector: 'app-options-max-cmake-version', template: '' })
 export class StubOptionsMaxCMakeVersion {}
@@ -26,4 +33,28 @@ export class StubCheckboxesList {
 @Component({ selector: 'app-checkboxes-item', template: '' })
 export class StubCheckboxesItem {
   readonly element = input.required<CheckboxesItemInterface>();
+}
+@Directive({
+  selector: '[appInvalidValidator]',
+})
+export class StubInvalidValidator implements Validator {
+  readonly appInvalidValidator =
+    input.required<(control: AbstractControl) => boolean>();
+
+  validate(_control: AbstractControl): ValidationErrors | null {
+    return null;
+  }
+}
+@Directive({
+  selector: '[appAsyncInvalidValidator]',
+})
+export class StubAsyncInvalidValidator implements AsyncValidator {
+  readonly appAsyncInvalidValidator =
+    input.required<(control: AbstractControl) => Promise<boolean>>();
+
+  validate(
+    _control: AbstractControl
+  ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+    return Promise.resolve(null);
+  }
 }

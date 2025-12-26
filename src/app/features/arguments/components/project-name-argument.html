@@ -5,7 +5,8 @@
   ><input
     name="project-name"
     type="text"
+    [appAsyncInvalidValidator]="validateProjectName"
     [id]="projectNameId"
-    [(ngModel)]="valueSignal"
+    [(ngModel)]="value"
   /><br />
 </div>
