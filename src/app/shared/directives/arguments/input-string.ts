@@ -29,7 +29,7 @@ export abstract class InputString
     });
   }
 
-  protected readonly valueSignal = signal('');
+  private readonly valueSignal = signal('');
   get value(): string {
     return this.valueSignal();
   }
