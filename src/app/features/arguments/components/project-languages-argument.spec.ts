@@ -140,13 +140,13 @@ describe('ProjectLanguagesArgument', () => {
         validTag,
       } = page;
 
-      expect(checkboxes.matches('.checkboxesShow')).toBeFalse();
+      expect(checkboxes.matches('.checkboxes-show')).toBeFalse();
 
       multiSelectBox.click();
 
       await fixture.whenStable();
 
-      expect(checkboxes.matches('.checkboxesShow')).toBeTrue();
+      expect(checkboxes.matches('.checkboxes-show')).toBeTrue();
 
       page.checkboxLanguage('C').click();
       page.checkboxLanguage('CXX').click();

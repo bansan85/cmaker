@@ -7,7 +7,7 @@
     (keydown.space)="showCheckboxes(); $event.preventDefault()"
   >
     <lucide-icon [name]="icon()" />
-    <div [class.checkboxesShow]="expanded()" [id]="checkboxesListId">
+    <div [class.checkboxes-show]="expanded()" [id]="checkboxesListId">
       <ng-content />
     </div>
   </div>

@@ -6,7 +6,7 @@
   position: relative;
 }
 
-#checkboxes {
+[id|="checkboxes-list"] {
   border: 1px #dadada solid;
   position: absolute;
   background-color: #fff;
@@ -14,6 +14,6 @@
   display: none;
 }
 
-#checkboxes.checkboxesShow {
+[id|="checkboxes-list"].checkboxes-show {
   display: block;
 }
