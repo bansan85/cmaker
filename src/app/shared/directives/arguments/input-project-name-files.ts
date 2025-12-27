@@ -22,7 +22,7 @@ export abstract class InputProjectNameFiles
   enabled = true;
 
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputProjectNameFilesModel>;
 
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);

@@ -17,7 +17,7 @@ export abstract class InputVersion
   enabled = true;
 
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputVersionModel>;
 
   constructor() {
     effect(() => {

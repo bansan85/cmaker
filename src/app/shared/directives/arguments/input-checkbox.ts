@@ -14,7 +14,7 @@ export abstract class InputCheckbox
   readonly isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputCheckboxModel>;
 
   constructor() {
     effect(() => {

@@ -17,7 +17,7 @@ export abstract class InputFiles
   readonly isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputFilesModel>;
 
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);

@@ -16,7 +16,7 @@ export abstract class InputLicense
   enabled = true;
 
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputLicenseModel>;
 
   constructor() {
     effect(() => {

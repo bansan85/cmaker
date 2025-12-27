@@ -19,7 +19,7 @@ export abstract class InputDirectory
   enabled = true;
 
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputDirectoryModel>;
 
   private readonly rustBackendService = inject(RustBackendService);
 

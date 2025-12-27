@@ -14,7 +14,7 @@ export abstract class InputString
   readonly isValid = signal(false);
   enabled = true;
   abstract readonly name: string;
-  abstract service: CMakeFeatureInterface<unknown>;
+  abstract service: CMakeFeatureInterface<InputStringModel>;
 
   constructor() {
     effect(() => {
