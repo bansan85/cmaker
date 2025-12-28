@@ -34,16 +34,15 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeCommandInt
     );
   }
 
-  async isValid(action: InputFilesModel): Promise<boolean> {
-    return (
+  readonly validateArgs = [
+    async (action: InputFilesModel): Promise<boolean> =>
       action.files.length > 0 &&
       (await this.rustBackendService.relativePathsExists(
         this.projectContext.rootPath,
         action.files,
         false
-      ))
-    );
-  }
+      )),
+  ];
 
   protected cmakeRequiredVersionImpl(_action: InputFilesModel): Version | null {
     return this.cmakeMinVersion;

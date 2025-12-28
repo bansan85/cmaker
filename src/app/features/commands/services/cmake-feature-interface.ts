@@ -10,7 +10,15 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   abstract readonly cmakeMinVersion: Version | null;
   abstract isEnabled(action: Feature): boolean;
-  abstract isValid(action: Feature): Promise<boolean>;
+
+  async isValid(action: Feature): Promise<boolean> {
+    const results = await Promise.all(
+      this.validateArgs.map((validate) => validate(action))
+    );
+    return results.every((result) => result);
+  }
+
+  abstract validateArgs: ((action: Feature) => Promise<boolean>)[];
 
   cmakeRequiredVersion(action: Feature): Version | null {
     if (this.isEnabled(action)) {

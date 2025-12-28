@@ -21,9 +21,10 @@ export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVer
     );
   }
 
-  isValid(action: InputVersionModel): Promise<boolean> {
-    return Promise.resolve(action.version !== undefined);
-  }
+  validateArgs = [
+    (action: InputVersionModel): Promise<boolean> =>
+      Promise.resolve(action.version !== undefined),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputVersionModel

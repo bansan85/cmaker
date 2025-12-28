@@ -38,7 +38,8 @@ export class TabProject implements AfterViewInit {
   readonly containers = viewChildren('container', { read: ViewContainerRef });
 
   defaultInitialFields: Type<
-    CMakeComponentInterface<CMakeFeatureInterface<unknown>>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    CMakeComponentInterface<CMakeFeatureInterface<any>>
   >[] = [
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,

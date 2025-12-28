@@ -1,6 +1,6 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectProjectNameIncludePathId"
-    >CMAKE_PROJECT_{{projectNameSignal()}}_INCLUDE
+    >CMAKE_PROJECT_{{projectName}}_INCLUDE
     <button type="button" (click)="addPath()">+</button>
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"

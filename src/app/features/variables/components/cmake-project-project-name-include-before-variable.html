@@ -1,6 +1,6 @@
 <div class="field" [hidden]="!service.isEnabled(this)">
   <label [for]="cmakeProjectProjectNameIncludeBeforePathId"
-    >CMAKE_PROJECT_{{projectNameSignal()}}_INCLUDE_BEFORE
+    >CMAKE_PROJECT_{{projectName}}_INCLUDE_BEFORE
     <button type="button" (click)="addPath()">+</button>
     <app-version-tag [element]="this" />
     <app-valid-tag [validator]="this"
@@ -11,7 +11,7 @@
       name="cmake-project-project-name-include-before-project-name"
       type="text"
       [id]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
-      [(ngModel)]="projectNameSignal"
+      [(ngModel)]="projectName"
     />
   </label>
   <textarea

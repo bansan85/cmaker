@@ -11,5 +11,6 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 })
 export class VersionTag {
   readonly element =
-    input.required<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    input.required<CMakeComponentInterface<CMakeFeatureInterface<any>>>();
 }

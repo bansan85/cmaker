@@ -35,9 +35,9 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
     );
   }
 
-  isValid(_action: InputCheckboxModel): Promise<boolean> {
-    return Promise.resolve(true);
-  }
+  readonly validateArgs = [
+    (_action: InputCheckboxModel): Promise<boolean> => Promise.resolve(true),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputCheckboxModel

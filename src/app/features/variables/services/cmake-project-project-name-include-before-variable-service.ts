@@ -36,17 +36,17 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
     );
   }
 
-  async isValid(action: InputProjectNameFilesModel): Promise<boolean> {
-    return (
-      this.dataToCMake.isValidTargetName(action.projectName) &&
+  readonly validateArgs = [
+    (action: InputProjectNameFilesModel): Promise<boolean> =>
+      Promise.resolve(this.dataToCMake.isValidTargetName(action.projectName)),
+    async (action: InputProjectNameFilesModel): Promise<boolean> =>
       action.files.length > 0 &&
       (await this.rustBackendService.relativePathsExists(
         this.projectContext.rootPath,
         action.files,
         false
-      ))
-    );
-  }
+      )),
+  ];
 
   protected cmakeRequiredVersionImpl(
     action: InputProjectNameFilesModel

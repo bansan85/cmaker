@@ -8,6 +8,7 @@ export interface CheckboxesItemInterface {
 
   // Only one.
   // If service is set, get version from service.cmakeMinVersion.
-  service?: CMakeFeatureInterface<unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  service?: CMakeFeatureInterface<any>;
   version?: Version;
 }

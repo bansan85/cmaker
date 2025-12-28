@@ -5,7 +5,8 @@ import { CMakeArgumentTyped } from './cmake-argument-typed';
 
 export interface CMakeCommandTyped {
   firstArgument?: string;
-  component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: Type<CMakeComponentInterface<CMakeFeatureInterface<any>>>;
   arguments?: Map<string, CMakeArgumentTyped>;
 }
 

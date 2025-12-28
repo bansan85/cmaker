@@ -21,9 +21,9 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
     );
   }
 
-  isValid(_action: InputLanguagesModel): Promise<boolean> {
-    return Promise.resolve(true);
-  }
+  readonly validateArgs = [
+    (_action: InputLanguagesModel): Promise<boolean> => Promise.resolve(true),
+  ];
 
   protected cmakeRequiredVersionImpl(
     action: InputLanguagesModel

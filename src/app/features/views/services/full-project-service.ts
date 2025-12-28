@@ -5,4 +5,6 @@ import { CMakeCommandInterface } from '../../commands/services/cmake-command-int
 @Injectable({
   providedIn: 'root',
 })
-export abstract class FullProjectService extends CMakeCommandInterface<FullProjectView> {}
+export abstract class FullProjectService extends CMakeCommandInterface<FullProjectView> {
+  readonly validateArgs = [];
+}

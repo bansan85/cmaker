@@ -20,9 +20,10 @@ export class ProjectHomepageUrlService extends CMakeArgumentInterface<InputStrin
     );
   }
 
-  isValid(action: InputStringModel): Promise<boolean> {
-    return Promise.resolve(/https?:\/\/.+/u.test(action.text));
-  }
+  readonly validateArgs = [
+    (action: InputStringModel): Promise<boolean> =>
+      Promise.resolve(/https?:\/\/.+/u.test(action.text)),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputStringModel

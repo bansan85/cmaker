@@ -21,9 +21,9 @@ export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputLicen
     );
   }
 
-  isValid(_action: InputLicenseModel): Promise<boolean> {
-    return Promise.resolve(true);
-  }
+  readonly validateArgs = [
+    (_action: InputLicenseModel): Promise<boolean> => Promise.resolve(true),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputLicenseModel

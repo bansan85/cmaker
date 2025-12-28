@@ -21,9 +21,9 @@ export class ProjectDescriptionService extends CMakeArgumentInterface<InputStrin
     );
   }
 
-  isValid(_action: InputStringModel): Promise<boolean> {
-    return Promise.resolve(true);
-  }
+  readonly validateArgs = [
+    (_action: InputStringModel): Promise<boolean> => Promise.resolve(true),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputStringModel

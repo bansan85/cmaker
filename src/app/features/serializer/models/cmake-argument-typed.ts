@@ -4,5 +4,6 @@ import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-int
 
 export interface CMakeArgumentTyped {
   name: string;
-  component: Type<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: Type<CMakeComponentInterface<CMakeFeatureInterface<any>>>;
 }

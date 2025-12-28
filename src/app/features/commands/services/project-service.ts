@@ -70,30 +70,35 @@ export class ProjectService extends CMakeCommandInterface<ProjectModel> {
     return true;
   }
 
-  async isValid(action: ProjectModel): Promise<boolean> {
-    return Promise.resolve(
-      (!this.name.isEnabled(action.name) ||
-        (await this.name.isValid(action.name))) &&
-        (action.version === undefined ||
-          !this.version.isEnabled(action.version) ||
-          (await this.version.isValid(action.version))) &&
-        (action.compatVersion === undefined ||
-          !this.compatVersion.isEnabled(action.compatVersion) ||
-          (await this.compatVersion.isValid(action.compatVersion))) &&
-        (action.spdxLicense === undefined ||
-          !this.spdxLicense.isEnabled(action.spdxLicense) ||
-          (await this.spdxLicense.isValid(action.spdxLicense))) &&
-        (action.description === undefined ||
-          !this.description.isEnabled(action.description) ||
-          (await this.description.isValid(action.description))) &&
-        (action.homepageUrl === undefined ||
-          !this.homepageUrl.isEnabled(action.homepageUrl) ||
-          (await this.homepageUrl.isValid(action.homepageUrl))) &&
-        (action.languages === undefined ||
-          !this.languages.isEnabled(action.languages) ||
-          (await this.languages.isValid(action.languages)))
-    );
-  }
+  readonly validateArgs = [
+    async (action: ProjectModel): Promise<boolean> =>
+      !this.name.isEnabled(action.name) ||
+      (await this.name.isValid(action.name)),
+    async (action: ProjectModel): Promise<boolean> =>
+      action.version === undefined ||
+      !this.version.isEnabled(action.version) ||
+      (await this.version.isValid(action.version)),
+    async (action: ProjectModel): Promise<boolean> =>
+      action.compatVersion === undefined ||
+      !this.compatVersion.isEnabled(action.compatVersion) ||
+      (await this.compatVersion.isValid(action.compatVersion)),
+    async (action: ProjectModel): Promise<boolean> =>
+      action.spdxLicense === undefined ||
+      !this.spdxLicense.isEnabled(action.spdxLicense) ||
+      (await this.spdxLicense.isValid(action.spdxLicense)),
+    async (action: ProjectModel): Promise<boolean> =>
+      action.description === undefined ||
+      !this.description.isEnabled(action.description) ||
+      (await this.description.isValid(action.description)),
+    async (action: ProjectModel): Promise<boolean> =>
+      action.homepageUrl === undefined ||
+      !this.homepageUrl.isEnabled(action.homepageUrl) ||
+      (await this.homepageUrl.isValid(action.homepageUrl)),
+    async (action: ProjectModel): Promise<boolean> =>
+      action.languages === undefined ||
+      !this.languages.isEnabled(action.languages) ||
+      (await this.languages.isValid(action.languages)),
+  ];
 
   protected cmakeRequiredVersionImpl(action: ProjectModel): Version | null {
     return this.versionService.max(

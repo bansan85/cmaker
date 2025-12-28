@@ -24,9 +24,10 @@ export class OptionsRootPathService extends CMakeArgumentInterface<InputDirector
     );
   }
 
-  isValid(action: InputDirectoryModel): Promise<boolean> {
-    return this.rustBackendService.pathExists(action.directory, true);
-  }
+  readonly validateArgs = [
+    (action: InputDirectoryModel): Promise<boolean> =>
+      this.rustBackendService.pathExists(action.directory, true),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputDirectoryModel

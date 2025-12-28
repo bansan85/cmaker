@@ -23,9 +23,10 @@ export class ProjectNameService extends CMakeArgumentInterface<InputStringModel>
     );
   }
 
-  isValid(action: InputStringModel): Promise<boolean> {
-    return Promise.resolve(this.dataToCMake.isValidTargetName(action.text));
-  }
+  readonly validateArgs = [
+    (action: InputStringModel): Promise<boolean> =>
+      Promise.resolve(this.dataToCMake.isValidTargetName(action.text)),
+  ];
 
   protected cmakeRequiredVersionImpl(
     _action: InputStringModel
