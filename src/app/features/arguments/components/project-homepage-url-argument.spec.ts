@@ -75,13 +75,13 @@ describe('ProjectHomepageUrlArgument', () => {
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(projectHomepageUrlInput.matches(':invalid')).toBeFalse();
-      expect(component.value).toBe('http://example.com');
+      expect(component.text).toBe('http://example.com');
 
       projectHomepageUrlInput.value = 'https://example.com';
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(projectHomepageUrlInput.matches(':invalid')).toBeFalse();
-      expect(component.value).toBe('https://example.com');
+      expect(component.text).toBe('https://example.com');
     });
   });
 
@@ -129,7 +129,7 @@ describe('ProjectHomepageUrlArgument', () => {
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(projectHomepageUrlInput.matches(':invalid')).toBeFalse();
-      expect(component.value).toBe('https://example.com');
+      expect(component.text).toBe('https://example.com');
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();
 

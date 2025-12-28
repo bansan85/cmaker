@@ -70,7 +70,7 @@ describe('ProjectDescriptionArgument', () => {
       projectDescriptionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(projectDescriptionInput.matches(':invalid')).toBeFalse();
-      expect(component.value).toBe('Describe me');
+      expect(component.text).toBe('Describe me');
     });
   });
 
@@ -111,7 +111,7 @@ describe('ProjectDescriptionArgument', () => {
       projectDescriptionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(projectDescriptionInput.matches(':invalid')).toBeFalse();
-      expect(component.value).toBe('Describe me');
+      expect(component.text).toBe('Describe me');
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();
 

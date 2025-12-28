@@ -26,27 +26,27 @@ export class CMakeProjectIncludeVariableService extends CMakeCommandInterface<In
   isEnabled(action: InputFilesModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
 
   async isValid(action: InputFilesModel): Promise<boolean> {
     return (
-      action.value.length > 0 &&
+      action.files.length > 0 &&
       (await this.rustBackendService.relativePathsExists(
         this.projectContext.rootPath,
-        action.value,
+        action.files,
         false
       ))
     );
   }
 
   protected cmakeRequiredVersionImpl(action: InputFilesModel): Version | null {
-    if (action.value.length > 1) {
+    if (action.files.length > 1) {
       return new Version(3, 29);
     } else {
       return this.cmakeMinVersion;
@@ -69,7 +69,7 @@ export class CMakeProjectIncludeVariableService extends CMakeCommandInterface<In
   }
 
   toCMakerTxt(action: InputFilesModel): string {
-    return `${this.serializeCommandName}(${this.variable} "${action.value.join(
+    return `${this.serializeCommandName}(${this.variable} "${action.files.join(
       ';'
     )}")\n`;
   }

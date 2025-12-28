@@ -114,43 +114,39 @@ export class ProjectCommand
 
   protected readonly projectId = `project-${crypto.randomUUID()}`;
 
-  private readonly isValidResource = resource({
+  private readonly isValidResource = resource<boolean, ProjectModel>({
     params: () => ({
       name: {
         enabled: this.name.enabled,
-        value: this.name.value,
+        text: this.name.text,
       },
       version: {
         enabled: this.version.enabled,
-        value: this.version.value,
+        version: this.version.version,
       },
       compatVersion: {
         enabled: this.compatVersion.enabled,
-        value: this.compatVersion.value,
+        version: this.compatVersion.version,
       },
       spdxLicense: {
         enabled: this.spdxLicense.enabled,
-        value: this.spdxLicense.value,
+        license: this.spdxLicense.license,
       },
       description: {
         enabled: this.description.enabled,
-        value: this.description.value,
+        text: this.description.text,
       },
       homepageUrl: {
         enabled: this.homepageUrl.enabled,
-        value: this.homepageUrl.value,
+        text: this.homepageUrl.text,
       },
       languages: {
         enabled: this.languages.enabled,
-        value: this.languages.value,
+        languages: this.languages.languages,
       },
     }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 }

@@ -41,13 +41,13 @@ export class OptionsMaxCMakeVersion
 
     effect(() => {
       if (this.initialized()) {
-        this.projectContext.maxCMakeVersion = this.value;
+        this.projectContext.maxCMakeVersion = this.version;
       }
     });
   }
 
   ngAfterViewInit() {
-    this.value = this.projectContext.maxCMakeVersion.value;
+    this.version = this.projectContext.maxCMakeVersion.version;
     this.initialized.set(true);
   }
 }

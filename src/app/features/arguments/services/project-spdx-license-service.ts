@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
+import { InputLicenseModel } from '../../../shared/models/arguments/input-license-model';
 
 @Injectable({
   providedIn: null,
 })
-export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputStringModel> {
+export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputLicenseModel> {
   readonly cmakeMinVersion = new Version(4, 2);
 
-  isEnabled(action: InputStringModel): boolean {
+  isEnabled(action: InputLicenseModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
 
-  isValid(_action: InputStringModel): Promise<boolean> {
+  isValid(_action: InputLicenseModel): Promise<boolean> {
     return Promise.resolve(true);
   }
 
   protected cmakeRequiredVersionImpl(
-    _action: InputStringModel
+    _action: InputLicenseModel
   ): Version | null {
     return this.cmakeMinVersion;
   }
 
-  protected cmakeObjectsImpl(_action: InputStringModel): CMakeAvailableData {
+  protected cmakeObjectsImpl(_action: InputLicenseModel): CMakeAvailableData {
     return {
       variables: [
         {
@@ -50,11 +50,11 @@ export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputStrin
     };
   }
 
-  protected toCMakeListTxtImpl(action: InputStringModel): Promise<string> {
+  protected toCMakeListTxtImpl(action: InputLicenseModel): Promise<string> {
     return Promise.resolve(this.toCMakerTxt(action));
   }
 
-  toCMakerTxt(action: InputStringModel): string {
-    return `SPDX_LICENSE "${action.value}"\n`;
+  toCMakerTxt(action: InputLicenseModel): string {
+    return `SPDX_LICENSE "${action.license}"\n`;
   }
 }

@@ -1,4 +1,4 @@
 export interface InputStringModel {
   enabled?: boolean;
-  value: string;
+  text: string;
 }

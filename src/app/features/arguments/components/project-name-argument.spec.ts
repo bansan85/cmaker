@@ -78,7 +78,7 @@ describe('ProjectNameArgument', () => {
       projectNameInput.value = 'validName';
       projectNameInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(component.value).toBe('validName');
+      expect(component.text).toBe('validName');
     });
   });
 
@@ -128,7 +128,7 @@ describe('ProjectNameArgument', () => {
       projectNameInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(projectNameInput.matches('.ng-invalid')).toBeFalse();
-      expect(component.value).toBe('validName');
+      expect(component.text).toBe('validName');
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();
 

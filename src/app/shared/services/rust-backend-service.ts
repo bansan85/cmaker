@@ -17,7 +17,7 @@ export class RustBackendService {
     paths: string[],
     directory: boolean
   ): Promise<boolean> {
-    const baseString = typeof base === 'string' ? base : base.value;
+    const baseString = typeof base === 'string' ? base : base.directory;
     return await invoke<boolean>('relative_paths_exists', {
       baseString,
       paths,
@@ -29,7 +29,7 @@ export class RustBackendService {
     base: string | InputDirectoryModel,
     path: string
   ): Promise<string> {
-    const baseString = typeof base === 'string' ? base : base.value;
+    const baseString = typeof base === 'string' ? base : base.directory;
     return await invoke<string>('diff_path', { path, baseString });
   }
 

@@ -28,10 +28,10 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
   isEnabled(action: InputProjectNameFilesModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
@@ -39,10 +39,10 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
   async isValid(action: InputProjectNameFilesModel): Promise<boolean> {
     return (
       this.dataToCMake.isValidTargetName(action.projectName) &&
-      action.value.length > 0 &&
+      action.files.length > 0 &&
       (await this.rustBackendService.relativePathsExists(
         this.projectContext.rootPath,
-        action.value,
+        action.files,
         false
       ))
     );
@@ -51,7 +51,7 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
   protected cmakeRequiredVersionImpl(
     action: InputProjectNameFilesModel
   ): Version | null {
-    if (action.value.length > 1) {
+    if (action.files.length > 1) {
       return new Version(3, 29);
     } else {
       return this.cmakeMinVersion;
@@ -82,6 +82,6 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
   toCMakerTxt(action: InputProjectNameFilesModel): string {
     return `set(${this.dataToCMake.stringToCMakeName(this.variable, {
       project: action.projectName,
-    })} "${action.value.join(';')}")\n`;
+    })} "${action.files.join(';')}")\n`;
   }
 }

@@ -142,14 +142,14 @@ describe('TabOptions', () => {
       rootPathInput.value = 'c:/temp';
       rootPathInput.dispatchEvent(new Event('input', { bubbles: true }));
       await fixture.whenStable();
-      expect(component.rootPathSignal().value).toEqual('c:/temp');
-      expect(service.rootPath.value).toEqual('c:/temp');
+      expect(component.rootPathSignal().directory).toEqual('c:/temp');
+      expect(service.rootPath.directory).toEqual('c:/temp');
 
       rootPathInput.value = '4.rez';
       rootPathInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(component.rootPathSignal().value).toEqual('4.rez');
-      expect(service.rootPath.value).toEqual('4.rez');
+      expect(component.rootPathSignal().directory).toEqual('4.rez');
+      expect(service.rootPath.directory).toEqual('4.rez');
     });
 
     it('should update root path button', async () => {
@@ -160,8 +160,8 @@ describe('TabOptions', () => {
       rootPathButton.click();
       await fixture.whenStable();
       await fixture.whenStable();
-      expect(component.rootPathSignal().value).toEqual('c:/temp2');
-      expect(service.rootPath.value).toEqual('c:/temp2');
+      expect(component.rootPathSignal().directory).toEqual('c:/temp2');
+      expect(service.rootPath.directory).toEqual('c:/temp2');
       expect(rootPathInput.matches('.ng-invalid')).toBeTrue();
 
       mockIpcOpen = Promise.resolve('.');
@@ -169,8 +169,8 @@ describe('TabOptions', () => {
       rootPathButton.click();
       await fixture.whenStable();
       await fixture.whenStable();
-      expect(component.rootPathSignal().value).toEqual('.');
-      expect(service.rootPath.value).toEqual('.');
+      expect(component.rootPathSignal().directory).toEqual('.');
+      expect(service.rootPath.directory).toEqual('.');
       expect(rootPathInput.matches('.ng-valid')).toBeTrue();
     });
   });

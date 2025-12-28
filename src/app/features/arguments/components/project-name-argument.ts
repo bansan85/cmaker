@@ -38,6 +38,6 @@ export class ProjectNameArgument
 
   protected get validateProjectName() {
     return (control: AbstractControl<string>) =>
-      this.service.isValid({ value: control.value });
+      this.service.isValid({ text: control.value });
   }
 }

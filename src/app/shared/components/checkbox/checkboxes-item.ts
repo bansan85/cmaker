@@ -30,13 +30,13 @@ export class CheckboxesItem {
     if (!version) {
       return false;
     }
-    if (!this.projectContext.maxCMakeVersion.value) {
+    if (!this.projectContext.maxCMakeVersion.version) {
       return false;
     }
 
     return this.versionService.isGreater(
       version,
-      this.projectContext.maxCMakeVersion.value
+      this.projectContext.maxCMakeVersion.version
     );
   }
 }

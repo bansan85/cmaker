@@ -51,25 +51,25 @@ export class DeserializerRegistry {
         comp.enabled = true;
       }
       if (comp instanceof InputString) {
-        comp.value = value;
+        comp.text = value;
         return;
       } else if (comp instanceof InputVersion) {
-        comp.value = new Version(value);
+        comp.version = new Version(value);
         return;
       } else if (comp instanceof InputLicense) {
-        comp.value = value;
+        comp.license = value;
         return;
       } else if (comp instanceof InputLanguages) {
-        comp.value = value;
+        comp.languages = value;
         return;
       } else if (comp instanceof InputFiles) {
-        comp.value = this.dataToCMakeService.filesToArrayString(value);
+        comp.files = this.dataToCMakeService.filesToArrayString(value);
         return;
       } else if (comp instanceof InputCheckbox) {
-        comp.value = this.dataToCMakeService.stringToBoolean(value);
+        comp.checked = this.dataToCMakeService.stringToBoolean(value);
         return;
       } else if (comp instanceof InputProjectNameFiles) {
-        comp.value = this.dataToCMakeService.filesToArrayString(value);
+        comp.files = this.dataToCMakeService.filesToArrayString(value);
         return;
       }
     }

@@ -13,10 +13,10 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   isEnabled(action: InputLanguagesModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
@@ -28,7 +28,7 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   protected cmakeRequiredVersionImpl(
     action: InputLanguagesModel
   ): Version | null {
-    const languages = action.value.split(' ');
+    const languages = action.languages.split(' ');
     if (languages.includes('ASM_MARMASM')) {
       return new Version(3, 26);
     } else if (languages.includes('HIP')) {
@@ -55,6 +55,6 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   }
 
   toCMakerTxt(action: InputLanguagesModel): string {
-    return `LANGUAGES ${action.value}\n`;
+    return `LANGUAGES ${action.languages}\n`;
   }
 }

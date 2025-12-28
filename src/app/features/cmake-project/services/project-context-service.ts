@@ -15,7 +15,7 @@ export class ProjectContextService implements OptionsModel {
 
   // eslint-disable-next-line @typescript-eslint/related-getter-setter-pairs
   get maxCMakeVersion(): InputVersionModel {
-    return { enabled: true, value: this.maxCMakeVersionSignal() };
+    return { enabled: true, version: this.maxCMakeVersionSignal() };
   }
   set maxCMakeVersion(value: Version | undefined) {
     this.maxCMakeVersionSignal.set(value);
@@ -23,7 +23,7 @@ export class ProjectContextService implements OptionsModel {
 
   // eslint-disable-next-line @typescript-eslint/related-getter-setter-pairs
   get rootPath(): InputDirectoryModel {
-    return { enabled: true, value: this.rootPathSignal() };
+    return { enabled: true, directory: this.rootPathSignal() };
   }
   set rootPath(value: string) {
     this.rootPathSignal.set(value);

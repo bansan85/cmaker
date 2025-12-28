@@ -37,5 +37,5 @@ export class CMakeMsvcRuntimeLibraryVariable
 
   readonly service = inject(CMakeMsvcRuntimeLibraryVariableService);
 
-  protected readonly valueSignal = signal(true);
+  protected readonly checkedSignal = signal(true);
 }

@@ -16,16 +16,12 @@ export abstract class InputFiles
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputFilesModel>({
+    params: () => ({ enabled: this.enabled, files: this.files }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -35,24 +31,24 @@ export abstract class InputFiles
     this.enabledSignal.set(val);
   }
 
-  private readonly valueSignal = signal<string[]>([]);
-  public get value(): string[] {
-    return this.valueSignal();
+  private readonly filesSignal = signal<string[]>([]);
+  public get files(): string[] {
+    return this.filesSignal();
   }
-  public set value(v: string[]) {
-    this.valueSignal.set(v);
+  public set files(v: string[]) {
+    this.filesSignal.set(v);
   }
 
   rows = 1;
 
-  protected get valueSingleLine() {
-    return this.value.join('\n');
+  protected get filesSingleLine() {
+    return this.files.join('\n');
   }
 
-  protected set valueSingleLine(value: string) {
-    this.value = value.split('\n');
-    this.valueSignal.set(this.value);
-    this.rows = this.value.length + 1;
+  protected set filesSingleLine(value: string) {
+    this.files = value.split('\n');
+    this.filesSignal.set(this.files);
+    this.rows = this.files.length + 1;
   }
 
   async addPath() {
@@ -70,10 +66,10 @@ export abstract class InputFiles
         this.projectContext.rootPath,
         absolutePath
       );
-      if (this.valueSingleLine === '') {
-        this.valueSingleLine = relativePath;
+      if (this.filesSingleLine === '') {
+        this.filesSingleLine = relativePath;
       } else {
-        this.valueSingleLine = `${this.valueSingleLine}\n${relativePath}`;
+        this.filesSingleLine = `${this.filesSingleLine}\n${relativePath}`;
       }
     }
   }

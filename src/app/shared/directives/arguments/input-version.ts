@@ -11,16 +11,12 @@ export abstract class InputVersion
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputVersionModel>;
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputVersionModel>({
+    params: () => ({ enabled: this.enabled, version: this.version }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -30,25 +26,25 @@ export abstract class InputVersion
     this.enabledSignal.set(val);
   }
 
-  private readonly valueSignal = signal<Version | undefined>(undefined);
-  set value(v: Version | undefined) {
-    this.valueSignal.set(v);
-    this.valueString = v ? v.toString() : '';
+  private readonly versionSignal = signal<Version | undefined>(undefined);
+  set version(v: Version | undefined) {
+    this.versionSignal.set(v);
+    this.internalVersionString = v ? v.toString() : '';
   }
-  get value(): Version | undefined {
-    return this.valueSignal();
+  get version(): Version | undefined {
+    return this.versionSignal();
   }
 
-  private valueString = '';
+  private internalVersionString = '';
   get versionString(): string {
-    return this.valueString;
+    return this.internalVersionString;
   }
   set versionString(value: string) {
-    this.valueString = value;
+    this.internalVersionString = value;
     if (Version.isValid(value)) {
-      this.valueSignal.set(new Version(value));
+      this.versionSignal.set(new Version(value));
     } else {
-      this.valueSignal.set(undefined);
+      this.versionSignal.set(undefined);
     }
   }
 }

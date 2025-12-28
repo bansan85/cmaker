@@ -11,16 +11,12 @@ export abstract class InputLanguages
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputLanguagesModel>;
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputLanguagesModel>({
+    params: () => ({ enabled: this.enabled, languages: this.languages }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -30,7 +26,7 @@ export abstract class InputLanguages
     this.enabledSignal.set(val);
   }
 
-  get value(): string {
+  get languages(): string {
     return (
       this.allLanguages
         .filter((item) => item.enabled)
@@ -38,7 +34,7 @@ export abstract class InputLanguages
         .join(' ') || 'NONE'
     );
   }
-  set value(value: string) {
+  set languages(value: string) {
     const values = value.split(' ');
     for (const item of this.allLanguages) {
       item.enabled = values.includes(item.name);

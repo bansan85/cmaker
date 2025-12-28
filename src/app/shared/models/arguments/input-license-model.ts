@@ -1,4 +1,4 @@
 export interface InputLicenseModel {
   enabled?: boolean;
-  value: string;
+  license: string;
 }

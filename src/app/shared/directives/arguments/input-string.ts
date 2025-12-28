@@ -10,16 +10,12 @@ export abstract class InputString
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputStringModel>;
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputStringModel>({
+    params: () => ({ enabled: this.enabled, text: this.text }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -29,11 +25,11 @@ export abstract class InputString
     this.enabledSignal.set(val);
   }
 
-  private readonly valueSignal = signal('');
-  get value(): string {
-    return this.valueSignal();
+  private readonly textSignal = signal('');
+  get text(): string {
+    return this.textSignal();
   }
-  set value(val: string) {
-    this.valueSignal.set(val);
+  set text(val: string) {
+    this.textSignal.set(val);
   }
 }

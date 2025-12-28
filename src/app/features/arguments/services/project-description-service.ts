@@ -13,10 +13,10 @@ export class ProjectDescriptionService extends CMakeArgumentInterface<InputStrin
   isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
@@ -55,6 +55,6 @@ export class ProjectDescriptionService extends CMakeArgumentInterface<InputStrin
   }
 
   toCMakerTxt(action: InputStringModel): string {
-    return `DESCRIPTION "${action.value}"\n`;
+    return `DESCRIPTION "${action.text}"\n`;
   }
 }

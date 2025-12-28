@@ -40,13 +40,13 @@ export class OptionsRootPath
 
     effect(() => {
       if (this.initialized()) {
-        this.projectContext.rootPath = this.value;
+        this.projectContext.rootPath = this.directory;
       }
     });
   }
 
   ngAfterViewInit() {
-    this.value = this.projectContext.rootPath.value;
+    this.directory = this.projectContext.rootPath.directory;
     this.initialized.set(true);
   }
 }

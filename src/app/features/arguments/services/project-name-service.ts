@@ -15,16 +15,16 @@ export class ProjectNameService extends CMakeArgumentInterface<InputStringModel>
   isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
 
   isValid(action: InputStringModel): Promise<boolean> {
-    return Promise.resolve(this.dataToCMake.isValidTargetName(action.value));
+    return Promise.resolve(this.dataToCMake.isValidTargetName(action.text));
   }
 
   protected cmakeRequiredVersionImpl(
@@ -53,6 +53,6 @@ export class ProjectNameService extends CMakeArgumentInterface<InputStringModel>
   }
 
   toCMakerTxt(action: InputStringModel): string {
-    return `${action.value}\n`;
+    return `${action.text}\n`;
   }
 }

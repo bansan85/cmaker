@@ -10,16 +10,12 @@ export abstract class InputCheckbox
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputCheckboxModel>;
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputCheckboxModel>({
+    params: () => ({ enabled: this.enabled, checked: this.checked }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -29,11 +25,11 @@ export abstract class InputCheckbox
     this.enabledSignal.set(val);
   }
 
-  protected abstract valueSignal: WritableSignal<boolean>;
-  get value(): boolean {
-    return this.valueSignal();
+  protected abstract checkedSignal: WritableSignal<boolean>;
+  get checked(): boolean {
+    return this.checkedSignal();
   }
-  set value(val: boolean) {
-    this.valueSignal.set(val);
+  set checked(val: boolean) {
+    this.checkedSignal.set(val);
   }
 }

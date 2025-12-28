@@ -27,10 +27,10 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
   isEnabled(action: InputCheckboxModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
@@ -51,7 +51,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
         {
           variable: this.variable,
           helpText: this.helpText,
-          value: this.dataToCMake.booleanToString(action.value),
+          value: this.dataToCMake.booleanToString(action.checked),
         },
       ],
     };
@@ -60,7 +60,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
   protected toCMakeListTxtImpl(action: InputCheckboxModel): Promise<string> {
     return Promise.resolve(`# Windows only
 option(${this.variable} "${this.helpText}" ${this.dataToCMake.booleanToString(
-      action.value
+      action.checked
     )})
 
 if(NOT ${this.variable})
@@ -72,7 +72,7 @@ endif()
 
   toCMakerTxt(action: InputCheckboxModel): string {
     return `${this.serializeCommandName}(${this.dataToCMake.booleanToString(
-      action.value
+      action.checked
     )})\n`;
   }
 }

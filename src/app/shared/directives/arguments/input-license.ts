@@ -10,16 +10,12 @@ export abstract class InputLicense
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputLicenseModel>;
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputLicenseModel>({
+    params: () => ({ enabled: this.enabled, license: this.license }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -29,11 +25,11 @@ export abstract class InputLicense
     this.enabledSignal.set(val);
   }
 
-  protected readonly valueSignal = signal('');
-  get value(): string {
-    return this.valueSignal();
+  private readonly licenseSignal = signal('');
+  get license(): string {
+    return this.licenseSignal();
   }
-  set value(val: string) {
-    this.valueSignal.set(val);
+  set license(val: string) {
+    this.licenseSignal.set(val);
   }
 }

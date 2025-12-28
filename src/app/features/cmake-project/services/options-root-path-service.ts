@@ -16,16 +16,16 @@ export class OptionsRootPathService extends CMakeArgumentInterface<InputDirector
   isEnabled(action: InputDirectoryModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
 
   isValid(action: InputDirectoryModel): Promise<boolean> {
-    return this.rustBackendService.pathExists(action.value, true);
+    return this.rustBackendService.pathExists(action.directory, true);
   }
 
   protected cmakeRequiredVersionImpl(
@@ -43,6 +43,6 @@ export class OptionsRootPathService extends CMakeArgumentInterface<InputDirector
   }
 
   toCMakerTxt(action: InputDirectoryModel): string {
-    return `cmaker_root_path(${action.value})\n`;
+    return `cmaker_root_path(${action.directory})\n`;
   }
 }

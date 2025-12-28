@@ -50,10 +50,10 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   isEffectiveVersionValid(action: Feature): boolean {
     return (
-      this.projectContext.maxCMakeVersion.value === undefined ||
+      this.projectContext.maxCMakeVersion.version === undefined ||
       !this.versionService.isGreater(
         this.cmakeRequiredVersionImpl(action),
-        this.projectContext.maxCMakeVersion.value
+        this.projectContext.maxCMakeVersion.version
       )
     );
   }

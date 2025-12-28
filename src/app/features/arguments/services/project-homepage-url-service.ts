@@ -12,16 +12,16 @@ export class ProjectHomepageUrlService extends CMakeArgumentInterface<InputStrin
   isEnabled(action: InputStringModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
 
   isValid(action: InputStringModel): Promise<boolean> {
-    return Promise.resolve(/https?:\/\/.+/u.test(action.value));
+    return Promise.resolve(/https?:\/\/.+/u.test(action.text));
   }
 
   protected cmakeRequiredVersionImpl(
@@ -54,6 +54,6 @@ export class ProjectHomepageUrlService extends CMakeArgumentInterface<InputStrin
   }
 
   toCMakerTxt(action: InputStringModel): string {
-    return `HOMEPAGE_URL "${action.value}"\n`;
+    return `HOMEPAGE_URL "${action.text}"\n`;
   }
 }

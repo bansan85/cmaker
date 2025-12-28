@@ -13,16 +13,16 @@ export class ProjectVersionService extends CMakeArgumentInterface<InputVersionMo
   isEnabled(action: InputVersionModel): boolean {
     return (
       (action.enabled ?? true) &&
-      (this.projectContext.maxCMakeVersion.value === undefined ||
+      (this.projectContext.maxCMakeVersion.version === undefined ||
         !this.versionService.isGreater(
           this.cmakeMinVersion,
-          this.projectContext.maxCMakeVersion.value
+          this.projectContext.maxCMakeVersion.version
         ))
     );
   }
 
   isValid(action: InputVersionModel): Promise<boolean> {
-    return Promise.resolve(action.value !== undefined);
+    return Promise.resolve(action.version !== undefined);
   }
 
   protected cmakeRequiredVersionImpl(
@@ -111,6 +111,6 @@ export class ProjectVersionService extends CMakeArgumentInterface<InputVersionMo
   }
 
   toCMakerTxt(action: InputVersionModel): string {
-    return `VERSION ${action.value?.toString()}\n`;
+    return `VERSION ${action.version?.toString()}\n`;
   }
 }

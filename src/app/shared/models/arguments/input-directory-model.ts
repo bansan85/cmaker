@@ -1,4 +1,4 @@
 export interface InputDirectoryModel {
   enabled?: boolean;
-  value: string;
+  directory: string;
 }

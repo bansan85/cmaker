@@ -12,16 +12,12 @@ export abstract class InputDirectory
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputDirectoryModel>;
 
-  private readonly isValidResource = resource({
-    params: () => ({ enabled: this.enabled, value: this.value }),
+  private readonly isValidResource = resource<boolean, InputDirectoryModel>({
+    params: () => ({ enabled: this.enabled, directory: this.directory }),
     loader: ({ params }) => this.service.isValid(params),
+    defaultValue: false,
   });
-  readonly isValid = computed(() => {
-    if (this.isValidResource.hasValue()) {
-      return this.isValidResource.value();
-    }
-    return false;
-  });
+  readonly isValid = computed(() => this.isValidResource.value());
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
@@ -31,26 +27,26 @@ export abstract class InputDirectory
     this.enabledSignal.set(val);
   }
 
-  private readonly valueSignal = signal<string>('');
-  public get value(): string {
-    return this.valueSignal();
+  private readonly directorySignal = signal<string>('');
+  public get directory(): string {
+    return this.directorySignal();
   }
-  public set value(v: string) {
-    this.valueSignal.set(v);
+  public set directory(v: string) {
+    this.directorySignal.set(v);
   }
 
   async selectPath() {
-    const rootPath = await open({
+    const directory = await open({
       multiple: false,
       directory: true,
     });
 
-    if (rootPath !== null) {
-      this.value = rootPath;
+    if (directory !== null) {
+      this.directory = directory;
     }
   }
 
-  protected checkPath = async (
+  protected checkDirectory = async (
     control: AbstractControl<string>
-  ): Promise<boolean> => this.service.isValid({ value: control.value });
+  ): Promise<boolean> => this.service.isValid({ directory: control.value });
 }
