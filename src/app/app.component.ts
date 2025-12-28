@@ -6,6 +6,6 @@ import { CMakeProject } from './features/cmake-project/components/cmake-project'
   imports: [CMakeProject],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {}

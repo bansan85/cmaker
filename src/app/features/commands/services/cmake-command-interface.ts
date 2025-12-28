@@ -4,7 +4,7 @@ import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { CMakeCommandMapping } from '../../serializer/services/cmake-command-mapping';
 
 export abstract class CMakeCommandInterface<
-  Feature
+  Feature,
 > extends CMakeFeatureInterface<Feature> {
   protected cmakeCommandMapping = inject(CMakeCommandMapping);
 

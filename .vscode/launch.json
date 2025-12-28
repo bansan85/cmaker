@@ -1,22 +1,22 @@
 {
-    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
-    // Survolez pour afficher les descriptions des attributs existants.
-    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Débogage de la production de Tauri",
-            "cargo": {
-                "args": [
-                    "build",
-                    "--manifest-path=./src-tauri/Cargo.toml",
-                    "--no-default-features"
-                ]
-            },
-            // La tâche pour `beforeDevCommand` si elle est utilisée, doit être configurée dans `.vscode/tasks.json`
-            "preLaunchTask": "ui:dev"
-        }
-    ]
+  // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+  // Survolez pour afficher les descriptions des attributs existants.
+  // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Débogage de la production de Tauri",
+      "cargo": {
+        "args": [
+          "build",
+          "--manifest-path=./src-tauri/Cargo.toml",
+          "--no-default-features"
+        ]
+      },
+      // La tâche pour `beforeDevCommand` si elle est utilisée, doit être configurée dans `.vscode/tasks.json`
+      "preLaunchTask": "ui:dev"
+    }
+  ]
 }

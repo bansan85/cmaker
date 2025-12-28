@@ -1,5 +1,5 @@
 import { CMakeFeatureInterface } from './cmake-feature-interface';
 
 export abstract class CMakeArgumentInterface<
-  Feature
+  Feature,
 > extends CMakeFeatureInterface<Feature> {}

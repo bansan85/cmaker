@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, output } from '@angular/core';
   imports: [],
   templateUrl: './ui-checkbox-indeterminate.html',
   styleUrl: './ui-checkbox-indeterminate.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiCheckboxIndeterminate {
   protected value: boolean | null = null;

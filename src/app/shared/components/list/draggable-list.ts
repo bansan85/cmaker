@@ -10,7 +10,7 @@ import { DraggableItemComponent } from './draggable-item';
 @Component({
   selector: 'app-draggable-list',
   templateUrl: './draggable-list.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DraggableListComponent {
   private readonly items = contentChildren(DraggableItemComponent);

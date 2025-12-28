@@ -12,6 +12,6 @@ import { TabOptions } from './tab-options';
   templateUrl: './cmake-project.html',
   styleUrl: './cmake-project.css',
   providers: [ProjectContextService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CMakeProject {}

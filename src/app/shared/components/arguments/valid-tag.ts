@@ -6,7 +6,7 @@ import { ValidatorInterface } from '../../interfaces/validator-interface';
   imports: [],
   templateUrl: './valid-tag.html',
   styleUrl: './valid-tag.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ValidTag {
   readonly validator = input.required<ValidatorInterface>();

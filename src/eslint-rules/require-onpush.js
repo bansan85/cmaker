@@ -16,7 +16,10 @@ export default {
         if (node.expression.callee?.name !== 'Component') return;
 
         const classNode = node.parent;
-        if (classNode?.type === 'ClassDeclaration' && classNode.id?.name.startsWith('Stub')) {
+        if (
+          classNode?.type === 'ClassDeclaration' &&
+          classNode.id?.name.startsWith('Stub')
+        ) {
           return;
         }
 

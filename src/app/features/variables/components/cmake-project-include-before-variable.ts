@@ -24,7 +24,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       useExisting: forwardRef(() => CMakeProjectIncludeBeforeVariable),
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CMakeProjectIncludeBeforeVariable
   extends InputFiles

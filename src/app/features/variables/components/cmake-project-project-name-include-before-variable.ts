@@ -26,7 +26,7 @@ import { VersionTag } from '../../../shared/components/arguments/version-tag';
       ),
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CMakeProjectProjectNameIncludeBeforeVariable
   extends InputProjectNameFiles

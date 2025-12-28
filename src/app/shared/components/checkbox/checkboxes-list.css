@@ -6,7 +6,7 @@
   position: relative;
 }
 
-[id|="checkboxes-list"] {
+[id|='checkboxes-list'] {
   border: 1px #dadada solid;
   position: absolute;
   background-color: #fff;
@@ -14,6 +14,6 @@
   display: none;
 }
 
-[id|="checkboxes-list"].checkboxes-show {
+[id|='checkboxes-list'].checkboxes-show {
   display: block;
 }

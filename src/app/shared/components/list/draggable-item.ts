@@ -12,7 +12,7 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 @Component({
   selector: 'app-draggable-item',
   templateUrl: './draggable-item.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DraggableItemComponent {
   readonly title =

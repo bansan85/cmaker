@@ -7,7 +7,7 @@ import { FullProjectService } from '../services/full-project-service';
   imports: [],
   templateUrl: './full-project-view.html',
   styleUrl: './full-project-view.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FullProjectView
   implements CMakeComponentInterface<FullProjectService>

@@ -65,7 +65,7 @@ import { unknownAssertError } from '../../../shared/interfaces/errors';
       useExisting: forwardRef(() => ProjectCommand),
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCommand
   implements
