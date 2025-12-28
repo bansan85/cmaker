@@ -1,4 +1,4 @@
-import { Directive, effect, signal } from '@angular/core';
+import { effect, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputVersionModel } from '../../models/arguments/input-version-model';
 import { Version } from '../../models/version';
@@ -6,9 +6,6 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 import { ValidatorInterface } from '../../interfaces/validator-interface';
 import { unknownAssertError } from '../../interfaces/errors';
 
-@Directive({
-  selector: '[appInputVersion]',
-})
 export abstract class InputVersion
   implements CheckboxesItemInterface, InputVersionModel, ValidatorInterface
 {

@@ -1,4 +1,4 @@
-import { Directive, effect, inject, signal } from '@angular/core';
+import { effect, inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputFilesModel } from '../../models/arguments/input-files-model';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
@@ -8,9 +8,6 @@ import { ProjectContextService } from '../../../features/cmake-project/services/
 import { ValidatorInterface } from '../../interfaces/validator-interface';
 import { unknownAssertError } from '../../interfaces/errors';
 
-@Directive({
-  selector: '[appInputFiles]',
-})
 export abstract class InputFiles
   implements CheckboxesItemInterface, InputFilesModel, ValidatorInterface
 {

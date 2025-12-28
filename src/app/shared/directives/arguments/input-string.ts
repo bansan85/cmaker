@@ -1,13 +1,10 @@
-import { Directive, effect, signal } from '@angular/core';
+import { effect, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { InputStringModel } from '../../models/arguments/input-string-model';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
 import { unknownAssertError } from '../../interfaces/errors';
 
-@Directive({
-  selector: '[appInputString]',
-})
 export abstract class InputString
   implements CheckboxesItemInterface, InputStringModel, ValidatorInterface
 {

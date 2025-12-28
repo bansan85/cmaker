@@ -1,4 +1,4 @@
-import { Directive, effect, inject, signal } from '@angular/core';
+import { effect, inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputProjectNameFilesModel } from '../../models/arguments/input-project-name-files-model';
 import { open } from '@tauri-apps/plugin-dialog';
@@ -8,9 +8,6 @@ import { ProjectContextService } from '../../../features/cmake-project/services/
 import { ValidatorInterface } from '../../interfaces/validator-interface';
 import { unknownAssertError } from '../../interfaces/errors';
 
-@Directive({
-  selector: '[appInputProjectNameFiles]',
-})
 export abstract class InputProjectNameFiles
   implements
     CheckboxesItemInterface,

@@ -1,4 +1,4 @@
-import { Directive, effect, signal } from '@angular/core';
+import { effect, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { Version } from '../../models/version';
 import { InputLanguagesModel } from '../../models/arguments/input-languages-model';
@@ -6,9 +6,6 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 import { ValidatorInterface } from '../../interfaces/validator-interface';
 import { unknownAssertError } from '../../interfaces/errors';
 
-@Directive({
-  selector: '[appInputLanguages]',
-})
 export abstract class InputLanguages
   implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
 {

@@ -1,4 +1,4 @@
-import { Directive, effect, inject, signal } from '@angular/core';
+import { effect, inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputDirectoryModel } from '../../models/arguments/input-directory-model';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
@@ -8,9 +8,6 @@ import { unknownAssertError } from '../../interfaces/errors';
 import { open } from '@tauri-apps/plugin-dialog';
 import { AbstractControl } from '@angular/forms';
 
-@Directive({
-  selector: '[appInputDirectory]',
-})
 export abstract class InputDirectory
   implements CheckboxesItemInterface, InputDirectoryModel, ValidatorInterface
 {
