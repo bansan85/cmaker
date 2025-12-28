@@ -54,6 +54,5 @@ export abstract class InputDirectory
 
   protected checkPath = async (
     control: AbstractControl<string>
-  ): Promise<boolean> =>
-    this.rustBackendService.pathExists(control.value, true);
+  ): Promise<boolean> => this.service.isValid({ value: control.value });
 }
