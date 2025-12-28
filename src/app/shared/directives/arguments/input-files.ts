@@ -12,7 +12,6 @@ export abstract class InputFiles
   implements CheckboxesItemInterface, InputFilesModel, ValidatorInterface
 {
   readonly isValid = signal(false);
-  enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputFilesModel>;
 
@@ -22,7 +21,7 @@ export abstract class InputFiles
   constructor() {
     effect(() => {
       this.service
-        .isValid(this)
+        .isValid({ enabled: this.enabled, value: this.value })
         .then((result) => {
           this.isValid.set(result);
         })
@@ -30,6 +29,14 @@ export abstract class InputFiles
           throw unknownAssertError(err);
         });
     });
+  }
+
+  private readonly enabledSignal = signal(true);
+  get enabled(): boolean {
+    return this.enabledSignal();
+  }
+  set enabled(val: boolean) {
+    this.enabledSignal.set(val);
   }
 
   private readonly valueSignal = signal<string[]>([]);

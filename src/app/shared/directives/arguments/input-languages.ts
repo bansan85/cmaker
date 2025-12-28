@@ -10,14 +10,13 @@ export abstract class InputLanguages
   implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
 {
   readonly isValid = signal(false);
-  enabled = true;
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputLanguagesModel>;
 
   constructor() {
     effect(() => {
       this.service
-        .isValid(this)
+        .isValid({ enabled: this.enabled, value: this.value })
         .then((result) => {
           this.isValid.set(result);
         })
@@ -25,6 +24,14 @@ export abstract class InputLanguages
           throw unknownAssertError(err);
         });
     });
+  }
+
+  private readonly enabledSignal = signal(true);
+  get enabled(): boolean {
+    return this.enabledSignal();
+  }
+  set enabled(val: boolean) {
+    this.enabledSignal.set(val);
   }
 
   get value(): string {
