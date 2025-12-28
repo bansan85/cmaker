@@ -6,7 +6,6 @@
   display: block;
 }
 
-.field input:invalid,
 .field input.ng-invalid {
   color: red;
 }

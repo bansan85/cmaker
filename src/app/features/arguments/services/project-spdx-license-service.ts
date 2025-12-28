@@ -3,6 +3,7 @@ import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 import { InputLicenseModel } from '../../../shared/models/arguments/input-license-model';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,
@@ -23,6 +24,13 @@ export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputLicen
 
   readonly validateArgs = [
     (_action: InputLicenseModel): Promise<boolean> => Promise.resolve(true),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      _context: InputLicenseModel
+    ): Promise<boolean> => this.validateArgs[0]({ license: control.value }),
   ];
 
   protected cmakeRequiredVersionImpl(

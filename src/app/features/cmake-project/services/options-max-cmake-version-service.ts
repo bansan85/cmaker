@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../interfaces/cmake-available-data';
+import { AbstractControl } from '@angular/forms';
+import { DataToCMakeService } from './data-to-cmake-service';
 
 @Injectable({
   providedIn: null,
 })
 export class OptionsMaxCMakeVersionService extends CMakeArgumentInterface<InputVersionModel> {
   readonly cmakeMinVersion = null;
+
+  private dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputVersionModel): boolean {
     return (
@@ -24,6 +28,16 @@ export class OptionsMaxCMakeVersionService extends CMakeArgumentInterface<InputV
   readonly validateArgs = [
     (action: InputVersionModel): Promise<boolean> =>
       Promise.resolve(action.version !== undefined),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      _context: InputVersionModel
+    ): Promise<boolean> =>
+      this.validateArgs[0]({
+        version: this.dataToCMake.stringToVersion(control.value),
+      }),
   ];
 
   protected cmakeRequiredVersionImpl(

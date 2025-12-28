@@ -5,9 +5,9 @@
   /></label>
   <input
     name="project-homepage-url"
-    pattern="https?:\/\/.+"
-    required
     type="url"
+    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidatorContext]="this"
     [id]="projectHomepageUrlId"
     [(ngModel)]="text"
   />

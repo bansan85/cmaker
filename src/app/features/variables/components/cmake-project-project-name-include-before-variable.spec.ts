@@ -4,6 +4,7 @@ import { CMakeProjectProjectNameIncludeBeforeVariable } from './cmake-project-pr
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { mockIPC } from '@tauri-apps/api/mocks';
 
 describe('CMakeProjectProjectNameIncludeBeforeVariable', () => {
   let component: CMakeProjectProjectNameIncludeBeforeVariable;
@@ -20,6 +21,13 @@ describe('CMakeProjectProjectNameIncludeBeforeVariable', () => {
         },
       ],
     }).compileComponents();
+
+    mockIPC((cmd, args) => {
+      if (cmd === 'relative_paths_exists') {
+        return true;
+      }
+      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+    });
 
     fixture = TestBed.createComponent(
       CMakeProjectProjectNameIncludeBeforeVariable

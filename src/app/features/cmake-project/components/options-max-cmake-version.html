@@ -2,9 +2,9 @@
   <label [for]="optionsMaxCMakeVersionId">Max CMake version:</label>
   <input
     name="max-cmake-version"
-    pattern="\d+(\.\d+){0,3}"
-    required
     type="text"
+    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidatorContext]="this"
     [id]="optionsMaxCMakeVersionId"
     [(ngModel)]="versionString"
   />

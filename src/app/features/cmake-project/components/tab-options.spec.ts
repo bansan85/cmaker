@@ -118,22 +118,22 @@ describe('TabOptions', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should change :invalid when invalid input', async () => {
+    it('should change .ng-invalid when invalid input', async () => {
       const { maxCMakeVersionInput } = page;
       expect(maxCMakeVersionInput.value).toEqual('4.3');
-      expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
+      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBeFalse();
       expect(component.maxCMakeVersionSignal().versionString).toBe('4.3');
 
       maxCMakeVersionInput.value = '4.rez';
       maxCMakeVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(maxCMakeVersionInput.matches(':invalid')).toBeTrue();
+      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBeTrue();
 
       maxCMakeVersionInput.value = '4.2';
       maxCMakeVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(maxCMakeVersionInput.value).toEqual('4.2');
-      expect(maxCMakeVersionInput.matches(':invalid')).toBeFalse();
+      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBeFalse();
       expect(component.maxCMakeVersionSignal().versionString).toBe('4.2');
     });
 

@@ -11,10 +11,11 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-project-version-argument',
-  imports: [FormsModule, ValidTag, VersionTag],
+  imports: [FormsModule, ValidTag, VersionTag, AsyncInvalidValidator],
   templateUrl: './project-version-argument.html',
   styleUrl: './project-version-argument.css',
   providers: [

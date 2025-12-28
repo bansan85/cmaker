@@ -72,7 +72,7 @@ describe('ProjectNameArgument', () => {
       expect(page.projectNameInput).toBeTruthy();
     });
 
-    it('should change input:invalid when invalid input', async () => {
+    it('should change input.ng-invalid when invalid input', async () => {
       const { projectNameInput } = page;
 
       projectNameInput.value = 'validName';

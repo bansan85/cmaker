@@ -11,10 +11,11 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-cmake-project-project-name-include-variable',
-  imports: [FormsModule, ValidTag, VersionTag],
+  imports: [FormsModule, ValidTag, VersionTag, AsyncInvalidValidator],
   templateUrl: './cmake-project-project-name-include-variable.html',
   styleUrl: './cmake-project-project-name-include-variable.css',
   providers: [

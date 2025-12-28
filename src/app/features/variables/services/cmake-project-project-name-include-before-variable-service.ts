@@ -7,6 +7,7 @@ import { InputProjectNameFilesModel } from '../../../shared/models/arguments/inp
 import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { CMakeProjectProjectNameIncludeBeforeVariable } from '../components/cmake-project-project-name-include-before-variable';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,
@@ -46,6 +47,25 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
         action.files,
         false
       )),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      context: InputProjectNameFilesModel
+    ): Promise<boolean> =>
+      this.validateArgs[0]({
+        projectName: control.value,
+        files: context.files,
+      }),
+    (
+      control: AbstractControl<string, string>,
+      context: InputProjectNameFilesModel
+    ): Promise<boolean> =>
+      this.validateArgs[1]({
+        projectName: context.projectName,
+        files: this.dataToCMake.filesToArrayString(control.value),
+      }),
   ];
 
   protected cmakeRequiredVersionImpl(

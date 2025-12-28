@@ -3,6 +3,7 @@ import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputLanguagesModel } from '../../../shared/models/arguments/input-languages-model';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,
@@ -23,6 +24,13 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
 
   readonly validateArgs = [
     (_action: InputLanguagesModel): Promise<boolean> => Promise.resolve(true),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      _context: InputLanguagesModel
+    ): Promise<boolean> => this.validateArgs[0]({ languages: control.value }),
   ];
 
   protected cmakeRequiredVersionImpl(

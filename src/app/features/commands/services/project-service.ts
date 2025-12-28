@@ -100,6 +100,8 @@ export class ProjectService extends CMakeCommandInterface<ProjectModel> {
       (await this.languages.isValid(action.languages)),
   ];
 
+  readonly validateArg = [];
+
   protected cmakeRequiredVersionImpl(action: ProjectModel): Version | null {
     return this.versionService.max(
       this.name.cmakeRequiredVersion(action.name),

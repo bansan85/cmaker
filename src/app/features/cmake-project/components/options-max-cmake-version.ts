@@ -11,10 +11,11 @@ import { CMakeComponentInterface } from '../interfaces/cmake-component-interface
 import { FormsModule } from '@angular/forms';
 import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-version-service';
 import { ProjectContextService } from '../services/project-context-service';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-options-max-cmake-version',
-  imports: [FormsModule],
+  imports: [FormsModule, AsyncInvalidValidator],
   templateUrl: './options-max-cmake-version.html',
   styleUrl: './options-max-cmake-version.css',
   providers: [OptionsMaxCMakeVersionService],

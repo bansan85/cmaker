@@ -6,6 +6,8 @@
   <input
     name="project-spdx-license"
     type="text"
+    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidatorContext]="this"
     [attr.list]="datalist.inputLicenseListId"
     [id]="projectSpdxLicenseId"
     [(ngModel)]="license"

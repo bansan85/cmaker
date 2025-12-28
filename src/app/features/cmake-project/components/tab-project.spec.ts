@@ -6,6 +6,7 @@ import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { importProvidersFrom } from '@angular/core';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
+import { mockIPC } from '@tauri-apps/api/mocks';
 
 describe('TabProject', () => {
   let component: TabProject;
@@ -23,6 +24,13 @@ describe('TabProject', () => {
         importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
       ],
     }).compileComponents();
+
+    mockIPC((cmd, args) => {
+      if (cmd === 'relative_paths_exists') {
+        return true;
+      }
+      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+    });
 
     fixture = TestBed.createComponent(TabProject);
     component = fixture.componentInstance;

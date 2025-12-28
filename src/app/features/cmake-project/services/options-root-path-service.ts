@@ -4,6 +4,7 @@ import { InputDirectoryModel } from '../../../shared/models/arguments/input-dire
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../interfaces/cmake-available-data';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,
@@ -27,6 +28,13 @@ export class OptionsRootPathService extends CMakeArgumentInterface<InputDirector
   readonly validateArgs = [
     (action: InputDirectoryModel): Promise<boolean> =>
       this.rustBackendService.pathExists(action.directory, true),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      _context: InputDirectoryModel
+    ): Promise<boolean> => this.validateArgs[0]({ directory: control.value }),
   ];
 
   protected cmakeRequiredVersionImpl(

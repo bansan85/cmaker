@@ -5,9 +5,9 @@
   /></label>
   <input
     name="project-version"
-    pattern="\d+(\.\d+){0,3}"
-    required
     type="text"
+    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidatorContext]="this"
     [id]="projectVersionId"
     [(ngModel)]="versionString"
   />

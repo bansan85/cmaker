@@ -93,7 +93,7 @@ describe('ProjectLanguagesArgument', () => {
       expect(page.projectLanguagesOutput).toBeTruthy();
     });
 
-    it('should change input:invalid when invalid input', () => {
+    it('should change input.ng-invalid when invalid input', () => {
       const { projectLanguagesOutput } = page;
 
       expect(projectLanguagesOutput.textContent).toBe('NONE');

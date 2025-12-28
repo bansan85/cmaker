@@ -3,6 +3,7 @@ import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { VersionService } from '../../../shared/services/version-service';
+import { AbstractControl } from '@angular/forms';
 
 export abstract class CMakeFeatureInterface<Feature> {
   protected projectContext = inject(ProjectContextService);
@@ -19,6 +20,12 @@ export abstract class CMakeFeatureInterface<Feature> {
   }
 
   abstract validateArgs: ((action: Feature) => Promise<boolean>)[];
+  abstract validateArg: ((
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: AbstractControl<any, any>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
+  ) => Promise<boolean>)[];
 
   cmakeRequiredVersion(action: Feature): Version | null {
     if (this.isEnabled(action)) {

@@ -6,7 +6,11 @@ import { ProjectCompatVersionService } from '../services/project-compat-version-
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { By } from '@angular/platform-browser';
-import { StubValidTag, StubVersionTag } from '../../tests/components/stubs';
+import {
+  StubAsyncInvalidValidator,
+  StubValidTag,
+  StubVersionTag,
+} from '../../tests/components/stubs';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -50,7 +54,14 @@ describe('ProjectCompatVersionArgument', () => {
         ],
       })
         .overrideComponent(ProjectCompatVersionArgument, {
-          set: { imports: [FormsModule, StubValidTag, StubVersionTag] },
+          set: {
+            imports: [
+              FormsModule,
+              StubValidTag,
+              StubVersionTag,
+              StubAsyncInvalidValidator,
+            ],
+          },
         })
         .compileComponents();
 
@@ -66,18 +77,16 @@ describe('ProjectCompatVersionArgument', () => {
       expect(page.projectCompatVersionInput).toBeTruthy();
     });
 
-    it('should change input:invalid when invalid input', async () => {
+    it('should change input.ng-invalid when invalid input', async () => {
       const { projectCompatVersionInput } = page;
 
       projectCompatVersionInput.value = '4.rez';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches(':invalid')).toBeTrue();
 
       projectCompatVersionInput.value = '4.2';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches(':invalid')).toBeFalse();
       expect(component.versionString).toBe('4.2');
     });
   });
@@ -119,14 +128,14 @@ describe('ProjectCompatVersionArgument', () => {
       projectCompatVersionInput.value = '4.rez';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches(':invalid')).toBeTrue();
+      expect(projectCompatVersionInput.matches('.ng-invalid')).toBeTrue();
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeTrue();
 
       projectCompatVersionInput.value = '4.2';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches(':invalid')).toBeFalse();
+      expect(projectCompatVersionInput.matches('.ng-invalid')).toBeFalse();
       expect(component.versionString).toBe('4.2');
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();

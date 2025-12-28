@@ -6,6 +6,8 @@ import { InputFilesModel } from '../../../shared/models/arguments/input-files-mo
 import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { CMakeProjectTopLevelIncludesVariable } from '../components/cmake-project-top-level-includes-variable';
+import { AbstractControl } from '@angular/forms';
+import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 
 @Injectable({
   providedIn: null,
@@ -22,6 +24,7 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeCommandInt
   };
 
   private readonly rustBackendService = inject(RustBackendService);
+  private dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputFilesModel): boolean {
     return (
@@ -42,6 +45,16 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeCommandInt
         action.files,
         false
       )),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      _context: InputFilesModel
+    ): Promise<boolean> =>
+      this.validateArgs[0]({
+        files: this.dataToCMake.filesToArrayString(control.value),
+      }),
   ];
 
   protected cmakeRequiredVersionImpl(_action: InputFilesModel): Version | null {

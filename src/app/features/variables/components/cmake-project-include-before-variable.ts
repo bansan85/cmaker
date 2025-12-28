@@ -11,10 +11,11 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-cmake-project-include-before-variable',
-  imports: [FormsModule, ValidTag, VersionTag],
+  imports: [FormsModule, ValidTag, VersionTag, AsyncInvalidValidator],
   templateUrl: './cmake-project-include-before-variable.html',
   styleUrl: './cmake-project-include-before-variable.css',
   providers: [

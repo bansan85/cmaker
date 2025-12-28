@@ -7,7 +7,11 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { StubValidTag, StubVersionTag } from '../../tests/components/stubs';
+import {
+  StubAsyncInvalidValidator,
+  StubValidTag,
+  StubVersionTag,
+} from '../../tests/components/stubs';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectDescriptionArgument>) {}
@@ -47,7 +51,14 @@ describe('ProjectDescriptionArgument', () => {
         ],
       })
         .overrideComponent(ProjectDescriptionArgument, {
-          set: { imports: [FormsModule, StubValidTag, StubVersionTag] },
+          set: {
+            imports: [
+              FormsModule,
+              StubValidTag,
+              StubVersionTag,
+              StubAsyncInvalidValidator,
+            ],
+          },
         })
         .compileComponents();
 
@@ -63,13 +74,13 @@ describe('ProjectDescriptionArgument', () => {
       expect(page.projectDescriptionInput).toBeTruthy();
     });
 
-    it('should change input:invalid when invalid input', async () => {
+    it('should change input.ng-invalid when invalid input', async () => {
       const { projectDescriptionInput } = page;
 
       projectDescriptionInput.value = 'Describe me';
       projectDescriptionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectDescriptionInput.matches(':invalid')).toBeFalse();
+      expect(projectDescriptionInput.matches('.ng-invalid')).toBeFalse();
       expect(component.text).toBe('Describe me');
     });
   });
@@ -110,7 +121,7 @@ describe('ProjectDescriptionArgument', () => {
       projectDescriptionInput.value = 'Describe me';
       projectDescriptionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectDescriptionInput.matches(':invalid')).toBeFalse();
+      expect(projectDescriptionInput.matches('.ng-invalid')).toBeFalse();
       expect(component.text).toBe('Describe me');
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();

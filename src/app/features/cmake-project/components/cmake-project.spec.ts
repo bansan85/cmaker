@@ -29,6 +29,9 @@ describe('CMakeProject', () => {
       if (cmd === 'path_exists') {
         return true;
       }
+      if (cmd === 'relative_paths_exists') {
+        return true;
+      }
       throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
     });
 

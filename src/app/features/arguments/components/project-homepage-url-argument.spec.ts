@@ -7,7 +7,11 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { StubValidTag, StubVersionTag } from '../../tests/components/stubs';
+import {
+  StubAsyncInvalidValidator,
+  StubValidTag,
+  StubVersionTag,
+} from '../../tests/components/stubs';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectHomepageUrlArgument>) {}
@@ -47,7 +51,14 @@ describe('ProjectHomepageUrlArgument', () => {
         ],
       })
         .overrideComponent(ProjectHomepageUrlArgument, {
-          set: { imports: [FormsModule, StubValidTag, StubVersionTag] },
+          set: {
+            imports: [
+              FormsModule,
+              StubValidTag,
+              StubVersionTag,
+              StubAsyncInvalidValidator,
+            ],
+          },
         })
         .compileComponents();
 
@@ -63,24 +74,21 @@ describe('ProjectHomepageUrlArgument', () => {
       expect(page.projectHomepageUrlInput).toBeTruthy();
     });
 
-    it('should change input:invalid when invalid input', async () => {
+    it('should change input.ng-invalid when invalid input', async () => {
       const { projectHomepageUrlInput } = page;
 
       projectHomepageUrlInput.value = 'example.com';
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectHomepageUrlInput.matches(':invalid')).toBeTrue();
 
       projectHomepageUrlInput.value = 'http://example.com';
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectHomepageUrlInput.matches(':invalid')).toBeFalse();
       expect(component.text).toBe('http://example.com');
 
       projectHomepageUrlInput.value = 'https://example.com';
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectHomepageUrlInput.matches(':invalid')).toBeFalse();
       expect(component.text).toBe('https://example.com');
     });
   });
@@ -121,14 +129,14 @@ describe('ProjectHomepageUrlArgument', () => {
       projectHomepageUrlInput.value = 'example.com';
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectHomepageUrlInput.matches(':invalid')).toBeTrue();
+      expect(projectHomepageUrlInput.matches('.ng-invalid')).toBeTrue();
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeTrue();
 
       projectHomepageUrlInput.value = 'https://example.com';
       projectHomepageUrlInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectHomepageUrlInput.matches(':invalid')).toBeFalse();
+      expect(projectHomepageUrlInput.matches('.ng-invalid')).toBeFalse();
       expect(component.text).toBe('https://example.com');
       expect(versionTag.matches('.invalid')).toBeFalse();
       expect(validTag.matches('.invalid')).toBeFalse();

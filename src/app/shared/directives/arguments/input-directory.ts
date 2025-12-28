@@ -45,8 +45,4 @@ export abstract class InputDirectory
       this.directory = directory;
     }
   }
-
-  protected checkDirectory = async (
-    control: AbstractControl<string>
-  ): Promise<boolean> => this.service.isValid({ directory: control.value });
 }

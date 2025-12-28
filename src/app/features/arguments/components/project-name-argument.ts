@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { ProjectNameService } from '../services/project-name-service';
-import { AbstractControl, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
@@ -35,9 +35,4 @@ export class ProjectNameArgument
   protected readonly projectNameId = `project-name-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectNameService);
-
-  protected get validateProjectName() {
-    return (control: AbstractControl<string>) =>
-      this.service.isValid({ text: control.value });
-  }
 }

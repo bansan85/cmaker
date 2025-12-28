@@ -3,6 +3,7 @@ import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { InputStringModel } from '../../../shared/models/arguments/input-string-model';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,
@@ -23,6 +24,13 @@ export class ProjectDescriptionService extends CMakeArgumentInterface<InputStrin
 
   readonly validateArgs = [
     (_action: InputStringModel): Promise<boolean> => Promise.resolve(true),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<string, string>,
+      _context: InputStringModel
+    ): Promise<boolean> => this.validateArgs[0]({ text: control.value }),
   ];
 
   protected cmakeRequiredVersionImpl(

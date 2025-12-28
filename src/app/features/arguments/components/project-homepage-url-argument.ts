@@ -11,10 +11,11 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-project-homepage-url-argument',
-  imports: [FormsModule, ValidTag, VersionTag],
+  imports: [FormsModule, ValidTag, VersionTag, AsyncInvalidValidator],
   templateUrl: './project-homepage-url-argument.html',
   styleUrl: './project-homepage-url-argument.css',
   providers: [

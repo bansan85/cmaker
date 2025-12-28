@@ -6,6 +6,7 @@ import { InputCheckboxModel } from '../../../shared/models/arguments/input-check
 import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
 import { CMakeMsvcRuntimeLibraryVariable } from '../components/cmake-msvc-runtime-library-variable';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,
@@ -37,6 +38,16 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
 
   readonly validateArgs = [
     (_action: InputCheckboxModel): Promise<boolean> => Promise.resolve(true),
+  ];
+
+  readonly validateArg = [
+    (
+      control: AbstractControl<boolean, boolean>,
+      _context: InputCheckboxModel
+    ): Promise<boolean> =>
+      this.validateArgs[0]({
+        checked: control.value,
+      }),
   ];
 
   protected cmakeRequiredVersionImpl(
