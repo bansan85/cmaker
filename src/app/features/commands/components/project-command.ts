@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
+  computed,
   forwardRef,
   inject,
-  signal,
+  resource,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -31,7 +31,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { ProjectModel } from '../models/project.model';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
-import { unknownAssertError } from '../../../shared/interfaces/errors';
 
 @Component({
   selector: 'app-project-command',
@@ -73,8 +72,6 @@ export class ProjectCommand
     ProjectModel,
     ValidatorInterface
 {
-  readonly isValid = signal(false);
-
   enabled = true;
 
   private readonly nameSignal = viewChild.required<ProjectNameArgument>('name');
@@ -117,16 +114,43 @@ export class ProjectCommand
 
   protected readonly projectId = `project-${crypto.randomUUID()}`;
 
-  constructor() {
-    effect(() => {
-      this.service
-        .isValid(this)
-        .then((result) => {
-          this.isValid.set(result);
-        })
-        .catch((err: unknown) => {
-          throw unknownAssertError(err);
-        });
-    });
-  }
+  private readonly isValidResource = resource({
+    params: () => ({
+      name: {
+        enabled: this.name.enabled,
+        value: this.name.value,
+      },
+      version: {
+        enabled: this.version.enabled,
+        value: this.version.value,
+      },
+      compatVersion: {
+        enabled: this.compatVersion.enabled,
+        value: this.compatVersion.value,
+      },
+      spdxLicense: {
+        enabled: this.spdxLicense.enabled,
+        value: this.spdxLicense.value,
+      },
+      description: {
+        enabled: this.description.enabled,
+        value: this.description.value,
+      },
+      homepageUrl: {
+        enabled: this.homepageUrl.enabled,
+        value: this.homepageUrl.value,
+      },
+      languages: {
+        enabled: this.languages.enabled,
+        value: this.languages.value,
+      },
+    }),
+    loader: ({ params }) => this.service.isValid(params),
+  });
+  readonly isValid = computed(() => {
+    if (this.isValidResource.hasValue()) {
+      return this.isValidResource.value();
+    }
+    return false;
+  });
 }

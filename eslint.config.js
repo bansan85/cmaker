@@ -91,6 +91,7 @@ export default defineConfig(
       'max-lines': 'off',
       'no-labels': 'off',
       'func-names': 'off',
+      '@angular-eslint/no-experimental': 'off',
     },
   },
   {

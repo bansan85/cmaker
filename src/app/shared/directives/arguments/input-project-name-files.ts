@@ -1,4 +1,4 @@
-import { effect, inject, signal } from '@angular/core';
+import { computed, inject, resource, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputProjectNameFilesModel } from '../../models/arguments/input-project-name-files-model';
 import { open } from '@tauri-apps/plugin-dialog';
@@ -6,7 +6,6 @@ import { CMakeFeatureInterface } from '../../../features/commands/services/cmake
 import { RustBackendService } from '../../services/rust-backend-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
-import { unknownAssertError } from '../../interfaces/errors';
 
 export abstract class InputProjectNameFiles
   implements
@@ -14,30 +13,26 @@ export abstract class InputProjectNameFiles
     InputProjectNameFilesModel,
     ValidatorInterface
 {
-  readonly isValid = signal(false);
-
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputProjectNameFilesModel>;
 
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);
 
-  constructor() {
-    effect(() => {
-      this.service
-        .isValid({
-          enabled: this.enabled,
-          projectName: this.projectName,
-          value: this.value,
-        })
-        .then((result) => {
-          this.isValid.set(result);
-        })
-        .catch((err: unknown) => {
-          throw unknownAssertError(err);
-        });
-    });
-  }
+  private readonly isValidResource = resource({
+    params: () => ({
+      enabled: this.enabled,
+      projectName: this.projectName,
+      value: this.value,
+    }),
+    loader: ({ params }) => this.service.isValid(params),
+  });
+  readonly isValid = computed(() => {
+    if (this.isValidResource.hasValue()) {
+      return this.isValidResource.value();
+    }
+    return false;
+  });
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {

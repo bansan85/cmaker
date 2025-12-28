@@ -1,29 +1,25 @@
-import { effect, signal } from '@angular/core';
+import { computed, resource, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { InputStringModel } from '../../models/arguments/input-string-model';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
-import { unknownAssertError } from '../../interfaces/errors';
 
 export abstract class InputString
   implements CheckboxesItemInterface, InputStringModel, ValidatorInterface
 {
-  readonly isValid = signal(false);
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputStringModel>;
 
-  constructor() {
-    effect(() => {
-      this.service
-        .isValid({ enabled: this.enabled, value: this.value })
-        .then((result) => {
-          this.isValid.set(result);
-        })
-        .catch((err: unknown) => {
-          throw unknownAssertError(err);
-        });
-    });
-  }
+  private readonly isValidResource = resource({
+    params: () => ({ enabled: this.enabled, value: this.value }),
+    loader: ({ params }) => this.service.isValid(params),
+  });
+  readonly isValid = computed(() => {
+    if (this.isValidResource.hasValue()) {
+      return this.isValidResource.value();
+    }
+    return false;
+  });
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
