@@ -1,8 +1,9 @@
-import { computed, resource, signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { InputStringModel } from '../../models/arguments/input-string-model';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputString
   implements CheckboxesItemInterface, InputStringModel, ValidatorInterface
@@ -10,12 +11,13 @@ export abstract class InputString
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputStringModel>;
 
-  private readonly isValidResource = resource<boolean, InputStringModel>({
-    params: () => ({ enabled: this.enabled, text: this.text }),
-    loader: ({ params }) => this.service.isValid(params),
-    defaultValue: false,
-  });
-  readonly isValid = computed(() => this.isValidResource.value());
+  private resourceService = inject(ResourceService);
+  readonly isValid =
+    this.resourceService.createValidationResource<InputStringModel>(
+      () => ({ enabled: this.enabled, text: this.text }),
+      (params) => this.service.isValid(params),
+      false
+    );
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {

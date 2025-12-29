@@ -1,4 +1,4 @@
-import { computed, inject, resource, signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputFilesModel } from '../../models/arguments/input-files-model';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
@@ -6,6 +6,7 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { RustBackendService } from '../../services/rust-backend-service';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputFiles
   implements CheckboxesItemInterface, InputFilesModel, ValidatorInterface
@@ -16,12 +17,13 @@ export abstract class InputFiles
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);
 
-  private readonly isValidResource = resource<boolean, InputFilesModel>({
-    params: () => ({ enabled: this.enabled, files: this.files }),
-    loader: ({ params }) => this.service.isValid(params),
-    defaultValue: false,
-  });
-  readonly isValid = computed(() => this.isValidResource.value());
+  private resourceService = inject(ResourceService);
+  readonly isValid =
+    this.resourceService.createValidationResource<InputFilesModel>(
+      () => ({ enabled: this.enabled, files: this.files }),
+      (params) => this.service.isValid(params),
+      false
+    );
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {

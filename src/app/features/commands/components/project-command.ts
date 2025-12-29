@@ -1,10 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   forwardRef,
   inject,
-  resource,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +29,7 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { ProjectModel } from '../models/project.model';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
+import { ResourceService } from '../../../shared/services/resource-service';
 
 @Component({
   selector: 'app-project-command',
@@ -114,39 +113,40 @@ export class ProjectCommand
 
   protected readonly projectId = `project-${crypto.randomUUID()}`;
 
-  private readonly isValidResource = resource<boolean, ProjectModel>({
-    params: () => ({
-      name: {
-        enabled: this.name.enabled,
-        text: this.name.text,
-      },
-      version: {
-        enabled: this.version.enabled,
-        version: this.version.version,
-      },
-      compatVersion: {
-        enabled: this.compatVersion.enabled,
-        version: this.compatVersion.version,
-      },
-      spdxLicense: {
-        enabled: this.spdxLicense.enabled,
-        license: this.spdxLicense.license,
-      },
-      description: {
-        enabled: this.description.enabled,
-        text: this.description.text,
-      },
-      homepageUrl: {
-        enabled: this.homepageUrl.enabled,
-        text: this.homepageUrl.text,
-      },
-      languages: {
-        enabled: this.languages.enabled,
-        languages: this.languages.languages,
-      },
-    }),
-    loader: ({ params }) => this.service.isValid(params),
-    defaultValue: false,
-  });
-  readonly isValid = computed(() => this.isValidResource.value());
+  private resourceService = inject(ResourceService);
+  readonly isValid =
+    this.resourceService.createValidationResource<ProjectModel>(
+      () => ({
+        name: {
+          enabled: this.name.enabled,
+          text: this.name.text,
+        },
+        version: {
+          enabled: this.version.enabled,
+          version: this.version.version,
+        },
+        compatVersion: {
+          enabled: this.compatVersion.enabled,
+          version: this.compatVersion.version,
+        },
+        spdxLicense: {
+          enabled: this.spdxLicense.enabled,
+          license: this.spdxLicense.license,
+        },
+        description: {
+          enabled: this.description.enabled,
+          text: this.description.text,
+        },
+        homepageUrl: {
+          enabled: this.homepageUrl.enabled,
+          text: this.homepageUrl.text,
+        },
+        languages: {
+          enabled: this.languages.enabled,
+          languages: this.languages.languages,
+        },
+      }),
+      (params) => this.service.isValid(params),
+      false
+    );
 }

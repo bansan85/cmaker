@@ -1,9 +1,10 @@
-import { computed, resource, signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { Version } from '../../models/version';
 import { InputLanguagesModel } from '../../models/arguments/input-languages-model';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputLanguages
   implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
@@ -11,12 +12,13 @@ export abstract class InputLanguages
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputLanguagesModel>;
 
-  private readonly isValidResource = resource<boolean, InputLanguagesModel>({
-    params: () => ({ enabled: this.enabled, languages: this.languages }),
-    loader: ({ params }) => this.service.isValid(params),
-    defaultValue: false,
-  });
-  readonly isValid = computed(() => this.isValidResource.value());
+  private resourceService = inject(ResourceService);
+  readonly isValid =
+    this.resourceService.createValidationResource<InputLanguagesModel>(
+      () => ({ enabled: this.enabled, languages: this.languages }),
+      (params) => this.service.isValid(params),
+      false
+    );
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {

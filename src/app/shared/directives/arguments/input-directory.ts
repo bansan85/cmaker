@@ -1,10 +1,10 @@
-import { computed, resource, signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { InputDirectoryModel } from '../../models/arguments/input-directory-model';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { open } from '@tauri-apps/plugin-dialog';
-import { AbstractControl } from '@angular/forms';
+import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputDirectory
   implements CheckboxesItemInterface, InputDirectoryModel, ValidatorInterface
@@ -12,12 +12,13 @@ export abstract class InputDirectory
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputDirectoryModel>;
 
-  private readonly isValidResource = resource<boolean, InputDirectoryModel>({
-    params: () => ({ enabled: this.enabled, directory: this.directory }),
-    loader: ({ params }) => this.service.isValid(params),
-    defaultValue: false,
-  });
-  readonly isValid = computed(() => this.isValidResource.value());
+  private resourceService = inject(ResourceService);
+  readonly isValid =
+    this.resourceService.createValidationResource<InputDirectoryModel>(
+      () => ({ enabled: this.enabled, directory: this.directory }),
+      (params) => this.service.isValid(params),
+      false
+    );
 
   private readonly enabledSignal = signal(true);
   get enabled(): boolean {
