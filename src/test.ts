@@ -12,5 +12,7 @@ getTestBed().initTestEnvironment(
   platformBrowserTesting(),
   {
     teardown: { destroyAfterEach: false },
+    errorOnUnknownElements: true,
+    errorOnUnknownProperties: true,
   }
 );

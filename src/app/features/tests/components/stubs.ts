@@ -40,6 +40,7 @@ export class StubCheckboxesItem {
 export class StubInvalidValidator implements Validator {
   readonly appInvalidValidator =
     input.required<(control: AbstractControl) => boolean>();
+  readonly appInvalidValidatorContext = input.required<unknown>();
 
   validate(_control: AbstractControl): ValidationErrors | null {
     return null;
@@ -49,8 +50,11 @@ export class StubInvalidValidator implements Validator {
   selector: '[appAsyncInvalidValidator]',
 })
 export class StubAsyncInvalidValidator implements AsyncValidator {
-  readonly appAsyncInvalidValidator =
-    input.required<(control: AbstractControl) => Promise<boolean>>();
+  readonly appAsyncInvalidValidator = input.required<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (control: AbstractControl, context: any) => Promise<boolean>
+  >();
+  readonly appAsyncInvalidValidatorContext = input.required<unknown>();
 
   validate(
     _control: AbstractControl
