@@ -69,5 +69,14 @@ jobs:
 
       - name: Angular tests
         run: pnpm run test-ci
+
+      - name: Built artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: bundle-${{ matrix.platform }}
+          path: |
+            src-tauri/target/release/cmaker.exe
+            src-tauri/target/release/bundle
+
 #      - name: Check lint
 #        run: pnpm run lint
