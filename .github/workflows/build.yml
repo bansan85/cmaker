@@ -65,18 +65,41 @@ jobs:
           pnpm install
 
       - name: build tauri app
+        id: tauri_build
         uses: tauri-apps/tauri-action@v0
 
       - name: Angular tests
         run: pnpm run test-ci
+
+      - name: Parse paths (Linux/macOS)
+        if: runner.os != 'Windows'
+        id: parse_unix
+        shell: bash
+        run: |
+          {
+            echo "paths<<EOF"
+            echo '${{ steps.tauri_build.outputs.artifactPaths }}' | jq -r '.[]'
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Parse paths (Windows)
+        if: runner.os == 'Windows'
+        id: parse_windows
+        shell: pwsh
+        run: |
+          $paths = '${{ steps.tauri_build.outputs.artifactPaths }}' | ConvertFrom-Json
+          "paths<<EOF" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          $paths | ForEach-Object { $_ } | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "EOF" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Built artifacts
         uses: actions/upload-artifact@v6
         with:
           name: bundle-${{ matrix.platform }}
           path: |
+            ${{ steps.parse_unix.outputs.paths || steps.parse_windows.outputs.paths }}
             src-tauri/target/release/cmaker.exe
-            src-tauri/target/release/bundle
+            src-tauri/target/release/cmaker
 
 #      - name: Check lint
 #        run: pnpm run lint
