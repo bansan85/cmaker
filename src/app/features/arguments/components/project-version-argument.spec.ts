@@ -5,6 +5,7 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { ProjectVersionService } from '../services/project-version-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProjectVersionArgument', () => {
   let component: ProjectVersionArgument;

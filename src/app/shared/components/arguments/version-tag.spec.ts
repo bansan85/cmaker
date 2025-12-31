@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { VersionTag } from './version-tag';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('VersionTag', () => {
   //let component: VersionTag;

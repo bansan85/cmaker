@@ -6,6 +6,7 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { OptionsRootPathService } from '../services/options-root-path-service';
 import { mockIPC } from '@tauri-apps/api/mocks';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('OptionsRootPath', () => {
   let component: OptionsRootPath;

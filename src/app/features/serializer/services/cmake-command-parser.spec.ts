@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CMakeCommandParser } from './cmake-command-parser';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CMakeCommandParser', () => {
   let service: CMakeCommandParser;

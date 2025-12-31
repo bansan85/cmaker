@@ -10,6 +10,7 @@ import {
   StubOptionsMaxCMakeVersion,
   StubOptionsRootPath,
 } from '../../tests/components/stubs';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
@@ -121,19 +122,19 @@ describe('TabOptions', () => {
     it('should change .ng-invalid when invalid input', async () => {
       const { maxCMakeVersionInput } = page;
       expect(maxCMakeVersionInput.value).toEqual('4.3');
-      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBeFalse();
+      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(false);
       expect(component.maxCMakeVersionSignal().versionString).toBe('4.3');
 
       maxCMakeVersionInput.value = '4.rez';
       maxCMakeVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBeTrue();
+      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(true);
 
       maxCMakeVersionInput.value = '4.2';
       maxCMakeVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(maxCMakeVersionInput.value).toEqual('4.2');
-      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBeFalse();
+      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(false);
       expect(component.maxCMakeVersionSignal().versionString).toBe('4.2');
     });
 
@@ -162,7 +163,7 @@ describe('TabOptions', () => {
       await fixture.whenStable();
       expect(component.rootPathSignal().directory).toEqual('c:/temp2');
       expect(service.rootPath.directory).toEqual('c:/temp2');
-      expect(rootPathInput.matches('.ng-invalid')).toBeTrue();
+      expect(rootPathInput.matches('.ng-invalid')).toBe(true);
 
       mockIpcOpen = Promise.resolve('.');
       mockIpcPathExists = true;
@@ -171,7 +172,7 @@ describe('TabOptions', () => {
       await fixture.whenStable();
       expect(component.rootPathSignal().directory).toEqual('.');
       expect(service.rootPath.directory).toEqual('.');
-      expect(rootPathInput.matches('.ng-valid')).toBeTrue();
+      expect(rootPathInput.matches('.ng-valid')).toBe(true);
     });
   });
 });

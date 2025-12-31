@@ -4,6 +4,7 @@ import { ProjectSpdxLicenseService } from './project-spdx-license-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProjectLicenseService', () => {
   let service: ProjectSpdxLicenseService;

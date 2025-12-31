@@ -4,6 +4,7 @@ import { OptionsMaxCMakeVersionService } from './options-max-cmake-version-servi
 import { ProjectContextService } from './project-context-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('OptionsMaxCMakeVersionService', () => {
   let service: OptionsMaxCMakeVersionService;

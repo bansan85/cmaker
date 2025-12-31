@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UiCheckboxIndeterminate } from './ui-checkbox-indeterminate';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('UiCheckboxIndeterminate', () => {
   let component: UiCheckboxIndeterminate;

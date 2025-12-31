@@ -4,6 +4,7 @@ import { CheckboxesItem } from './checkboxes-item';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { Version } from '../../models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CheckboxesItem', () => {
   //let component: CheckboxesItem;

@@ -4,6 +4,7 @@ import { CMakeMsvcRuntimeLibraryVariableService } from './cmake-msvc-runtime-lib
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CMakeMsvcRuntimeLibraryVariableService', () => {
   let service: CMakeMsvcRuntimeLibraryVariableService;

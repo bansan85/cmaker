@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CheckboxesList } from './checkboxes-list';
 import { importProvidersFrom } from '@angular/core';
 import { LucideAngularModule, Menu } from 'lucide-angular';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CheckboxesList', () => {
   let component: CheckboxesList;

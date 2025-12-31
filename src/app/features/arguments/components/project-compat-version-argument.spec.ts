@@ -13,6 +13,7 @@ import {
 } from '../../tests/components/stubs';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 class Page {
   constructor(
@@ -128,22 +129,22 @@ describe('ProjectCompatVersionArgument', () => {
       projectCompatVersionInput.value = '4.rez';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches('.ng-invalid')).toBeTrue();
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeTrue();
+      expect(projectCompatVersionInput.matches('.ng-invalid')).toBe(true);
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(true);
 
       projectCompatVersionInput.value = '4.2';
       projectCompatVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches('.ng-invalid')).toBeFalse();
+      expect(projectCompatVersionInput.matches('.ng-invalid')).toBe(false);
       expect(component.versionString).toBe('4.2');
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(false);
 
       projectContextService.maxCMakeVersion = new Version('3.0');
       await fixture.whenStable();
-      expect(versionTag.matches('.invalid')).toBeTrue();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(true);
+      expect(validTag.matches('.invalid')).toBe(false);
     });
   });
 });

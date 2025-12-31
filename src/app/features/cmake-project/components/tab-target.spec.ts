@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabTarget } from './tab-target';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('TabTarget', () => {
   let component: TabTarget;

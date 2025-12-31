@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RustBackendService } from './rust-backend-service';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('RustBackendService', () => {
   let service: RustBackendService;

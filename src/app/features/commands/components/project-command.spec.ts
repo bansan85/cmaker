@@ -6,6 +6,7 @@ import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { importProvidersFrom } from '@angular/core';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProjectCommand', () => {
   let component: ProjectCommand;

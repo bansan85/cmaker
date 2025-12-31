@@ -14,6 +14,7 @@ import {
   StubVersionTag,
 } from '../../tests/components/stubs';
 import { By } from '@angular/platform-browser';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectLanguagesArgument>) {}
@@ -140,13 +141,13 @@ describe('ProjectLanguagesArgument', () => {
         validTag,
       } = page;
 
-      expect(checkboxes.matches('.checkboxes-show')).toBeFalse();
+      expect(checkboxes.matches('.checkboxes-show')).toBe(false);
 
       multiSelectBox.click();
 
       await fixture.whenStable();
 
-      expect(checkboxes.matches('.checkboxes-show')).toBeTrue();
+      expect(checkboxes.matches('.checkboxes-show')).toBe(true);
 
       page.checkboxLanguage('C').click();
       page.checkboxLanguage('CXX').click();
@@ -156,13 +157,13 @@ describe('ProjectLanguagesArgument', () => {
 
       expect(projectLanguagesOutput.textContent).toEqual('C CXX CSharp');
 
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(false);
 
       projectContextService.maxCMakeVersion = new Version('3.0');
       await fixture.whenStable();
-      expect(versionTag.matches('.invalid')).toBeTrue();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(true);
+      expect(validTag.matches('.invalid')).toBe(false);
     });
   });
 });

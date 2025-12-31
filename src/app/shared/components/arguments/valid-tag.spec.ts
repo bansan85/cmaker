@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ValidTag } from './valid-tag';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ValidTag', () => {
   //let component: ValidTag;

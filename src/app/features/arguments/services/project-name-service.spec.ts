@@ -6,6 +6,7 @@ import { VersionService } from '../../../shared/services/version-service';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProjectNameService', () => {
   let service: ProjectNameService;

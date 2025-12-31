@@ -7,6 +7,7 @@ import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { importProvidersFrom } from '@angular/core';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 import { mockIPC } from '@tauri-apps/api/mocks';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('TabProject', () => {
   let component: TabProject;

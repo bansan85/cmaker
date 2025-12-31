@@ -13,6 +13,7 @@ import {
   StubValidTag,
   StubVersionTag,
 } from '../../tests/components/stubs';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectSpdxLicenseArgument>) {}
@@ -124,22 +125,22 @@ describe('ProjectLicenseArgument', () => {
 
       await fixture.whenStable();
 
-      expect(projectSpdxLicenseInput.matches('.ng-invalid')).toBeTrue();
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeTrue();
+      expect(projectSpdxLicenseInput.matches('.ng-invalid')).toBe(true);
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(true);
 
       projectSpdxLicenseInput.value = 'validSpdxLicense';
       projectSpdxLicenseInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectSpdxLicenseInput.matches('.ng-invalid')).toBeFalse();
+      expect(projectSpdxLicenseInput.matches('.ng-invalid')).toBe(false);
       expect(component.license).toBe('validSpdxLicense');
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(false);
 
       projectContextService.maxCMakeVersion = new Version('3.0');
       await fixture.whenStable();
-      expect(versionTag.matches('.invalid')).toBeTrue();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(true);
+      expect(validTag.matches('.invalid')).toBe(false);
     });
   });
 });

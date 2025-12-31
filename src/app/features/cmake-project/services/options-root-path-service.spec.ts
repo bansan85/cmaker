@@ -4,6 +4,7 @@ import { OptionsRootPathService } from './options-root-path-service';
 import { ProjectContextService } from './project-context-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('OptionsRootPathService', () => {
   let service: OptionsRootPathService;

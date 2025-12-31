@@ -12,6 +12,7 @@ import {
   StubValidTag,
   StubVersionTag,
 } from '../../tests/components/stubs';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectDescriptionArgument>) {}
@@ -120,15 +121,15 @@ describe('ProjectDescriptionArgument', () => {
       projectDescriptionInput.value = 'Describe me';
       projectDescriptionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectDescriptionInput.matches('.ng-invalid')).toBeFalse();
+      expect(projectDescriptionInput.matches('.ng-invalid')).toBe(false);
       expect(component.text).toBe('Describe me');
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(false);
 
       projectContextService.maxCMakeVersion = new Version('3.0');
       await fixture.whenStable();
-      expect(versionTag.matches('.invalid')).toBeTrue();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(true);
+      expect(validTag.matches('.invalid')).toBe(false);
     });
   });
 });

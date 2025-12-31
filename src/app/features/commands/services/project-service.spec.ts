@@ -10,6 +10,7 @@ import { ProjectCompatVersionService } from '../../arguments/services/project-co
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
 import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProjectService', () => {
   let service: ProjectService;

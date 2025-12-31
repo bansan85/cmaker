@@ -106,7 +106,6 @@ export class ProjectSpdxLicenseParserService {
   }
 
   parse(expr: string): boolean {
-    console.log(expr);
     const tokens = this.tokenize(expr);
     if (tokens === undefined) {
       return false;

@@ -4,6 +4,7 @@ import { CMakeProjectProjectNameIncludeVariableService } from './cmake-project-p
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CMakeProjectProjectNameIncludeVariableService', () => {
   let service: CMakeProjectProjectNameIncludeVariableService;

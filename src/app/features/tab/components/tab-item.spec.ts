@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabItem } from './tab-item';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('TabItem', () => {
   let component: TabItem;

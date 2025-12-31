@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DraggableListComponent } from './draggable-list';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('DraggableListComponent', () => {
   let component: DraggableListComponent;

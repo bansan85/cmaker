@@ -4,6 +4,7 @@ import { ProjectContextService } from '../../cmake-project/services/project-cont
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { mockIPC } from '@tauri-apps/api/mocks';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CMakeProjectIncludeBeforeVariable', () => {
   let component: CMakeProjectIncludeBeforeVariable;

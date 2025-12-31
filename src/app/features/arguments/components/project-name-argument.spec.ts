@@ -12,6 +12,7 @@ import {
   StubVersionTag,
 } from '../../tests/components/stubs';
 import { ProjectNameService } from '../services/project-name-service';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectNameArgument>) {}
@@ -120,22 +121,22 @@ describe('ProjectNameArgument', () => {
 
       await fixture.whenStable();
 
-      expect(projectNameInput.matches('.ng-invalid')).toBeTrue();
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeTrue();
+      expect(projectNameInput.matches('.ng-invalid')).toBe(true);
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(true);
 
       projectNameInput.value = 'validName';
       projectNameInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectNameInput.matches('.ng-invalid')).toBeFalse();
+      expect(projectNameInput.matches('.ng-invalid')).toBe(false);
       expect(component.text).toBe('validName');
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(false);
 
       projectContextService.maxCMakeVersion = new Version('3.0');
       await fixture.whenStable();
-      expect(versionTag.matches('.invalid')).toBeFalse();
-      expect(validTag.matches('.invalid')).toBeFalse();
+      expect(versionTag.matches('.invalid')).toBe(false);
+      expect(validTag.matches('.invalid')).toBe(false);
     });
   });
 });

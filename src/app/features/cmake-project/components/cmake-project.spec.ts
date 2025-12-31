@@ -7,6 +7,7 @@ import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 import { importProvidersFrom } from '@angular/core';
 import { ProjectContextService } from '../services/project-context-service';
 import { mockIPC } from '@tauri-apps/api/mocks';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CMakeProject', () => {
   let component: CMakeProject;
