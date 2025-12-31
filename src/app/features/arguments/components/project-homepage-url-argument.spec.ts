@@ -74,7 +74,7 @@ describe('ProjectHomepageUrlArgument', () => {
       expect(page.projectHomepageUrlInput).toBeTruthy();
     });
 
-    it('should change input.ng-invalid when invalid input', async () => {
+    it('should change value in component', async () => {
       const { projectHomepageUrlInput } = page;
 
       projectHomepageUrlInput.value = 'example.com';

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputLicenseDataList } from './input-license-data-list';
+import { InputSpdxLicenseDataList } from './input-spdx-license-data-list';
 
 describe('InputLicenseDataList', () => {
-  let component: InputLicenseDataList;
-  let fixture: ComponentFixture<InputLicenseDataList>;
+  let component: InputSpdxLicenseDataList;
+  let fixture: ComponentFixture<InputSpdxLicenseDataList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputLicenseDataList],
+      imports: [InputSpdxLicenseDataList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InputLicenseDataList);
+    fixture = TestBed.createComponent(InputSpdxLicenseDataList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

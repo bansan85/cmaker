@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
 import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { InputLicenseDataList } from '../../../shared/components/arguments/input-license-data-list/input-license-data-list';
+import { InputSpdxLicenseDataList } from '../../../shared/components/arguments/input-spdx-license-data-list';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
@@ -19,7 +19,7 @@ import { AsyncInvalidValidator } from '../../../shared/directives/validators/asy
   selector: 'app-project-spdx-license-argument',
   imports: [
     FormsModule,
-    InputLicenseDataList,
+    InputSpdxLicenseDataList,
     ValidTag,
     VersionTag,
     AsyncInvalidValidator,
@@ -38,7 +38,7 @@ export class ProjectSpdxLicenseArgument
   extends InputLicense
   implements CMakeComponentInterface<ProjectSpdxLicenseService>
 {
-  protected readonly datalist = viewChild<InputLicenseDataList>('datalist');
+  protected readonly datalist = viewChild<InputSpdxLicenseDataList>('datalist');
 
   readonly name = 'License';
 

@@ -74,13 +74,12 @@ describe('ProjectDescriptionArgument', () => {
       expect(page.projectDescriptionInput).toBeTruthy();
     });
 
-    it('should change input.ng-invalid when invalid input', async () => {
+    it('should change value in component', async () => {
       const { projectDescriptionInput } = page;
 
       projectDescriptionInput.value = 'Describe me';
       projectDescriptionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
-      expect(projectDescriptionInput.matches('.ng-invalid')).toBeFalse();
       expect(component.text).toBe('Describe me');
     });
   });

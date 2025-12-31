@@ -8,7 +8,7 @@
     type="text"
     [appAsyncInvalidValidator]="this.service.validateArg[0]"
     [appAsyncInvalidValidatorContext]="this"
-    [attr.list]="datalist.inputLicenseListId"
+    [attr.list]="datalist.inputSpdxLicenseListId"
     [id]="projectSpdxLicenseId"
     [(ngModel)]="license"
   />
@@ -25,5 +25,5 @@
     <code>MIT and BSD-3-Clause</code>).</span
   >
   <br />
-  <app-input-license-data-list #datalist />
+  <app-input-spdx-license-data-list #datalist />
 </div>

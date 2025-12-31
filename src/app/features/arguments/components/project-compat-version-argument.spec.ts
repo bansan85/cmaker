@@ -77,7 +77,7 @@ describe('ProjectCompatVersionArgument', () => {
       expect(page.projectCompatVersionInput).toBeTruthy();
     });
 
-    it('should change input.ng-invalid when invalid input', async () => {
+    it('should change value in component', async () => {
       const { projectCompatVersionInput } = page;
 
       projectCompatVersionInput.value = '4.rez';

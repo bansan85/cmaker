@@ -62,3 +62,10 @@ export class StubAsyncInvalidValidator implements AsyncValidator {
     return Promise.resolve(null);
   }
 }
+@Component({
+  selector: 'app-input-spdx-license-data-list',
+  template: '',
+})
+export class StubInputSpdxLicenseDataList {
+  readonly inputSpdxLicenseListId = '';
+}
