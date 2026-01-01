@@ -4,21 +4,9 @@
     <app-valid-tag [validator]="this"
   /></span>
   <app-checkboxes-list icon="chevron-down" [itemsId]="projectLanguagesId">
-    <app-checkboxes-item [element]="c()" />
-    <app-checkboxes-item [element]="cxx()" />
-    <app-checkboxes-item [element]="cSharp()" />
-    <app-checkboxes-item [element]="cuda()" />
-    <app-checkboxes-item [element]="objC()" />
-    <app-checkboxes-item [element]="objCxx()" />
-    <app-checkboxes-item [element]="fortran()" />
-    <app-checkboxes-item [element]="hip()" />
-    <app-checkboxes-item [element]="ispc()" />
-    <app-checkboxes-item [element]="swift()" />
-    <app-checkboxes-item [element]="asm()" />
-    <app-checkboxes-item [element]="asmNasm()" />
-    <app-checkboxes-item [element]="asmMarmasm()" />
-    <app-checkboxes-item [element]="asmMasm()" />
-    <app-checkboxes-item [element]="asmAtt()" />
+    @for (item of allLanguages; track $index) {
+    <app-checkboxes-item [element]="item()" />
+    }
   </app-checkboxes-list>
   <br />
   <span data-testid="value">{{languages}}</span>

@@ -24,7 +24,27 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   }
 
   readonly validateArgs = [
-    (_action: InputLanguagesModel): Promise<boolean> => Promise.resolve(true),
+    (action: InputLanguagesModel): Promise<boolean> => {
+      const languages = action.languages
+        .split(' ')
+        .filter((language) => language !== '');
+
+      if (languages.length === 0) {
+        return Promise.resolve(false);
+      }
+
+      if (languages.length === 1 && languages[0] === 'NONE') {
+        return Promise.resolve(true);
+      }
+
+      for (const item of languages) {
+        if (!this.allLanguages.some((lang) => lang.name === item)) {
+          return Promise.resolve(false);
+        }
+      }
+
+      return Promise.resolve(true);
+    },
   ];
 
   readonly validateArg = [
@@ -66,4 +86,25 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   toCMakerTxt(action: InputLanguagesModel): string {
     return `LANGUAGES ${action.languages}\n`;
   }
+
+  allLanguages: {
+    name: string;
+    version?: Version;
+  }[] = [
+    { name: 'C' },
+    { name: 'CXX' },
+    { name: 'CSharp', version: new Version(3, 8) },
+    { name: 'CUDA', version: new Version(3, 8) },
+    { name: 'OBJC', version: new Version(3, 16) },
+    { name: 'OBJCXX', version: new Version(3, 16) },
+    { name: 'Fortran' },
+    { name: 'HIP', version: new Version(3, 21) },
+    { name: 'ISPC', version: new Version(3, 18) },
+    { name: 'Swift', version: new Version(3, 15) },
+    { name: 'ASM' },
+    { name: 'ASM_NASM' },
+    { name: 'ASM_MARMASM', version: new Version(3, 26) },
+    { name: 'ASM_MASM' },
+    { name: 'ASM-ATT' },
+  ];
 }
