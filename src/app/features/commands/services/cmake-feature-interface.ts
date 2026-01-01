@@ -38,11 +38,11 @@ export abstract class CMakeFeatureInterface<Feature> {
 
   protected abstract cmakeRequiredVersionImpl(action: Feature): Version | null;
 
-  cmakeObjects(action: Feature): CMakeAvailableData {
+  cmakeObjects(action: Feature): CMakeAvailableData | null {
     if (this.isEnabled(action)) {
       return this.cmakeObjectsImpl(action);
     } else {
-      return {};
+      return null;
     }
   }
 

@@ -9,11 +9,17 @@ export interface CMakeAvailableData {
 }
 
 export function mergeCMakeAvailableData(
-  ...items: CMakeAvailableData[]
+  ...items: (CMakeAvailableData | null)[]
 ): CMakeAvailableData {
   return {
-    options: items.flatMap((item) => item.options ?? []),
-    variables: items.flatMap((item) => item.variables ?? []),
-    policies: items.flatMap((item) => item.policies ?? []),
+    options: items
+      .filter((item) => item !== null)
+      .flatMap((item) => item.options ?? []),
+    variables: items
+      .filter((item) => item !== null)
+      .flatMap((item) => item.variables ?? []),
+    policies: items
+      .filter((item) => item !== null)
+      .flatMap((item) => item.policies ?? []),
   };
 }
