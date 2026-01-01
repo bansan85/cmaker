@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { mockIPC } from '@tauri-apps/api/mocks';
-import { beforeEach,describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { CMakeProjectTopLevelIncludesVariableService } from '../services/cmake-project-top-level-includes-variable-service';
 import { CMakeProjectTopLevelIncludesVariable } from './cmake-project-top-level-includes-variable';
 
 describe('CMakeProjectTopLevelIncludesVariable', () => {
@@ -16,6 +17,7 @@ describe('CMakeProjectTopLevelIncludesVariable', () => {
       imports: [CMakeProjectTopLevelIncludesVariable],
       providers: [
         ProjectContextService,
+        CMakeProjectTopLevelIncludesVariableService,
         {
           provide: DEFAULT_MAX_VERSION,
           useValue: new Version(4, 3),
