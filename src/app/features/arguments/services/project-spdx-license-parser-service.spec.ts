@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { beforeEach,describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { ProjectSpdxLicenseParserService } from './project-spdx-license-parser-service';
 
@@ -103,5 +103,9 @@ describe('ProjectSpdxLicenseParserService', () => {
     expect(service.parse('MIT AND OR Apache-2.0')).toBe(false);
     expect(service.parse('(MIT AND (Apache-2.0 OR)')).toBe(false);
     expect(service.parse('MIT +AND Apache-2.0')).toBe(false);
+    expect(
+      service.parse('MIT WITH DocumentRef-spdx-tool-1.2:LicenseRef-MIT-Style-2')
+    ).toBe(false);
+    expect(service.parse('MIT WITH DocumentRef-spdx-tool-1.2')).toBe(false);
   });
 });
