@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { TabProject } from './tab-project';
-import { ProjectContextService } from '../services/project-context-service';
-import { Version } from '../../../shared/models/version';
-import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { importProvidersFrom } from '@angular/core';
-import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { mockIPC } from '@tauri-apps/api/mocks';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
+import { beforeEach,describe, expect, it } from 'vitest';
+
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from '../services/project-context-service';
+import { TabProject } from './tab-project';
 
 describe('TabProject', () => {
   let component: TabProject;

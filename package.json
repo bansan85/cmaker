@@ -43,6 +43,7 @@
     "@vitest/browser-playwright": "^4.0.16",
     "angular-eslint": "21.1.0",
     "eslint": "^9.39.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "jsdom": "^27.4.0",
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "playwright": "^1.57.0",

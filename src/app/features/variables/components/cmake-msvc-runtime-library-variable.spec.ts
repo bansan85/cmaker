@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { CMakeMsvcRuntimeLibraryVariable } from './cmake-msvc-runtime-library-variable';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { CMakeMsvcRuntimeLibraryVariable } from './cmake-msvc-runtime-library-variable';
 
 describe('CMakeMsvcRuntimeLibraryVariable', () => {
   let component: CMakeMsvcRuntimeLibraryVariable;

@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+
+import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
-import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
-import { AbstractControl } from '@angular/forms';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
+import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 
 @Injectable({
   providedIn: null,

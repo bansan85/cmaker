@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+
+import { assertError } from '../../../shared/interfaces/errors';
 import {
   CMakeCommandTyped,
   cmakeCommandTypedEqual,
 } from '../models/cmake-command-typed';
-import { assertError } from '../../../shared/interfaces/errors';
 
 @Injectable({
   providedIn: 'root',

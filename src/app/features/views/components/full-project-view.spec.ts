@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { FullProjectView } from './full-project-view';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { FullProjectView } from './full-project-view';
 
 describe('FullProjectView', () => {
   let component: FullProjectView;

@@ -5,6 +5,7 @@ import {
   effect,
   output,
 } from '@angular/core';
+
 import { DraggableItemComponent } from './draggable-item';
 
 @Component({

@@ -1,20 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ProjectLanguagesArgument } from './project-languages-argument';
-import { ProjectLanguagesService } from '../services/project-languages-service';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { Version } from '../../../shared/models/version';
-import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { importProvidersFrom } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
+import { beforeEach,describe, expect, it } from 'vitest';
+
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import {
   StubCheckboxesItem,
   StubCheckboxesList,
   StubValidTag,
   StubVersionTag,
 } from '../../tests/components/stubs';
-import { By } from '@angular/platform-browser';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { ProjectLanguagesService } from '../services/project-languages-service';
+import { ProjectLanguagesArgument } from './project-languages-argument';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectLanguagesArgument>) {}

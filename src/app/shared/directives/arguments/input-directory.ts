@@ -1,9 +1,10 @@
 import { inject, signal } from '@angular/core';
-import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
-import { InputDirectoryModel } from '../../models/arguments/input-directory-model';
-import { ValidatorInterface } from '../../interfaces/validator-interface';
-import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { open } from '@tauri-apps/plugin-dialog';
+
+import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
+import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
+import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { InputDirectoryModel } from '../../models/arguments/input-directory-model';
 import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputDirectory

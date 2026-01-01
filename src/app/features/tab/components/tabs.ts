@@ -5,6 +5,7 @@ import {
   Component,
   contentChildren,
 } from '@angular/core';
+
 import { TabItem } from './tab-item';
 
 @Component({

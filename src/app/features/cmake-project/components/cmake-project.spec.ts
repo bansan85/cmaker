@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CMakeProject } from './cmake-project';
-import { Version } from '../../../shared/models/version';
-import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 import { importProvidersFrom } from '@angular/core';
-import { ProjectContextService } from '../services/project-context-service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { mockIPC } from '@tauri-apps/api/mocks';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
+import { beforeEach,describe, expect, it } from 'vitest';
+
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from '../services/project-context-service';
+import { CMakeProject } from './cmake-project';
 
 describe('CMakeProject', () => {
   let component: CMakeProject;

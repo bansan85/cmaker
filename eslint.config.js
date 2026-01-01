@@ -5,6 +5,7 @@ import angular from 'angular-eslint';
 import { defineConfig } from 'eslint/config';
 import requireOnPush from './src/eslint-rules/require-onpush.js';
 import requireStubImports from './src/eslint-rules/require-stub-imports.js';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default defineConfig(
   {
@@ -28,11 +29,14 @@ export default defineConfig(
           'require-stub-imports': requireStubImports,
         },
       },
+      'simple-import-sort': simpleImportSort,
     },
     processor: angular.processInlineTemplates,
     rules: {
       'local-rules/require-onpush': 'error',
       'local-rules/require-stub-imports': 'error',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
       '@angular-eslint/directive-selector': [
         'error',
         {

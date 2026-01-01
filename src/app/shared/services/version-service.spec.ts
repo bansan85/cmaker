@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
 import { VersionService } from './version-service';
-import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('VersionService', () => {
   let service: VersionService;

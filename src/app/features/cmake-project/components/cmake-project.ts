@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Tabs } from '../../tab/components/tabs';
+
 import { TabItem } from '../../tab/components/tab-item';
+import { Tabs } from '../../tab/components/tabs';
 import { ProjectContextService } from '../services/project-context-service';
+import { TabOptions } from './tab-options';
 import { TabProject } from './tab-project';
 import { TabTarget } from './tab-target';
-import { TabOptions } from './tab-options';
 
 @Component({
   selector: 'app-cmake-project',

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { ProjectNameService } from './project-name-service';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
-import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { VersionService } from '../../../shared/services/version-service';
+import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { ProjectNameService } from './project-name-service';
 
 describe('ProjectNameService', () => {
   let service: ProjectNameService;

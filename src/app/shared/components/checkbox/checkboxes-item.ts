@@ -4,9 +4,10 @@ import {
   inject,
   input,
 } from '@angular/core';
+
+import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { VersionService } from '../../services/version-service';
-import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { CheckboxesList } from './checkboxes-list';
 
 @Component({

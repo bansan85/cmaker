@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
+
 import { InputDirectoryModel } from '../models/arguments/input-directory-model';
 
 @Injectable({

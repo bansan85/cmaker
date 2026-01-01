@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { CheckboxesItem } from './checkboxes-item';
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { Version } from '../../models/version';
-import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { CheckboxesItem } from './checkboxes-item';
 
 describe('CheckboxesItem', () => {
   //let component: CheckboxesItem;

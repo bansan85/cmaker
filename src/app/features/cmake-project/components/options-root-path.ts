@@ -1,16 +1,17 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   effect,
   inject,
-  AfterViewInit,
   signal,
 } from '@angular/core';
-import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
-import { OptionsRootPathService } from '../services/options-root-path-service';
+import { FormsModule } from '@angular/forms';
+
 import { InputDirectory } from '../../../shared/directives/arguments/input-directory';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { FormsModule } from '@angular/forms';
+import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
+import { OptionsRootPathService } from '../services/options-root-path-service';
 import { ProjectContextService } from '../services/project-context-service';
 
 @Component({

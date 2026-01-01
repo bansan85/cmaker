@@ -4,14 +4,15 @@ import {
   forwardRef,
   inject,
 } from '@angular/core';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { ProjectCompatVersionService } from '../services/project-compat-version-service';
 import { FormsModule } from '@angular/forms';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectCompatVersionService } from '../services/project-compat-version-service';
 
 @Component({
   selector: 'app-project-compat-version-argument',

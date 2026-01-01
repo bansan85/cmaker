@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ProjectSpdxLicenseArgument } from './project-spdx-license-argument';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
-import { Version } from '../../../shared/models/version';
-import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { beforeEach,describe, expect, it } from 'vitest';
+
+import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import {
   StubAsyncInvalidValidator,
   StubInputSpdxLicenseDataList,
   StubValidTag,
   StubVersionTag,
 } from '../../tests/components/stubs';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
+import { ProjectSpdxLicenseArgument } from './project-spdx-license-argument';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectSpdxLicenseArgument>) {}

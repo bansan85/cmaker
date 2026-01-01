@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { ProjectDescriptionArgument } from './project-description-argument';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { ProjectDescriptionService } from '../services/project-description-service';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
-import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 import {
   StubAsyncInvalidValidator,
   StubValidTag,
   StubVersionTag,
 } from '../../tests/components/stubs';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { ProjectDescriptionService } from '../services/project-description-service';
+import { ProjectDescriptionArgument } from './project-description-argument';
 
 class Page {
   constructor(private fixture: ComponentFixture<ProjectDescriptionArgument>) {}

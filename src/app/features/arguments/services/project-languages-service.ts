@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+
+import { InputLanguagesModel } from '../../../shared/models/arguments/input-languages-model';
 import { Version } from '../../../shared/models/version';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { InputLanguagesModel } from '../../../shared/models/arguments/input-languages-model';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
-import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: null,

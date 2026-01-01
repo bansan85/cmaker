@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CMakeCommandString } from '../models/cmake-command-string';
+
 import { assertError } from '../../../shared/interfaces/errors';
+import { CMakeCommandString } from '../models/cmake-command-string';
 
 const enum ParserStatus {
   SEEKING_START_OF_COMMAND_NAME,

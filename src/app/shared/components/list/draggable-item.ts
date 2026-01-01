@@ -5,6 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { CMakeComponentInterface } from '../../../features/cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';

@@ -6,30 +6,31 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProjectService } from '../services/project-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
-import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
-import { ProjectVersionService } from '../../arguments/services/project-version-service';
-import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
-import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
-import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
-import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
-import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
-import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
-import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
-import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
-import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
-import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
-import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
-import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
-import { ProjectNameService } from '../../arguments/services/project-name-service';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
-import { ProjectModel } from '../models/project.model';
+import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
+import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { ResourceService } from '../../../shared/services/resource-service';
+import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
+import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
+import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
+import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
+import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
+import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
+import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
+import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
+import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
+import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
+import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
+import { ProjectNameService } from '../../arguments/services/project-name-service';
+import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
+import { ProjectVersionService } from '../../arguments/services/project-version-service';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectModel } from '../models/project.model';
+import { ProjectService } from '../services/project-service';
 
 @Component({
   selector: 'app-project-command',

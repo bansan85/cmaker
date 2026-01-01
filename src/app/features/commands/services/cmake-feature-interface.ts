@@ -1,9 +1,10 @@
 import { inject } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+
 import { Version } from '../../../shared/models/version';
+import { VersionService } from '../../../shared/services/version-service';
 import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { VersionService } from '../../../shared/services/version-service';
-import { AbstractControl } from '@angular/forms';
 
 export abstract class CMakeFeatureInterface<Feature> {
   protected projectContext = inject(ProjectContextService);

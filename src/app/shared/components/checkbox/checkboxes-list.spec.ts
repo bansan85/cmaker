@@ -1,9 +1,9 @@
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LucideAngularModule, Menu } from 'lucide-angular';
+import { beforeEach,describe, expect, it } from 'vitest';
 
 import { CheckboxesList } from './checkboxes-list';
-import { importProvidersFrom } from '@angular/core';
-import { LucideAngularModule, Menu } from 'lucide-angular';
-import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CheckboxesList', () => {
   let component: CheckboxesList;

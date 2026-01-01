@@ -6,12 +6,13 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-runtime-library-variable-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-runtime-library-variable-service';
 
 @Component({
   selector: 'app-cmake-msvc-runtime-library-variable',

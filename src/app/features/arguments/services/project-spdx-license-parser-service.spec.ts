@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
 import { ProjectSpdxLicenseParserService } from './project-spdx-license-parser-service';
-import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('ProjectSpdxLicenseParserService', () => {
   let service: ProjectSpdxLicenseParserService;

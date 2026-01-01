@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
 import { CMakeCommandMapping } from './cmake-command-mapping';
-import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('CMakeCommandMapping', () => {
   let service: CMakeCommandMapping;

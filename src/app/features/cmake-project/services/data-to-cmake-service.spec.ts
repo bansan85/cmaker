@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
+
 import { DataToCMakeService } from './data-to-cmake-service';
-import { describe, it, expect, beforeEach } from 'vitest';
 
 describe('DataToCMakeService', () => {
   let service: DataToCMakeService;

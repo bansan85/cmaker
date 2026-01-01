@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { CMakeProject } from './features/cmake-project/components/cmake-project';
 
 @Component({

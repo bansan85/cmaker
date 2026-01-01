@@ -1,5 +1,6 @@
+import { describe, expect,it } from 'vitest';
+
 import { Version } from './version';
-import { describe, it, expect } from 'vitest';
 
 describe('Version', () => {
   it('should create an instance', () => {

@@ -1,9 +1,10 @@
 import { inject, signal } from '@angular/core';
-import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
-import { Version } from '../../models/version';
-import { InputLanguagesModel } from '../../models/arguments/input-languages-model';
+
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
+import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { InputLanguagesModel } from '../../models/arguments/input-languages-model';
+import { Version } from '../../models/version';
 import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputLanguages

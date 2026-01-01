@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { ProjectLanguagesService } from './project-languages-service';
-import { ProjectContextService } from '../../cmake-project/services/project-context-service';
-import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from '../../cmake-project/services/project-context-service';
+import { ProjectLanguagesService } from './project-languages-service';
 
 describe('ProjectLanguagesService', () => {
   let service: ProjectLanguagesService;

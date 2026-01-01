@@ -4,14 +4,15 @@ import {
   forwardRef,
   inject,
 } from '@angular/core';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { ProjectLanguagesService } from '../services/project-languages-service';
-import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
-import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-item';
+import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
+import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectLanguagesService } from '../services/project-languages-service';
 
 @Component({
   selector: 'app-project-languages-argument',

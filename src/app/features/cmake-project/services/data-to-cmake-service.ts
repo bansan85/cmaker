@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DataToCMakeOptions } from '../models/data-to-cmake-options';
+
 import { Version } from '../../../shared/models/version';
+import { DataToCMakeOptions } from '../models/data-to-cmake-options';
 
 @Injectable({
   providedIn: 'root',

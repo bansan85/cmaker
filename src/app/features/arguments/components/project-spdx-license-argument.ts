@@ -6,14 +6,15 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { InputSpdxLicenseDataList } from '../../../shared/components/arguments/input-spdx-license-data-list';
-import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
 
 @Component({
   selector: 'app-project-spdx-license-argument',

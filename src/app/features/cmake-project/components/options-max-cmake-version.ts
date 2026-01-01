@@ -6,12 +6,13 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { InputVersion } from '../../../shared/directives/arguments/input-version';
-import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
+
+import { InputVersion } from '../../../shared/directives/arguments/input-version';
+import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
+import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
 import { OptionsMaxCMakeVersionService } from '../services/options-max-cmake-version-service';
 import { ProjectContextService } from '../services/project-context-service';
-import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 
 @Component({
   selector: 'app-options-max-cmake-version',

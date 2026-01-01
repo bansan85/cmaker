@@ -1,9 +1,10 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { OptionsModel } from '../models/options.model';
 import { InputDirectoryModel } from '../../../shared/models/arguments/input-directory-model';
 import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 import { Version } from '../../../shared/models/version';
+import { OptionsModel } from '../models/options.model';
 
 @Injectable({
   providedIn: null,

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+
 import { CMakeComponentInterface } from '../../../features/cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 

@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
-import { CMakeFeatureInterface } from './cmake-feature-interface';
+
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { CMakeCommandMapping } from '../../serializer/services/cmake-command-mapping';
+import { CMakeFeatureInterface } from './cmake-feature-interface';
 
 export abstract class CMakeCommandInterface<
   Feature,

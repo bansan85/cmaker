@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { Version } from '../../../shared/models/version';
-import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
-import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
-import { InputCheckboxModel } from '../../../shared/models/arguments/input-checkbox-model';
-import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
-import { CMakeMsvcRuntimeLibraryVariable } from '../components/cmake-msvc-runtime-library-variable';
-import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { AbstractControl } from '@angular/forms';
+
+import { InputCheckboxModel } from '../../../shared/models/arguments/input-checkbox-model';
+import { Version } from '../../../shared/models/version';
+import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
+import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
+import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
+import { CMakeMsvcRuntimeLibraryVariable } from '../components/cmake-msvc-runtime-library-variable';
 
 @Injectable({
   providedIn: null,

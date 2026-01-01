@@ -1,27 +1,28 @@
 import { inject, Injectable } from '@angular/core';
+
 import { Version } from '../../../shared/models/version';
-import {
-  CMakeAvailableData,
-  mergeCMakeAvailableData,
-} from '../../cmake-project/interfaces/cmake-available-data';
-import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
-import { ProjectVersionService } from '../../arguments/services/project-version-service';
+import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
+import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
+import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
+import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
+import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
+import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
+import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
 import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
 import { ProjectLanguagesService } from '../../arguments/services/project-languages-service';
 import { ProjectNameService } from '../../arguments/services/project-name-service';
-import { ProjectModel } from '../models/project.model';
-import { CMakeCommandInterface } from './cmake-command-interface';
+import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
+import { ProjectVersionService } from '../../arguments/services/project-version-service';
+import {
+  CMakeAvailableData,
+  mergeCMakeAvailableData,
+} from '../../cmake-project/interfaces/cmake-available-data';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { ProjectCommand } from '../components/project-command';
-import { ProjectNameArgument } from '../../arguments/components/project-name-argument';
-import { ProjectVersionArgument } from '../../arguments/components/project-version-argument';
-import { ProjectCompatVersionArgument } from '../../arguments/components/project-compat-version-argument';
-import { ProjectSpdxLicenseArgument } from '../../arguments/components/project-spdx-license-argument';
-import { ProjectDescriptionArgument } from '../../arguments/components/project-description-argument';
-import { ProjectHomepageUrlArgument } from '../../arguments/components/project-homepage-url-argument';
-import { ProjectLanguagesArgument } from '../../arguments/components/project-languages-argument';
+import { ProjectModel } from '../models/project.model';
+import { CMakeCommandInterface } from './cmake-command-interface';
 
 @Injectable({
   providedIn: null,

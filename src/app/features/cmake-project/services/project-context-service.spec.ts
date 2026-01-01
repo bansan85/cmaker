@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach,describe, expect, it } from 'vitest';
 
-import { ProjectContextService } from './project-context-service';
-import { Version } from '../../../shared/models/version';
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { Version } from '../../../shared/models/version';
+import { ProjectContextService } from './project-context-service';
 
 describe('ProjectContextService', () => {
   let service: ProjectContextService;

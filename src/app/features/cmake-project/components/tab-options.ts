@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+
+import { InputDirectoryModel } from '../../../shared/models/arguments/input-directory-model';
+import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
+import { OptionsModel } from '../models/options.model';
 import { OptionsMaxCMakeVersion } from './options-max-cmake-version';
 import { OptionsRootPath } from './options-root-path';
-import { OptionsModel } from '../models/options.model';
-import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
-import { InputDirectoryModel } from '../../../shared/models/arguments/input-directory-model';
 
 @Component({
   selector: 'app-tab-options',

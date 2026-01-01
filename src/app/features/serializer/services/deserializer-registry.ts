@@ -6,23 +6,24 @@ import {
   Injectable,
   Injector,
 } from '@angular/core';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { Version } from '../../../shared/models/version';
+
+import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
+import { InputFiles } from '../../../shared/directives/arguments/input-files';
+import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
+import { InputLicense } from '../../../shared/directives/arguments/input-license';
+import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
-import { InputLicense } from '../../../shared/directives/arguments/input-license';
-import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
-import { InputFiles } from '../../../shared/directives/arguments/input-files';
-import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
-import { CMakeCommandParser } from './cmake-command-parser';
-import { CMakeCommandString } from '../models/cmake-command-string';
-import { CMakeArgumentTyped } from '../models/cmake-argument-typed';
-import { CMakeCommandMapping } from './cmake-command-mapping';
 import { assertError } from '../../../shared/interfaces/errors';
-import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
-import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
+import { Version } from '../../../shared/models/version';
 import { StringService } from '../../../shared/services/string-service';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { CMakeArgumentTyped } from '../models/cmake-argument-typed';
+import { CMakeCommandString } from '../models/cmake-command-string';
+import { CMakeCommandMapping } from './cmake-command-mapping';
+import { CMakeCommandParser } from './cmake-command-parser';
 
 @Injectable({
   providedIn: 'root',

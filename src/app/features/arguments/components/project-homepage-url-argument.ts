@@ -4,14 +4,15 @@ import {
   forwardRef,
   inject,
 } from '@angular/core';
-import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
 import { FormsModule } from '@angular/forms';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { InputString } from '../../../shared/directives/arguments/input-string';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { InputString } from '../../../shared/directives/arguments/input-string';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
 
 @Component({
   selector: 'app-project-homepage-url-argument',

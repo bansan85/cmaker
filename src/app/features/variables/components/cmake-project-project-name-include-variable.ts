@@ -5,13 +5,14 @@ import {
   inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CMakeProjectProjectNameIncludeVariableService } from '../services/cmake-project-project-name-include-variable-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
-import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
+import { InputProjectNameFiles } from '../../../shared/directives/arguments/input-project-name-files';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
+import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeProjectProjectNameIncludeVariableService } from '../services/cmake-project-project-name-include-variable-service';
 
 @Component({
   selector: 'app-cmake-project-project-name-include-variable',

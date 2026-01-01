@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -8,21 +9,21 @@ import {
   viewChildren,
   ViewContainerRef,
 } from '@angular/core';
-import { ProjectCommand } from '../../commands/components/project-command';
-import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
-import { DraggableListComponent } from '../../../shared/components/list/draggable-list';
+import { open, save } from '@tauri-apps/plugin-dialog';
+
 import { DraggableItemComponent } from '../../../shared/components/list/draggable-item';
-import { CommonModule } from '@angular/common';
+import { DraggableListComponent } from '../../../shared/components/list/draggable-list';
+import { RustBackendService } from '../../../shared/services/rust-backend-service';
+import { ProjectCommand } from '../../commands/components/project-command';
+import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
+import { DeserializerRegistry } from '../../serializer/services/deserializer-registry';
+import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
 import { CMakeProjectIncludeBeforeVariable } from '../../variables/components/cmake-project-include-before-variable';
 import { CMakeProjectIncludeVariable } from '../../variables/components/cmake-project-include-variable';
 import { CMakeProjectProjectNameIncludeBeforeVariable } from '../../variables/components/cmake-project-project-name-include-before-variable';
 import { CMakeProjectProjectNameIncludeVariable } from '../../variables/components/cmake-project-project-name-include-variable';
 import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
-import { DeserializerRegistry } from '../../serializer/services/deserializer-registry';
-import { open, save } from '@tauri-apps/plugin-dialog';
-import { RustBackendService } from '../../../shared/services/rust-backend-service';
 
 @Component({
   selector: 'app-tab-project',

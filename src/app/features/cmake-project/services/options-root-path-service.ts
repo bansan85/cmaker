@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
+import { AbstractControl } from '@angular/forms';
+
 import { InputDirectoryModel } from '../../../shared/models/arguments/input-directory-model';
 import { Version } from '../../../shared/models/version';
-import { CMakeAvailableData } from '../interfaces/cmake-available-data';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
-import { AbstractControl } from '@angular/forms';
+import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
+import { CMakeAvailableData } from '../interfaces/cmake-available-data';
 
 @Injectable({
   providedIn: null,
