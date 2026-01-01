@@ -1,5 +1,6 @@
 import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { mockIPC } from '@tauri-apps/api/mocks';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -22,6 +23,28 @@ import { CMakeProjectProjectNameIncludeVariableService } from '../../variables/s
 import { CMakeProjectTopLevelIncludesVariableService } from '../../variables/services/cmake-project-top-level-includes-variable-service';
 import { ProjectContextService } from '../services/project-context-service';
 import { CMakeProject } from './cmake-project';
+
+class Page {
+  constructor(private fixture: ComponentFixture<CMakeProject>) {}
+
+  get tabOptions() {
+    return this.fixture.debugElement.query(
+      By.css('app-ui-tab-item[tabName="Options"]')
+    ).nativeElement as HTMLInputElement;
+  }
+
+  get tabProject() {
+    return this.fixture.debugElement.query(
+      By.css('app-ui-tab-item[tabName="Project"]')
+    ).nativeElement as HTMLInputElement;
+  }
+
+  get tabTarget() {
+    return this.fixture.debugElement.query(
+      By.css('app-ui-tab-item[tabName="Target"]')
+    ).nativeElement as HTMLInputElement;
+  }
+}
 
 describe('CMakeProject', () => {
   let component: CMakeProject;
