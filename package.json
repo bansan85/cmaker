@@ -10,6 +10,7 @@
     "test-ci": "ng test --no-watch --no-progress",
     "tauri": "tauri",
     "pretty": "prettier --write \"./{src,src-tauri}/**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "compodoc": "npx compodoc -p tsconfig.doc.json --disableCoverage --disableRoutesGraph",
     "lint": "ng lint"
   },
   "type": "module",
@@ -35,6 +36,7 @@
     "@angular/cli": "^21.0.3",
     "@angular/compiler-cli": "^21.0.5",
     "@angular/platform-browser-dynamic": "^21.0.5",
+    "@compodoc/compodoc": "^1.1.32",
     "@eslint/js": "^9.39.2",
     "@tauri-apps/cli": "^2.9.6",
     "@types/node": "^25.0.2",
