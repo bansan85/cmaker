@@ -90,7 +90,7 @@ export default defineConfig(
       'func-style': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
       'max-lines-per-function': 'off',
-      complexity: 'off',
+      'complexity': 'off',
       'max-depth': 'off',
       'max-lines': 'off',
       'no-labels': 'off',
