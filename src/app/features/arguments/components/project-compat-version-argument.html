@@ -7,7 +7,7 @@
   <input
     name="project-compat-version"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForCompatVersion"
     [appAsyncInvalidValidatorContext]="this"
     [id]="labelVersionId"
     [(ngModel)]="versionString"

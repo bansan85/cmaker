@@ -6,7 +6,7 @@
   <input
     name="project-description"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForDescription"
     [appAsyncInvalidValidatorContext]="this"
     [id]="labelDescriptionId"
     [(ngModel)]="text"

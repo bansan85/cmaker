@@ -43,4 +43,7 @@ export class CMakeProjectProjectNameIncludeBeforeVariable
   readonly service = inject(
     CMakeProjectProjectNameIncludeBeforeVariableService
   );
+
+  protected readonly validatorForProjectName = this.service.validateArg[0];
+  protected readonly validatorForIncludes = this.service.validateArg[1];
 }

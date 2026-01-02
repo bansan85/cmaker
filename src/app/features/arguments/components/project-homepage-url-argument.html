@@ -6,7 +6,7 @@
   <input
     name="project-homepage-url"
     type="url"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForHomepageUrl"
     [appAsyncInvalidValidatorContext]="this"
     [id]="projectHomepageUrlId"
     [(ngModel)]="text"

@@ -36,4 +36,6 @@ export class ProjectVersionArgument
   protected readonly projectVersionId = `project-version-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectVersionService);
+
+  protected readonly validatorForVersion = this.service.validateArg[0];
 }

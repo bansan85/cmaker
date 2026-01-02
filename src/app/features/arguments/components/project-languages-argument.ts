@@ -39,6 +39,8 @@ export class ProjectLanguagesArgument
 
   readonly service = inject(ProjectLanguagesService);
 
+  protected readonly validatorForLanguages = this.service.validateArg[0];
+
   protected override allLanguages = this.service.allLanguages.map((item) =>
     signal<CheckboxesItemInterface>({
       enabled: false,

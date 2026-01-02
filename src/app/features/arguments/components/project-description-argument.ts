@@ -36,4 +36,6 @@ export class ProjectDescriptionArgument
   protected readonly labelDescriptionId = `project-description-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectDescriptionService);
+
+  protected readonly validatorForDescription = this.service.validateArg[0];
 }

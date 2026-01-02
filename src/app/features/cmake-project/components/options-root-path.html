@@ -9,7 +9,7 @@
     <input
       name="root-path"
       type="text"
-      [appAsyncInvalidValidator]="this.service.validateArg[0]"
+      [appAsyncInvalidValidator]="validatorForRootPath"
       [appAsyncInvalidValidatorContext]="this"
       [id]="optionsRootPathId"
       [(ngModel)]="directory"

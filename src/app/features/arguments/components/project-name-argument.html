@@ -5,7 +5,7 @@
   ><input
     name="project-name"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForName"
     [appAsyncInvalidValidatorContext]="this"
     [id]="projectNameId"
     [(ngModel)]="text"

@@ -36,4 +36,6 @@ export class ProjectCompatVersionArgument
   protected readonly labelVersionId = `project-compat-version-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectCompatVersionService);
+
+  protected readonly validatorForCompatVersion = this.service.validateArg[0];
 }

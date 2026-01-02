@@ -6,7 +6,7 @@
   <input
     name="project-version"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForVersion"
     [appAsyncInvalidValidatorContext]="this"
     [id]="projectVersionId"
     [(ngModel)]="versionString"

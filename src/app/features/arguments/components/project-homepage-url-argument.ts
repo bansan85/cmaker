@@ -36,4 +36,6 @@ export class ProjectHomepageUrlArgument
   protected readonly projectHomepageUrlId = `project-homepage-url-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectHomepageUrlService);
+
+  protected readonly validatorForHomepageUrl = this.service.validateArg[0];
 }

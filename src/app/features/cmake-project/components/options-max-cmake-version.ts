@@ -36,6 +36,8 @@ export class OptionsMaxCMakeVersion
 
   readonly service = inject(OptionsMaxCMakeVersionService);
 
+  protected readonly validatorForMaxCMakeVersion = this.service.validateArg[0];
+
   private readonly initialized = signal(false);
 
   constructor() {

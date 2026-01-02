@@ -10,7 +10,7 @@
     <input
       name="cmake-project-project-name-include-before-project-name"
       type="text"
-      [appAsyncInvalidValidator]="this.service.validateArg[0]"
+      [appAsyncInvalidValidator]="validatorForProjectName"
       [appAsyncInvalidValidatorContext]="this"
       [id]="cmakeProjectProjectNameIncludeBeforeProjectNameId"
       [(ngModel)]="projectName"
@@ -20,7 +20,7 @@
     cols="80"
     name="cmake-project-project-name-include-before-path"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[1]"
+    [appAsyncInvalidValidator]="validatorForIncludes"
     [appAsyncInvalidValidatorContext]="this"
     [id]="cmakeProjectProjectNameIncludeBeforePathId"
     [rows]="rows"

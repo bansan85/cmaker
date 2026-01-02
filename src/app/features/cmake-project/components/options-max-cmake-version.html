@@ -3,7 +3,7 @@
   <input
     name="max-cmake-version"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForMaxCMakeVersion"
     [appAsyncInvalidValidatorContext]="this"
     [id]="optionsMaxCMakeVersionId"
     [(ngModel)]="versionString"

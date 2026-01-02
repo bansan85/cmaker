@@ -9,7 +9,7 @@
     cols="80"
     name="cmake-project-top-level-includes-path"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForIncludes"
     [appAsyncInvalidValidatorContext]="this"
     [id]="cmakeProjectTopLevelIncludesPathId"
     [rows]="rows"

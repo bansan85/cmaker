@@ -36,4 +36,6 @@ export class ProjectNameArgument
   protected readonly projectNameId = `project-name-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectNameService);
+
+  protected readonly validatorForName = this.service.validateArg[0];
 }

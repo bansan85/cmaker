@@ -6,7 +6,7 @@
   <input
     name="project-spdx-license"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForSpdxLicense"
     [appAsyncInvalidValidatorContext]="this"
     [attr.list]="datalist.inputSpdxLicenseListId"
     [id]="projectSpdxLicenseId"

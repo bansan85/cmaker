@@ -39,4 +39,7 @@ export class CMakeProjectProjectNameIncludeVariable
   protected readonly cmakeProjectProjectNameIncludePathId = `cmake-project-project-name-include-path-${crypto.randomUUID()}`;
 
   readonly service = inject(CMakeProjectProjectNameIncludeVariableService);
+
+  protected readonly validatorForProjectName = this.service.validateArg[0];
+  protected readonly validatorForIncludes = this.service.validateArg[1];
 }

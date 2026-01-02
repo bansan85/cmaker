@@ -46,4 +46,6 @@ export class ProjectSpdxLicenseArgument
   protected readonly projectSpdxLicenseId = `project-spdx-license-${crypto.randomUUID()}`;
 
   readonly service = inject(ProjectSpdxLicenseService);
+
+  protected readonly validatorForSpdxLicense = this.service.validateArg[0];
 }

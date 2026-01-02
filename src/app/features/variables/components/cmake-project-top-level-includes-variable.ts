@@ -38,4 +38,6 @@ export class CMakeProjectTopLevelIncludesVariable
   protected readonly cmakeProjectTopLevelIncludesPathId = `cmake-project-top-level-includes-path-${crypto.randomUUID()}`;
 
   readonly service = inject(CMakeProjectTopLevelIncludesVariableService);
+
+  protected readonly validatorForIncludes = this.service.validateArg[0];
 }

@@ -8,7 +8,7 @@
     cols="80"
     name="cmake-project-include-path"
     type="text"
-    [appAsyncInvalidValidator]="this.service.validateArg[0]"
+    [appAsyncInvalidValidator]="validatorForIncludes"
     [appAsyncInvalidValidatorContext]="this"
     [id]="cmakeProjectIncludePathId"
     [rows]="rows"

@@ -34,6 +34,8 @@ export class OptionsRootPath
 
   readonly service = inject(OptionsRootPathService);
 
+  protected readonly validatorForRootPath = this.service.validateArg[0];
+
   private readonly initialized = signal(false);
 
   constructor() {

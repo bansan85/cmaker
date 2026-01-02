@@ -37,4 +37,6 @@ export class CMakeProjectIncludeBeforeVariable
   protected readonly cmakeProjectIncludeBeforePathId = `cmake-project-include-before-path-${crypto.randomUUID()}`;
 
   readonly service = inject(CMakeProjectIncludeBeforeVariableService);
+
+  protected readonly validatorForIncludes = this.service.validateArg[0];
 }
