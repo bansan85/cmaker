@@ -70,3 +70,29 @@ export class StubAsyncInvalidValidator implements AsyncValidator {
 export class StubInputSpdxLicenseDataList {
   readonly inputSpdxLicenseListId = '';
 }
+@Component({
+  selector: 'app-ui-tabs',
+  template: '',
+})
+export class StubTabs {}
+@Component({
+  selector: 'app-ui-tab-item',
+  template: '',
+})
+export class StubTabItem {}
+
+@Component({
+  selector: 'app-tab-options',
+  template: '',
+})
+export class StubTabOptions {}
+@Component({
+  selector: 'app-tab-project',
+  template: '',
+})
+export class StubTabProject {}
+@Component({
+  selector: 'app-tab-target',
+  template: '',
+})
+export class StubTabTarget {}

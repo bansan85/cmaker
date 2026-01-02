@@ -15,6 +15,13 @@ import { ProjectNameService } from '../../arguments/services/project-name-servic
 import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
 import { ProjectVersionService } from '../../arguments/services/project-version-service';
 import { ProjectService } from '../../commands/services/project-service';
+import {
+  StubTabItem,
+  StubTabOptions,
+  StubTabProject,
+  StubTabs,
+  StubTabTarget,
+} from '../../tests/components/stubs';
 import { CMakeMsvcRuntimeLibraryVariableService } from '../../variables/services/cmake-msvc-runtime-library-variable-service';
 import { CMakeProjectIncludeBeforeVariableService } from '../../variables/services/cmake-project-include-before-variable-service';
 import { CMakeProjectIncludeVariableService } from '../../variables/services/cmake-project-include-variable-service';
@@ -49,50 +56,108 @@ class Page {
 describe('CMakeProject', () => {
   let component: CMakeProject;
   let fixture: ComponentFixture<CMakeProject>;
+  let page: Page;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CMakeProject],
-      providers: [
-        ProjectContextService,
-        ProjectService,
-        ProjectSpdxLicenseService,
-        ProjectVersionService,
-        ProjectCompatVersionService,
-        ProjectDescriptionService,
-        ProjectHomepageUrlService,
-        ProjectLanguagesService,
-        ProjectNameService,
-        CMakeMsvcRuntimeLibraryVariableService,
-        CMakeProjectIncludeBeforeVariableService,
-        CMakeProjectIncludeVariableService,
-        CMakeProjectProjectNameIncludeBeforeVariableService,
-        CMakeProjectProjectNameIncludeVariableService,
-        CMakeProjectTopLevelIncludesVariableService,
-        {
-          provide: DEFAULT_MAX_VERSION,
-          useValue: new Version(4, 3),
-        },
-        importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
-      ],
-    }).compileComponents();
+  describe('Shallow Component Testing', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [
+          ProjectContextService,
+          ProjectService,
+          ProjectSpdxLicenseService,
+          ProjectVersionService,
+          ProjectCompatVersionService,
+          ProjectDescriptionService,
+          ProjectHomepageUrlService,
+          ProjectLanguagesService,
+          ProjectNameService,
+          CMakeMsvcRuntimeLibraryVariableService,
+          CMakeProjectIncludeBeforeVariableService,
+          CMakeProjectIncludeVariableService,
+          CMakeProjectProjectNameIncludeBeforeVariableService,
+          CMakeProjectProjectNameIncludeVariableService,
+          CMakeProjectTopLevelIncludesVariableService,
+          {
+            provide: DEFAULT_MAX_VERSION,
+            useValue: new Version(4, 3),
+          },
+          importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
+        ],
+      })
+        .overrideComponent(CMakeProject, {
+          set: {
+            imports: [
+              StubTabs,
+              StubTabItem,
+              StubTabOptions,
+              StubTabProject,
+              StubTabTarget,
+            ],
+          },
+        })
+        .compileComponents();
 
-    mockIPC((cmd, args) => {
-      if (cmd === 'path_exists') {
-        return true;
-      }
-      if (cmd === 'relative_paths_exists') {
-        return true;
-      }
-      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      mockIPC((cmd, args) => {
+        if (cmd === 'path_exists') {
+          return true;
+        }
+        if (cmd === 'relative_paths_exists') {
+          return true;
+        }
+        throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      });
+
+      fixture = TestBed.createComponent(CMakeProject);
+      component = fixture.componentInstance;
+      page = new Page(fixture);
+
+      await fixture.whenStable();
     });
 
-    fixture = TestBed.createComponent(CMakeProject);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Full Component Testing', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [
+          ProjectContextService,
+          ProjectService,
+          ProjectSpdxLicenseService,
+          ProjectVersionService,
+          ProjectCompatVersionService,
+          ProjectDescriptionService,
+          ProjectHomepageUrlService,
+          ProjectLanguagesService,
+          ProjectNameService,
+          CMakeMsvcRuntimeLibraryVariableService,
+          CMakeProjectIncludeBeforeVariableService,
+          CMakeProjectIncludeVariableService,
+          CMakeProjectProjectNameIncludeBeforeVariableService,
+          CMakeProjectProjectNameIncludeVariableService,
+          CMakeProjectTopLevelIncludesVariableService,
+          {
+            provide: DEFAULT_MAX_VERSION,
+            useValue: new Version(4, 3),
+          },
+          importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
+        ],
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(CMakeProject);
+      component = fixture.componentInstance;
+      page = new Page(fixture);
+
+      await fixture.whenStable();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+      expect(page.tabOptions).toBeTruthy();
+      expect(page.tabProject).toBeTruthy();
+      expect(page.tabTarget).toBeTruthy();
+    });
   });
 });
