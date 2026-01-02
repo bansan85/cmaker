@@ -1,4 +1,3 @@
-import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -100,7 +99,6 @@ describe('ProjectCompatVersionArgument', () => {
         providers: [
           ProjectContextService,
           ProjectCompatVersionService,
-          ChangeDetectorRef,
           {
             provide: DEFAULT_MAX_VERSION,
             useValue: new Version(4, 3),
