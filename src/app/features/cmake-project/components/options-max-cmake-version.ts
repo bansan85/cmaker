@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
@@ -16,7 +17,7 @@ import { ProjectContextService } from '../services/project-context-service';
 
 @Component({
   selector: 'app-options-max-cmake-version',
-  imports: [FormsModule, AsyncInvalidValidator],
+  imports: [FormsModule, ValidTag, AsyncInvalidValidator],
   templateUrl: './options-max-cmake-version.html',
   styleUrl: './options-max-cmake-version.css',
   providers: [OptionsMaxCMakeVersionService],

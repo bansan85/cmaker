@@ -1,5 +1,7 @@
 <div class="field">
-  <label [for]="optionsMaxCMakeVersionId">Max CMake version:</label>
+  <label [for]="optionsMaxCMakeVersionId"
+    >Max CMake version <app-valid-tag [validator]="this"
+  /></label>
   <input
     name="max-cmake-version"
     type="text"
