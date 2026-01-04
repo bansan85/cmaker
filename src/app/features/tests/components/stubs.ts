@@ -96,3 +96,13 @@ export class StubTabProject {}
   template: '',
 })
 export class StubTabTarget {}
+@Component({
+  selector: 'app-draggable-list',
+  template: '',
+})
+export class StubDraggableListComponent {}
+@Component({
+  selector: 'app-draggable-item',
+  template: '',
+})
+export class StubDraggableItemComponent {}
