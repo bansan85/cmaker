@@ -1,11 +1,12 @@
 import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { mockIPC } from '@tauri-apps/api/mocks';
+import { InvokeArgs } from '@tauri-apps/api/core';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { MockIpc } from '../../../shared/classes/tests/mock-ipc';
 import { Version } from '../../../shared/models/version';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
@@ -57,6 +58,18 @@ describe('CMakeProject', () => {
   let component: CMakeProject;
   let fixture: ComponentFixture<CMakeProject>;
   let page: Page;
+  let mockIpc: MockIpc;
+
+  beforeAll(() => {
+    mockIpc = new MockIpc();
+    mockIpc.mockCommand('path_exists', (_args?: InvokeArgs) => true);
+    mockIpc.mockCommand('relative_paths_exists', (_args?: InvokeArgs) => true);
+    mockIpc.start();
+  });
+
+  afterAll(() => {
+    mockIpc.stop();
+  });
 
   describe('Shallow Component Testing', () => {
     beforeEach(async () => {
@@ -96,16 +109,6 @@ describe('CMakeProject', () => {
           },
         })
         .compileComponents();
-
-      mockIPC((cmd, args) => {
-        if (cmd === 'path_exists') {
-          return true;
-        }
-        if (cmd === 'relative_paths_exists') {
-          return true;
-        }
-        throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
-      });
 
       fixture = TestBed.createComponent(CMakeProject);
       component = fixture.componentInstance;

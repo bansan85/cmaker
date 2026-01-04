@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { mockIPC } from '@tauri-apps/api/mocks';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { InvokeArgs } from '@tauri-apps/api/core';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
+import { MockIpc } from '../../../shared/classes/tests/mock-ipc';
 import { Version } from '../../../shared/models/version';
 import {
   StubAsyncInvalidValidator,
@@ -40,6 +41,23 @@ describe('OptionsRootPath', () => {
   let page: Page;
   let mockIpcOpen: Promise<string>;
   let mockIpcPathExists: boolean;
+  let mockIpc: MockIpc;
+  beforeAll(() => {
+    mockIpc = new MockIpc();
+    mockIpc.mockCommand(
+      'plugin:dialog|open',
+      (_args?: InvokeArgs) => mockIpcOpen
+    );
+    mockIpc.mockCommand(
+      'path_exists',
+      (_args?: InvokeArgs) => mockIpcPathExists
+    );
+    mockIpc.start();
+  });
+
+  afterAll(() => {
+    mockIpc.stop();
+  });
 
   describe('Shallow Component Testing', () => {
     beforeEach(async () => {
@@ -63,16 +81,6 @@ describe('OptionsRootPath', () => {
           },
         })
         .compileComponents();
-
-      mockIPC((cmd, args) => {
-        if (cmd === 'plugin:dialog|open') {
-          return mockIpcOpen;
-        }
-        if (cmd === 'path_exists') {
-          return mockIpcPathExists;
-        }
-        throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
-      });
 
       fixture = TestBed.createComponent(OptionsRootPath);
       component = fixture.componentInstance;
