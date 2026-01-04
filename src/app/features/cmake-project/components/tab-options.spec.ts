@@ -160,7 +160,6 @@ describe('TabOptions', () => {
       mockIpcPathExists = false;
       rootPathButton.click();
       await fixture.whenStable();
-      await fixture.whenStable();
       expect(component.rootPathSignal().directory).toEqual('c:/temp2');
       expect(service.rootPath.directory).toEqual('c:/temp2');
       expect(rootPathInput.matches('.ng-invalid')).toBe(true);
@@ -168,7 +167,6 @@ describe('TabOptions', () => {
       mockIpcOpen = Promise.resolve('.');
       mockIpcPathExists = true;
       rootPathButton.click();
-      await fixture.whenStable();
       await fixture.whenStable();
       expect(component.rootPathSignal().directory).toEqual('.');
       expect(service.rootPath.directory).toEqual('.');
