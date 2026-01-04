@@ -1,10 +1,11 @@
 <div class="field">
   <label [for]="optionsRootPathId"
-    >Root path:
+    >Root path
     <button name="root-path-button" type="button" (click)="selectPath()">
       ...
-    </button></label
-  >
+    </button>
+    <app-valid-tag [validator]="this"
+  /></label>
   <span>
     <input
       name="root-path"

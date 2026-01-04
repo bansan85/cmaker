@@ -1,43 +1,167 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { mockIPC } from '@tauri-apps/api/mocks';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { Version } from '../../../shared/models/version';
+import {
+  StubAsyncInvalidValidator,
+  StubValidTag,
+} from '../../tests/components/stubs';
 import { OptionsRootPathService } from '../services/options-root-path-service';
 import { ProjectContextService } from '../services/project-context-service';
 import { OptionsRootPath } from './options-root-path';
 
+class Page {
+  constructor(private fixture: ComponentFixture<OptionsRootPath>) {}
+
+  get rootPathButton() {
+    return this.fixture.debugElement.query(
+      By.css('button[name="root-path-button"]')
+    ).nativeElement as HTMLButtonElement;
+  }
+
+  get rootPathInput() {
+    return this.fixture.debugElement.query(By.css('input[name="root-path"]'))
+      .nativeElement as HTMLInputElement;
+  }
+
+  get validTag() {
+    return this.fixture.debugElement.query(By.css('app-valid-tag span'))
+      .nativeElement as HTMLSpanElement;
+  }
+}
+
 describe('OptionsRootPath', () => {
   let component: OptionsRootPath;
   let fixture: ComponentFixture<OptionsRootPath>;
+  let page: Page;
+  let mockIpcOpen: Promise<string>;
+  let mockIpcPathExists: boolean;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [OptionsRootPath],
-      providers: [
-        ProjectContextService,
-        OptionsRootPathService,
-        {
-          provide: DEFAULT_MAX_VERSION,
-          useValue: new Version(4, 3),
-        },
-      ],
-    }).compileComponents();
+  describe('Shallow Component Testing', () => {
+    beforeEach(async () => {
+      mockIpcOpen = Promise.resolve('c:/temp2');
+      mockIpcPathExists = true;
 
-    mockIPC((cmd, args) => {
-      if (cmd === 'path_exists') {
-        return true;
-      }
-      throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      await TestBed.configureTestingModule({
+        imports: [OptionsRootPath],
+        providers: [
+          ProjectContextService,
+          OptionsRootPathService,
+          {
+            provide: DEFAULT_MAX_VERSION,
+            useValue: new Version(4, 3),
+          },
+        ],
+      })
+        .overrideComponent(OptionsRootPath, {
+          set: {
+            imports: [StubAsyncInvalidValidator, FormsModule, StubValidTag],
+          },
+        })
+        .compileComponents();
+
+      mockIPC((cmd, args) => {
+        if (cmd === 'plugin:dialog|open') {
+          return mockIpcOpen;
+        }
+        if (cmd === 'path_exists') {
+          return mockIpcPathExists;
+        }
+        throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}`);
+      });
+
+      fixture = TestBed.createComponent(OptionsRootPath);
+      component = fixture.componentInstance;
+      page = new Page(fixture);
+
+      await fixture.whenStable();
     });
 
-    fixture = TestBed.createComponent(OptionsRootPath);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
+    it('should create', () => {
+      expect(component).toBeTruthy();
+      expect(page.rootPathButton).toBeTruthy();
+      expect(page.rootPathInput).toBeTruthy();
+    });
+
+    it('should change value in component', async () => {
+      const { rootPathButton, rootPathInput } = page;
+
+      mockIpcPathExists = false;
+      rootPathInput.value = 'missingFolder';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+
+      mockIpcPathExists = true;
+      rootPathInput.value = '.';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(component.directory).toBe('.');
+
+      mockIpcPathExists = false;
+      mockIpcOpen = Promise.resolve('missingFolder');
+      rootPathButton.click();
+      await fixture.whenStable();
+
+      mockIpcPathExists = true;
+      mockIpcOpen = Promise.resolve('..');
+      rootPathButton.click();
+      await fixture.whenStable();
+      expect(component.directory).toBe('..');
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Full Component Testing', () => {
+    let projectContextService: ProjectContextService;
+
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [
+          ProjectContextService,
+          OptionsRootPathService,
+          {
+            provide: DEFAULT_MAX_VERSION,
+            useValue: new Version(4, 3),
+          },
+        ],
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(OptionsRootPath);
+      component = fixture.componentInstance;
+      page = new Page(fixture);
+      projectContextService = TestBed.inject(ProjectContextService);
+
+      await fixture.whenStable();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+      expect(page.rootPathButton).toBeTruthy();
+      expect(page.rootPathInput).toBeTruthy();
+      expect(page.validTag).toBeTruthy();
+    });
+
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
+      const { rootPathInput, validTag } = page;
+
+      mockIpcPathExists = false;
+      rootPathInput.value = 'missingFolder';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(rootPathInput.matches('.ng-invalid')).toBe(true);
+      expect(validTag.matches('.invalid')).toBe(true);
+
+      mockIpcPathExists = true;
+      rootPathInput.value = '.';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(rootPathInput.matches('.ng-invalid')).toBe(false);
+      expect(projectContextService.rootPath.directory).toBe('.');
+      expect(component.directory).toBe('.');
+      expect(validTag.matches('.invalid')).toBe(false);
+    });
   });
 });

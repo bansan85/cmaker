@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { InputDirectory } from '../../../shared/directives/arguments/input-directory';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
 import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
@@ -16,7 +17,7 @@ import { ProjectContextService } from '../services/project-context-service';
 
 @Component({
   selector: 'app-options-root-path',
-  imports: [AsyncInvalidValidator, FormsModule],
+  imports: [AsyncInvalidValidator, FormsModule, ValidTag],
   templateUrl: './options-root-path.html',
   styleUrl: './options-root-path.css',
   providers: [OptionsRootPathService],

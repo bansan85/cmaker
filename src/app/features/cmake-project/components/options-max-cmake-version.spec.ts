@@ -120,6 +120,9 @@ describe('OptionsMaxCMakeVersion', () => {
       maxCMakeVersionInput.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(false);
+      expect(projectContextService.maxCMakeVersion.version).toStrictEqual(
+        new Version('4.2')
+      );
       expect(component.versionString).toBe('4.2');
       expect(validTag.matches('.invalid')).toBe(false);
 
