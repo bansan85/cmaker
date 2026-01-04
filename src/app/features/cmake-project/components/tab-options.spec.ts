@@ -15,27 +15,22 @@ import { TabOptions } from './tab-options';
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
 
-  get maxCMakeVersionInput() {
+  get maxCMakeVersion() {
     return this.fixture.debugElement.query(
-      By.css('input[name="max-cmake-version"]')
-    ).nativeElement as HTMLInputElement;
+      By.css('app-options-max-cmake-version')
+    ).nativeElement as HTMLElement;
   }
 
-  get rootPathButton() {
-    return this.fixture.debugElement.query(
-      By.css('button[name="root-path-button"]')
-    ).nativeElement as HTMLButtonElement;
-  }
-
-  get rootPathInput() {
-    return this.fixture.debugElement.query(By.css('input[name="root-path"]'))
-      .nativeElement as HTMLInputElement;
+  get rootPath() {
+    return this.fixture.debugElement.query(By.css('app-options-root-path'))
+      .nativeElement as HTMLElement;
   }
 }
 
 describe('TabOptions', () => {
   let component: TabOptions;
   let fixture: ComponentFixture<TabOptions>;
+  let page: Page;
 
   let mockIpcOpen: Promise<string>;
   let mockIpcPathExists: boolean;
@@ -71,17 +66,19 @@ describe('TabOptions', () => {
 
       fixture = TestBed.createComponent(TabOptions);
       component = fixture.componentInstance;
+      page = new Page(fixture);
+
+      await fixture.whenStable();
     });
 
     it('should create', () => {
       expect(component).toBeTruthy();
+      expect(page.maxCMakeVersion).toBeTruthy();
+      expect(page.rootPath).toBeTruthy();
     });
   });
 
   describe('Full Component Testing', () => {
-    let page: Page;
-    let service: ProjectContextService;
-
     beforeEach(async () => {
       mockIpcOpen = Promise.resolve('c:/temp2');
       mockIpcPathExists = true;
@@ -111,66 +108,12 @@ describe('TabOptions', () => {
       page = new Page(fixture);
 
       await fixture.whenStable();
-
-      service = TestBed.inject(ProjectContextService);
     });
 
     it('should create', () => {
       expect(component).toBeTruthy();
-    });
-
-    it('should change .ng-invalid when invalid input', async () => {
-      const { maxCMakeVersionInput } = page;
-      expect(maxCMakeVersionInput.value).toEqual('4.3');
-      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(false);
-      expect(component.maxCMakeVersionSignal().versionString).toBe('4.3');
-
-      maxCMakeVersionInput.value = '4.rez';
-      maxCMakeVersionInput.dispatchEvent(new Event('input'));
-      await fixture.whenStable();
-      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(true);
-
-      maxCMakeVersionInput.value = '4.2';
-      maxCMakeVersionInput.dispatchEvent(new Event('input'));
-      await fixture.whenStable();
-      expect(maxCMakeVersionInput.value).toEqual('4.2');
-      expect(maxCMakeVersionInput.matches('.ng-invalid')).toBe(false);
-      expect(component.maxCMakeVersionSignal().versionString).toBe('4.2');
-    });
-
-    it('should update root path input', async () => {
-      const { rootPathInput } = page;
-      rootPathInput.value = 'c:/temp';
-      rootPathInput.dispatchEvent(new Event('input', { bubbles: true }));
-      await fixture.whenStable();
-      expect(component.rootPathSignal().directory).toEqual('c:/temp');
-      expect(service.rootPath.directory).toEqual('c:/temp');
-
-      rootPathInput.value = '4.rez';
-      rootPathInput.dispatchEvent(new Event('input'));
-      await fixture.whenStable();
-      expect(component.rootPathSignal().directory).toEqual('4.rez');
-      expect(service.rootPath.directory).toEqual('4.rez');
-    });
-
-    it('should update root path button', async () => {
-      const { rootPathButton } = page;
-      const { rootPathInput } = page;
-      mockIpcOpen = Promise.resolve('c:/temp2');
-      mockIpcPathExists = false;
-      rootPathButton.click();
-      await fixture.whenStable();
-      expect(component.rootPathSignal().directory).toEqual('c:/temp2');
-      expect(service.rootPath.directory).toEqual('c:/temp2');
-      expect(rootPathInput.matches('.ng-invalid')).toBe(true);
-
-      mockIpcOpen = Promise.resolve('.');
-      mockIpcPathExists = true;
-      rootPathButton.click();
-      await fixture.whenStable();
-      expect(component.rootPathSignal().directory).toEqual('.');
-      expect(service.rootPath.directory).toEqual('.');
-      expect(rootPathInput.matches('.ng-valid')).toBe(true);
+      expect(page.maxCMakeVersion).toBeTruthy();
+      expect(page.rootPath).toBeTruthy();
     });
   });
 });
