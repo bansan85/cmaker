@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { InvokeArgs } from '@tauri-apps/api/core';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { MockIpc } from '../../../shared/classes/tests/mock-ipc';
-import { sleep } from '../../../shared/classes/tests/timer';
 import { Version } from '../../../shared/models/version';
+import { StringService } from '../../../shared/services/string-service';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
 import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
@@ -32,6 +33,40 @@ import { TabProject } from './tab-project';
 
 class Page {
   constructor(private fixture: ComponentFixture<TabProject>) {}
+
+  get cmakeListToConsoleButton() {
+    return this.fixture.debugElement.query(
+      By.css('button[name=cmake-list-to-console]')
+    ).nativeElement as HTMLButtonElement;
+  }
+
+  get loadFromTextButton() {
+    return this.fixture.debugElement.query(
+      By.css('button[name=load-from-text]')
+    ).nativeElement as HTMLButtonElement;
+  }
+
+  get saveToCMakerButton() {
+    return this.fixture.debugElement.query(
+      By.css('button[name=save-to-cmaker]')
+    ).nativeElement as HTMLButtonElement;
+  }
+
+  get saveToCMakeListsTxtButton() {
+    return this.fixture.debugElement.query(
+      By.css('button[name=save-to-cmakelists-txt]')
+    ).nativeElement as HTMLButtonElement;
+  }
+
+  get loadFromFileButton() {
+    return this.fixture.debugElement.query(
+      By.css('button[name=load-from-file]')
+    ).nativeElement as HTMLButtonElement;
+  }
+
+  get allDraggableItems() {
+    return this.fixture.debugElement.queryAll(By.css('app-draggable-item li'));
+  }
 }
 
 describe('TabProject', () => {
@@ -103,6 +138,7 @@ describe('TabProject', () => {
 
   describe('Full Component Testing', () => {
     let projectContextService: ProjectContextService;
+    let stringService: StringService;
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
@@ -114,6 +150,7 @@ describe('TabProject', () => {
             useValue: new Version(4, 3),
           },
           importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
+          StringService,
         ],
       }).compileComponents();
 
@@ -121,37 +158,86 @@ describe('TabProject', () => {
       component = fixture.componentInstance;
       page = new Page(fixture);
       projectContextService = TestBed.inject(ProjectContextService);
+      stringService = TestBed.inject(StringService);
 
       await fixture.whenStable();
     });
 
     it('should create', () => {
       expect(component).toBeTruthy();
+      expect(page.cmakeListToConsoleButton).toBeTruthy();
+      expect(page.loadFromFileButton).toBeTruthy();
+      expect(page.loadFromTextButton).toBeTruthy();
+      expect(page.saveToCMakeListsTxtButton).toBeTruthy();
+      expect(page.saveToCMakerButton).toBeTruthy();
     });
-    /*
+
     it('should set .invalid for version / valid tags when invalid input / version', async () => {
-      const { projectCompatVersionInput, versionTag, validTag } = page;
+      //const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
-      projectCompatVersionInput.value = '4.rez';
-      projectCompatVersionInput.dispatchEvent(new Event('input'));
+      const {
+        cmakeListToConsoleButton,
+        loadFromFileButton,
+        loadFromTextButton,
+        saveToCMakeListsTxtButton,
+        saveToCMakerButton,
+        allDraggableItems,
+      } = page;
+      cmakeListToConsoleButton.click();
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches('.ng-invalid')).toBe(true);
-      expect(versionTag.matches('.invalid')).toBe(false);
-      expect(validTag.matches('.invalid')).toBe(true);
-
-      projectCompatVersionInput.value = '4.2';
-      projectCompatVersionInput.dispatchEvent(new Event('input'));
+      /*
+      const logs = consoleSpy.mock.calls;
+      expect(logs[0][0]).toBe(
+        '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)'
+      );
+      expect(logs[1][0]).toBe(
+        '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()\n'
+      );
+      expect(logs[2][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")\n'
+      );
+      expect(logs[3][0]).toBe('# Invalid\nset(CMAKE_PROJECT_INCLUDE "")\n');
+      expect(logs[4][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")\n'
+      );
+      expect(logs[5][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")\n'
+      );
+      expect(logs[6][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'
+      );
+      */
+      const dragStartEvent = new DragEvent('dragstart', {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer: new DataTransfer(),
+      });
+      allDraggableItems[0].nativeElement.dispatchEvent(dragStartEvent);
       await fixture.whenStable();
-      expect(projectCompatVersionInput.matches('.ng-invalid')).toBe(false);
-      expect(component.versionString).toBe('4.2');
-      expect(versionTag.matches('.invalid')).toBe(false);
-      expect(validTag.matches('.invalid')).toBe(false);
-
-      projectContextService.maxCMakeVersion = new Version('3.0');
+      const dragOverEvent = new DragEvent('dragover', {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer: dragStartEvent.dataTransfer,
+      });
+      allDraggableItems[1].nativeElement.dispatchEvent(dragOverEvent);
       await fixture.whenStable();
-      expect(versionTag.matches('.invalid')).toBe(true);
-      expect(validTag.matches('.invalid')).toBe(false);
+      const dropEvent = new DragEvent('drop', {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer: dragStartEvent.dataTransfer,
+      });
+      allDraggableItems[1].nativeElement.dispatchEvent(dropEvent);
+      await fixture.whenStable();
+      const dragEndEvent = new DragEvent('dragend', {
+        bubbles: true,
+        cancelable: true,
+        dataTransfer: dragStartEvent.dataTransfer,
+      });
+      allDraggableItems[0].nativeElement.dispatchEvent(dragEndEvent);
+      await fixture.whenStable();
+      debugger;
+      //return logs[0][0];
+      //
     });
-    */
   });
 });

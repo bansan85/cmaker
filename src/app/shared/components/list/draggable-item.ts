@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
+  inject,
   input,
   output,
 } from '@angular/core';
@@ -9,6 +10,7 @@ import {
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { CMakeComponentInterface } from '../../../features/cmake-project/interfaces/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
+import { StringService } from '../../services/string-service';
 
 @Component({
   selector: 'app-draggable-item',
@@ -21,26 +23,26 @@ export class DraggableItemComponent {
       CMAKE_COMPONENT_ITEM
     );
 
+  readonly stringService = inject(StringService);
+
   readonly text = input<string>();
 
   readonly dragStartEvent = output<HTMLElement>();
   readonly dragOverEvent = output<HTMLElement>();
-  readonly dragEndEvent = output();
+  readonly dragEndEvent = output<HTMLElement>();
 
   dragStart(e: DragEvent) {
-    if (e.dataTransfer === null) {
-      throw new Error('Invalid event while dragging.');
-    }
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', '');
+    console.log(`dragStart`);
     this.dragStartEvent.emit(e.target as HTMLElement);
   }
 
   dragOver(e: DragEvent) {
+    console.log(`dragOver`);
     this.dragOverEvent.emit(e.target as HTMLElement);
   }
 
-  dragEnd() {
-    this.dragEndEvent.emit();
+  dragEnd(e: DragEvent) {
+    console.log(`dragEnd`);
+    this.dragEndEvent.emit(e.target as HTMLElement);
   }
 }

@@ -5,12 +5,26 @@
   </app-draggable-item>
   }
 </app-draggable-list>
-<button type="button" (click)="cmakeListToConsole()">
+<button
+  name="cmake-list-to-console"
+  type="button"
+  (click)="cmakeListToConsole()"
+>
   CMakeLists.txt to console
 </button>
-<button type="button" (click)="loadFromText()">Hardcoded parse</button>
-<button type="button" (click)="saveToCMaker()">save to cmaker.txt</button>
-<button type="button" (click)="saveToCMakeListsTxt()">
+<button name="load-from-text" type="button" (click)="loadFromText()">
+  Hardcoded parse
+</button>
+<button name="save-to-cmaker" type="button" (click)="saveToCMaker()">
+  save to cmaker.txt
+</button>
+<button
+  name="save-to-cmakelists-txt"
+  type="button"
+  (click)="saveToCMakeListsTxt()"
+>
   save to CMakeLists.txt
 </button>
-<button type="button" (click)="loadFromFile()">load from file</button>
+<button name="load-from-file" type="button" (click)="loadFromFile()">
+  load from file
+</button>

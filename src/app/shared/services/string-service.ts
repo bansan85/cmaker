@@ -27,7 +27,7 @@ export class StringService {
         return '[Circular]';
       }
 
-      if (i >= 50) {
+      if (i >= 35) {
         return `[Unknown:${typeof value}]`;
       }
 
