@@ -15,15 +15,16 @@ import { TabOptions } from './tab-options';
 class Page {
   constructor(private fixture: ComponentFixture<TabOptions>) {}
 
-  get maxCMakeVersion() {
+  get maxCMakeVersionInput() {
     return this.fixture.debugElement.query(
-      By.css('app-options-max-cmake-version')
-    ).nativeElement as HTMLElement;
+      By.css('app-options-max-cmake-version input')
+    ).nativeElement as HTMLInputElement;
   }
 
-  get rootPath() {
-    return this.fixture.debugElement.query(By.css('app-options-root-path'))
-      .nativeElement as HTMLElement;
+  get rootPathInput() {
+    return this.fixture.debugElement.query(
+      By.css('app-options-root-path input')
+    ).nativeElement as HTMLInputElement;
   }
 }
 
@@ -73,12 +74,11 @@ describe('TabOptions', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
-      expect(page.maxCMakeVersion).toBeTruthy();
-      expect(page.rootPath).toBeTruthy();
     });
   });
 
   describe('Full Component Testing', () => {
+    let projectContextService: ProjectContextService;
     beforeEach(async () => {
       mockIpcOpen = Promise.resolve('c:/temp2');
       mockIpcPathExists = true;
@@ -106,14 +106,36 @@ describe('TabOptions', () => {
       fixture = TestBed.createComponent(TabOptions);
       component = fixture.componentInstance;
       page = new Page(fixture);
+      projectContextService = TestBed.inject(ProjectContextService);
 
       await fixture.whenStable();
     });
 
     it('should create', () => {
       expect(component).toBeTruthy();
-      expect(page.maxCMakeVersion).toBeTruthy();
-      expect(page.rootPath).toBeTruthy();
+      expect(page.maxCMakeVersionInput).toBeTruthy();
+      expect(page.rootPathInput).toBeTruthy();
+    });
+
+    it('should update options', async () => {
+      const { maxCMakeVersionInput, rootPathInput } = page;
+
+      mockIpcPathExists = true;
+      rootPathInput.value = 'IExist';
+      rootPathInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(projectContextService.rootPath.directory).toBe('IExist');
+      expect(component.rootPath.directory).toBe('IExist');
+
+      maxCMakeVersionInput.value = '9.5.4';
+      maxCMakeVersionInput.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(projectContextService.maxCMakeVersion.version).toStrictEqual(
+        new Version(9, 5, 4)
+      );
+      expect(component.maxCMakeVersion.version).toStrictEqual(
+        new Version(9, 5, 4)
+      );
     });
   });
 });
