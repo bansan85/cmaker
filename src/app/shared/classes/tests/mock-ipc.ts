@@ -9,13 +9,13 @@ export class MockIpc {
   private readonly used: string[] = [];
   mockCommand(commandName: string, action: (payload?: InvokeArgs) => any) {
     if (this.debug) {
-      console.log(`Enable mocking ${commandName}.`);
+      console.debug(`Enable mocking ${commandName}.`);
     }
     this.actions.set(commandName, action);
   }
   start() {
     if (this.debug) {
-      console.log('Start mocking.');
+      console.debug('Start mocking.');
     }
     mockIPC((cmd: string, args) => {
       const action = this.actions.get(cmd);
@@ -23,7 +23,7 @@ export class MockIpc {
         throw Error(`Mock me ${cmd} / ${JSON.stringify(args)}.`);
       }
       if (this.debug) {
-        console.log(`Run mocking ${cmd} / ${JSON.stringify(args)}.`);
+        console.debug(`Run mocking ${cmd} / ${JSON.stringify(args)}.`);
       }
       if (!this.used.includes(cmd)) {
         this.used.push(cmd);
@@ -33,7 +33,7 @@ export class MockIpc {
   }
   stop() {
     if (this.debug) {
-      console.log('Stop mocking.');
+      console.debug('Stop mocking.');
     }
     clearMocks();
     const missingKeys = Array.from(this.actions.keys()).filter(

@@ -9,20 +9,17 @@ describe('MockIpc', () => {
     let date2 = new Date();
     let diff = date2.getTime() - date1.getTime();
     expect(diff).greaterThanOrEqual(10);
-    console.log(diff);
 
     date1 = new Date();
     await sleep(100);
     date2 = new Date();
     diff = date2.getTime() - date1.getTime();
     expect(diff).greaterThanOrEqual(100);
-    console.log(diff);
 
     date1 = new Date();
     await sleep(150);
     date2 = new Date();
     diff = date2.getTime() - date1.getTime();
     expect(diff).greaterThanOrEqual(150);
-    console.log(diff);
   });
 });
