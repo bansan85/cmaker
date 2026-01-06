@@ -4,7 +4,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { InvokeArgs } from '@tauri-apps/api/core';
 import { ChevronDown, LucideAngularModule, Menu } from 'lucide-angular';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { MockIpc } from '../../../shared/classes/tests/mock-ipc';
@@ -173,7 +181,7 @@ describe('TabProject', () => {
     });
 
     it('should set .invalid for version / valid tags when invalid input / version', async () => {
-      //const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
       const {
         cmakeListToConsoleButton,
@@ -185,8 +193,7 @@ describe('TabProject', () => {
       } = page;
       cmakeListToConsoleButton.click();
       await fixture.whenStable();
-      /*
-      const logs = consoleSpy.mock.calls;
+      let logs = consoleSpy.mock.calls;
       expect(logs[0][0]).toBe(
         '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)'
       );
@@ -206,7 +213,6 @@ describe('TabProject', () => {
       expect(logs[6][0]).toBe(
         '# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'
       );
-      */
       const dragStartEvent = new DragEvent('dragstart', {
         bubbles: true,
         cancelable: true,
@@ -235,9 +241,28 @@ describe('TabProject', () => {
       });
       allDraggableItems[0].nativeElement.dispatchEvent(dragEndEvent);
       await fixture.whenStable();
-      debugger;
-      //return logs[0][0];
-      //
+      cmakeListToConsoleButton.click();
+      await fixture.whenStable();
+      logs = consoleSpy.mock.calls;
+      expect(logs[7][0]).toBe(
+        '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()\n'
+      );
+      expect(logs[8][0]).toBe(
+        '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)'
+      );
+      expect(logs[9][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")\n'
+      );
+      expect(logs[10][0]).toBe('# Invalid\nset(CMAKE_PROJECT_INCLUDE "")\n');
+      expect(logs[11][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")\n'
+      );
+      expect(logs[12][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")\n'
+      );
+      expect(logs[13][0]).toBe(
+        '# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'
+      );
     });
   });
 });

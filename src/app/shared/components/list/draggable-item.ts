@@ -32,17 +32,14 @@ export class DraggableItemComponent {
   readonly dragEndEvent = output<HTMLElement>();
 
   dragStart(e: DragEvent) {
-    console.log(`dragStart`);
     this.dragStartEvent.emit(e.target as HTMLElement);
   }
 
   dragOver(e: DragEvent) {
-    console.log(`dragOver`);
     this.dragOverEvent.emit(e.target as HTMLElement);
   }
 
   dragEnd(e: DragEvent) {
-    console.log(`dragEnd`);
     this.dragEndEvent.emit(e.target as HTMLElement);
   }
 }
