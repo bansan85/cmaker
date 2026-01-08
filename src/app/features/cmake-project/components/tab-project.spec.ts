@@ -16,6 +16,12 @@ import {
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { MockIpc } from '../../../shared/classes/tests/mock-ipc';
+import { dragAndDrop } from '../../../shared/classes/tests/mouse';
+import {
+  arrayMove,
+  compareArrayString,
+  sortArrayFromList,
+} from '../../../shared/classes/tests/string';
 import { Version } from '../../../shared/models/version';
 import { StringService } from '../../../shared/services/string-service';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
@@ -185,86 +191,82 @@ describe('TabProject', () => {
         /* Spy console */
       });
 
-      const {
-        cmakeListToConsoleButton,
-        loadFromFileButton,
-        loadFromTextButton,
-        saveToCMakeListsTxtButton,
-        saveToCMakerButton,
-        allDraggableItems,
-      } = page;
+      const { cmakeListToConsoleButton } = page;
+      let { allDraggableItems } = page;
       cmakeListToConsoleButton.click();
       await fixture.whenStable();
-      let logs = consoleSpy.mock.calls;
-      expect(logs[0][0]).toBe(
-        '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)'
+      let logs = consoleSpy.mock.calls as string[][];
+      const result: string[][] = [
+        [
+          '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)',
+        ],
+        [
+          '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()\n',
+        ],
+        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")\n'],
+        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE "")\n'],
+        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")\n'],
+        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")\n'],
+        ['# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'],
+      ];
+      let index = Array.from(Array(result.length).keys());
+      expect(logs.length).toBe(result.length);
+      expect(compareArrayString(logs, 0, result, 0, result.length)).toBe(true);
+
+      let moveFrom = 0;
+      let moveTo = 2;
+      dragAndDrop(
+        allDraggableItems[moveFrom].nativeElement as HTMLElement,
+        allDraggableItems[moveTo].nativeElement as HTMLElement
       );
-      expect(logs[1][0]).toBe(
-        '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()\n'
-      );
-      expect(logs[2][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")\n'
-      );
-      expect(logs[3][0]).toBe('# Invalid\nset(CMAKE_PROJECT_INCLUDE "")\n');
-      expect(logs[4][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")\n'
-      );
-      expect(logs[5][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")\n'
-      );
-      expect(logs[6][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'
-      );
-      const dragStartEvent = new DragEvent('dragstart', {
-        bubbles: true,
-        cancelable: true,
-        dataTransfer: new DataTransfer(),
-      });
-      allDraggableItems[0].nativeElement.dispatchEvent(dragStartEvent);
       await fixture.whenStable();
-      const dragOverEvent = new DragEvent('dragover', {
-        bubbles: true,
-        cancelable: true,
-        dataTransfer: dragStartEvent.dataTransfer,
-      });
-      allDraggableItems[1].nativeElement.dispatchEvent(dragOverEvent);
-      await fixture.whenStable();
-      const dropEvent = new DragEvent('drop', {
-        bubbles: true,
-        cancelable: true,
-        dataTransfer: dragStartEvent.dataTransfer,
-      });
-      allDraggableItems[1].nativeElement.dispatchEvent(dropEvent);
-      await fixture.whenStable();
-      const dragEndEvent = new DragEvent('dragend', {
-        bubbles: true,
-        cancelable: true,
-        dataTransfer: dragStartEvent.dataTransfer,
-      });
-      allDraggableItems[0].nativeElement.dispatchEvent(dragEndEvent);
-      await fixture.whenStable();
+      arrayMove(result, index[moveFrom], index[moveTo]);
+      arrayMove(index, index[moveFrom], index[moveTo]);
       cmakeListToConsoleButton.click();
       await fixture.whenStable();
-      logs = consoleSpy.mock.calls;
-      expect(logs[7][0]).toBe(
-        '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()\n'
+      logs = consoleSpy.mock.calls as string[][];
+      expect(logs.length).toBe(result.length * 2);
+      expect(
+        compareArrayString(logs, result.length, result, 0, result.length)
+      ).toBe(true);
+
+      allDraggableItems = sortArrayFromList(allDraggableItems, index);
+      index = Array.from(Array(result.length).keys());
+      moveFrom = 0;
+      moveTo = 5;
+      dragAndDrop(
+        allDraggableItems[moveFrom].nativeElement as HTMLElement,
+        allDraggableItems[moveTo].nativeElement as HTMLElement
       );
-      expect(logs[8][0]).toBe(
-        '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)'
+      await fixture.whenStable();
+      arrayMove(result, index[moveFrom], index[moveTo]);
+      arrayMove(index, index[moveFrom], index[moveTo]);
+      cmakeListToConsoleButton.click();
+      await fixture.whenStable();
+      logs = consoleSpy.mock.calls as string[][];
+      expect(logs.length).toBe(result.length * 3);
+      expect(
+        compareArrayString(logs, result.length * 2, result, 0, result.length)
+      ).toBe(true);
+
+      allDraggableItems = sortArrayFromList(allDraggableItems, index);
+      index = Array.from(Array(result.length).keys());
+      moveFrom = 4;
+      moveTo = 1;
+      dragAndDrop(
+        allDraggableItems[moveFrom].nativeElement as HTMLElement,
+        allDraggableItems[moveTo].nativeElement as HTMLElement
       );
-      expect(logs[9][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")\n'
-      );
-      expect(logs[10][0]).toBe('# Invalid\nset(CMAKE_PROJECT_INCLUDE "")\n');
-      expect(logs[11][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")\n'
-      );
-      expect(logs[12][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")\n'
-      );
-      expect(logs[13][0]).toBe(
-        '# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'
-      );
+      await fixture.whenStable();
+      arrayMove(result, index[moveFrom], index[moveTo]);
+      arrayMove(index, index[moveFrom], index[moveTo]);
+      cmakeListToConsoleButton.click();
+      await fixture.whenStable();
+      logs = consoleSpy.mock.calls as string[][];
+      expect(logs.length).toBe(result.length * 4);
+      expect(
+        compareArrayString(logs, result.length * 3, result, 0, result.length)
+      ).toBe(true);
     });
   });
 });
