@@ -45,14 +45,14 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
 
       return Promise.resolve(true);
     },
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
       control: AbstractControl<string, string>,
       _context: InputLanguagesModel
     ): Promise<boolean> => this.validateArgs[0]({ languages: control.value }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     action: InputLanguagesModel

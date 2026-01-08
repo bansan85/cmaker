@@ -9,6 +9,9 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    // Doesn't support .length verification.
+    // https://github.com/microsoft/TypeScript/issues/53678
+    // "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "experimentalDecorators": true,

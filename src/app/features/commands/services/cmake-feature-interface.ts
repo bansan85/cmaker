@@ -20,8 +20,8 @@ export abstract class CMakeFeatureInterface<Feature> {
     return results.every((result) => result);
   }
 
-  abstract validateArgs: ((action: Feature) => Promise<boolean>)[];
-  abstract validateArg: ((
+  abstract validateArgs: readonly ((action: Feature) => Promise<boolean>)[];
+  abstract validateArg: readonly ((
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     control: AbstractControl<any, any>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

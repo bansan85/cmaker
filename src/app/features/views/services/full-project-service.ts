@@ -7,5 +7,5 @@ import { FullProjectView } from '../components/full-project-view';
   providedIn: 'root',
 })
 export abstract class FullProjectService extends CMakeCommandInterface<FullProjectView> {
-  readonly validateArgs = [];
+  readonly validateArgs = [] as const;
 }

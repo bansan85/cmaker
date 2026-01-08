@@ -39,7 +39,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
 
   readonly validateArgs = [
     (_action: InputCheckboxModel): Promise<boolean> => Promise.resolve(true),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
@@ -49,7 +49,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
       this.validateArgs[0]({
         checked: control.value,
       }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     _action: InputCheckboxModel

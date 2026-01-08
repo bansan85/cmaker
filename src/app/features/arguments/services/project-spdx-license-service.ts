@@ -33,14 +33,14 @@ export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputLicen
       Promise.resolve(
         this.projectSpdxLicenseParserService.parse(action.license)
       ),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
       control: AbstractControl<string, string>,
       _context: InputLicenseModel
     ): Promise<boolean> => this.validateArgs[0]({ license: control.value }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     _action: InputLicenseModel

@@ -46,7 +46,7 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeCommandInterf
         action.files,
         false
       )),
-  ];
+  ] as const;
 
   readonly validateArg = [
     async (
@@ -56,7 +56,7 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeCommandInterf
       this.validateArgs[0]({
         files: this.dataToCMake.filesToArrayString(control.value),
       }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(action: InputFilesModel): Version | null {
     if (action.files.length > 1) {

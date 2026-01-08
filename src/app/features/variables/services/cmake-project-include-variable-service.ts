@@ -46,7 +46,7 @@ export class CMakeProjectIncludeVariableService extends CMakeCommandInterface<In
         action.files,
         false
       )),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
@@ -56,7 +56,7 @@ export class CMakeProjectIncludeVariableService extends CMakeCommandInterface<In
       this.validateArgs[0]({
         files: this.dataToCMake.filesToArrayString(control.value),
       }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(action: InputFilesModel): Version | null {
     if (action.files.length > 1) {

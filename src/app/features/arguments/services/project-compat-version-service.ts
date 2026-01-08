@@ -29,7 +29,7 @@ export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVer
   readonly validateArgs = [
     (action: InputVersionModel): Promise<boolean> =>
       Promise.resolve(action.version !== undefined),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
@@ -39,7 +39,7 @@ export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVer
       this.validateArgs[0]({
         version: this.dataToCMake.stringToVersion(control.value),
       }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     _action: InputVersionModel

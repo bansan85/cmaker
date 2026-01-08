@@ -29,14 +29,14 @@ export class ProjectNameService extends CMakeArgumentInterface<InputStringModel>
   readonly validateArgs = [
     (action: InputStringModel): Promise<boolean> =>
       Promise.resolve(this.dataToCMake.isValidTargetName(action.text)),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
       control: AbstractControl<string, string>,
       _context: InputStringModel
     ): Promise<boolean> => this.validateArgs[0]({ text: control.value }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     _action: InputStringModel

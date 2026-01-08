@@ -99,9 +99,9 @@ export class ProjectService extends CMakeCommandInterface<ProjectModel> {
       action.languages === undefined ||
       !this.languages.isEnabled(action.languages) ||
       (await this.languages.isValid(action.languages)),
-  ];
+  ] as const;
 
-  readonly validateArg = [];
+  readonly validateArg = [] as const;
 
   protected cmakeRequiredVersionImpl(action: ProjectModel): Version | null {
     return this.versionService.max(

@@ -48,7 +48,7 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
         action.files,
         false
       )),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
@@ -67,7 +67,7 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
         projectName: context.projectName,
         files: this.dataToCMake.filesToArrayString(control.value),
       }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     action: InputProjectNameFilesModel

@@ -25,14 +25,14 @@ export class ProjectDescriptionService extends CMakeArgumentInterface<InputStrin
 
   readonly validateArgs = [
     (_action: InputStringModel): Promise<boolean> => Promise.resolve(true),
-  ];
+  ] as const;
 
   readonly validateArg = [
     (
       control: AbstractControl<string, string>,
       _context: InputStringModel
     ): Promise<boolean> => this.validateArgs[0]({ text: control.value }),
-  ];
+  ] as const;
 
   protected cmakeRequiredVersionImpl(
     _action: InputStringModel
