@@ -180,8 +180,10 @@ describe('TabProject', () => {
       expect(page.saveToCMakerButton).toBeTruthy();
     });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
-      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    it('should support drag and drop', async () => {
+      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {
+        /* Spy console */
+      });
 
       const {
         cmakeListToConsoleButton,

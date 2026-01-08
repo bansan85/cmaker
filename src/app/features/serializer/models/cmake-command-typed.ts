@@ -27,11 +27,7 @@ export function cmakeCommandTypedEqual(
 
   for (const [key, valueA] of a) {
     const valueB = b.get(key);
-    if (
-      !valueB ||
-      valueA.name !== valueB.name ||
-      valueA.component !== valueB.component
-    ) {
+    if (valueA.name !== valueB?.name || valueA.component !== valueB.component) {
       return false;
     }
   }
