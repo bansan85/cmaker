@@ -40,8 +40,8 @@ describe('ProjectDescriptionService', () => {
       new Version(3, 9)
     );
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe('DESCRIPTION ""\n');
-    expect(service.toCMakerTxt(action)).toBe(`DESCRIPTION ""\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('DESCRIPTION ""');
+    expect(service.toCMakerTxt(action)).toBe('DESCRIPTION ""');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -49,7 +49,7 @@ describe('ProjectDescriptionService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`DESCRIPTION ""\n`);
+    expect(service.toCMakerTxt(action)).toBe('DESCRIPTION ""');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -65,9 +65,9 @@ describe('ProjectDescriptionService', () => {
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      'DESCRIPTION "Hello world"\n'
+      'DESCRIPTION "Hello world"'
     );
-    expect(service.toCMakerTxt(action)).toBe('DESCRIPTION "Hello world"\n');
+    expect(service.toCMakerTxt(action)).toBe('DESCRIPTION "Hello world"');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });
 });

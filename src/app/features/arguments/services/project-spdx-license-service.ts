@@ -72,6 +72,6 @@ export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputLicen
   }
 
   toCMakerTxt(action: InputLicenseModel): string {
-    return `SPDX_LICENSE "${action.license}"\n`;
+    return `SPDX_LICENSE "${action.license}"`;
   }
 }

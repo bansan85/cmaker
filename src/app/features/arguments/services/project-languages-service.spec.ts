@@ -35,10 +35,8 @@ describe('ProjectLanguagesService', () => {
     expect(await service.isValid(action)).toBe(false);
     expect(service.cmakeRequiredVersion(action)).toBeNull();
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nLANGUAGES \n'
-    );
-    expect(service.toCMakerTxt(action)).toBe(`LANGUAGES \n`);
+    expect(await service.toCMakeListTxt(action)).toBe('# Invalid\nLANGUAGES');
+    expect(service.toCMakerTxt(action)).toBe('LANGUAGES');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -46,7 +44,7 @@ describe('ProjectLanguagesService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`LANGUAGES \n`);
+    expect(service.toCMakerTxt(action)).toBe('LANGUAGES');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -61,8 +59,8 @@ describe('ProjectLanguagesService', () => {
     expect(service.isEnabled(action)).toBe(true);
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe('LANGUAGES C CXX\n');
-    expect(service.toCMakerTxt(action)).toBe(`LANGUAGES C CXX\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('LANGUAGES C CXX');
+    expect(service.toCMakerTxt(action)).toBe('LANGUAGES C CXX');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.languages = 'C CXX HELLO';
@@ -70,9 +68,9 @@ describe('ProjectLanguagesService', () => {
     expect(await service.isValid(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nLANGUAGES C CXX HELLO\n'
+      '# Invalid\nLANGUAGES C CXX HELLO'
     );
-    expect(service.toCMakerTxt(action)).toBe(`LANGUAGES C CXX HELLO\n`);
+    expect(service.toCMakerTxt(action)).toBe('LANGUAGES C CXX HELLO');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });
 

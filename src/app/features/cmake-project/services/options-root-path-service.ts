@@ -53,6 +53,6 @@ export class OptionsRootPathService extends CMakeArgumentInterface<InputDirector
   }
 
   toCMakerTxt(action: InputDirectoryModel): string {
-    return `cmaker_root_path(${action.directory})\n`;
+    return `cmaker_root_path(${action.directory})`;
   }
 }

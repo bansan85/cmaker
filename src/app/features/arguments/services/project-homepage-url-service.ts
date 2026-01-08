@@ -64,6 +64,6 @@ export class ProjectHomepageUrlService extends CMakeArgumentInterface<InputStrin
   }
 
   toCMakerTxt(action: InputStringModel): string {
-    return `HOMEPAGE_URL "${action.text}"\n`;
+    return `HOMEPAGE_URL "${action.text}"`;
   }
 }

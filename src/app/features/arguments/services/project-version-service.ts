@@ -127,6 +127,6 @@ export class ProjectVersionService extends CMakeArgumentInterface<InputVersionMo
   }
 
   toCMakerTxt(action: InputVersionModel): string {
-    return `VERSION ${action.version?.toString()}\n`;
+    return `VERSION ${action.version?.toString()}`;
   }
 }

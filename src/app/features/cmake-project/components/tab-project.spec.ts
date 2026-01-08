@@ -15,7 +15,10 @@ import {
 } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
-import { MockIpc } from '../../../shared/classes/tests/mock-ipc';
+import {
+  IpcSaveToFileArgs,
+  MockIpc,
+} from '../../../shared/classes/tests/mock-ipc';
 import { dragAndDrop } from '../../../shared/classes/tests/mouse';
 import {
   arrayMove,
@@ -23,7 +26,6 @@ import {
   sortArrayFromList,
 } from '../../../shared/classes/tests/string';
 import { Version } from '../../../shared/models/version';
-import { StringService } from '../../../shared/services/string-service';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
 import { ProjectHomepageUrlService } from '../../arguments/services/project-homepage-url-service';
@@ -89,10 +91,20 @@ describe('TabProject', () => {
   let page: Page;
 
   let mockIpc: MockIpc;
+  let mockIpcDialogSave = 'cmaker.txt';
+  const mockIpcContentSavedToFile = new Map<string, string | undefined>();
 
   beforeAll(() => {
     mockIpc = new MockIpc();
     mockIpc.mockCommand('relative_paths_exists', (_args?: InvokeArgs) => true);
+    mockIpc.mockCommand(
+      'plugin:dialog|save',
+      (_args?: InvokeArgs) => mockIpcDialogSave
+    );
+    mockIpc.mockCommand('save_to_file', (payload?: InvokeArgs) => {
+      const args1 = payload as unknown as IpcSaveToFileArgs;
+      mockIpcContentSavedToFile.set(args1.path, args1.content);
+    });
     mockIpc.start();
   });
 
@@ -151,9 +163,6 @@ describe('TabProject', () => {
   });
 
   describe('Full Component Testing', () => {
-    let projectContextService: ProjectContextService;
-    let stringService: StringService;
-
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         providers: [
@@ -164,15 +173,12 @@ describe('TabProject', () => {
             useValue: new Version(4, 3),
           },
           importProvidersFrom(LucideAngularModule.pick({ Menu, ChevronDown })),
-          StringService,
         ],
       }).compileComponents();
 
       fixture = TestBed.createComponent(TabProject);
       component = fixture.componentInstance;
       page = new Page(fixture);
-      projectContextService = TestBed.inject(ProjectContextService);
-      stringService = TestBed.inject(StringService);
 
       await fixture.whenStable();
     });
@@ -191,82 +197,96 @@ describe('TabProject', () => {
         /* Spy console */
       });
 
-      const { cmakeListToConsoleButton } = page;
+      const { cmakeListToConsoleButton, saveToCMakerButton } = page;
       let { allDraggableItems } = page;
-      cmakeListToConsoleButton.click();
-      await fixture.whenStable();
-      let logs = consoleSpy.mock.calls as string[][];
-      const result: string[][] = [
+      const expectedCMakeList: string[][] = [
         [
           '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)',
         ],
         [
-          '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()\n',
+          '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()',
         ],
-        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")\n'],
-        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE "")\n'],
-        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")\n'],
-        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")\n'],
-        ['# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")\n'],
+        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")'],
       ];
-      let index = Array.from(Array(result.length).keys());
-      expect(logs.length).toBe(result.length);
-      expect(compareArrayString(logs, 0, result, 0, result.length)).toBe(true);
+      const expectedCMaker: string[][] = [
+        [
+          'project(\nVERSION undefined\nCOMPAT_VERSION undefined\nSPDX_LICENSE ""\nDESCRIPTION ""\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)',
+        ],
+        ['cmaker_cmake_msvc_runtime_library(ON)'],
+        ['set(CMAKE_PROJECT_INCLUDE_BEFORE "")'],
+        ['set(CMAKE_PROJECT_INCLUDE "")'],
+        ['set(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")'],
+        ['set(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")'],
+        ['set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")'],
+      ];
 
-      let moveFrom = 0;
-      let moveTo = 2;
-      dragAndDrop(
-        allDraggableItems[moveFrom].nativeElement as HTMLElement,
-        allDraggableItems[moveTo].nativeElement as HTMLElement
-      );
-      await fixture.whenStable();
-      arrayMove(result, index[moveFrom], index[moveTo]);
-      arrayMove(index, index[moveFrom], index[moveTo]);
       cmakeListToConsoleButton.click();
       await fixture.whenStable();
-      logs = consoleSpy.mock.calls as string[][];
-      expect(logs.length).toBe(result.length * 2);
+      let logs = consoleSpy.mock.calls as string[][];
+      let logPosition = 0;
+      let indexes = Array.from(Array(expectedCMakeList.length).keys());
+      expect(logs.length).toBe(expectedCMakeList.length);
       expect(
-        compareArrayString(logs, result.length, result, 0, result.length)
+        compareArrayString(
+          logs,
+          logPosition,
+          expectedCMakeList,
+          0,
+          expectedCMakeList.length
+        )
       ).toBe(true);
-
-      allDraggableItems = sortArrayFromList(allDraggableItems, index);
-      index = Array.from(Array(result.length).keys());
-      moveFrom = 0;
-      moveTo = 5;
-      dragAndDrop(
-        allDraggableItems[moveFrom].nativeElement as HTMLElement,
-        allDraggableItems[moveTo].nativeElement as HTMLElement
+      logPosition += expectedCMakeList.length;
+      mockIpcDialogSave = 'cmaker.txt';
+      saveToCMakerButton.click();
+      await fixture.whenStable();
+      expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+        expectedCMaker.join('\n')
       );
-      await fixture.whenStable();
-      arrayMove(result, index[moveFrom], index[moveTo]);
-      arrayMove(index, index[moveFrom], index[moveTo]);
-      cmakeListToConsoleButton.click();
-      await fixture.whenStable();
-      logs = consoleSpy.mock.calls as string[][];
-      expect(logs.length).toBe(result.length * 3);
-      expect(
-        compareArrayString(logs, result.length * 2, result, 0, result.length)
-      ).toBe(true);
 
-      allDraggableItems = sortArrayFromList(allDraggableItems, index);
-      index = Array.from(Array(result.length).keys());
-      moveFrom = 4;
-      moveTo = 1;
-      dragAndDrop(
-        allDraggableItems[moveFrom].nativeElement as HTMLElement,
-        allDraggableItems[moveTo].nativeElement as HTMLElement
-      );
-      await fixture.whenStable();
-      arrayMove(result, index[moveFrom], index[moveTo]);
-      arrayMove(index, index[moveFrom], index[moveTo]);
-      cmakeListToConsoleButton.click();
-      await fixture.whenStable();
-      logs = consoleSpy.mock.calls as string[][];
-      expect(logs.length).toBe(result.length * 4);
-      expect(
-        compareArrayString(logs, result.length * 3, result, 0, result.length)
-      ).toBe(true);
+      const moveFromTo = async (moveFrom: number, moveTo: number) => {
+        allDraggableItems = sortArrayFromList(allDraggableItems, indexes);
+        indexes = Array.from(Array(expectedCMakeList.length).keys());
+        dragAndDrop(
+          allDraggableItems[moveFrom].nativeElement as HTMLElement,
+          allDraggableItems[moveTo].nativeElement as HTMLElement
+        );
+        await fixture.whenStable();
+        arrayMove(expectedCMakeList, indexes[moveFrom], indexes[moveTo]);
+        arrayMove(expectedCMaker, indexes[moveFrom], indexes[moveTo]);
+        arrayMove(indexes, indexes[moveFrom], indexes[moveTo]);
+        const oldLogsLength = logs.length;
+        cmakeListToConsoleButton.click();
+        await fixture.whenStable();
+        // eslint-disable-next-line require-atomic-updates
+        logs = consoleSpy.mock.calls as string[][];
+        expect(logs.length - oldLogsLength).toBe(expectedCMakeList.length);
+        expect(
+          compareArrayString(
+            logs,
+            logPosition,
+            expectedCMakeList,
+            0,
+            expectedCMakeList.length
+          )
+        ).toBe(true);
+        logPosition += expectedCMakeList.length;
+
+        mockIpcDialogSave = 'cmaker.txt';
+        saveToCMakerButton.click();
+        await fixture.whenStable();
+        expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+          expectedCMaker.join('\n')
+        );
+      };
+
+      await moveFromTo(0, 2);
+      await moveFromTo(0, 5);
+      await moveFromTo(4, 1);
+      await moveFromTo(3, 3);
     });
   });
 });

@@ -103,6 +103,6 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeCommandI
   toCMakerTxt(action: InputProjectNameFilesModel): string {
     return `set(${this.dataToCMake.stringToCMakeName(this.variable, {
       project: action.projectName,
-    })} "${action.files.join(';')}")\n`;
+    })} "${action.files.join(';')}")`;
   }
 }

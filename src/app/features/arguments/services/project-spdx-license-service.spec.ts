@@ -41,9 +41,9 @@ describe('ProjectLicenseService', () => {
     );
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nSPDX_LICENSE "WRONG LICENSE"\n'
+      '# Invalid\nSPDX_LICENSE "WRONG LICENSE"'
     );
-    expect(service.toCMakerTxt(action)).toBe(`SPDX_LICENSE "WRONG LICENSE"\n`);
+    expect(service.toCMakerTxt(action)).toBe('SPDX_LICENSE "WRONG LICENSE"');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -51,7 +51,7 @@ describe('ProjectLicenseService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`SPDX_LICENSE "WRONG LICENSE"\n`);
+    expect(service.toCMakerTxt(action)).toBe('SPDX_LICENSE "WRONG LICENSE"');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -66,8 +66,8 @@ describe('ProjectLicenseService', () => {
     expect(service.isEnabled(action)).toBe(true);
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe('SPDX_LICENSE "MIT"\n');
-    expect(service.toCMakerTxt(action)).toBe(`SPDX_LICENSE "MIT"\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('SPDX_LICENSE "MIT"');
+    expect(service.toCMakerTxt(action)).toBe('SPDX_LICENSE "MIT"');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });
 });

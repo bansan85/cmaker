@@ -69,13 +69,13 @@ export class TabProject implements AfterViewInit {
     this.itemsOrder = Array.from({ length: this.items.length }, (_, k) => k);
   }
 
-  reorderItems(event: { from: number; to: number }) {
+  protected reorderItems(event: { from: number; to: number }) {
     const element = this.itemsOrder[event.from];
     this.itemsOrder.splice(event.from, 1);
     this.itemsOrder.splice(event.to, 0, element);
   }
 
-  async cmakeListToConsole() {
+  protected async cmakeListToConsole() {
     const promises = this.itemsOrder.map((i) => {
       const child = this.items[i];
       if (child === null) {
@@ -90,7 +90,7 @@ export class TabProject implements AfterViewInit {
     });
   }
 
-  async loadFromFile() {
+  protected async loadFromFile() {
     const absolutePath = await open({
       multiple: false,
       directory: false,
@@ -106,7 +106,7 @@ export class TabProject implements AfterViewInit {
     }
   }
 
-  loadFromText() {
+  protected loadFromText() {
     this.parse([
       'project(helloworld VERSION 1.0.0 LANGUAGES CXX)',
       // eslint-disable-next-line no-template-curly-in-string
@@ -115,7 +115,7 @@ export class TabProject implements AfterViewInit {
     ]);
   }
 
-  async saveToCMakeListsTxt() {
+  protected async saveToCMakeListsTxt() {
     const absolutePath = await save({
       filters: [
         { name: 'CMake files', extensions: ['txt'] },
@@ -141,7 +141,7 @@ export class TabProject implements AfterViewInit {
     }
   }
 
-  async saveToCMaker() {
+  protected async saveToCMaker() {
     const absolutePath = await save({
       filters: [
         { name: 'CMake files', extensions: ['txt'] },
@@ -167,7 +167,7 @@ export class TabProject implements AfterViewInit {
     }
   }
 
-  parse(content: string[]) {
+  private parse(content: string[]) {
     const retval = this.registry.parse(content, this.contextInjector);
     for (const _ of retval) {
       this.items.push(null);

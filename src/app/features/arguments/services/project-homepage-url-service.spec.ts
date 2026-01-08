@@ -41,9 +41,9 @@ describe('ProjectHomepageUrlService', () => {
     );
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nHOMEPAGE_URL "Hello"\n'
+      '# Invalid\nHOMEPAGE_URL "Hello"'
     );
-    expect(service.toCMakerTxt(action)).toBe(`HOMEPAGE_URL "Hello"\n`);
+    expect(service.toCMakerTxt(action)).toBe('HOMEPAGE_URL "Hello"');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -51,7 +51,7 @@ describe('ProjectHomepageUrlService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`HOMEPAGE_URL "Hello"\n`);
+    expect(service.toCMakerTxt(action)).toBe('HOMEPAGE_URL "Hello"');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -67,10 +67,10 @@ describe('ProjectHomepageUrlService', () => {
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      'HOMEPAGE_URL "https://www.example.com"\n'
+      'HOMEPAGE_URL "https://www.example.com"'
     );
     expect(service.toCMakerTxt(action)).toBe(
-      `HOMEPAGE_URL "https://www.example.com"\n`
+      'HOMEPAGE_URL "https://www.example.com"'
     );
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });

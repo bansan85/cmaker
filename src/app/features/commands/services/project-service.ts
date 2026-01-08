@@ -175,27 +175,29 @@ export class ProjectService extends CMakeCommandInterface<ProjectModel> {
 
   protected async toCMakeListTxtImpl(action: ProjectModel): Promise<string> {
     return Promise.resolve(
-      `project(\n${await this.name.toCMakeListTxt(action.name)}${
-        action.version ? await this.version.toCMakeListTxt(action.version) : ''
+      `project(\n${await this.name.toCMakeListTxt(action.name)}\n${
+        action.version
+          ? `${await this.version.toCMakeListTxt(action.version)}\n`
+          : ''
       }${
         action.compatVersion
-          ? await this.compatVersion.toCMakeListTxt(action.compatVersion)
+          ? `${await this.compatVersion.toCMakeListTxt(action.compatVersion)}\n`
           : ''
       }${
         action.spdxLicense
-          ? await this.spdxLicense.toCMakeListTxt(action.spdxLicense)
+          ? `${await this.spdxLicense.toCMakeListTxt(action.spdxLicense)}\n`
           : ''
       }${
         action.description
-          ? await this.description.toCMakeListTxt(action.description)
+          ? `${await this.description.toCMakeListTxt(action.description)}\n`
           : ''
       }${
         action.homepageUrl
-          ? await this.homepageUrl.toCMakeListTxt(action.homepageUrl)
+          ? `${await this.homepageUrl.toCMakeListTxt(action.homepageUrl)}\n`
           : ''
       }${
         action.languages
-          ? await this.languages.toCMakeListTxt(action.languages)
+          ? `${await this.languages.toCMakeListTxt(action.languages)}\n`
           : ''
       })`
     );
@@ -203,17 +205,27 @@ export class ProjectService extends CMakeCommandInterface<ProjectModel> {
 
   toCMakerTxt(action: ProjectModel): string {
     return `project(\n${this.name.toCMakerTxt(action.name)}${
-      action.version ? this.version.toCMakerTxt(action.version) : ''
+      action.version ? `${this.version.toCMakerTxt(action.version)}\n` : ''
     }${
       action.compatVersion
-        ? this.compatVersion.toCMakerTxt(action.compatVersion)
+        ? `${this.compatVersion.toCMakerTxt(action.compatVersion)}\n`
         : ''
     }${
-      action.spdxLicense ? this.spdxLicense.toCMakerTxt(action.spdxLicense) : ''
+      action.spdxLicense
+        ? `${this.spdxLicense.toCMakerTxt(action.spdxLicense)}\n`
+        : ''
     }${
-      action.description ? this.description.toCMakerTxt(action.description) : ''
+      action.description
+        ? `${this.description.toCMakerTxt(action.description)}\n`
+        : ''
     }${
-      action.homepageUrl ? this.homepageUrl.toCMakerTxt(action.homepageUrl) : ''
-    }${action.languages ? this.languages.toCMakerTxt(action.languages) : ''})`;
+      action.homepageUrl
+        ? `${this.homepageUrl.toCMakerTxt(action.homepageUrl)}\n`
+        : ''
+    }${
+      action.languages
+        ? `${this.languages.toCMakerTxt(action.languages)}\n`
+        : ''
+    })`;
   }
 }

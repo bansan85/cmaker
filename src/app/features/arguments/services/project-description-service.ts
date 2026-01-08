@@ -64,6 +64,6 @@ export class ProjectDescriptionService extends CMakeArgumentInterface<InputStrin
   }
 
   toCMakerTxt(action: InputStringModel): string {
-    return `DESCRIPTION "${action.text}"\n`;
+    return `DESCRIPTION "${action.text}"`;
   }
 }

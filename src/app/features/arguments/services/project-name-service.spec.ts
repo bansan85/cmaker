@@ -41,10 +41,8 @@ describe('ProjectNameService', () => {
     expect(await service.isValid(action)).toBe(false);
     expect(service.cmakeRequiredVersion(action)).toBeNull();
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nWrong Name\n'
-    );
-    expect(service.toCMakerTxt(action)).toBe(`Wrong Name\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('# Invalid\nWrong Name');
+    expect(service.toCMakerTxt(action)).toBe('Wrong Name');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -52,7 +50,7 @@ describe('ProjectNameService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`Wrong Name\n`);
+    expect(service.toCMakerTxt(action)).toBe('Wrong Name');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -67,8 +65,8 @@ describe('ProjectNameService', () => {
     expect(service.isEnabled(action)).toBe(true);
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe('GoodName\n');
-    expect(service.toCMakerTxt(action)).toBe(`GoodName\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('GoodName');
+    expect(service.toCMakerTxt(action)).toBe('GoodName');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });
 });

@@ -58,6 +58,6 @@ export class OptionsMaxCMakeVersionService extends CMakeArgumentInterface<InputV
   }
 
   toCMakerTxt(action: InputVersionModel): string {
-    return `cmaker_max_cmake_version(${action.version?.toString()})\n`;
+    return `cmaker_max_cmake_version(${action.version?.toString()})`;
   }
 }

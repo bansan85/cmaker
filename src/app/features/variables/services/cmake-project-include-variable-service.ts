@@ -84,6 +84,6 @@ export class CMakeProjectIncludeVariableService extends CMakeCommandInterface<In
   toCMakerTxt(action: InputFilesModel): string {
     return `${this.serializeCommandName}(${this.variable} "${action.files.join(
       ';'
-    )}")\n`;
+    )}")`;
   }
 }

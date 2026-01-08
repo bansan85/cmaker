@@ -6,12 +6,12 @@ export function compareArrayString(
   c: number
 ): boolean {
   for (let i = 0; i < c; i += 1) {
-    const subA = a[aBegin + i];
-    const subB = b[bBegin + i];
-
-    if (!subA || !subB) {
+    if (a.length <= aBegin + i || b.length < bBegin + i) {
       return false;
     }
+
+    const subA = a[aBegin + i];
+    const subB = b[bBegin + i];
 
     if (subA.length !== subB.length) {
       return false;

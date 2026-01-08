@@ -64,6 +64,6 @@ export class ProjectNameService extends CMakeArgumentInterface<InputStringModel>
   }
 
   toCMakerTxt(action: InputStringModel): string {
-    return `${action.text}\n`;
+    return action.text;
   }
 }

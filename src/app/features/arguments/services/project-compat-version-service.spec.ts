@@ -41,9 +41,9 @@ describe('ProjectCompatVersionService', () => {
     );
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nCOMPAT_VERSION undefined\n'
+      '# Invalid\nCOMPAT_VERSION undefined'
     );
-    expect(service.toCMakerTxt(action)).toBe(`COMPAT_VERSION undefined\n`);
+    expect(service.toCMakerTxt(action)).toBe('COMPAT_VERSION undefined');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -51,7 +51,7 @@ describe('ProjectCompatVersionService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`COMPAT_VERSION undefined\n`);
+    expect(service.toCMakerTxt(action)).toBe('COMPAT_VERSION undefined');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -66,10 +66,8 @@ describe('ProjectCompatVersionService', () => {
     expect(service.isEnabled(action)).toBe(true);
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe(
-      'COMPAT_VERSION 1.2.3.4\n'
-    );
-    expect(service.toCMakerTxt(action)).toBe(`COMPAT_VERSION 1.2.3.4\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('COMPAT_VERSION 1.2.3.4');
+    expect(service.toCMakerTxt(action)).toBe('COMPAT_VERSION 1.2.3.4');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });
 });

@@ -39,9 +39,9 @@ describe('ProjectVersionService', () => {
     expect(service.cmakeRequiredVersion(action)).toBeNull();
     expect(service.cmakeObjects(action)).toBeTruthy();
     expect(await service.toCMakeListTxt(action)).toBe(
-      '# Invalid\nVERSION undefined\n'
+      '# Invalid\nVERSION undefined'
     );
-    expect(service.toCMakerTxt(action)).toBe(`VERSION undefined\n`);
+    expect(service.toCMakerTxt(action)).toBe('VERSION undefined');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
 
     action.enabled = false;
@@ -49,7 +49,7 @@ describe('ProjectVersionService', () => {
     expect(service.isEnabled(action)).toBe(false);
     expect(service.cmakeObjects(action)).toBeNull();
     expect(await service.toCMakeListTxt(action)).toBe('');
-    expect(service.toCMakerTxt(action)).toBe(`VERSION undefined\n`);
+    expect(service.toCMakerTxt(action)).toBe('VERSION undefined');
 
     action.enabled = true;
     expect(service.isEnabled(action)).toBe(true);
@@ -64,8 +64,8 @@ describe('ProjectVersionService', () => {
     expect(service.isEnabled(action)).toBe(true);
     expect(await service.isValid(action)).toBe(true);
     expect(service.cmakeObjects(action)).toBeTruthy();
-    expect(await service.toCMakeListTxt(action)).toBe('VERSION 1.2.3.4\n');
-    expect(service.toCMakerTxt(action)).toBe(`VERSION 1.2.3.4\n`);
+    expect(await service.toCMakeListTxt(action)).toBe('VERSION 1.2.3.4');
+    expect(service.toCMakerTxt(action)).toBe('VERSION 1.2.3.4');
     expect(service.isEffectiveVersionValid(action)).toBe(true);
   });
 });

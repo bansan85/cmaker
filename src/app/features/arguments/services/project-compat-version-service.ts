@@ -71,6 +71,6 @@ export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVer
   }
 
   toCMakerTxt(action: InputVersionModel): string {
-    return `COMPAT_VERSION ${action.version?.toString()}\n`;
+    return `COMPAT_VERSION ${action.version?.toString()}`;
   }
 }

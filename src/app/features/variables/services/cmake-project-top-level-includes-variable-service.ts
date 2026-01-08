@@ -80,6 +80,6 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeCommandInt
   toCMakerTxt(action: InputFilesModel): string {
     return `${this.serializeCommandName}(${this.variable} "${action.files.join(
       ';'
-    )}")\n`;
+    )}")`;
   }
 }

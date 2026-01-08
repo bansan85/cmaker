@@ -2,6 +2,35 @@
 import { InvokeArgs } from '@tauri-apps/api/core';
 import { clearMocks, mockIPC } from '@tauri-apps/api/mocks';
 
+export interface IpcSaveToFileArgs {
+  path: string;
+  content: string;
+}
+
+export interface IpcRelativePathsExistsArgs {
+  baseString: string;
+  paths: string[];
+  directory: boolean;
+}
+
+export interface IpcPathExistsArgs {
+  path: string;
+  directory: boolean;
+}
+
+export interface IpcPluginDialogOpen {
+  options: {
+    multiple: boolean;
+    directory: boolean;
+  };
+}
+
+export interface IpcPluginDialogSave {
+  options: {
+    filters: { name: string; extensions: string[] }[];
+  };
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class MockIpc {
   private readonly debug = false;

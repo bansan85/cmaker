@@ -84,7 +84,9 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
   }
 
   toCMakerTxt(action: InputLanguagesModel): string {
-    return `LANGUAGES ${action.languages}\n`;
+    return `LANGUAGES${action.languages.length === 0 ? '' : ' '}${
+      action.languages
+    }`;
   }
 
   allLanguages: {
