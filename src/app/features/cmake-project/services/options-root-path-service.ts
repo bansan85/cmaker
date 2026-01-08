@@ -13,7 +13,7 @@ import { CMakeAvailableData } from '../interfaces/cmake-available-data';
 export class OptionsRootPathService extends CMakeArgumentInterface<InputDirectoryModel> {
   readonly cmakeMinVersion = null;
 
-  private rustBackendService = inject(RustBackendService);
+  private readonly rustBackendService = inject(RustBackendService);
 
   isEnabled(action: InputDirectoryModel): boolean {
     return (

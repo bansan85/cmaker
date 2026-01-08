@@ -114,7 +114,7 @@ export class ProjectCommand
 
   protected readonly projectId = `project-${crypto.randomUUID()}`;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<ProjectModel>(
       () => ({

@@ -24,8 +24,8 @@ export class CMakeProjectProjectNameIncludeBeforeVariableService extends CMakeCo
     component: CMakeProjectProjectNameIncludeBeforeVariable,
   };
 
-  private rustBackendService = inject(RustBackendService);
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly rustBackendService = inject(RustBackendService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputProjectNameFilesModel): boolean {
     return (

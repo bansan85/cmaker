@@ -24,8 +24,8 @@ export class CMakeProjectIncludeBeforeVariableService extends CMakeCommandInterf
     component: CMakeProjectIncludeBeforeVariable,
   };
 
-  private rustBackendService = inject(RustBackendService);
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly rustBackendService = inject(RustBackendService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputFilesModel): boolean {
     return (

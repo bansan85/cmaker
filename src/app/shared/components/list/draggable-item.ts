@@ -37,7 +37,7 @@ export class DraggableItemComponent implements AfterViewInit, OnDestroy {
   readonly el = inject(ElementRef<HTMLElement>);
   private observer!: MutationObserver;
 
-  private stopDrag = (event: MouseEvent) => {
+  private readonly stopDrag = (event: MouseEvent) => {
     event.preventDefault();
   };
 

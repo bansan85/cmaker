@@ -13,7 +13,7 @@ import { ProjectSpdxLicenseParserService } from './project-spdx-license-parser-s
 export class ProjectSpdxLicenseService extends CMakeArgumentInterface<InputLicenseModel> {
   readonly cmakeMinVersion = new Version(4, 2);
 
-  private projectSpdxLicenseParserService = inject(
+  private readonly projectSpdxLicenseParserService = inject(
     ProjectSpdxLicenseParserService
   );
 

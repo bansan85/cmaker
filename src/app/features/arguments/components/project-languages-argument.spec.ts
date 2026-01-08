@@ -17,7 +17,7 @@ import { ProjectLanguagesService } from '../services/project-languages-service';
 import { ProjectLanguagesArgument } from './project-languages-argument';
 
 class Page {
-  constructor(private fixture: ComponentFixture<ProjectLanguagesArgument>) {}
+  constructor(private readonly fixture: ComponentFixture<ProjectLanguagesArgument>) {}
 
   get projectLanguagesOutput() {
     return this.fixture.debugElement.query(By.css('span[data-testid="value"]'))

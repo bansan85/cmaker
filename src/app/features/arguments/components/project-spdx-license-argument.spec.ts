@@ -16,7 +16,7 @@ import { ProjectSpdxLicenseService } from '../services/project-spdx-license-serv
 import { ProjectSpdxLicenseArgument } from './project-spdx-license-argument';
 
 class Page {
-  constructor(private fixture: ComponentFixture<ProjectSpdxLicenseArgument>) {}
+  constructor(private readonly fixture: ComponentFixture<ProjectSpdxLicenseArgument>) {}
 
   get projectSpdxLicenseInput() {
     return this.fixture.debugElement.query(

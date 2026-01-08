@@ -15,7 +15,7 @@ import { ProjectHomepageUrlService } from '../services/project-homepage-url-serv
 import { ProjectHomepageUrlArgument } from './project-homepage-url-argument';
 
 class Page {
-  constructor(private fixture: ComponentFixture<ProjectHomepageUrlArgument>) {}
+  constructor(private readonly fixture: ComponentFixture<ProjectHomepageUrlArgument>) {}
 
   get projectHomepageUrlInput() {
     return this.fixture.debugElement.query(

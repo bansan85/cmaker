@@ -12,7 +12,7 @@ export abstract class InputLanguages
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputLanguagesModel>;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputLanguagesModel>(
       () => ({ enabled: this.enabled, languages: this.languages }),

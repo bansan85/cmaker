@@ -16,7 +16,7 @@ import { ProjectCompatVersionArgument } from './project-compat-version-argument'
 
 class Page {
   constructor(
-    private fixture: ComponentFixture<ProjectCompatVersionArgument>
+    private readonly fixture: ComponentFixture<ProjectCompatVersionArgument>
   ) {}
 
   get projectCompatVersionInput() {

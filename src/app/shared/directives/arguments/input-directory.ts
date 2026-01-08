@@ -13,7 +13,7 @@ export abstract class InputDirectory
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputDirectoryModel>;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputDirectoryModel>(
       () => ({ enabled: this.enabled, directory: this.directory }),

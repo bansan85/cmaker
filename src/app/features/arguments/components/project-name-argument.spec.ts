@@ -15,7 +15,7 @@ import { ProjectNameService } from '../services/project-name-service';
 import { ProjectNameArgument } from './project-name-argument';
 
 class Page {
-  constructor(private fixture: ComponentFixture<ProjectNameArgument>) {}
+  constructor(private readonly fixture: ComponentFixture<ProjectNameArgument>) {}
 
   get projectNameInput() {
     return this.fixture.debugElement.query(By.css('input[name="project-name"]'))

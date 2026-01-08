@@ -18,7 +18,7 @@ export abstract class InputFiles
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputFilesModel>(
       () => ({ enabled: this.enabled, files: this.files }),

@@ -17,7 +17,7 @@ export class DraggableListComponent {
   private readonly items = contentChildren(DraggableItemComponent);
   private draggableItem!: HTMLElement;
 
-  private subscribedItems = new Set<DraggableItemComponent>();
+  private readonly subscribedItems = new Set<DraggableItemComponent>();
 
   private from = 0;
   private to = 0;

@@ -15,7 +15,7 @@ import { ProjectVersionService } from '../services/project-version-service';
 import { ProjectVersionArgument } from './project-version-argument';
 
 class Page {
-  constructor(private fixture: ComponentFixture<ProjectVersionArgument>) {}
+  constructor(private readonly fixture: ComponentFixture<ProjectVersionArgument>) {}
 
   get projectVersionInput() {
     return this.fixture.debugElement.query(

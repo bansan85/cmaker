@@ -12,7 +12,7 @@ export abstract class InputCheckbox
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputCheckboxModel>;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputCheckboxModel>(
       () => ({ enabled: this.enabled, checked: this.checked }),

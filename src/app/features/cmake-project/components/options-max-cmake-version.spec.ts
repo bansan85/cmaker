@@ -14,7 +14,7 @@ import { ProjectContextService } from '../services/project-context-service';
 import { OptionsMaxCMakeVersion } from './options-max-cmake-version';
 
 class Page {
-  constructor(private fixture: ComponentFixture<OptionsMaxCMakeVersion>) {}
+  constructor(private readonly fixture: ComponentFixture<OptionsMaxCMakeVersion>) {}
 
   get maxCMakeVersionInput() {
     return this.fixture.debugElement.query(

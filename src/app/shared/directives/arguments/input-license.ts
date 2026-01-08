@@ -12,7 +12,7 @@ export abstract class InputLicense
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputLicenseModel>;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputLicenseModel>(
       () => ({ enabled: this.enabled, license: this.license }),

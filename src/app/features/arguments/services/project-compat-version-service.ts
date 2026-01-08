@@ -13,7 +13,7 @@ import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-i
 export class ProjectCompatVersionService extends CMakeArgumentInterface<InputVersionModel> {
   readonly cmakeMinVersion = new Version(4, 1);
 
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputVersionModel): boolean {
     return (

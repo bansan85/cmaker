@@ -29,11 +29,11 @@ import { CMakeCommandParser } from './cmake-command-parser';
   providedIn: 'root',
 })
 export class DeserializerRegistry {
-  private envInjector = inject(EnvironmentInjector);
-  private dataToCMakeService = inject(DataToCMakeService);
-  private cmakeCommandParser = inject(CMakeCommandParser);
-  private cmakeCommandMapping = inject(CMakeCommandMapping);
-  private stringService = inject(StringService);
+  private readonly envInjector = inject(EnvironmentInjector);
+  private readonly dataToCMakeService = inject(DataToCMakeService);
+  private readonly cmakeCommandParser = inject(CMakeCommandParser);
+  private readonly cmakeCommandMapping = inject(CMakeCommandMapping);
+  private readonly stringService = inject(StringService);
 
   private setArgument(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

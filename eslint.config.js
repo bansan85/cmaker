@@ -96,6 +96,7 @@ export default defineConfig(
       'no-labels': 'off',
       'func-names': 'off',
       '@angular-eslint/no-experimental': 'off',
+      '@typescript-eslint/prefer-readonly': 'error',
     },
   },
   {

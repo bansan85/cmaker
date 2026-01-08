@@ -24,7 +24,7 @@ export class CMakeMsvcRuntimeLibraryVariableService extends CMakeCommandInterfac
 
   private readonly helpText = 'Build using CRT shared libraries';
 
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputCheckboxModel): boolean {
     return (

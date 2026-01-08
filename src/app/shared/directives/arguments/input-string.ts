@@ -12,7 +12,7 @@ export abstract class InputString
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputStringModel>;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputStringModel>(
       () => ({ enabled: this.enabled, text: this.text }),

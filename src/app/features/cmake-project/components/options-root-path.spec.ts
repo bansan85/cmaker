@@ -16,7 +16,7 @@ import { ProjectContextService } from '../services/project-context-service';
 import { OptionsRootPath } from './options-root-path';
 
 class Page {
-  constructor(private fixture: ComponentFixture<OptionsRootPath>) {}
+  constructor(private readonly fixture: ComponentFixture<OptionsRootPath>) {}
 
   get rootPathButton() {
     return this.fixture.debugElement.query(

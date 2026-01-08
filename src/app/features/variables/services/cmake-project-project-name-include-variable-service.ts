@@ -24,8 +24,8 @@ export class CMakeProjectProjectNameIncludeVariableService extends CMakeCommandI
     component: CMakeProjectProjectNameIncludeVariable,
   };
 
-  private rustBackendService = inject(RustBackendService);
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly rustBackendService = inject(RustBackendService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputProjectNameFilesModel): boolean {
     return (

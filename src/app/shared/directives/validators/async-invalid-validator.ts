@@ -20,8 +20,6 @@ import { DataToCMakeService } from '../../../features/cmake-project/services/dat
   ],
 })
 export class AsyncInvalidValidator implements AsyncValidator {
-  private dataToCMake = inject(DataToCMakeService);
-
   readonly appAsyncInvalidValidator = input.required<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (control: AbstractControl, context: any) => Promise<boolean>

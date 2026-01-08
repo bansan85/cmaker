@@ -33,7 +33,7 @@ import { ProjectContextService } from '../services/project-context-service';
 import { CMakeProject } from './cmake-project';
 
 class Page {
-  constructor(private fixture: ComponentFixture<CMakeProject>) {}
+  constructor(private readonly fixture: ComponentFixture<CMakeProject>) {}
 
   get tabOptions() {
     return this.fixture.debugElement.query(

@@ -13,7 +13,7 @@ import { DataToCMakeService } from './data-to-cmake-service';
 export class OptionsMaxCMakeVersionService extends CMakeArgumentInterface<InputVersionModel> {
   readonly cmakeMinVersion = null;
 
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputVersionModel): boolean {
     return (

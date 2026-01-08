@@ -15,7 +15,7 @@ import { ProjectDescriptionService } from '../services/project-description-servi
 import { ProjectDescriptionArgument } from './project-description-argument';
 
 class Page {
-  constructor(private fixture: ComponentFixture<ProjectDescriptionArgument>) {}
+  constructor(private readonly fixture: ComponentFixture<ProjectDescriptionArgument>) {}
 
   get projectDescriptionInput() {
     return this.fixture.debugElement.query(

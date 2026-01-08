@@ -21,7 +21,7 @@ export abstract class InputProjectNameFiles
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputProjectNameFilesModel>(
       () => ({

@@ -25,7 +25,7 @@ export class CMakeProjectTopLevelIncludesVariableService extends CMakeCommandInt
   };
 
   private readonly rustBackendService = inject(RustBackendService);
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputFilesModel): boolean {
     return (

@@ -13,7 +13,7 @@ import { ProjectContextService } from '../services/project-context-service';
 import { TabOptions } from './tab-options';
 
 class Page {
-  constructor(private fixture: ComponentFixture<TabOptions>) {}
+  constructor(private readonly fixture: ComponentFixture<TabOptions>) {}
 
   get maxCMakeVersionInput() {
     return this.fixture.debugElement.query(

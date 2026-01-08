@@ -46,7 +46,7 @@ import { ProjectContextService } from '../services/project-context-service';
 import { TabProject } from './tab-project';
 
 class Page {
-  constructor(private fixture: ComponentFixture<TabProject>) {}
+  constructor(private readonly fixture: ComponentFixture<TabProject>) {}
 
   get cmakeListToConsoleButton() {
     return this.fixture.debugElement.query(

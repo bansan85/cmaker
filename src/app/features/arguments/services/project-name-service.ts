@@ -13,7 +13,7 @@ import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-i
 export class ProjectNameService extends CMakeArgumentInterface<InputStringModel> {
   readonly cmakeMinVersion = null;
 
-  private dataToCMake = inject(DataToCMakeService);
+  private readonly dataToCMake = inject(DataToCMakeService);
 
   isEnabled(action: InputStringModel): boolean {
     return (

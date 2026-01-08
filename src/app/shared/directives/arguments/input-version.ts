@@ -13,7 +13,7 @@ export abstract class InputVersion
   abstract readonly name: string;
   abstract service: CMakeFeatureInterface<InputVersionModel>;
 
-  private resourceService = inject(ResourceService);
+  private readonly resourceService = inject(ResourceService);
   readonly isValid =
     this.resourceService.createValidationResource<InputVersionModel>(
       () => ({
