@@ -197,7 +197,11 @@ describe('TabProject', () => {
         /* Spy console */
       });
 
-      const { cmakeListToConsoleButton, saveToCMakerButton } = page;
+      const {
+        cmakeListToConsoleButton,
+        saveToCMakerButton,
+        saveToCMakeListsTxtButton,
+      } = page;
       let { allDraggableItems } = page;
       const expectedCMakeList: string[][] = [
         [
@@ -223,7 +227,19 @@ describe('TabProject', () => {
         ['set(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")'],
         ['set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")'],
       ];
-
+      const expectedCMakeListsTxt: string[][] = [
+        [
+          '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)',
+        ],
+        [
+          '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()',
+        ],
+        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")'],
+        ['# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")'],
+      ];
       cmakeListToConsoleButton.click();
       await fixture.whenStable();
       let logs = consoleSpy.mock.calls as string[][];
@@ -246,6 +262,12 @@ describe('TabProject', () => {
       expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
         expectedCMaker.join('\n')
       );
+      mockIpcDialogSave = 'cmakelist.txt';
+      saveToCMakeListsTxtButton.click();
+      await fixture.whenStable();
+      expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+        expectedCMakeListsTxt.join('\n')
+      );
 
       const moveFromTo = async (moveFrom: number, moveTo: number) => {
         allDraggableItems = sortArrayFromList(allDraggableItems, indexes);
@@ -256,6 +278,7 @@ describe('TabProject', () => {
         );
         await fixture.whenStable();
         arrayMove(expectedCMakeList, indexes[moveFrom], indexes[moveTo]);
+        arrayMove(expectedCMakeListsTxt, indexes[moveFrom], indexes[moveTo]);
         arrayMove(expectedCMaker, indexes[moveFrom], indexes[moveTo]);
         arrayMove(indexes, indexes[moveFrom], indexes[moveTo]);
         const oldLogsLength = logs.length;
@@ -280,6 +303,12 @@ describe('TabProject', () => {
         await fixture.whenStable();
         expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
           expectedCMaker.join('\n')
+        );
+        mockIpcDialogSave = 'cmakelist.txt';
+        saveToCMakeListsTxtButton.click();
+        await fixture.whenStable();
+        expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+          expectedCMakeListsTxt.join('\n')
         );
       };
 
