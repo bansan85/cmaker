@@ -19,6 +19,9 @@ export class RustBackendService {
     directory: boolean
   ): Promise<boolean> {
     const baseString = typeof base === 'string' ? base : base.directory;
+    if (baseString === '') {
+      return Promise.resolve(false);
+    }
     return await invoke<boolean>('relative_paths_exists', {
       baseString,
       paths,
