@@ -16,6 +16,7 @@ import {
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import {
+  IpcLoadFromFileArgs,
   IpcSaveToFileArgs,
   MockIpc,
 } from '../../../shared/classes/tests/mock-ipc';
@@ -98,7 +99,9 @@ describe('TabProject', () => {
 
   let mockIpc: MockIpc;
   let mockIpcDialogSave = 'cmaker.txt';
-  const mockIpcContentSavedToFile = new Map<string, string | undefined>();
+  let mockIpcDialogOpen = 'cmaker.txt';
+  const mockIpcContentSaveToFile = new Map<string, string | undefined>();
+  const mockIpcContentLoadFromFile = new Map<string, string>();
 
   beforeAll(() => {
     mockIpc = new MockIpc();
@@ -106,9 +109,17 @@ describe('TabProject', () => {
       'plugin:dialog|save',
       (_args?: InvokeArgs) => mockIpcDialogSave
     );
+    mockIpc.mockCommand(
+      'plugin:dialog|open',
+      (_args?: InvokeArgs) => mockIpcDialogOpen
+    );
     mockIpc.mockCommand('save_to_file', (payload?: InvokeArgs) => {
-      const args1 = payload as unknown as IpcSaveToFileArgs;
-      mockIpcContentSavedToFile.set(args1.path, args1.content);
+      const args = payload as unknown as IpcSaveToFileArgs;
+      mockIpcContentSaveToFile.set(args.path, args.content);
+    });
+    mockIpc.mockCommand('load_from_file', (payload?: InvokeArgs) => {
+      const args = payload as unknown as IpcLoadFromFileArgs;
+      return Promise.resolve(mockIpcContentLoadFromFile.get(args.path));
     });
     mockIpc.start();
   });
@@ -263,13 +274,13 @@ describe('TabProject', () => {
       mockIpcDialogSave = 'cmaker.txt';
       saveToCMakerButton.click();
       await fixture.whenStable();
-      expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+      expect(mockIpcContentSaveToFile.get(mockIpcDialogSave)).toBe(
         expectedCMaker.join('\n')
       );
       mockIpcDialogSave = 'cmakelist.txt';
       saveToCMakeListsTxtButton.click();
       await fixture.whenStable();
-      expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+      expect(mockIpcContentSaveToFile.get(mockIpcDialogSave)).toBe(
         expectedCMakeListsTxt.join('\n')
       );
 
@@ -308,13 +319,13 @@ describe('TabProject', () => {
         mockIpcDialogSave = 'cmaker.txt';
         saveToCMakerButton.click();
         await fixture.whenStable();
-        expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+        expect(mockIpcContentSaveToFile.get(mockIpcDialogSave)).toBe(
           expectedCMaker.join('\n')
         );
         mockIpcDialogSave = 'cmakelist.txt';
         saveToCMakeListsTxtButton.click();
         await fixture.whenStable();
-        expect(mockIpcContentSavedToFile.get(mockIpcDialogSave)).toBe(
+        expect(mockIpcContentSaveToFile.get(mockIpcDialogSave)).toBe(
           expectedCMakeListsTxt.join('\n')
         );
       };
@@ -323,6 +334,36 @@ describe('TabProject', () => {
       await moveFromTo(0, 5);
       await moveFromTo(4, 1);
       await moveFromTo(3, 3);
+    });
+
+    it('should load data from file', async () => {
+      const { loadFromFileButton } = page;
+
+      const expectedCMaker = `project(\nVERSION undefined\nCOMPAT_VERSION undefined\nSPDX_LICENSE ""\nDESCRIPTION ""\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)
+cmaker_cmake_msvc_runtime_library(ON)
+set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")
+set(CMAKE_PROJECT_INCLUDE_BEFORE "")
+set(CMAKE_PROJECT_INCLUDE "")
+set(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")
+set(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")`;
+      const expectedComponentName: string[] = [
+        'app-project-command',
+        'app-cmake-msvc-runtime-library-variable',
+        'app-cmake-project-top-level-includes-variable',
+        'app-cmake-project-include-before-variable',
+        'app-cmake-project-include-variable',
+        'app-cmake-project-project-name-include-before-variable',
+        'app-cmake-project-project-name-include-variable',
+      ];
+      mockIpcDialogOpen = 'cmaker.txt';
+      mockIpcContentLoadFromFile.set(mockIpcDialogOpen, expectedCMaker);
+
+      loadFromFileButton.click();
+      await fixture.whenStable();
+
+      for (const [i, type] of expectedComponentName.entries()) {
+        expect(page.checkNthElementType(i + 1, type)).toBeTruthy();
+      }
     });
   });
 });

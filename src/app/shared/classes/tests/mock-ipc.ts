@@ -2,6 +2,10 @@
 import { InvokeArgs } from '@tauri-apps/api/core';
 import { clearMocks, mockIPC } from '@tauri-apps/api/mocks';
 
+export interface IpcLoadFromFileArgs {
+  path: string;
+}
+
 export interface IpcSaveToFileArgs {
   path: string;
   content: string;
@@ -22,6 +26,7 @@ export interface IpcPluginDialogOpen {
   options: {
     multiple: boolean;
     directory: boolean;
+    filters?: { name: string; extensions: string[] }[];
   };
 }
 
