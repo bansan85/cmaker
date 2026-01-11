@@ -63,7 +63,6 @@ describe('CMakeProject', () => {
   beforeAll(() => {
     mockIpc = new MockIpc();
     mockIpc.mockCommand('path_exists', (_args?: InvokeArgs) => true);
-    mockIpc.mockCommand('relative_paths_exists', (_args?: InvokeArgs) => true);
     mockIpc.start();
   });
 

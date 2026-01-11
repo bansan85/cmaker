@@ -96,7 +96,6 @@ describe('TabProject', () => {
 
   beforeAll(() => {
     mockIpc = new MockIpc();
-    mockIpc.mockCommand('relative_paths_exists', (_args?: InvokeArgs) => true);
     mockIpc.mockCommand(
       'plugin:dialog|save',
       (_args?: InvokeArgs) => mockIpcDialogSave
