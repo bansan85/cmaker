@@ -202,19 +202,6 @@ describe('TabProject', () => {
         saveToCMakeListsTxtButton,
       } = page;
       let { allDraggableItems } = page;
-      const expectedCMakeList: string[][] = [
-        [
-          '# Invalid\nproject(\n# Invalid\n\n# Invalid\nVERSION undefined\n# Invalid\nCOMPAT_VERSION undefined\n# Invalid\nSPDX_LICENSE ""\nDESCRIPTION ""\n# Invalid\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)',
-        ],
-        [
-          '# Windows only\noption(CMAKE_MSVC_RUNTIME_LIBRARY "Build using CRT shared libraries" ON)\n\nif(NOT CMAKE_MSVC_RUNTIME_LIBRARY)\n  cmake_policy(SET CMP0091 NEW)\n  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")\nendif()',
-        ],
-        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE_BEFORE "")'],
-        ['# Invalid\nset(CMAKE_PROJECT_INCLUDE "")'],
-        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE "")'],
-        ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")'],
-        ['# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")'],
-      ];
       const expectedCMaker: string[][] = [
         [
           'project(\nVERSION undefined\nCOMPAT_VERSION undefined\nSPDX_LICENSE ""\nDESCRIPTION ""\nHOMEPAGE_URL ""\nLANGUAGES NONE\n)',
@@ -243,18 +230,18 @@ describe('TabProject', () => {
       await fixture.whenStable();
       let logs = consoleSpy.mock.calls as string[][];
       let logPosition = 0;
-      let indexes = Array.from(Array(expectedCMakeList.length).keys());
-      expect(logs.length).toBe(expectedCMakeList.length);
+      let indexes = Array.from(Array(expectedCMakeListsTxt.length).keys());
+      expect(logs.length).toBe(expectedCMakeListsTxt.length);
       expect(
         compareArrayString(
           logs,
           logPosition,
-          expectedCMakeList,
+          expectedCMakeListsTxt,
           0,
-          expectedCMakeList.length
+          expectedCMakeListsTxt.length
         )
       ).toBe(true);
-      logPosition += expectedCMakeList.length;
+      logPosition += expectedCMakeListsTxt.length;
       mockIpcDialogSave = 'cmaker.txt';
       saveToCMakerButton.click();
       await fixture.whenStable();
@@ -270,13 +257,12 @@ describe('TabProject', () => {
 
       const moveFromTo = async (moveFrom: number, moveTo: number) => {
         allDraggableItems = sortArrayFromList(allDraggableItems, indexes);
-        indexes = Array.from(Array(expectedCMakeList.length).keys());
+        indexes = Array.from(Array(expectedCMakeListsTxt.length).keys());
         dragAndDrop(
           allDraggableItems[moveFrom].nativeElement as HTMLElement,
           allDraggableItems[moveTo].nativeElement as HTMLElement
         );
         await fixture.whenStable();
-        arrayMove(expectedCMakeList, indexes[moveFrom], indexes[moveTo]);
         arrayMove(expectedCMakeListsTxt, indexes[moveFrom], indexes[moveTo]);
         arrayMove(expectedCMaker, indexes[moveFrom], indexes[moveTo]);
         arrayMove(indexes, indexes[moveFrom], indexes[moveTo]);
@@ -285,17 +271,17 @@ describe('TabProject', () => {
         await fixture.whenStable();
         // eslint-disable-next-line require-atomic-updates
         logs = consoleSpy.mock.calls as string[][];
-        expect(logs.length - oldLogsLength).toBe(expectedCMakeList.length);
+        expect(logs.length - oldLogsLength).toBe(expectedCMakeListsTxt.length);
         expect(
           compareArrayString(
             logs,
             logPosition,
-            expectedCMakeList,
+            expectedCMakeListsTxt,
             0,
-            expectedCMakeList.length
+            expectedCMakeListsTxt.length
           )
         ).toBe(true);
-        logPosition += expectedCMakeList.length;
+        logPosition += expectedCMakeListsTxt.length;
 
         mockIpcDialogSave = 'cmaker.txt';
         saveToCMakerButton.click();
