@@ -3,7 +3,7 @@ import { AbstractControl } from '@angular/forms';
 
 import { InputCheckboxModel } from '../../../shared/models/arguments/input-checkbox-model';
 import { Version } from '../../../shared/models/version';
-import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { CMakeAvailableData } from '../../cmake-project/models/cmake-available-data';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';

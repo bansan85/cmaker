@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 import { CheckboxesItemInterface } from '../../../shared/interfaces/checkboxes-item-interface';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 
 @Component({ selector: 'app-options-max-cmake-version', template: '' })

@@ -3,7 +3,7 @@ import { AbstractControl } from '@angular/forms';
 
 import { InputLicenseModel } from '../../../shared/models/arguments/input-license-model';
 import { Version } from '../../../shared/models/version';
-import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { CMakeAvailableData } from '../../cmake-project/models/cmake-available-data';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
 import { ProjectSpdxLicenseParserService } from './project-spdx-license-parser-service';
 

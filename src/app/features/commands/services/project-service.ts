@@ -18,7 +18,7 @@ import { ProjectVersionService } from '../../arguments/services/project-version-
 import {
   CMakeAvailableData,
   mergeCMakeAvailableData,
-} from '../../cmake-project/interfaces/cmake-available-data';
+} from '../../cmake-project/models/cmake-available-data';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';
 import { ProjectCommand } from '../components/project-command';
 import { ProjectModel } from '../models/project.model';

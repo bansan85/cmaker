@@ -13,7 +13,7 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
 
 @Component({

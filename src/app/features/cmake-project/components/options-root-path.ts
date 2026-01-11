@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { InputDirectory } from '../../../shared/directives/arguments/input-directory';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../models/cmake-component-interface';
 import { OptionsRootPathService } from '../services/options-root-path-service';
 import { ProjectContextService } from '../services/project-context-service';
 

@@ -24,7 +24,7 @@ import { CMakeProjectIncludeVariable } from '../../variables/components/cmake-pr
 import { CMakeProjectProjectNameIncludeBeforeVariable } from '../../variables/components/cmake-project-project-name-include-before-variable';
 import { CMakeProjectProjectNameIncludeVariable } from '../../variables/components/cmake-project-project-name-include-variable';
 import { CMakeProjectTopLevelIncludesVariable } from '../../variables/components/cmake-project-top-level-includes-variable';
-import { CMakeComponentInterface } from '../interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../models/cmake-component-interface';
 
 @Component({
   selector: 'app-tab-project',

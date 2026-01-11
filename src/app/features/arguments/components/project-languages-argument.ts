@@ -13,7 +13,7 @@ import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-i
 import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
 import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
 import { CheckboxesItemInterface } from '../../../shared/interfaces/checkboxes-item-interface';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectLanguagesService } from '../services/project-languages-service';
 
 @Component({

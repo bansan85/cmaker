@@ -4,7 +4,7 @@ import { AbstractControl } from '@angular/forms';
 import { InputFilesModel } from '../../../shared/models/arguments/input-files-model';
 import { Version } from '../../../shared/models/version';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
-import { CMakeAvailableData } from '../../cmake-project/interfaces/cmake-available-data';
+import { CMakeAvailableData } from '../../cmake-project/models/cmake-available-data';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeCommandInterface } from '../../commands/services/cmake-command-interface';
 import { CMakeCommandTyped } from '../../serializer/models/cmake-command-typed';

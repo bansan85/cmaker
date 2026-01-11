@@ -17,7 +17,7 @@ import { InputVersion } from '../../../shared/directives/arguments/input-version
 import { assertError } from '../../../shared/interfaces/errors';
 import { Version } from '../../../shared/models/version';
 import { StringService } from '../../../shared/services/string-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
 import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeArgumentTyped } from '../models/cmake-argument-typed';

@@ -28,7 +28,7 @@ import { ProjectLanguagesService } from '../../arguments/services/project-langua
 import { ProjectNameService } from '../../arguments/services/project-name-service';
 import { ProjectSpdxLicenseService } from '../../arguments/services/project-spdx-license-service';
 import { ProjectVersionService } from '../../arguments/services/project-version-service';
-import { CMakeComponentInterface } from '../../cmake-project/interfaces/cmake-component-interface';
+import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectModel } from '../models/project.model';
 import { ProjectService } from '../services/project-service';
 

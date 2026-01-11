@@ -5,7 +5,7 @@ import { InputDirectoryModel } from '../../../shared/models/arguments/input-dire
 import { Version } from '../../../shared/models/version';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
-import { CMakeAvailableData } from '../interfaces/cmake-available-data';
+import { CMakeAvailableData } from '../models/cmake-available-data';
 
 @Injectable({
   providedIn: null,

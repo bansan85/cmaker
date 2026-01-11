@@ -4,7 +4,7 @@ import { AbstractControl } from '@angular/forms';
 import { InputVersionModel } from '../../../shared/models/arguments/input-version-model';
 import { Version } from '../../../shared/models/version';
 import { CMakeArgumentInterface } from '../../commands/services/cmake-argument-interface';
-import { CMakeAvailableData } from '../interfaces/cmake-available-data';
+import { CMakeAvailableData } from '../models/cmake-available-data';
 import { DataToCMakeService } from './data-to-cmake-service';
 
 @Injectable({
