@@ -116,7 +116,7 @@ describe('CMakeProject', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should support shallow', () => {
       expect(component).toBeTruthy();
     });
   });
@@ -155,7 +155,7 @@ describe('CMakeProject', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should support full', () => {
       expect(component).toBeTruthy();
       expect(page.tabOptions).toBeTruthy();
       expect(page.tabProject).toBeTruthy();

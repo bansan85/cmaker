@@ -15,7 +15,9 @@ import { ProjectVersionService } from '../services/project-version-service';
 import { ProjectVersionArgument } from './project-version-argument';
 
 class Page {
-  constructor(private readonly fixture: ComponentFixture<ProjectVersionArgument>) {}
+  constructor(
+    private readonly fixture: ComponentFixture<ProjectVersionArgument>
+  ) {}
 
   get projectVersionInput() {
     return this.fixture.debugElement.query(
@@ -70,12 +72,10 @@ describe('ProjectVersionArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.projectVersionInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { projectVersionInput } = page;
 
       projectVersionInput.value = '1.2.3';
@@ -108,14 +108,12 @@ describe('ProjectVersionArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.projectVersionInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
       expect(page.versionTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { projectVersionInput, versionTag, validTag } = page;
 
       projectVersionInput.value = '3..2';

@@ -72,7 +72,7 @@ describe('TabOptions', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should support shallow', () => {
       expect(component).toBeTruthy();
     });
   });
@@ -111,13 +111,11 @@ describe('TabOptions', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should update options', async () => {
       expect(component).toBeTruthy();
       expect(page.maxCMakeVersionInput).toBeTruthy();
       expect(page.rootPathInput).toBeTruthy();
-    });
 
-    it('should update options', async () => {
       const { maxCMakeVersionInput, rootPathInput } = page;
 
       mockIpcPathExists = true;

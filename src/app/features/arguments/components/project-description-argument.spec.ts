@@ -15,7 +15,9 @@ import { ProjectDescriptionService } from '../services/project-description-servi
 import { ProjectDescriptionArgument } from './project-description-argument';
 
 class Page {
-  constructor(private readonly fixture: ComponentFixture<ProjectDescriptionArgument>) {}
+  constructor(
+    private readonly fixture: ComponentFixture<ProjectDescriptionArgument>
+  ) {}
 
   get projectDescriptionInput() {
     return this.fixture.debugElement.query(
@@ -70,12 +72,10 @@ describe('ProjectDescriptionArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.projectDescriptionInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { projectDescriptionInput } = page;
 
       projectDescriptionInput.value = 'Describe me';
@@ -108,14 +108,12 @@ describe('ProjectDescriptionArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.projectDescriptionInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
       expect(page.versionTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { projectDescriptionInput, versionTag, validTag } = page;
 
       projectDescriptionInput.value = 'Describe me';

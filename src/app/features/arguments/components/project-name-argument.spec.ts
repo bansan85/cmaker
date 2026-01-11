@@ -15,7 +15,9 @@ import { ProjectNameService } from '../services/project-name-service';
 import { ProjectNameArgument } from './project-name-argument';
 
 class Page {
-  constructor(private readonly fixture: ComponentFixture<ProjectNameArgument>) {}
+  constructor(
+    private readonly fixture: ComponentFixture<ProjectNameArgument>
+  ) {}
 
   get projectNameInput() {
     return this.fixture.debugElement.query(By.css('input[name="project-name"]'))
@@ -68,12 +70,10 @@ describe('ProjectNameArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.projectNameInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { projectNameInput } = page;
 
       projectNameInput.value = 'validName';
@@ -106,14 +106,12 @@ describe('ProjectNameArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.projectNameInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
       expect(page.versionTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { projectNameInput, versionTag, validTag } = page;
 
       projectNameInput.value = 'Invalid name';

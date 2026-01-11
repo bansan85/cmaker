@@ -11,11 +11,9 @@ describe('ProjectSpdxLicenseParserService', () => {
     service = TestBed.inject(ProjectSpdxLicenseParserService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
   it('should validate licenses', () => {
+    expect(service).toBeTruthy();
+
     expect(service.parse('MIT')).toBe(true);
     expect(service.parse('MIT+')).toBe(true);
     expect(service.parse('LGPL-2.1-only OR MIT')).toBe(true);

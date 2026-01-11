@@ -16,7 +16,9 @@ import { ProjectSpdxLicenseService } from '../services/project-spdx-license-serv
 import { ProjectSpdxLicenseArgument } from './project-spdx-license-argument';
 
 class Page {
-  constructor(private readonly fixture: ComponentFixture<ProjectSpdxLicenseArgument>) {}
+  constructor(
+    private readonly fixture: ComponentFixture<ProjectSpdxLicenseArgument>
+  ) {}
 
   get projectSpdxLicenseInput() {
     return this.fixture.debugElement.query(
@@ -72,12 +74,10 @@ describe('ProjectLicenseArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.projectSpdxLicenseInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { projectSpdxLicenseInput } = page;
 
       projectSpdxLicenseInput.value = 'validName';
@@ -110,14 +110,12 @@ describe('ProjectLicenseArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.projectSpdxLicenseInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
       expect(page.versionTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { projectSpdxLicenseInput, versionTag, validTag } = page;
 
       projectSpdxLicenseInput.value = 'Invalid SpdxLicense';

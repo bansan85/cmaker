@@ -72,12 +72,10 @@ describe('ProjectCompatVersionArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.projectCompatVersionInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { projectCompatVersionInput } = page;
 
       projectCompatVersionInput.value = '4.rez';
@@ -114,14 +112,12 @@ describe('ProjectCompatVersionArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.projectCompatVersionInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
       expect(page.versionTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { projectCompatVersionInput, versionTag, validTag } = page;
 
       projectCompatVersionInput.value = '4.rez';

@@ -17,7 +17,9 @@ import { ProjectLanguagesService } from '../services/project-languages-service';
 import { ProjectLanguagesArgument } from './project-languages-argument';
 
 class Page {
-  constructor(private readonly fixture: ComponentFixture<ProjectLanguagesArgument>) {}
+  constructor(
+    private readonly fixture: ComponentFixture<ProjectLanguagesArgument>
+  ) {}
 
   get projectLanguagesOutput() {
     return this.fixture.debugElement.query(By.css('span[data-testid="value"]'))
@@ -89,12 +91,10 @@ describe('ProjectLanguagesArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', () => {
       expect(component).toBeTruthy();
       expect(page.projectLanguagesOutput).toBeTruthy();
-    });
 
-    it('should change value in component', () => {
       const { projectLanguagesOutput } = page;
 
       expect(projectLanguagesOutput.textContent).toBe('NONE');
@@ -122,7 +122,7 @@ describe('ProjectLanguagesArgument', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.projectLanguagesOutput).toBeTruthy();
       expect(page.multiSelectBox).toBeTruthy();
@@ -130,9 +130,7 @@ describe('ProjectLanguagesArgument', () => {
       expect(page.checkboxLanguage('CXX')).toBeTruthy();
       expect(page.validTag).toBeTruthy();
       expect(page.versionTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const {
         projectLanguagesOutput,
         multiSelectBox,

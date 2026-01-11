@@ -12,7 +12,7 @@ describe('DataToCMakeService', () => {
     service = TestBed.inject(DataToCMakeService);
   });
 
-  it('should be created', () => {
+  it('should compute', () => {
     expect(service).toBeTruthy();
 
     expect(service.booleanToString(true)).toEqual('ON');

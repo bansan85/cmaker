@@ -89,13 +89,11 @@ describe('OptionsRootPath', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.rootPathButton).toBeTruthy();
       expect(page.rootPathInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { rootPathButton, rootPathInput } = page;
 
       mockIpcPathExists = false;
@@ -145,14 +143,12 @@ describe('OptionsRootPath', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.rootPathButton).toBeTruthy();
       expect(page.rootPathInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { rootPathInput, validTag } = page;
 
       mockIpcPathExists = false;

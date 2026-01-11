@@ -23,11 +23,9 @@ describe('ProjectLanguagesService', () => {
     projectContext = TestBed.inject(ProjectContextService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
   it('should support missing optional fields', async () => {
+    expect(service).toBeTruthy();
+
     const action: InputLanguagesModel = { languages: '' };
     projectContext.maxCMakeVersion = undefined;
 

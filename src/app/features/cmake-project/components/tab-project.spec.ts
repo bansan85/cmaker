@@ -173,7 +173,7 @@ describe('TabProject', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should support shallow', () => {
       expect(component).toBeTruthy();
     });
   });
@@ -199,16 +199,14 @@ describe('TabProject', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should support drag and drop', async () => {
       expect(component).toBeTruthy();
       expect(page.cmakeListToConsoleButton).toBeTruthy();
       expect(page.loadFromFileButton).toBeTruthy();
       expect(page.loadFromTextButton).toBeTruthy();
       expect(page.saveToCMakeListsTxtButton).toBeTruthy();
       expect(page.saveToCMakerButton).toBeTruthy();
-    });
 
-    it('should support drag and drop', async () => {
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {
         /* Spy console */
       });

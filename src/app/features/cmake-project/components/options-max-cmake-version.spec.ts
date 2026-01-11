@@ -14,7 +14,9 @@ import { ProjectContextService } from '../services/project-context-service';
 import { OptionsMaxCMakeVersion } from './options-max-cmake-version';
 
 class Page {
-  constructor(private readonly fixture: ComponentFixture<OptionsMaxCMakeVersion>) {}
+  constructor(
+    private readonly fixture: ComponentFixture<OptionsMaxCMakeVersion>
+  ) {}
 
   get maxCMakeVersionInput() {
     return this.fixture.debugElement.query(
@@ -59,12 +61,10 @@ describe('OptionsMaxCMakeVersion', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should change value in component', async () => {
       expect(component).toBeTruthy();
       expect(page.maxCMakeVersionInput).toBeTruthy();
-    });
 
-    it('should change value in component', async () => {
       const { maxCMakeVersionInput } = page;
 
       maxCMakeVersionInput.value = '4.rez';
@@ -101,13 +101,11 @@ describe('OptionsMaxCMakeVersion', () => {
       await fixture.whenStable();
     });
 
-    it('should create', () => {
+    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       expect(component).toBeTruthy();
       expect(page.maxCMakeVersionInput).toBeTruthy();
       expect(page.validTag).toBeTruthy();
-    });
 
-    it('should set .invalid for version / valid tags when invalid input / version', async () => {
       const { maxCMakeVersionInput, validTag } = page;
 
       maxCMakeVersionInput.value = '4.rez';
