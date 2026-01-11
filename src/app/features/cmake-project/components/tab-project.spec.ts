@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { importProvidersFrom } from '@angular/core';
+import { DebugElement, importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { InvokeArgs } from '@tauri-apps/api/core';
@@ -82,6 +82,12 @@ class Page {
 
   get allDraggableItems() {
     return this.fixture.debugElement.queryAll(By.css('app-draggable-item li'));
+  }
+
+  checkNthElementType(nth: number, type: string): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css(`app-draggable-list app-draggable-item:nth-child(${nth}) ${type}`)
+    );
   }
 }
 
@@ -226,6 +232,15 @@ describe('TabProject', () => {
         ['# Invalid\nset(CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE "")'],
         ['# Invalid\nset(CMAKE_PROJECT_TOP_LEVEL_INCLUDES "")'],
       ];
+      const expectedComponentName: string[] = [
+        'app-project-command',
+        'app-cmake-msvc-runtime-library-variable',
+        'app-cmake-project-include-before-variable',
+        'app-cmake-project-include-variable',
+        'app-cmake-project-project-name-include-before-variable',
+        'app-cmake-project-project-name-include-variable',
+        'app-cmake-project-top-level-includes-variable',
+      ];
       cmakeListToConsoleButton.click();
       await fixture.whenStable();
       let logs = consoleSpy.mock.calls as string[][];
@@ -241,6 +256,9 @@ describe('TabProject', () => {
           expectedCMakeListsTxt.length
         )
       ).toBe(true);
+      for (const [i, type] of expectedComponentName.entries()) {
+        expect(page.checkNthElementType(i + 1, type)).toBeTruthy();
+      }
       logPosition += expectedCMakeListsTxt.length;
       mockIpcDialogSave = 'cmaker.txt';
       saveToCMakerButton.click();
@@ -265,6 +283,7 @@ describe('TabProject', () => {
         await fixture.whenStable();
         arrayMove(expectedCMakeListsTxt, indexes[moveFrom], indexes[moveTo]);
         arrayMove(expectedCMaker, indexes[moveFrom], indexes[moveTo]);
+        arrayMove(expectedComponentName, indexes[moveFrom], indexes[moveTo]);
         arrayMove(indexes, indexes[moveFrom], indexes[moveTo]);
         const oldLogsLength = logs.length;
         cmakeListToConsoleButton.click();
@@ -281,6 +300,9 @@ describe('TabProject', () => {
             expectedCMakeListsTxt.length
           )
         ).toBe(true);
+        for (const [i, type] of expectedComponentName.entries()) {
+          expect(page.checkNthElementType(i + 1, type)).toBeTruthy();
+        }
         logPosition += expectedCMakeListsTxt.length;
 
         mockIpcDialogSave = 'cmaker.txt';
