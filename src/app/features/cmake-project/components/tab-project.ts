@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   Injector,
@@ -35,6 +36,7 @@ import { CMakeComponentInterface } from '../interfaces/cmake-component-interface
 export class TabProject implements AfterViewInit {
   private readonly contextInjector = inject(Injector);
   private readonly rustBackendService = inject(RustBackendService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly containers = viewChildren('container', { read: ViewContainerRef });
 
@@ -169,18 +171,20 @@ export class TabProject implements AfterViewInit {
 
   private parse(content: string[]) {
     const retval = this.registry.parse(content, this.contextInjector);
-    for (const _ of retval) {
+    this.items.length = 0;
+    this.itemsOrder.length = 0;
+    for (const [i, _] of retval.entries()) {
       this.items.push(null);
+      this.itemsOrder.push(i);
     }
 
-    setTimeout(() => {
-      for (const [i, x] of retval.entries()) {
-        const newIndex = this.items.length - retval.length + i;
-        const newContainer = this.containers()[newIndex];
-        newContainer.insert(x.hostView);
-        this.items[newIndex] = x.instance;
-        this.itemsOrder.push(newIndex);
-      }
-    });
+    this.cdr.detectChanges();
+
+    for (const [i, x] of retval.entries()) {
+      const newContainer = this.containers()[i];
+      newContainer.clear();
+      newContainer.insert(x.hostView);
+      this.items[i] = x.instance;
+    }
   }
 }
