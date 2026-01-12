@@ -21,7 +21,33 @@ describe('ProjectContextService', () => {
     service = TestBed.inject(ProjectContextService);
   });
 
-  it('should be created', () => {
+  it('should pass', () => {
     expect(service).toBeTruthy();
+
+    service.maxCMakeVersion = new Version(1, 2, 3);
+    expect(service.maxCMakeVersion.version).toStrictEqual(new Version(1, 2, 3));
+    expect(service.maxCMakeVersion).toStrictEqual({
+      enabled: true,
+      version: new Version(1, 2, 3),
+    });
+
+    service.rootPath = 'path';
+    expect(service.rootPath.directory).toStrictEqual('path');
+    expect(service.rootPath).toStrictEqual({
+      enabled: true,
+      directory: 'path',
+    });
+  });
+
+  it('should fail', () => {
+    expect(service).toBeTruthy();
+
+    service.maxCMakeVersion.version = new Version(1, 2, 3);
+    expect(service.maxCMakeVersion.version).not.toStrictEqual(
+      new Version(1, 2, 3)
+    );
+
+    service.rootPath.directory = 'path';
+    expect(service.rootPath.directory).not.toBe('path');
   });
 });
