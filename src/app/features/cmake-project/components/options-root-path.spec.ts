@@ -39,9 +39,11 @@ describe('OptionsRootPath', () => {
   let component: OptionsRootPath;
   let fixture: ComponentFixture<OptionsRootPath>;
   let page: Page;
+
   let mockIpcOpen: Promise<string>;
   let mockIpcPathExists: boolean;
   let mockIpc: MockIpc;
+
   beforeAll(() => {
     mockIpc = new MockIpc();
     mockIpc.mockCommand(
