@@ -106,3 +106,38 @@ export class StubDraggableListComponent {}
   template: '',
 })
 export class StubDraggableItemComponent {}
+@Component({
+  selector: 'app-project-spdx-license-argument',
+  template: '',
+})
+export class StubProjectSpdxLicenseArgument {}
+@Component({
+  selector: 'app-project-version-argument',
+  template: '',
+})
+export class StubProjectVersionArgument {}
+@Component({
+  selector: 'app-project-compat-version-argument',
+  template: '',
+})
+export class StubProjectCompatVersionArgument {}
+@Component({
+  selector: 'app-project-description-argument',
+  template: '',
+})
+export class StubProjectDescriptionArgument {}
+@Component({
+  selector: 'app-project-homepage-url-argument',
+  template: '',
+})
+export class StubProjectHomepageUrlArgument {}
+@Component({
+  selector: 'app-project-languages-argument',
+  template: '',
+})
+export class StubProjectLanguagesArgument {}
+@Component({
+  selector: 'app-project-name-argument',
+  template: '',
+})
+export class StubProjectNameArgument {}
