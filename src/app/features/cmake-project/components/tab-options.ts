@@ -14,9 +14,9 @@ import { OptionsRootPath } from './options-root-path';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabOptions implements OptionsModel {
-  public readonly maxCMakeVersionSignal =
+  private readonly maxCMakeVersionSignal =
     viewChild.required<OptionsMaxCMakeVersion>('maxCMakeVersion');
-  public readonly rootPathSignal =
+  private readonly rootPathSignal =
     viewChild.required<OptionsRootPath>('rootPath');
 
   get maxCMakeVersion(): InputVersionModel {

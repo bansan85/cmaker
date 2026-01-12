@@ -38,9 +38,11 @@ export class TabProject implements AfterViewInit {
   private readonly rustBackendService = inject(RustBackendService);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  readonly containers = viewChildren('container', { read: ViewContainerRef });
+  private readonly containers = viewChildren('container', {
+    read: ViewContainerRef,
+  });
 
-  defaultInitialFields: Type<
+  private readonly defaultInitialFields: Type<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     CMakeComponentInterface<CMakeFeatureInterface<any>>
   >[] = [
