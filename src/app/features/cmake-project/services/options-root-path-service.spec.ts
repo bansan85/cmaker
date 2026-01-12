@@ -76,10 +76,12 @@ describe('OptionsRootPathService', () => {
 
     projectContext.rootPath = 'invalid';
     mockIpcPathExists = false;
+    projectContext.maxCMakeVersion = new Version(3, 0);
     expect(service.isEnabled(action)).toBe(true);
 
     projectContext.rootPath = 'valid';
     mockIpcPathExists = true;
+    projectContext.maxCMakeVersion = new Version(4, 3);
     expect(service.isEnabled(action)).toBe(true);
 
     action.directory = 'c:/temp';

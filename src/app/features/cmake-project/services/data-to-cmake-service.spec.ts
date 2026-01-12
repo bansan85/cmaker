@@ -20,6 +20,7 @@ describe('DataToCMakeService', () => {
 
     expect(service.stringToBoolean('ON')).toEqual(true);
     expect(service.stringToBoolean('OFF')).toEqual(false);
+    expect(() => service.stringToBoolean('aaa')).toThrow('aaa is not boolean.');
 
     expect(service.stringToVersion('trez')).toBeUndefined();
     expect(service.stringToVersion('1.2.4')).toStrictEqual(

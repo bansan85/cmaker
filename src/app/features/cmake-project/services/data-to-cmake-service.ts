@@ -21,8 +21,7 @@ export class DataToCMakeService {
     } else if (value === 'OFF') {
       return false;
     } else {
-      console.warn(`${value} is not boolean.`);
-      return false;
+      throw Error(`${value} is not boolean.`);
     }
   }
 
