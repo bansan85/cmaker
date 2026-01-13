@@ -91,22 +91,22 @@ export class ProjectLanguagesService extends CMakeArgumentInterface<InputLanguag
 
   allLanguages: {
     name: string;
-    version?: Version;
+    version: Version | null;
   }[] = [
-    { name: 'C' },
-    { name: 'CXX' },
+    { name: 'C', version: null },
+    { name: 'CXX', version: null },
     { name: 'CSharp', version: new Version(3, 8) },
     { name: 'CUDA', version: new Version(3, 8) },
     { name: 'OBJC', version: new Version(3, 16) },
     { name: 'OBJCXX', version: new Version(3, 16) },
-    { name: 'Fortran' },
+    { name: 'Fortran', version: null },
     { name: 'HIP', version: new Version(3, 21) },
     { name: 'ISPC', version: new Version(3, 18) },
     { name: 'Swift', version: new Version(3, 15) },
-    { name: 'ASM' },
-    { name: 'ASM_NASM' },
+    { name: 'ASM', version: null },
+    { name: 'ASM_NASM', version: null },
     { name: 'ASM_MARMASM', version: new Version(3, 26) },
-    { name: 'ASM_MASM' },
-    { name: 'ASM-ATT' },
+    { name: 'ASM_MASM', version: null },
+    { name: 'ASM-ATT', version: null },
   ];
 }

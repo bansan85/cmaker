@@ -45,7 +45,7 @@ export class ProjectLanguagesArgument
     signal<CheckboxesItemInterface>({
       enabled: false,
       itemName: item.name,
-      version: item.version,
+      service: { cmakeMinVersion: item.version },
     })
   );
 }

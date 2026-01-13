@@ -6,7 +6,13 @@ import { VersionService } from '../../../shared/services/version-service';
 import { CMakeAvailableData } from '../../cmake-project/models/cmake-available-data';
 import { ProjectContextService } from '../../cmake-project/services/project-context-service';
 
-export abstract class CMakeFeatureInterface<Feature> {
+export interface CMakeFeatureInterfaceCMakeMinVersion {
+  readonly cmakeMinVersion: Version | null;
+}
+
+export abstract class CMakeFeatureInterface<Feature>
+  implements CMakeFeatureInterfaceCMakeMinVersion
+{
   protected projectContext = inject(ProjectContextService);
   protected versionService = inject(VersionService);
 

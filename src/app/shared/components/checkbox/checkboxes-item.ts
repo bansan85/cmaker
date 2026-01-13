@@ -26,8 +26,7 @@ export class CheckboxesItem {
   public parent = inject(CheckboxesList);
 
   isHidden(): boolean {
-    const version =
-      this.element().service?.cmakeMinVersion ?? this.element().version ?? null;
+    const version = this.element().service.cmakeMinVersion;
     if (!version) {
       return false;
     }
