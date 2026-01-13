@@ -1,18 +1,12 @@
 import { inject, signal } from '@angular/core';
 
-import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
-import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
-import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { InputInterface } from '../../interfaces/input-interface';
 import { InputLicenseModel } from '../../models/arguments/input-license-model';
 import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputLicense
-  implements
-    CheckboxesItemInterface,
-    InputLicenseModel,
-    ValidatorInterface,
-    CMakeComponentInterface<InputLicenseModel>
+  implements InputInterface<InputLicenseModel>
 {
   abstract readonly itemName: string;
   abstract readonly service: CMakeFeatureInterface<InputLicenseModel>;

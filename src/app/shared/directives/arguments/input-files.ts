@@ -1,22 +1,14 @@
 import { inject, signal } from '@angular/core';
 import { open } from '@tauri-apps/plugin-dialog';
 
-import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
-import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
-import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { InputInterface } from '../../interfaces/input-interface';
 import { InputFilesModel } from '../../models/arguments/input-files-model';
 import { ResourceService } from '../../services/resource-service';
 import { RustBackendService } from '../../services/rust-backend-service';
 
-export abstract class InputFiles
-  implements
-    CheckboxesItemInterface,
-    InputFilesModel,
-    ValidatorInterface,
-    CMakeComponentInterface<InputFilesModel>
-{
+export abstract class InputFiles implements InputInterface<InputFilesModel> {
   abstract readonly itemName: string;
   abstract readonly service: CMakeFeatureInterface<InputFilesModel>;
 

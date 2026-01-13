@@ -1,19 +1,13 @@
 import { inject, signal } from '@angular/core';
 import { open } from '@tauri-apps/plugin-dialog';
 
-import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
-import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
-import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { InputInterface } from '../../interfaces/input-interface';
 import { InputDirectoryModel } from '../../models/arguments/input-directory-model';
 import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputDirectory
-  implements
-    CheckboxesItemInterface,
-    InputDirectoryModel,
-    ValidatorInterface,
-    CMakeComponentInterface<InputDirectoryModel>
+  implements InputInterface<InputDirectoryModel>
 {
   abstract readonly itemName: string;
   abstract readonly service: CMakeFeatureInterface<InputDirectoryModel>;

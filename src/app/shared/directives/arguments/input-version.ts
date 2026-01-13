@@ -1,19 +1,13 @@
 import { inject, signal } from '@angular/core';
 
-import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
-import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
-import { ValidatorInterface } from '../../interfaces/validator-interface';
+import { InputInterface } from '../../interfaces/input-interface';
 import { InputVersionModel } from '../../models/arguments/input-version-model';
 import { Version } from '../../models/version';
 import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputVersion
-  implements
-    CheckboxesItemInterface,
-    InputVersionModel,
-    ValidatorInterface,
-    CMakeComponentInterface<InputVersionModel>
+  implements InputInterface<InputVersionModel>
 {
   abstract readonly itemName: string;
   abstract readonly service: CMakeFeatureInterface<InputVersionModel>;
