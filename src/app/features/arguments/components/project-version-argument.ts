@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputVersion } from '../../../shared/directives/arguments/input-version';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectVersionService } from '../services/project-version-service';
 
 @Component({
@@ -27,10 +26,7 @@ import { ProjectVersionService } from '../services/project-version-service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectVersionArgument
-  extends InputVersion
-  implements CMakeComponentInterface<ProjectVersionService>
-{
+export class ProjectVersionArgument extends InputVersion {
   readonly itemName = 'Version';
 
   protected readonly projectVersionId = `project-version-${crypto.randomUUID()}`;

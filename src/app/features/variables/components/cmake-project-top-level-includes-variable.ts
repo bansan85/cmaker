@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { CMakeProjectTopLevelIncludesVariableService } from '../services/cmake-project-top-level-includes-variable-service';
 
 @Component({
@@ -28,11 +27,7 @@ import { CMakeProjectTopLevelIncludesVariableService } from '../services/cmake-p
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CMakeProjectTopLevelIncludesVariable
-  extends InputFiles
-  implements
-    CMakeComponentInterface<CMakeProjectTopLevelIncludesVariableService>
-{
+export class CMakeProjectTopLevelIncludesVariable extends InputFiles {
   readonly itemName = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
 
   protected readonly cmakeProjectTopLevelIncludesPathId = `cmake-project-top-level-includes-path-${crypto.randomUUID()}`;

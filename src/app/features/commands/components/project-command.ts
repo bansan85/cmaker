@@ -68,7 +68,7 @@ import { ProjectService } from '../services/project-service';
 })
 export class ProjectCommand
   implements
-    CMakeComponentInterface<ProjectService>,
+    CMakeComponentInterface<ProjectModel>,
     ProjectModel,
     ValidatorInterface
 {

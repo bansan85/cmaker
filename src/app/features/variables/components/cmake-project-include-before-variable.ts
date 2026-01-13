@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { CMakeProjectIncludeBeforeVariableService } from '../services/cmake-project-include-before-variable-service';
 
 @Component({
@@ -28,10 +27,7 @@ import { CMakeProjectIncludeBeforeVariableService } from '../services/cmake-proj
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CMakeProjectIncludeBeforeVariable
-  extends InputFiles
-  implements CMakeComponentInterface<CMakeProjectIncludeBeforeVariableService>
-{
+export class CMakeProjectIncludeBeforeVariable extends InputFiles {
   readonly itemName = 'CMAKE_PROJECT_INCLUDE_BEFORE';
 
   protected readonly cmakeProjectIncludeBeforePathId = `cmake-project-include-before-path-${crypto.randomUUID()}`;

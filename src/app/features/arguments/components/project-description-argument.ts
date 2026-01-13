@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectDescriptionService } from '../services/project-description-service';
 
 @Component({
@@ -27,10 +26,7 @@ import { ProjectDescriptionService } from '../services/project-description-servi
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectDescriptionArgument
-  extends InputString
-  implements CMakeComponentInterface<ProjectDescriptionService>
-{
+export class ProjectDescriptionArgument extends InputString {
   readonly itemName = 'Description';
 
   protected readonly labelDescriptionId = `project-description-${crypto.randomUUID()}`;

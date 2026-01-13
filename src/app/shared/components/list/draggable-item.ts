@@ -12,7 +12,6 @@ import {
 
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
-import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { StringService } from '../../services/string-service';
 
 @Component({
@@ -22,9 +21,7 @@ import { StringService } from '../../services/string-service';
 })
 export class DraggableItemComponent implements AfterViewInit, OnDestroy {
   readonly title =
-    contentChild<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>(
-      CMAKE_COMPONENT_ITEM
-    );
+    contentChild<CMakeComponentInterface<unknown>>(CMAKE_COMPONENT_ITEM);
 
   readonly stringService = inject(StringService);
 

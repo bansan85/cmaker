@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputFiles } from '../../../shared/directives/arguments/input-files';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { CMakeProjectIncludeVariableService } from '../services/cmake-project-include-variable-service';
 
 @Component({
@@ -28,10 +27,7 @@ import { CMakeProjectIncludeVariableService } from '../services/cmake-project-in
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CMakeProjectIncludeVariable
-  extends InputFiles
-  implements CMakeComponentInterface<CMakeProjectIncludeVariableService>
-{
+export class CMakeProjectIncludeVariable extends InputFiles {
   readonly itemName = 'CMAKE_PROJECT_INCLUDE';
 
   protected readonly cmakeProjectIncludePathId = `cmake-project-include-path-${crypto.randomUUID()}`;

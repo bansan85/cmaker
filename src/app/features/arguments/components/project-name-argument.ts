@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectNameService } from '../services/project-name-service';
 
 @Component({
@@ -27,10 +26,7 @@ import { ProjectNameService } from '../services/project-name-service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectNameArgument
-  extends InputString
-  implements CMakeComponentInterface<ProjectNameService>
-{
+export class ProjectNameArgument extends InputString {
   readonly itemName = 'Name';
 
   protected readonly projectNameId = `project-name-${crypto.randomUUID()}`;

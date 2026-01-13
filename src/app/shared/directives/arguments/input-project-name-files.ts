@@ -1,6 +1,7 @@
 import { inject, signal } from '@angular/core';
 import { open } from '@tauri-apps/plugin-dialog';
 
+import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
@@ -13,7 +14,8 @@ export abstract class InputProjectNameFiles
   implements
     CheckboxesItemInterface,
     InputProjectNameFilesModel,
-    ValidatorInterface
+    ValidatorInterface,
+    CMakeComponentInterface<InputProjectNameFilesModel>
 {
   abstract readonly itemName: string;
   abstract readonly service: CMakeFeatureInterface<InputProjectNameFilesModel>;

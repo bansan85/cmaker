@@ -13,7 +13,6 @@ import { CheckboxesItem } from '../../../shared/components/checkbox/checkboxes-i
 import { CheckboxesList } from '../../../shared/components/checkbox/checkboxes-list';
 import { InputLanguages } from '../../../shared/directives/arguments/input-languages';
 import { CheckboxesItemInterface } from '../../../shared/interfaces/checkboxes-item-interface';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectLanguagesService } from '../services/project-languages-service';
 
 @Component({
@@ -29,10 +28,7 @@ import { ProjectLanguagesService } from '../services/project-languages-service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectLanguagesArgument
-  extends InputLanguages
-  implements CMakeComponentInterface<ProjectLanguagesService>
-{
+export class ProjectLanguagesArgument extends InputLanguages {
   readonly itemName = 'Languages';
 
   protected readonly projectLanguagesId = `project-languages-${crypto.randomUUID()}`;

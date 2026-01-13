@@ -13,7 +13,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputLicense } from '../../../shared/directives/arguments/input-license';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectSpdxLicenseService } from '../services/project-spdx-license-service';
 
 @Component({
@@ -35,10 +34,7 @@ import { ProjectSpdxLicenseService } from '../services/project-spdx-license-serv
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectSpdxLicenseArgument
-  extends InputLicense
-  implements CMakeComponentInterface<ProjectSpdxLicenseService>
-{
+export class ProjectSpdxLicenseArgument extends InputLicense {
   protected readonly datalist = viewChild<InputSpdxLicenseDataList>('datalist');
 
   readonly itemName = 'License';

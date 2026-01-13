@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 import { CheckboxesItemInterface } from '../../../shared/interfaces/checkboxes-item-interface';
 import { ValidatorInterface } from '../../../shared/interfaces/validator-interface';
 import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 
 @Component({ selector: 'app-options-max-cmake-version', template: '' })
 export class StubOptionsMaxCMakeVersion {}
@@ -23,8 +22,7 @@ export class StubValidTag {
 }
 @Component({ selector: 'app-version-tag', template: '' })
 export class StubVersionTag {
-  readonly element =
-    input.required<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>();
+  readonly element = input.required<CMakeComponentInterface<unknown>>();
 }
 @Component({ selector: 'app-checkboxes-list', template: '' })
 export class StubCheckboxesList {

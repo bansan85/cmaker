@@ -1,5 +1,6 @@
 import { inject, signal, WritableSignal } from '@angular/core';
 
+import { CMakeComponentInterface } from '../../../features/cmake-project/models/cmake-component-interface';
 import { CMakeFeatureInterface } from '../../../features/commands/services/cmake-feature-interface';
 import { CheckboxesItemInterface } from '../../interfaces/checkboxes-item-interface';
 import { ValidatorInterface } from '../../interfaces/validator-interface';
@@ -7,7 +8,11 @@ import { InputCheckboxModel } from '../../models/arguments/input-checkbox-model'
 import { ResourceService } from '../../services/resource-service';
 
 export abstract class InputCheckbox
-  implements CheckboxesItemInterface, InputCheckboxModel, ValidatorInterface
+  implements
+    CheckboxesItemInterface,
+    InputCheckboxModel,
+    ValidatorInterface,
+    CMakeComponentInterface<InputCheckboxModel>
 {
   abstract readonly itemName: string;
   abstract readonly service: CMakeFeatureInterface<InputCheckboxModel>;

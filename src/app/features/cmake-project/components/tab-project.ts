@@ -16,7 +16,6 @@ import { DraggableItemComponent } from '../../../shared/components/list/draggabl
 import { DraggableListComponent } from '../../../shared/components/list/draggable-list';
 import { RustBackendService } from '../../../shared/services/rust-backend-service';
 import { ProjectCommand } from '../../commands/components/project-command';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { DeserializerRegistry } from '../../serializer/services/deserializer-registry';
 import { CMakeMsvcRuntimeLibraryVariable } from '../../variables/components/cmake-msvc-runtime-library-variable';
 import { CMakeProjectIncludeBeforeVariable } from '../../variables/components/cmake-project-include-before-variable';
@@ -44,7 +43,7 @@ export class TabProject implements AfterViewInit {
 
   private readonly defaultInitialFields: Type<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    CMakeComponentInterface<CMakeFeatureInterface<any>>
+    CMakeComponentInterface<any>
   >[] = [
     ProjectCommand,
     CMakeMsvcRuntimeLibraryVariable,
@@ -55,11 +54,10 @@ export class TabProject implements AfterViewInit {
     CMakeProjectTopLevelIncludesVariable,
   ];
 
-  protected items: (CMakeComponentInterface<
-    CMakeFeatureInterface<unknown>
-  > | null)[] = new Array<CMakeComponentInterface<
-    CMakeFeatureInterface<unknown>
-  > | null>(this.defaultInitialFields.length);
+  protected items: (CMakeComponentInterface<unknown> | null)[] =
+    new Array<CMakeComponentInterface<unknown> | null>(
+      this.defaultInitialFields.length
+    );
 
   private itemsOrder!: number[];
   private readonly registry = inject(DeserializerRegistry);

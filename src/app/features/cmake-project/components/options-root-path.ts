@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { InputDirectory } from '../../../shared/directives/arguments/input-directory';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../models/cmake-component-interface';
 import { OptionsRootPathService } from '../services/options-root-path-service';
 import { ProjectContextService } from '../services/project-context-service';
 
@@ -23,10 +22,7 @@ import { ProjectContextService } from '../services/project-context-service';
   providers: [OptionsRootPathService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OptionsRootPath
-  extends InputDirectory
-  implements CMakeComponentInterface<OptionsRootPathService>, AfterViewInit
-{
+export class OptionsRootPath extends InputDirectory implements AfterViewInit {
   private readonly projectContext = inject(ProjectContextService);
 
   readonly itemName = 'Root path';

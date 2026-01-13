@@ -11,7 +11,6 @@ import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputString } from '../../../shared/directives/arguments/input-string';
 import { AsyncInvalidValidator } from '../../../shared/directives/validators/async-invalid-validator';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { ProjectHomepageUrlService } from '../services/project-homepage-url-service';
 
 @Component({
@@ -27,10 +26,7 @@ import { ProjectHomepageUrlService } from '../services/project-homepage-url-serv
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectHomepageUrlArgument
-  extends InputString
-  implements CMakeComponentInterface<ProjectHomepageUrlService>
-{
+export class ProjectHomepageUrlArgument extends InputString {
   readonly itemName = 'Homepage';
 
   protected readonly projectHomepageUrlId = `project-homepage-url-${crypto.randomUUID()}`;

@@ -19,7 +19,6 @@ import { Version } from '../../../shared/models/version';
 import { StringService } from '../../../shared/services/string-service';
 import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { DataToCMakeService } from '../../cmake-project/services/data-to-cmake-service';
-import { CMakeFeatureInterface } from '../../commands/services/cmake-feature-interface';
 import { CMakeArgumentTyped } from '../models/cmake-argument-typed';
 import { CMakeCommandString } from '../models/cmake-command-string';
 import { CMakeCommandMapping } from './cmake-command-mapping';
@@ -122,9 +121,7 @@ export class DeserializerRegistry {
   private cmakeCommandToComponent(
     command: CMakeCommandString,
     parentContextInjector: Injector
-  ):
-    | ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>
-    | undefined {
+  ): ComponentRef<CMakeComponentInterface<unknown>> | undefined {
     const commandParser = this.cmakeCommandMapping.getCMakeCommand(
       command.name,
       command.args[0]
@@ -204,7 +201,7 @@ export class DeserializerRegistry {
   parse(
     lines: string[],
     parentContextInjector: Injector
-  ): ComponentRef<CMakeComponentInterface<CMakeFeatureInterface<unknown>>>[] {
+  ): ComponentRef<CMakeComponentInterface<unknown>>[] {
     return Array.from(this.cmakeCommandParser.parseStrCommands(lines))
       .map((x) => this.cmakeCommandToComponent(x, parentContextInjector))
       .filter((x) => x !== undefined);

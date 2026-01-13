@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, it } from 'vitest';
 
 import { DEFAULT_MAX_VERSION } from '../../../app.tokens';
 import { ProjectContextService } from '../../../features/cmake-project/services/project-context-service';

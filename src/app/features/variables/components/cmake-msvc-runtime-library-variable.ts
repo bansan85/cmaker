@@ -11,7 +11,6 @@ import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
 import { ValidTag } from '../../../shared/components/arguments/valid-tag';
 import { VersionTag } from '../../../shared/components/arguments/version-tag';
 import { InputCheckbox } from '../../../shared/directives/arguments/input-checkbox';
-import { CMakeComponentInterface } from '../../cmake-project/models/cmake-component-interface';
 import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-runtime-library-variable-service';
 
 @Component({
@@ -28,10 +27,7 @@ import { CMakeMsvcRuntimeLibraryVariableService } from '../services/cmake-msvc-r
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CMakeMsvcRuntimeLibraryVariable
-  extends InputCheckbox
-  implements CMakeComponentInterface<CMakeMsvcRuntimeLibraryVariableService>
-{
+export class CMakeMsvcRuntimeLibraryVariable extends InputCheckbox {
   readonly itemName = 'CMAKE_MSVC_RUNTIME_LIBRARY';
 
   protected readonly cmakeMsvcRuntimeLibraryCheckboxId = `cmake-msvc-runtime-library-checkbox-${crypto.randomUUID()}`;
