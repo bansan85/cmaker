@@ -9,7 +9,7 @@ import { ResourceService } from '../../services/resource-service';
 export abstract class InputLanguages
   implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
 {
-  abstract readonly name: string;
+  abstract readonly itemName: string;
   abstract service: CMakeFeatureInterface<InputLanguagesModel>;
 
   private readonly resourceService = inject(ResourceService);
@@ -32,14 +32,14 @@ export abstract class InputLanguages
     return (
       this.allLanguages
         .filter((item) => item().enabled)
-        .map((item) => item().name)
+        .map((item) => item().itemName)
         .join(' ') || 'NONE'
     );
   }
   set languages(value: string) {
     const values = value.split(' ');
     for (const item of this.allLanguages) {
-      item().enabled = values.includes(item().name);
+      item().enabled = values.includes(item().itemName);
     }
   }
 

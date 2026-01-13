@@ -9,7 +9,7 @@ import { ResourceService } from '../../services/resource-service';
 export abstract class InputLicense
   implements CheckboxesItemInterface, InputLicenseModel, ValidatorInterface
 {
-  abstract readonly name: string;
+  abstract readonly itemName: string;
   abstract service: CMakeFeatureInterface<InputLicenseModel>;
 
   private readonly resourceService = inject(ResourceService);

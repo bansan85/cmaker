@@ -4,7 +4,7 @@ import { Version } from '../models/version';
 export interface CheckboxesItemInterface {
   enabled: boolean;
 
-  readonly name: string;
+  readonly itemName: string;
 
   // Only one.
   // If service is set, get version from service.cmakeMinVersion.

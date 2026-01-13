@@ -35,7 +35,7 @@ export class CMakeProjectProjectNameIncludeBeforeVariable
   implements
     CMakeComponentInterface<CMakeProjectProjectNameIncludeBeforeVariableService>
 {
-  readonly name = 'CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE';
+  readonly itemName = 'CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE_BEFORE';
 
   protected readonly cmakeProjectProjectNameIncludeBeforeProjectNameId = `cmake-project-project-name-include-before-project-name-${crypto.randomUUID()}`;
   protected readonly cmakeProjectProjectNameIncludeBeforePathId = `cmake-project-project-name-include-before-path-${crypto.randomUUID()}`;

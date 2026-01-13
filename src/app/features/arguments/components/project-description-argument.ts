@@ -31,7 +31,7 @@ export class ProjectDescriptionArgument
   extends InputString
   implements CMakeComponentInterface<ProjectDescriptionService>
 {
-  readonly name = 'Description';
+  readonly itemName = 'Description';
 
   protected readonly labelDescriptionId = `project-description-${crypto.randomUUID()}`;
 

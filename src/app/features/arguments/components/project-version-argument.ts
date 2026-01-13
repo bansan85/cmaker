@@ -31,7 +31,7 @@ export class ProjectVersionArgument
   extends InputVersion
   implements CMakeComponentInterface<ProjectVersionService>
 {
-  readonly name = 'Version';
+  readonly itemName = 'Version';
 
   protected readonly projectVersionId = `project-version-${crypto.randomUUID()}`;
 

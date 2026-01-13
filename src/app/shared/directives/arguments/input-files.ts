@@ -12,7 +12,7 @@ import { RustBackendService } from '../../services/rust-backend-service';
 export abstract class InputFiles
   implements CheckboxesItemInterface, InputFilesModel, ValidatorInterface
 {
-  abstract readonly name: string;
+  abstract readonly itemName: string;
   abstract service: CMakeFeatureInterface<InputFilesModel>;
 
   private readonly rustBackendService = inject(RustBackendService);

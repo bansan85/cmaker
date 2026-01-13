@@ -31,7 +31,7 @@ export class ProjectCompatVersionArgument
   extends InputVersion
   implements CMakeComponentInterface<ProjectCompatVersionService>
 {
-  readonly name = 'Compat version';
+  readonly itemName = 'Compat version';
 
   protected readonly labelVersionId = `project-compat-version-${crypto.randomUUID()}`;
 

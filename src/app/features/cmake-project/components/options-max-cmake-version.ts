@@ -31,7 +31,7 @@ export class OptionsMaxCMakeVersion
 {
   private readonly projectContext = inject(ProjectContextService);
 
-  readonly name = 'Max CMake version';
+  readonly itemName = 'Max CMake version';
 
   protected readonly optionsMaxCMakeVersionId = `options-max-cmake-version-${crypto.randomUUID()}`;
 

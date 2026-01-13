@@ -33,7 +33,7 @@ export class ProjectLanguagesArgument
   extends InputLanguages
   implements CMakeComponentInterface<ProjectLanguagesService>
 {
-  readonly name = 'Languages';
+  readonly itemName = 'Languages';
 
   protected readonly projectLanguagesId = `project-languages-${crypto.randomUUID()}`;
 
@@ -44,7 +44,7 @@ export class ProjectLanguagesArgument
   protected override allLanguages = this.service.allLanguages.map((item) =>
     signal<CheckboxesItemInterface>({
       enabled: false,
-      name: item.name,
+      itemName: item.name,
       version: item.version,
     })
   );

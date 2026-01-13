@@ -32,7 +32,7 @@ export class CMakeProjectIncludeVariable
   extends InputFiles
   implements CMakeComponentInterface<CMakeProjectIncludeVariableService>
 {
-  readonly name = 'CMAKE_PROJECT_INCLUDE';
+  readonly itemName = 'CMAKE_PROJECT_INCLUDE';
 
   protected readonly cmakeProjectIncludePathId = `cmake-project-include-path-${crypto.randomUUID()}`;
 

@@ -41,7 +41,7 @@ export class ProjectSpdxLicenseArgument
 {
   protected readonly datalist = viewChild<InputSpdxLicenseDataList>('datalist');
 
-  readonly name = 'License';
+  readonly itemName = 'License';
 
   protected readonly projectSpdxLicenseId = `project-spdx-license-${crypto.randomUUID()}`;
 

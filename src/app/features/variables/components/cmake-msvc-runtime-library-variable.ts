@@ -32,7 +32,7 @@ export class CMakeMsvcRuntimeLibraryVariable
   extends InputCheckbox
   implements CMakeComponentInterface<CMakeMsvcRuntimeLibraryVariableService>
 {
-  readonly name = 'CMAKE_MSVC_RUNTIME_LIBRARY';
+  readonly itemName = 'CMAKE_MSVC_RUNTIME_LIBRARY';
 
   protected readonly cmakeMsvcRuntimeLibraryCheckboxId = `cmake-msvc-runtime-library-checkbox-${crypto.randomUUID()}`;
 

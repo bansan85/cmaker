@@ -32,7 +32,7 @@ export class CMakeProjectIncludeBeforeVariable
   extends InputFiles
   implements CMakeComponentInterface<CMakeProjectIncludeBeforeVariableService>
 {
-  readonly name = 'CMAKE_PROJECT_INCLUDE_BEFORE';
+  readonly itemName = 'CMAKE_PROJECT_INCLUDE_BEFORE';
 
   protected readonly cmakeProjectIncludeBeforePathId = `cmake-project-include-before-path-${crypto.randomUUID()}`;
 

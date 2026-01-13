@@ -31,7 +31,7 @@ export class ProjectNameArgument
   extends InputString
   implements CMakeComponentInterface<ProjectNameService>
 {
-  readonly name = 'Name';
+  readonly itemName = 'Name';
 
   protected readonly projectNameId = `project-name-${crypto.randomUUID()}`;
 

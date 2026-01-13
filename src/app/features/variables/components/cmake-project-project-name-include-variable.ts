@@ -33,7 +33,7 @@ export class CMakeProjectProjectNameIncludeVariable
   implements
     CMakeComponentInterface<CMakeProjectProjectNameIncludeVariableService>
 {
-  readonly name = 'CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE';
+  readonly itemName = 'CMAKE_PROJECT_<PROJECT-NAME>_INCLUDE';
 
   protected readonly cmakeProjectProjectNameIncludeProjectNameId = `cmake-project-project-name-include-project-name-${crypto.randomUUID()}`;
   protected readonly cmakeProjectProjectNameIncludePathId = `cmake-project-project-name-include-path-${crypto.randomUUID()}`;

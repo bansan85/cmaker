@@ -33,7 +33,7 @@ export class CMakeProjectTopLevelIncludesVariable
   implements
     CMakeComponentInterface<CMakeProjectTopLevelIncludesVariableService>
 {
-  readonly name = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
+  readonly itemName = 'CMAKE_PROJECT_TOP_LEVEL_INCLUDES';
 
   protected readonly cmakeProjectTopLevelIncludesPathId = `cmake-project-top-level-includes-path-${crypto.randomUUID()}`;
 

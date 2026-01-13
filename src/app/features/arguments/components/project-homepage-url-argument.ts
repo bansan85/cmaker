@@ -31,7 +31,7 @@ export class ProjectHomepageUrlArgument
   extends InputString
   implements CMakeComponentInterface<ProjectHomepageUrlService>
 {
-  readonly name = 'Homepage';
+  readonly itemName = 'Homepage';
 
   protected readonly projectHomepageUrlId = `project-homepage-url-${crypto.randomUUID()}`;
 

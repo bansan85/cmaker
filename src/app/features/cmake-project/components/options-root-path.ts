@@ -29,7 +29,7 @@ export class OptionsRootPath
 {
   private readonly projectContext = inject(ProjectContextService);
 
-  readonly name = 'Root path';
+  readonly itemName = 'Root path';
 
   protected readonly optionsRootPathId = `options-root-path-${crypto.randomUUID()}`;
 

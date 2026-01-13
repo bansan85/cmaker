@@ -9,7 +9,7 @@ import { ResourceService } from '../../services/resource-service';
 export abstract class InputString
   implements CheckboxesItemInterface, InputStringModel, ValidatorInterface
 {
-  abstract readonly name: string;
+  abstract readonly itemName: string;
   abstract service: CMakeFeatureInterface<InputStringModel>;
 
   private readonly resourceService = inject(ResourceService);
