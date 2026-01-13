@@ -11,7 +11,7 @@ export abstract class InputVersion
   implements CheckboxesItemInterface, InputVersionModel, ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputVersionModel>;
+  abstract readonly service: CMakeFeatureInterface<InputVersionModel>;
 
   private readonly resourceService = inject(ResourceService);
   readonly isValid =

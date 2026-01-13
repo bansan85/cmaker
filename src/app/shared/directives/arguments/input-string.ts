@@ -10,7 +10,7 @@ export abstract class InputString
   implements CheckboxesItemInterface, InputStringModel, ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputStringModel>;
+  abstract readonly service: CMakeFeatureInterface<InputStringModel>;
 
   private readonly resourceService = inject(ResourceService);
   readonly isValid =

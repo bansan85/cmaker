@@ -10,7 +10,7 @@ export abstract class InputLicense
   implements CheckboxesItemInterface, InputLicenseModel, ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputLicenseModel>;
+  abstract readonly service: CMakeFeatureInterface<InputLicenseModel>;
 
   private readonly resourceService = inject(ResourceService);
   readonly isValid =

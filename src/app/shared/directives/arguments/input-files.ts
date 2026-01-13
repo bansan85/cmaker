@@ -13,7 +13,7 @@ export abstract class InputFiles
   implements CheckboxesItemInterface, InputFilesModel, ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputFilesModel>;
+  abstract readonly service: CMakeFeatureInterface<InputFilesModel>;
 
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);

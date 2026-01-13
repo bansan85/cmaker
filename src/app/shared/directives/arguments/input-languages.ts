@@ -10,7 +10,7 @@ export abstract class InputLanguages
   implements CheckboxesItemInterface, InputLanguagesModel, ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputLanguagesModel>;
+  abstract readonly service: CMakeFeatureInterface<InputLanguagesModel>;
 
   private readonly resourceService = inject(ResourceService);
   readonly isValid =

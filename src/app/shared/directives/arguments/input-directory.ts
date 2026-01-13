@@ -11,7 +11,7 @@ export abstract class InputDirectory
   implements CheckboxesItemInterface, InputDirectoryModel, ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputDirectoryModel>;
+  abstract readonly service: CMakeFeatureInterface<InputDirectoryModel>;
 
   private readonly resourceService = inject(ResourceService);
   readonly isValid =

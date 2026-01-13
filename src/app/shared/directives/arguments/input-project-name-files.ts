@@ -16,7 +16,7 @@ export abstract class InputProjectNameFiles
     ValidatorInterface
 {
   abstract readonly itemName: string;
-  abstract service: CMakeFeatureInterface<InputProjectNameFilesModel>;
+  abstract readonly service: CMakeFeatureInterface<InputProjectNameFilesModel>;
 
   private readonly rustBackendService = inject(RustBackendService);
   private readonly projectContext = inject(ProjectContextService);

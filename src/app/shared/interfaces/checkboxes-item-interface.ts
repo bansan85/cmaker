@@ -5,5 +5,5 @@ export interface CheckboxesItemInterface {
 
   readonly itemName: string;
 
-  service: CMakeFeatureInterfaceCMakeMinVersion;
+  readonly service: CMakeFeatureInterfaceCMakeMinVersion;
 }
