@@ -26,6 +26,7 @@ import {
   compareArrayString,
   sortArrayFromList,
 } from '../../../shared/classes/tests/string';
+import { sleep } from '../../../shared/classes/tests/timer';
 import { Version } from '../../../shared/models/version';
 import { ProjectCompatVersionService } from '../../arguments/services/project-compat-version-service';
 import { ProjectDescriptionService } from '../../arguments/services/project-description-service';
@@ -332,6 +333,50 @@ describe('TabProject', () => {
       await moveFromTo(0, 5);
       await moveFromTo(4, 1);
       await moveFromTo(3, 3);
+    });
+
+    it.skipIf(
+      ['HappyDOM', 'jsdom'].find((e) => navigator.userAgent.includes(e)) !==
+        undefined
+    )('should not break click event', async () => {
+      const labelIncludeBefore = fixture.debugElement.query(
+        By.css('app-cmake-project-include-before-variable label')
+      ).nativeElement as HTMLLabelElement;
+      labelIncludeBefore.click();
+      await fixture.whenStable();
+      const textareaIncludeBefore = fixture.debugElement.query(
+        By.css('app-cmake-project-include-before-variable textarea')
+      ).nativeElement as HTMLTextAreaElement;
+      expect(document.activeElement).toBe(textareaIncludeBefore);
+      /*
+      const textareaInclude = fixture.debugElement.query(
+        By.css('app-cmake-project-include-variable textarea')
+      ).nativeElement as HTMLTextAreaElement;
+      textareaInclude.dispatchEvent(
+        new MouseEvent('mouseenter', { bubbles: true })
+      );
+      fixture.detectChanges();
+      await fixture.whenStable();
+      textareaInclude.dispatchEvent(
+        new MouseEvent('mousedown', { bubbles: true, cancelable: true })
+      );
+      fixture.detectChanges();
+      await fixture.whenStable();
+      textareaInclude.dispatchEvent(
+        new MouseEvent('mouseup', { bubbles: true })
+      );
+      fixture.detectChanges();
+      await fixture.whenStable();
+      textareaInclude.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      fixture.detectChanges();
+      await fixture.whenStable();
+      textareaInclude.dispatchEvent(
+        new MouseEvent('mouseleave', { bubbles: true })
+      );
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(document.activeElement).toBe(textareaInclude);*/
+      //      await sleep(150000);
     });
 
     it('should load data from file', async () => {

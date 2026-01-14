@@ -8,6 +8,7 @@ import {
   input,
   OnDestroy,
   output,
+  signal,
 } from '@angular/core';
 
 import { CMAKE_COMPONENT_ITEM } from '../../../app.tokens';
@@ -34,8 +35,14 @@ export class DraggableItemComponent implements AfterViewInit, OnDestroy {
   readonly el = inject(ElementRef<HTMLElement>);
   private observer!: MutationObserver;
 
-  private readonly stopDrag = (event: MouseEvent) => {
-    event.preventDefault();
+  protected readonly isDraggable = signal(true);
+
+  private readonly onInputMouseEnter = () => {
+    this.isDraggable.set(false);
+  };
+
+  private readonly onInputMouseLeave = () => {
+    this.isDraggable.set(true);
   };
 
   ngAfterViewInit(): void {
@@ -56,9 +63,11 @@ export class DraggableItemComponent implements AfterViewInit, OnDestroy {
   private attachListeners(): void {
     this.el.nativeElement
       .querySelectorAll('textarea, input')
-      .forEach((textarea: HTMLTextAreaElement) => {
-        textarea.removeEventListener('mousedown', this.stopDrag);
-        textarea.addEventListener('mousedown', this.stopDrag);
+      .forEach((element: HTMLTextAreaElement) => {
+        element.removeEventListener('mouseenter', this.onInputMouseEnter);
+        element.removeEventListener('mouseleave', this.onInputMouseLeave);
+        element.addEventListener('mouseenter', this.onInputMouseEnter);
+        element.addEventListener('mouseleave', this.onInputMouseLeave);
       });
   }
 

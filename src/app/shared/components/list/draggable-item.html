@@ -1,5 +1,5 @@
 <li
-  draggable="true"
+  [attr.draggable]="isDraggable()"
   (dragend)="dragEnd($event)"
   (dragover)="dragOver($event)"
   (dragstart)="dragStart($event)"
